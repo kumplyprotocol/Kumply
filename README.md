@@ -50,6 +50,15 @@ We are introducing the first Avalanche L1 where only **KYB-verified institutions
 - **Cross-L1 via Warp + ICM**: Attestations propagate natively without bridges or third-party trust assumptions.
 - **Self-Healing Validator Set**: Anyone can call `disableExpiredValidator()` if a validator's KYB expires, removing non-compliant validators automatically without admin intervention.
 
+### Live L1 Network Details (Fuji)
+- **Network Name:** KUMPLY Compliance L1
+- **RPC URL:** `https://subnets.avax.network/2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b/rpc`
+- **Chain ID:** `43210`
+- **Currency Symbol:** `KMP`
+- **Subnet ID:** `2buHAwNvaybnQ6vQYRS4TeXizZhAo33bhpnonAJu21CKYLZoST`
+- **Blockchain ID:** `2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b`
+- **Validator Set Manager:** [`0x903f6E46f965C9A1127652D761400dBe487F555D`](https://testnet.snowtrace.io/address/0x903f6E46f965C9A1127652D761400dBe487F555D)
+
 ## 💻 Tech Stack
 
 - **Smart Contracts**: Solidity 0.8.28, Hardhat, OpenZeppelin

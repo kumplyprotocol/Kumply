@@ -216,9 +216,12 @@ Four structural moats:
 |---|---|
 | **Live demo** | https://kumply.xyz/verify |
 | **Repository** | https://github.com/Eras256/Kumply |
-| **Snowtrace AttestationStore** | https://testnet.snowtrace.io/address/[set by deploy] |
-| **Snowtrace ComplianceGate** | https://testnet.snowtrace.io/address/[set by deploy] |
-| **Snowtrace ValidatorSetManager** | https://testnet.snowtrace.io/address/[set post-L1-deploy] |
+| **Snowtrace AttestationStore** | https://testnet.snowtrace.io/address/0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76 |
+| **Snowtrace ComplianceGate** | https://testnet.snowtrace.io/address/0x3Bf8F8ea2573Eb3f386aDF72D191869c4827062B |
+| **Snowtrace ValidatorSetManager** | https://testnet.snowtrace.io/address/0x903f6E46f965C9A1127652D761400dBe487F555D |
+| **L1 Subnet ID** | `2buHAwNvaybnQ6vQYRS4TeXizZhAo33bhpnonAJu21CKYLZoST` |
+| **L1 Blockchain ID** | `2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b` |
+| **L1 RPC URL** | `https://subnets.avax.network/2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b/rpc` |
 | **Tests CI status** | 157 passing, 4 parallel jobs, 100% green |
 | **Twitter / X** | @kumply_xyz |
 | **Contact** | hello@kumply.xyz |
