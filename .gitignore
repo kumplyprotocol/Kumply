@@ -43,3 +43,5 @@ yarn-error.log*
 .turbo
 
 .vercel
+CLAUDE.md
+claude.md
