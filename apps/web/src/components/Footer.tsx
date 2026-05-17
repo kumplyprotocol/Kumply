@@ -35,7 +35,8 @@ export function Footer() {
         top: 0,
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: '600px',
+        width: '100%',
+        maxWidth: '600px',
         height: '200px',
         background: 'radial-gradient(ellipse, rgba(232, 65, 66, 0.1) 0%, transparent 70%)',
         pointerEvents: 'none'

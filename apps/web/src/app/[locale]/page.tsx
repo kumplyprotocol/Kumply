@@ -74,25 +74,13 @@ export default async function Home() {
           </div>
         </div>
 
-        <style dangerouslySetInnerHTML={{ __html: `
-          @media (max-width: 900px) {
-            .hero-grid { grid-template-columns: 1fr !important; text-align: center; }
-            .hero-grid > div:first-child { text-align: center !important; display: flex; flex-direction: column; align-items: center; }
-            .hero-grid .page-title { text-align: center !important; font-size: 2.4rem !important; }
-            .hero-grid .page-description { text-align: center !important; margin: 0 auto 2.5rem auto !important; }
-            .hero-grid > div:first-child > div:last-child { flex-direction: column; width: 100%; max-width: 320px; margin: 0 auto; }
-            .hero-3d-container { grid-row: 1; }
-          }
-          @media (max-width: 480px) {
-            .hero-grid .page-title { font-size: 1.9rem !important; }
-          }
-        ` }} />
+
       </section>
 
       {/* ── Stats Bar ── */}
       <section id="stats" aria-label="Key metrics" style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', padding: '2.5rem 0' }}>
         <div className="container">
-          <div className="grid-4" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
+          <div className="stats-grid" style={{ display: 'grid', gap: '1.5rem' }}>
             <div className="stat-card">
               <div className="stat-value">{totalAttestations > 0 ? totalAttestations.toString() : '—'}</div>
               <div className="stat-label">{h('statsAttestation')}</div>
@@ -120,7 +108,7 @@ export default async function Home() {
           <p className="section-subtitle" style={{ margin: '0 auto' }}>{h('howItWorksSubtitle')}</p>
         </div>
 
-        <div className="how-it-works-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 48px 1fr 48px 1fr', alignItems: 'center', gap: '0' }}>
+        <div className="how-it-works-grid" style={{ display: 'grid', alignItems: 'center', gap: '0' }}>
           {/* Step 1 */}
           <div className="glass-card" style={{ textAlign: 'center', padding: '2rem 1.5rem' }}>
             <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--accent), var(--accent-dark))', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem', boxShadow: 'var(--shadow-glow)' }}>
@@ -178,12 +166,7 @@ export default async function Home() {
           </div>
         </div>
 
-        <style dangerouslySetInnerHTML={{ __html: `
-          @media (max-width: 768px) {
-            .how-it-works-grid { grid-template-columns: 1fr !important; }
-            .step-arrow { transform: rotate(90deg); margin: 0.5rem auto; }
-          }
-        ` }} />
+
       </section>
 
       {/* ── Partners / Institutions ── */}
@@ -194,7 +177,7 @@ export default async function Home() {
             <p className="section-subtitle" style={{ margin: '0 auto' }}>{h('partnersSubtitle')}</p>
           </div>
 
-          <div className="grid-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
+          <div className="partners-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
             {/* Bankaool */}
             <div className="glass-card" style={{ textAlign: 'center', padding: '2rem' }}>
               <div style={{ width: '56px', height: '56px', borderRadius: 'var(--radius-md)', background: 'linear-gradient(135deg, #1e40af, #1d4ed8)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem', fontSize: '1.5rem' }}>
@@ -241,7 +224,7 @@ export default async function Home() {
           <p className="section-subtitle" style={{ margin: '0 auto' }}>{h('whyAvaxSubtitle')}</p>
         </div>
 
-        <div className="grid-2" style={{ gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem' }}>
+        <div className="why-avax-grid" style={{ display: 'grid', gap: '1.5rem' }}>
           <div className="glass-card" style={{ display: 'flex', gap: '1.25rem', padding: '1.75rem' }}>
             <div style={{ width: '48px', height: '48px', borderRadius: 'var(--radius-md)', background: 'var(--accent-glow)', border: '1px solid var(--border-accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -295,10 +278,10 @@ export default async function Home() {
           textAlign: 'center',
           overflow: 'hidden'
         }}>
-          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '500px', height: '300px', background: 'radial-gradient(ellipse, rgba(232,65,66,0.12) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
+          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '100%', maxWidth: '500px', height: '300px', background: 'radial-gradient(ellipse, rgba(232,65,66,0.12) 0%, transparent 70%)', pointerEvents: 'none' }}></div>
 
           <div style={{ position: 'relative' }}>
-            <h2 id="cta-title" className="section-title" style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>{h('ctaTitle')}</h2>
+            <h2 id="cta-title" className="section-title cta-title" style={{ marginBottom: '1rem' }}>{h('ctaTitle')}</h2>
             <p className="section-subtitle" style={{ margin: '0 auto 2.5rem', maxWidth: '520px' }}>{h('ctaSubtitle')}</p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <Link href="/verify" className="btn btn-primary" style={{ padding: '0.9rem 2rem', fontSize: '1rem' }}>
@@ -311,6 +294,42 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        /* Hero */
+        @media (max-width: 900px) {
+          .hero-grid { grid-template-columns: 1fr !important; text-align: center; }
+          .hero-grid > div:first-child { text-align: center !important; display: flex; flex-direction: column; align-items: center; }
+          .hero-grid .page-title { text-align: center !important; font-size: 2.4rem !important; }
+          .hero-grid .page-description { text-align: center !important; margin: 0 auto 2.5rem auto !important; }
+          .hero-grid > div:first-child > div:last-child { flex-direction: column; width: 100%; max-width: 320px; margin: 0 auto; }
+          .hero-3d-container { grid-row: 1; }
+        }
+        @media (max-width: 480px) {
+          .hero-grid .page-title { font-size: 1.9rem !important; }
+        }
+
+        /* Stats */
+        .stats-grid { grid-template-columns: repeat(4, 1fr); }
+        @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 480px) { .stats-grid { grid-template-columns: 1fr; } }
+
+        /* How it works */
+        .how-it-works-grid { grid-template-columns: 1fr 48px 1fr 48px 1fr; }
+        @media (max-width: 768px) {
+          .how-it-works-grid { grid-template-columns: 1fr; }
+          .step-arrow { transform: rotate(90deg); margin: 0.5rem auto; }
+        }
+
+        /* Why Avalanche */
+        .why-avax-grid { grid-template-columns: repeat(2, 1fr); }
+        @media (max-width: 768px) { .why-avax-grid { grid-template-columns: 1fr; } }
+
+        /* CTA */
+        .cta-title { font-size: 2.5rem; }
+        @media (max-width: 768px) { .cta-title { font-size: 2rem; } }
+        @media (max-width: 480px) { .cta-title { font-size: 1.75rem; } }
+      ` }} />
     </div>
   );
 }
