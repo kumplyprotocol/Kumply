@@ -52,13 +52,6 @@ export class KumplyClient {
     } else if (options.network === "kumply-l1") {
       config = KUMPLY_L1_CONFIG;
       this.chain = kumplyL1Chain;
-      if (!config.live) {
-        // eslint-disable-next-line no-console
-        console.warn(
-          "[@kumply/sdk] KUMPLY Compliance L1 is Deploy-Ready but not yet live. " +
-            "Calls will fail until the L1 is bootstrapped. See https://kumply.xyz/l1 for status."
-        );
-      }
     } else {
       config = FUJI_CONFIG;
       this.chain = avalancheFuji;
