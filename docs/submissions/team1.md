@@ -19,10 +19,10 @@ Yes. KUMPLY is live on Avalanche Fuji testnet today:
 
 | Component | Status | Evidence |
 |---|---|---|
-| AttestationStore smart contract | Deployed + verified on C-Chain Fuji | `[FILL: Snowtrace URL]` |
-| ComplianceGate smart contract | Deployed + verified | `[FILL: Snowtrace URL]` |
-| KumplyValidatorSetManager (ACP-99) | Deployed for KUMPLY L1 | `[FILL: Snowtrace URL]` |
-| KUMPLY Compliance L1 (Subnet-EVM) | Bootstrapping on Fuji | SubnetID `[FILL]` |
+| AttestationStore smart contract | Deployed + verified on C-Chain Fuji | https://testnet.snowtrace.io/address/0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76 |
+| ComplianceGate smart contract | Deployed + verified | https://testnet.snowtrace.io/address/0x3Bf8F8ea2573Eb3f386aDF72D191869c4827062B |
+| KumplyValidatorSetManager (ACP-99) | Deployed for KUMPLY L1 | https://testnet.snowtrace.io/address/0x903f6E46f965C9A1127652D761400dBe487F555D |
+| KUMPLY Compliance L1 (Subnet-EVM) | Registered on P-Chain Fuji | SubnetID `2buHAwNvaybnQ6vQYRS4TeXizZhAo33bhpnonAJu21CKYLZoST` |
 | Sumsub WebSDK + webhook | Live, end-to-end KYC flow | https://kumply.io/verify |
 | Public frontend | Live | https://kumply.io |
 | Open-source monorepo | Public, MIT | https://github.com/Eras256/Kumply |

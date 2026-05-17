@@ -51,11 +51,13 @@ https://github.com/Eras256/Kumply/blob/main/LITEPAPER.md (v1.1, ~3K words)
 
 | Contract | Address | Snowtrace |
 |---|---|---|
-| AttestationStore | `[FILL: 0x…]` | https://testnet.snowtrace.io/address/[FILL] |
-| ComplianceGate | `[FILL: 0x…]` | https://testnet.snowtrace.io/address/[FILL] |
-| KumplyValidatorSetManager | `[FILL: 0x…]` (post Tier-4 issue + L1 manager deploy) | https://testnet.snowtrace.io/address/[FILL] |
-| KUMPLY L1 SubnetID | `[FILL: 2…]` (post `avalanche blockchain deploy`) | https://subnets-test.avax.network/subnets/[FILL] |
-| KUMPLY L1 BlockchainID | `[FILL: 2…]` | as above |
+| AttestationStore | `0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76` | https://testnet.snowtrace.io/address/0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76 |
+| ComplianceGate | `0x3Bf8F8ea2573Eb3f386aDF72D191869c4827062B` | https://testnet.snowtrace.io/address/0x3Bf8F8ea2573Eb3f386aDF72D191869c4827062B |
+| KumplyValidatorSetManager (ACP-99) | `0x903f6E46f965C9A1127652D761400dBe487F555D` | https://testnet.snowtrace.io/address/0x903f6E46f965C9A1127652D761400dBe487F555D |
+| KUMPLY L1 SubnetID | `2buHAwNvaybnQ6vQYRS4TeXizZhAo33bhpnonAJu21CKYLZoST` | https://subnets-test.avax.network/subnets/2buHAwNvaybnQ6vQYRS4TeXizZhAo33bhpnonAJu21CKYLZoST |
+| KUMPLY L1 BlockchainID | `2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b` | https://subnets-test.avax.network/blockchain/2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b |
+| KUMPLY L1 VM ID | `pKtXEGFPZ1S5CFBf5yvu3S1WxcBm66Av3DassMRerNrEBi59a` | Subnet-EVM v0.8.0 |
+| KUMPLY L1 ChainID | `43210` | (KMP gas token) |
 
 **Verification:** all contracts verified on Routescan/Snowtrace; source visible inline.
 
@@ -68,10 +70,10 @@ https://github.com/Eras256/Kumply/blob/main/LITEPAPER.md (v1.1, ~3K words)
 
 ## On-chain activity / impact metrics (as of submission)
 
-- Tier-4 KYB attestation issued to deployer: `[FILL tx hash]`
+- Tier-4 KYB attestation issued to deployer: `0x14664990227c2969c62e4199d549a5b8c14a93c3eef1599e479acbc381c98170` ([Snowtrace](https://testnet.snowtrace.io/tx/0x14664990227c2969c62e4199d549a5b8c14a93c3eef1599e479acbc381c98170))
 - Demo attestations issued for hackathon flow: `[FILL count + sample tx]`
-- L1 ConvertSubnetToL1Tx: `[FILL tx hash or "deploying, ~3h bootstrap in progress"]`
-- Validators registered: `[FILL count]`
+- L1 deployed via avalanche-cli v1.9.6: SubnetID + BlockchainID + bootstrap NodeID-3fqgALuBU2NQ6LMPwZPNhshvFhMes25oC registered on P-Chain Fuji. CreateSubnetTx fee 0.000010278 AVAX + CreateChainTx fee 0.000022068 AVAX.
+- Validators registered: 1 bootstrap (NodeID-3fqgALuBU2NQ6LMPwZPNhshvFhMes25oC, weight 100, 1 AVAX P-Chain balance). Additional institutional validators (Bankaool, Arkangeles) onboard Q3 2026.
 
 ## Why this advances Avalanche
 

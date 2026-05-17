@@ -1,0 +1,12 @@
+{
+  "name": "kumply",
+  "network": "fuji",
+  "subnetID": "0xd2f1a372fc88310d678b0eb893d8e54a70d1d5a5652cdba9575f6abf94519c3f",
+  "subnetIDCB58": "2buHAwNvaybnQ6vQYRS4TeXizZhAo33bhpnonAJu21CKYLZoST",
+  "blockchainID": "2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b",
+  "vmID": "pKtXEGFPZ1S5CFBf5yvu3S1WxcBm66Av3DassMRerNrEBi59a",
+  "chainID": 43210,
+  "symbol": "KMP",
+  "bootstrapNodeID": "NodeID-3fqgALuBU2NQ6LMPwZPNhshvFhMes25oC",
+  "deployedAt": "2026-05-17T19:46:02Z"
+}
