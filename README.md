@@ -42,7 +42,7 @@ KUMPLY is built entirely around the Avalanche technical stack (May 2026 standard
 - **Avalanche L1 Interoperability**: Through Interchain Messaging (ICM), a credential minted on the C-Chain can be queried seamlessly from any customized Avalanche L1 (formerly Subnets), enabling cross-chain compliance out-of-the-box.
 - **Software-Only Protocol**: We never store user documents. Data is processed securely by Sumsub, while Kumply exclusively handles the cryptographic on-chain proofs.
 
-## ⛓️ KUMPLY Compliance L1 (Deploy-Ready)
+## ⛓️ KUMPLY Compliance L1 (Live on Fuji Testnet)
 
 We are introducing the first Avalanche L1 where only **KYB-verified institutions can validate**. Every block is signed by a licensed entity, baking compliance directly into the consensus layer.
 - **Validator Architecture (ACP-77 + ACP-99)**: Uses `KumplyValidatorSetManager.sol` to enforce Tier 4 (KYB) attestation as a prerequisite for validation.
@@ -133,6 +133,21 @@ KUMPLY rigorously adheres to the May 2026 Ava Labs Trademark Usage Policy and AV
 - ✅ Follows **responsible disclosure** practices for security vulnerabilities
 - ✅ Operates as **Software-Only** infrastructure — non-custodial, no financial intermediation
 - ✅ Published under **MIT License** for open-source transparency
+
+## 📚 Official Avalanche Resources & References
+
+The architecture and implementation of KUMPLY were built strictly following the official Avalanche documentation and ACPs (Avalanche Community Proposals):
+
+- **Architecture & Ecosystem:** [Avalanche Network](https://www.avax.network/), [Developer Hub](https://www.avax.network/build/developer-hub), [Primary Network & Consensus](https://build.avax.network/docs/primary-network/avalanche-consensus)
+- **Nodes & Validation:** [Run a Node](https://build.avax.network/docs/nodes/run-a-node), [Staking for Institutions](https://build.avax.network/docs/primary-network/validate/staking-for-finance-professionals), [Subnet-EVM Configs](https://build.avax.network/docs/nodes/chain-configs/avalanche-l1s/subnet-evm)
+- **Avalanche L1s (Subnets):** [L1 Nodes](https://build.avax.network/docs/nodes/run-a-node/avalanche-l1-nodes), [L1 Architecture](https://build.avax.network/docs/nodes/architecture)
+- **Interoperability (ICM/Warp):** [Avalanche Interchain Messaging](https://build.avax.network/docs/tooling/avalanche-sdk/interchain/icm), [Warp Building & Parsing](https://build.avax.network/docs/tooling/avalanche-sdk/interchain/warp)
+- **Data API:** [Avalanche Data API](https://build.avax.network/docs/api-reference/data-api)
+- **Smart Contract Verification:** [Verify on Snowtrace](https://build.avax.network/docs/primary-network/verify-contract/snowtrace), [Hardhat Integration](https://build.avax.network/docs/primary-network/verify-contract/hardhat)
+- **Implemented ACPs:** 
+  - [ACP-99: ValidatorSetManager Contract](https://build.avax.network/docs/acps/99-validatorsetmanager-contract)
+  - [ACP-77: Reinventing Subnets](https://build.avax.network/docs/acps/77-reinventing-subnets)
+  - [ACP-30: Avalanche Warp X EVM](https://build.avax.network/docs/acps/30-avalanche-warp-x-evm)
 
 ## 📄 License
 
