@@ -140,17 +140,32 @@ export function Navbar() {
             )}
           </div>
 
-          {/* MOBILE HAMBURGER */}
-          <button
-            className="navbar__hamburger"
-            onClick={toggleMenu}
-            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={mobileMenuOpen}
-          >
-            <span className={`navbar__hamburger-line ${mobileMenuOpen ? 'navbar__hamburger-line--top' : ''}`} />
-            <span className={`navbar__hamburger-line ${mobileMenuOpen ? 'navbar__hamburger-line--mid' : ''}`} />
-            <span className={`navbar__hamburger-line ${mobileMenuOpen ? 'navbar__hamburger-line--bot' : ''}`} />
-          </button>
+          {/* MOBILE ACTIONS */}
+          <div className="navbar__mobile-actions">
+            <div className="navbar__lang navbar__mobile-toplang">
+              <button
+                onClick={() => router.replace(pathname, { locale: 'en' })}
+                className={`navbar__lang-btn ${locale === 'en' ? 'navbar__lang-btn--active' : ''}`}
+              >EN</button>
+              <button
+                onClick={() => router.replace(pathname, { locale: 'es' })}
+                className={`navbar__lang-btn ${locale === 'es' ? 'navbar__lang-btn--active' : ''}`}
+              >ES</button>
+            </div>
+
+            {/* MOBILE HAMBURGER */}
+            <button
+              className="navbar__hamburger"
+              onClick={toggleMenu}
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileMenuOpen}
+              style={{ display: 'flex' }}
+            >
+              <span className={`navbar__hamburger-line ${mobileMenuOpen ? 'navbar__hamburger-line--top' : ''}`} />
+              <span className={`navbar__hamburger-line ${mobileMenuOpen ? 'navbar__hamburger-line--mid' : ''}`} />
+              <span className={`navbar__hamburger-line ${mobileMenuOpen ? 'navbar__hamburger-line--bot' : ''}`} />
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -230,6 +245,15 @@ export function Navbar() {
           </div>
         </div>
       </div>
+      <style dangerouslySetInnerHTML={{ __html: `
+        .navbar__mobile-actions { display: none; align-items: center; gap: 0.75rem; }
+        @media (max-width: 1100px) {
+          .navbar__mobile-actions { display: flex; }
+        }
+        @media (max-width: 380px) {
+          .navbar__mobile-toplang { display: none !important; }
+        }
+      ` }} />
     </>
   );
 }
