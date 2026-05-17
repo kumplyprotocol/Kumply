@@ -55,9 +55,11 @@
     }
   },
   "alloc": {
-    "_comment": "Genesis allocations — KMP gas token. Bankaool, Arkangeles + KUMPLY treasury",
-    "0x0000000000000000000000000000000000000000": {
-      "balance": "0x0"
+    "_comment_purpose": "FUJI TESTNET ONLY. KMP has no market value and is non-tradable in this deployment. Mainnet KMP allocation is explicitly NOT defined here — it will be set by KUMPLY governance at L1 mainnet launch, after (a) on-chain traction is demonstrated, (b) institutional validator agreements are formalized, and (c) a written Mexican fintech-law opinion confirms the software-only positioning of the protocol.",
+    "_comment_supply": "Total testnet supply = 1,000,000,000 KMP (1e9 * 1e18 wei = 1e27 wei = 0x33B2E3C9FD0803CE8000000). 100% allocated to the deployer/operator wallet for testnet operations (faucet distribution, demo grants, hackathon stipends, validator gas top-ups).",
+    "_comment_legal": "This genesis allocation is a testnet operational choice, NOT a binding mainnet tokenomics commitment. KMP is not an investment instrument, not e-money under LRITF Art. 22, not a virtual asset offered for exchange under LFPIORPI Art. 17 fracción XVI. See LEGAL_REVIEW_BRIEF.md (gitignored, internal) for the pending counsel scope.",
+    "0xD65042534CE80fcb641fd6Eb99a16eBF6C0cd076": {
+      "balance": "0x33B2E3C9FD0803CE8000000"
     }
   },
   "nonce": "0x0",
