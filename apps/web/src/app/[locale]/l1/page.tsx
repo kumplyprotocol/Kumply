@@ -71,7 +71,7 @@ export default function L1Page() {
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.5 }}>{t('statusDesc')}</p>
           </div>
           <a
-            href="https://github.com/KumplyProtocol/kumply/tree/main/contracts/l1"
+            href="https://github.com/Eras256/Kumply"
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-secondary"
