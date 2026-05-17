@@ -2,7 +2,7 @@
 
 ## Qué es KUMPLY
 
-Infraestructura de compliance institucional sobre Avalanche. Proporciona attestaciones KYC/KYB/KYA (Know Your Agent) on-chain con 5 tiers, integración con Sumsub, y diseño para cross-L1 via ICM. Implementa un modelo de negocio "Software-Only" (no custodial, sin clasificaciones Fintech/AML).
+Infraestructura de compliance institucional sobre Avalanche. Proporciona attestaciones KYC/KYB/KYA (Know Your Agent) on-chain con 5 tiers, integración con Sumsub, y diseño para cross-L1 via ICM. Implementa un modelo de negocio "Software-Only" (no custodial, sin clasificaciones financieras/AML).
 
 **Estado actual (Mayo 2026):** Contratos desplegados y verificados en Fuji. Tests: 40 contratos + 30 SDK + 15 API = **85 tests**. Frontend con 10 páginas (Home, Verify, Demo, Dashboard, Network, Tiers, Developers, Solutions, Legal, Docs). AttestationStore soporta `setEercToken()` admin-only para Phase 2 (eERC encrypted proofs). **Pendiente:** configurar API keys de Sumsub para activar el flujo KYC real.
 

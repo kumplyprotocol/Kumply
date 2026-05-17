@@ -19,7 +19,7 @@ Institutional compliance infrastructure for Avalanche: on-chain KYC/KYB/KYA atte
 
 ## Long description (~300-500 words)
 
-KUMPLY is the on-chain identity and compliance layer for institutional Web3, built natively on Avalanche. We solve the recurring blocker that has prevented LatAm banks, fintechs, and tokenization platforms from going on-chain: **regulatory uncertainty around counterparty identity**.
+KUMPLY is the on-chain identity and compliance layer for institutional Web3, built natively on Avalanche. We solve the recurring blocker that has prevented LatAm banks, enterprises, and tokenization platforms from going on-chain: **regulatory uncertainty around counterparty identity**.
 
 The product has two layers, both production-grade today:
 
@@ -31,9 +31,9 @@ The product has two layers, both production-grade today:
 
 **Standards compliance verified by 110 unit tests:** ACP-30 (Warp×EVM), ACP-77 (continuous-fee L1 validators), ACP-99 (ValidatorSetManager two-phase lifecycle with Avalanche-codec bit-exact Warp payloads), ACP-103 roadmap.
 
-**Institutional pipeline:** active conversations with Bankaool, Arkangeles, and three additional LatAm fintechs (under NDA).
+**Institutional pipeline:** active conversations with Bankaool, Arkangeles, and three additional LatAm enterprises (under NDA).
 
-**Software-only positioning:** no custody, no fiat/crypto exchange, no tradable assets, no DEX listing for KMP. Designed to operate outside ITF/IFPE/Actividad Vulnerable classifications under Mexican Fintech Law, with a written counsel opinion engaged for Q3 2026 before mainnet.
+**Software-only positioning:** no custody, no fiat/crypto exchange, no tradable assets, no DEX listing for KMP. Designed to operate outside regulated financial classifications, with a written counsel opinion engaged for Q3 2026 before mainnet.
 
 ## Repository
 https://github.com/Eras256/Kumply
@@ -93,7 +93,7 @@ Discretionary. If we get to specify a number: the highest-impact uses for $50K-$
 
 - **$25K** — OpenZeppelin or Code4rena smart-contract audit (mandatory pre-mainnet)
 - **$30K** — 6 months of P-Chain continuous validator fees for 3 institutional bootstrap validators (~1.33 AVAX/month/validator × 6 × 3 + buffer)
-- **$20K** — Mexican fintech-law written counsel opinion (Galicia / Mijares / Creel)
+- **$20K** — Mexican legal written counsel opinion (Galicia / Mijares / Creel)
 - **$25K** — KYA Tier-5 (`AgentRegistry.sol`) implementation + reference agentic-DeFi pilot DApp
 - **$30K** — Engineering hire (1 senior Solidity dev, 6 months)
 - **$20K** — Cross-L1 ICM attestation mirror integration with 2 partner Avalanche L1s
@@ -103,7 +103,7 @@ Discretionary. If we get to specify a number: the highest-impact uses for $50K-$
 - AVALANCHE® is a trademark of Ava Labs, Inc. KUMPLY is an independent submission, not endorsed by Ava Labs.
 - KMP is the KUMPLY L1 gas token, not an investment instrument, not e-money, not offered for sale.
 - All claims about partnerships with Bankaool/Arkangeles refer to active conversations under NDA, not formalized contracts (formalization is Q3 2026).
-- Mainnet launch contingent on written Mexican fintech-law opinion.
+- Mainnet launch contingent on written Mexican legal opinion.
 
 ---
 

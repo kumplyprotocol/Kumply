@@ -40,7 +40,7 @@ Yes. KUMPLY is live on Avalanche Fuji testnet today:
 
 ## 6. Market analysis (Team1 explicit requirement)
 
-**Problem we solve.** LatAm financial institutions face a structural blocker to Web3 adoption: no compliant counterparty-resolution layer. Banco Bankaool, Arkangeles, and dozens of LatAm fintechs have publicly stated they want to deploy on-chain products but cite "no on-chain KYC primitive trusted by regulators" as the gating concern. Current workarounds (off-chain whitelists, per-DApp KYC, permissioned forks) all fragment liquidity and break composability.
+**Problem we solve.** LatAm financial institutions face a structural blocker to Web3 adoption: no compliant counterparty-resolution layer. Banco Bankaool, Arkangeles, and dozens of LatAm enterprises have publicly stated they want to deploy on-chain products but cite "no on-chain KYC primitive trusted by regulators" as the gating concern. Current workarounds (off-chain whitelists, per-DApp KYC, permissioned forks) all fragment liquidity and break composability.
 
 **Market size.**
 - LatAm Web3 adoption: Mexico alone has ~12M crypto users (Chainalysis 2025), with traditional banking penetration at 56% — a massive opportunity for bank-grade on-chain rails.
@@ -51,7 +51,7 @@ Yes. KUMPLY is live on Avalanche Fuji testnet today:
 
 **Initial customer pipeline (under NDA):**
 - 2 LatAm banks (Bankaool, Arkangeles — Mexico)
-- 3 LatAm fintechs (names redacted, pre-LOI conversations)
+- 3 LatAm enterprises (names redacted, pre-LOI conversations)
 - 1 LatAm tokenization platform (real-world assets, pre-pilot)
 
 ## 7. Revenue model — how it might work (Team1 explicit ask)
@@ -60,14 +60,14 @@ Software-only B2B, four streams:
 
 | Stream | Customer | Pricing | Year-1 conservative target |
 |---|---|---|---|
-| **SaaS subscription** | Regulated institutions (banks, ITFs) | MXN/USD monthly fixed (CFDI invoice) | 3 customers × $3K MRR = $108K ARR |
+| **SaaS subscription** | Regulated institutions (banks, enterprises) | MXN/USD monthly fixed (CFDI invoice) | 3 customers × $3K MRR = $108K ARR |
 | **Pay-per-use API** | DApps, autonomous agents, small teams | $0.50/call in AVAX | $200K ARR (~33K monthly checks) |
 | **L1 gas (KMP)** | Validators + DApps on KUMPLY L1 | Native L1 fees | rounds to zero year 1 |
 | **Verifier-as-a-Service** | KYC providers wanting on-chain distribution | License + rev share | 1 partner × $50K license |
 
 Year-1 conservative ARR target: **~$350K** with 3 paying institutions + DApp self-serve traffic.
 
-Breakeven on operating costs (lean: 3 engineers + audit amortized + infra) at ~50K monthly verifications — a single mid-size LatAm fintech customer.
+Breakeven on operating costs (lean: 3 engineers + audit amortized + infra) at ~50K monthly verifications — a single mid-size LatAm enterprise customer.
 
 ## 8. Risk-taking / iteration speed (Team1 explicit ask)
 
@@ -75,7 +75,7 @@ Solo founder built the entire stack — Solidity, TypeScript SDK, Express API, N
 
 Recent iteration evidence:
 - Detected and fixed non-ACP-99-conformant initial implementation mid-hackathon (rewrote 400+ lines of Solidity to ship a verified Avalanche-codec round-trip in the test harness).
-- Pivoted KMP tokenomics from speculative 4-bucket split to defensible 100% testnet-deployer alloc with legal disclaimers embedded in `genesis.json` itself after fintech-law analysis.
+- Pivoted KMP tokenomics from speculative 4-bucket split to defensible 100% testnet-deployer alloc with legal disclaimers embedded in `genesis.json` itself after legal analysis.
 
 ## 9. Funding ask
 
@@ -98,7 +98,7 @@ Use of funds (line-itemized for accountability):
 | Phase | Milestone | Approximate cost |
 |---|---|---|
 | 2 | OpenZeppelin / Code4rena smart-contract audit | $25K |
-| 2 | Mexican fintech-law written counsel opinion | $15K |
+| 2 | Mexican legal written counsel opinion | $15K |
 | 3 | KUMPLY L1 mainnet launch + first 3 institutional validators onboarded | $50K (legal + infra) |
 | 3 | KYA Tier-5 (`AgentRegistry.sol`) implementation + 1 agentic-DeFi pilot DApp | $35K |
 | 4 | Colombia + Brazil market expansion (legal + integrations) | $60K |

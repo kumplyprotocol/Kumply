@@ -14,7 +14,7 @@
 | Tiempo | Pantalla | Voice-over |
 |---|---|---|
 | **0:00 – 0:08** | Landing page `kumply.xyz`, fade-in del logo, scroll lento por el hero | "KUMPLY es la primera infraestructura de compliance institucional sobre Avalanche. KYC, KYB y KYA — Know Your Agent — en una sola primitiva on-chain." |
-| **0:08 – 0:18** | Click en "Verify" → connect wallet → MetaMask popup approval | "Cualquier usuario, fintech o agente autónomo conecta su wallet, lanza el flujo KYC vía Sumsub —" |
+| **0:08 – 0:18** | Click en "Verify" → connect wallet → MetaMask popup approval | "Cualquier usuario, enterprise o agente autónomo conecta su wallet, lanza el flujo KYC vía Sumsub —" |
 | **0:18 – 0:32** | Sumsub WebSDK abre (skip al estado "Approved") → webhook dispara → loading "Issuing attestation" → tx confirmation | "— y al aprobar, nuestro webhook dispara `issueAttestation` on-chain. La atestación queda escrita en C-Chain Fuji, verificable públicamente." |
 | **0:32 – 0:42** | Cambio a Snowtrace → muestro la tx hash → Read Contract → `verify(address)` returns `(true, 4, expiry, …)` | "Aquí: tier 4, KYB. La misma atestación es leída por cualquier DApp en Avalanche en una sola llamada." |
 | **0:42 – 0:55** | Cambio a `kumply.xyz/demo` → demo del ComplianceGate → click "Protected action" → success | "Tres líneas de Solidity en un ComplianceGate. Cualquier DApp gatea acciones por tier requerido — sin re-hacer KYC por protocolo, sin walled gardens." |
@@ -59,7 +59,7 @@ Submitting to Retro9000 R3 today.
 1/ KUMPLY is institutional compliance infrastructure for Avalanche.
 
 A bank cannot interact with an EVM address without knowing who controls it.
-A fintech cannot route stablecoin payments without confirming KYC.
+A enterprise cannot route stablecoin payments without confirming KYC.
 A tokenization platform cannot list to qualified investors without verification.
 
 We fix this on-chain.
@@ -91,10 +91,10 @@ No other Avalanche L1 — and to our knowledge no other EVM L1 — has this.
 
 5/ Software-only B2B. No custody. No fiat. No DEX listing for KMP.
 
-Designed to stay outside ITF / IFPE / Actividad Vulnerable classifications
-under Mexican Fintech Law.
+Designed to stay outside enterprise / IFPE / Actividad Vulnerable classifications
+under Mexican Enterprise Law.
 
-Active conversations: Bankaool · Arkangeles · 3 LatAm fintechs (NDA).
+Active conversations: Bankaool · Arkangeles · 3 LatAm enterprises (NDA).
 
 Built solo at the @avalabs LatAm Institutional Hackathon · MIT licensed.
 ```
@@ -133,7 +133,7 @@ KUMPLY es la primera infraestructura de compliance institucional sobre
 Avalanche: atestaciones KYC, KYB y KYA (Know Your Agent) on-chain, más una
 L1 dedicada donde cada validador es una institución verificada.
 
-¿Por qué importa? Porque Bankaool, Arkangeles y decenas de fintechs LatAm
+¿Por qué importa? Porque Bankaool, Arkangeles y decenas de enterprises LatAm
 quieren operar en cadena pero no pueden mientras no exista una primitiva
 de "saber quién es la contraparte" que sea técnicamente componible y
 regulatoriamente defendible.
@@ -145,7 +145,7 @@ Lo que entregamos en este hackathon:
     open-source fuera de la referencia de Ava Labs
 ✅ 157 tests verde, CI en cada push
 ✅ Modelo software-only: sin custodia, sin intercambio fiat↔crypto, fuera
-    del perímetro ITF/IFPE bajo Ley Fintech mexicana
+    del perímetro regulated financial frameworks bajo Ley Enterprise mexicana
 
 Y el diferenciador que nadie más en el ecosistema Avalanche tiene: KYA —
 Know Your Agent. Tier 5 para agentes IA autónomos. Cuando el agentic DeFi
@@ -159,15 +159,15 @@ Aplicando ahora a:
 
 Solo founder, full-stack, código MIT. Buscando:
 • Integraciones con DApps de Avalanche que quieran usuarios institucionales
-• Conversaciones con bancos / fintechs LatAm interesados en validar
-• Despacho de fintech mexicano (Galicia / Mijares / Creel) para opinión
+• Conversaciones con bancos / enterprises LatAm interesados en validar
+• Despacho de enterprise mexicano (Galicia / Mijares / Creel) para opinión
     pre-mainnet
 
 → Repo: github.com/Eras256/Kumply
 → Sitio: kumply.xyz
 → Litepaper: github.com/Eras256/Kumply/blob/main/LITEPAPER.md
 
-#Avalanche #Web3 #Compliance #LatAm #Fintech #KYC #ACP99 #InstitutionalDeFi
+#Avalanche #Web3 #Compliance #LatAm #Enterprise #KYC #ACP99 #InstitutionalDeFi
 ```
 
 ---
@@ -189,7 +189,7 @@ Submitting Retro9000 R3 today.
 
 ---
 
-## 5. Cold email — institutional outreach (a Bankaool / Arkangeles / fintechs)
+## 5. Cold email — institutional outreach (a Bankaool / Arkangeles / enterprises)
 
 **Subject:** KUMPLY — KYC y KYB on-chain en Avalanche, listo para piloto
 
@@ -208,7 +208,7 @@ con el resto de DeFi.
 
 KUMPLY resuelve esto sin pedirle a [empresa] que se vuelva exchange ni
 que custodie crypto. Modelo software-only — facturación SaaS en MXN, sin
-intermediación de activos virtuales, fuera del perímetro ITF/IFPE.
+intermediación de activos virtuales, fuera del perímetro regulated financial frameworks.
 
 ¿Puedo mandarte el litepaper (3 minutos de lectura) y agendar 20 min la
 próxima semana para mostrarte el demo? Si después prefieres pasar, no

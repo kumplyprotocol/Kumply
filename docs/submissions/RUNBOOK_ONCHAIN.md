@@ -214,4 +214,4 @@ Antes del **2026-05-18 6PM UTC**:
 - ❌ Prometer rendimientos en KMP a validadores
 - ❌ Hacer airdrops públicos de KMP
 
-Todo eso rompe el positioning software-only que protege contra ITF/IFPE/Actividad Vulnerable. Ver `LEGAL_REVIEW_BRIEF.md` (gitignored, local).
+Todo eso rompe el positioning software-only que protege contra clasificaciones financieras reguladas. Ver `LEGAL_REVIEW_BRIEF.md` (gitignored, local).
