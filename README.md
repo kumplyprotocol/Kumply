@@ -1,0 +1,137 @@
+# KUMPLY 🛡️
+
+**The First Institutional-Grade Compliance Identity Layer for the AVALANCHE® Public Blockchain**
+
+KUMPLY provides non-custodial, on-chain identity verification (KYC/KYB/KYA) for the AVALANCHE® network. By bridging real-world regulatory compliance with DeFi anonymity, we empower institutions, exchanges, and autonomous AI agents to operate seamlessly across the C-Chain and custom AVALANCHE® L1s without compromising user privacy.
+
+*Built for the AVALANCHE® LatAm Hackathon (2026).*
+
+> **Trademark Notice:** The AVALANCHE® and AVAX® trademarks are owned by Ava Labs, Inc. KUMPLY is an independent project — not endorsed by, sponsored by, or affiliated with Ava Labs, Inc. or the Avalanche Foundation.
+
+## 🌐 Live Contracts (Fuji Testnet)
+
+All our smart contracts are deployed and verified on the Avalanche Fuji Testnet.
+
+- **AttestationStore**: [`0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76`](https://testnet.snowtrace.io/address/0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76)
+- **ComplianceGate**: [`0x3Bf8F8ea2573Eb3f386aDF72D191869c4827062B`](https://testnet.snowtrace.io/address/0x3Bf8F8ea2573Eb3f386aDF72D191869c4827062B)
+
+## ⚡ The Problem
+
+As DeFi scales and institutions enter the Avalanche ecosystem, a massive friction point exists: **Compliance**. 
+DApps must enforce KYC/AML laws, but forcing users to verify their identity on every single DApp destroys UX and creates dangerous data honeypots. Furthermore, the rise of Autonomous AI Agents trading on-chain brings a new question: *Who is legally responsible for this agent's actions?*
+
+## 💡 The Solution
+
+KUMPLY is a "Verify Once, Use Everywhere" protocol.
+1. Users/Businesses/Agents complete identity verification via our licensed partner (Sumsub).
+2. We issue a 100% privacy-preserving **on-chain attestation credential** to their wallet.
+3. Avalanche Smart Contracts can check a user's compliance Tier (`1-5`) natively via our `AttestationStore` or `ComplianceGate` without touching personal data.
+
+### Verification Tiers
+- **Tier 1 (Basic)**: Email & Phone Verification
+- **Tier 2 (Standard)**: Government ID + Liveness Check (KYC)
+- **Tier 3 (Enhanced)**: Proof of Address + Source of Funds
+- **Tier 4 (Business)**: Corporate Verification (KYB) + UBO Disclosure
+- **Tier 5 (Agentic)**: AI Agent Verification (KYA) - Linking autonomous software to verified owners.
+
+## 🏗️ Architecture
+
+KUMPLY is built entirely around the Avalanche technical stack (May 2026 standards):
+
+- **Encrypted ERC (eERC)**: Identity attestations remain private and encrypted. Only authorized compliance protocols can read the underlying data.
+- **Avalanche L1 Interoperability**: Through Interchain Messaging (ICM), a credential minted on the C-Chain can be queried seamlessly from any customized Avalanche L1 (formerly Subnets), enabling cross-chain compliance out-of-the-box.
+- **Software-Only Protocol**: We never store user documents. Data is processed securely by Sumsub, while Kumply exclusively handles the cryptographic on-chain proofs.
+
+## 💻 Tech Stack
+
+- **Smart Contracts**: Solidity 0.8.28, Hardhat, OpenZeppelin
+- **Frontend**: Next.js 16 (App Router), React 19, Vanilla CSS (custom design system)
+- **Web3 Interaction**: Wagmi v3, Viem v2, MetaMask / Core Wallet
+- **SDK**: `@kumply/sdk` (TypeScript package for DApps)
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js >= 20.0.0
+- pnpm >= 10.0.0
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/KumplyProtocol/kumply.git
+   cd kumply
+   ```
+
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
+
+3. Setup environment variables:
+   ```bash
+   cp .env.example .env
+   # Add your specific keys (WalletConnect ID, Sumsub credentials if running locally)
+   ```
+
+4. Run the development server:
+   ```bash
+   pnpm dev
+   ```
+   *The frontend will be available at `http://localhost:3000`*
+
+## 🔐 For Developers: Using the Kumply SDK
+
+Integrating KUMPLY into your DApp is incredibly simple:
+
+```typescript
+import { KumplyClient } from '@kumply/sdk';
+
+const client = new KumplyClient({ network: 'fuji' });
+
+// Check if a user has passed KYC Tier 2
+const result = await client.verify('0xUserAddress');
+
+if (result.verified && result.tier >= 2) {
+    // Allow deposit
+} else {
+    // Block action
+}
+```
+
+Or enforce it directly in your Solidity Contracts:
+
+```solidity
+import {ComplianceGate} from "./ComplianceGate.sol";
+
+contract MyDeFiVault is ComplianceGate {
+    constructor(address _attestationStore) ComplianceGate(_attestationStore, 2) {}
+
+    function deposit() external {
+        _requireVerified(msg.sender); // Automatically reverts if not Tier 2+
+        // ... execute deposit
+    }
+}
+```
+
+## 📜 Compliance & Brand Alignment
+
+KUMPLY rigorously adheres to the May 2026 Ava Labs Trademark Usage Policy and AVALANCHE® ecosystem guidelines:
+
+- ✅ Uses **AVALANCHE®** and **AVAX®** as adjectives (never as nouns or verbs)
+- ✅ Uses the official **"AVALANCHE® L1"** nomenclature (not "Subnets")
+- ✅ Implements **eERC** (Encrypted ERC) for privacy-preserving credentials
+- ✅ Categorizes autonomous actors as **"AI Agents"** with KYA verification
+- ✅ Follows **responsible disclosure** practices for security vulnerabilities
+- ✅ Operates as **Software-Only** infrastructure — non-custodial, no financial intermediation
+- ✅ Published under **MIT License** for open-source transparency
+
+## 📄 License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+
+---
+
+*Built with ❤️ for the AVALANCHE® ecosystem.*
+
+*The AVALANCHE® and AVAX® trademarks are owned by Ava Labs, Inc. KUMPLY is not endorsed by, sponsored by, or affiliated with Ava Labs, Inc.*

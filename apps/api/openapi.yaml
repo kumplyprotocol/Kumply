@@ -1,0 +1,459 @@
+openapi: 3.1.0
+info:
+  title: KUMPLY Compliance API
+  version: 1.0.0
+  description: |
+    REST API for the KUMPLY on-chain compliance protocol built on the AVALANCHE® public blockchain.
+
+    Provides:
+    - Sumsub KYC SDK token generation for frontend integration
+    - Webhook endpoint for Sumsub KYC approval notifications
+    - Real-time attestation lookup for any EVM address
+    - Health check with live Fuji testnet connectivity status
+
+    The AVALANCHE® trademark is owned by Ava Labs, Inc.
+    KUMPLY is an independent project — not endorsed by Ava Labs, Inc.
+  contact:
+    name: KUMPLY Team
+    url: https://kumply.xyz
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://kumply-api.fly.dev
+    description: Production (Fuji Testnet) — Fly.io dfw
+  - url: http://localhost:3001
+    description: Local development
+
+security:
+  - apiKey: []
+  - {}
+
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Optional API key for protecting the /api/token endpoint. Set via API_KEY env var.
+
+  schemas:
+    AttestationResult:
+      type: object
+      required: [address, verified, tier, timestamp, expiry]
+      properties:
+        address:
+          type: string
+          pattern: "^0x[0-9a-fA-F]{40}$"
+          example: "0xD65042534CE80fcb641fd6Eb99a16eBF6C0cd076"
+        verified:
+          type: boolean
+          description: True if the address has a valid, non-expired attestation.
+        tier:
+          type: integer
+          minimum: 0
+          maximum: 5
+          description: |
+            KYC tier level:
+            - 0: Not verified
+            - 1: Basic (email + phone)
+            - 2: Standard (government ID + liveness)
+            - 3: Enhanced (proof of address + source of funds)
+            - 4: Business / KYB (company registration + UBO)
+            - 5: Agent / KYA (AI agent verification)
+        timestamp:
+          type: integer
+          description: Unix timestamp when the attestation was issued. 0 if not verified.
+        expiry:
+          type: integer
+          description: Unix timestamp when the attestation expires. 0 if not verified.
+        issuedDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: ISO 8601 date when the attestation was issued.
+        expiryDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: ISO 8601 date when the attestation expires.
+
+    TokenRequest:
+      type: object
+      required: [userId, levelName]
+      properties:
+        userId:
+          type: string
+          minLength: 1
+          maxLength: 200
+          description: The wallet address or unique user ID to associate with the Sumsub applicant.
+          example: "0xD65042534CE80fcb641fd6Eb99a16eBF6C0cd076"
+        levelName:
+          type: string
+          enum: [basic-kyc, standard-kyc, enhanced-kyc, business-kyb, agent-kya]
+          description: Sumsub verification level name corresponding to a KUMPLY tier.
+          example: "standard-kyc"
+
+    TokenResponse:
+      type: object
+      required: [token]
+      properties:
+        token:
+          type: string
+          description: Sumsub Web SDK access token. Pass to the Sumsub Web SDK init() call.
+        applicantId:
+          type: string
+          description: Sumsub applicant ID (may be present depending on Sumsub response).
+
+    FeeResponse:
+      type: object
+      required: [verificationFeeWei, verificationFeeAvax, totalFeesCollectedWei, totalFeesCollectedAvax, freeForUnverified]
+      properties:
+        verificationFeeWei:
+          type: string
+          description: Current per-call compliance check fee in wei. "0" means free.
+          example: "500000000000000"
+        verificationFeeAvax:
+          type: string
+          description: Same fee expressed in AVAX (4 decimal places).
+          example: "0.0005"
+        totalFeesCollectedWei:
+          type: string
+          description: Cumulative protocol revenue collected in wei.
+          example: "1250000000000000"
+        totalFeesCollectedAvax:
+          type: string
+          description: Cumulative protocol revenue in AVAX.
+          example: "0.0013"
+        freeForUnverified:
+          type: boolean
+          description: Always true — the fee is only charged when the subject address IS verified (Verify Once model).
+          example: true
+
+    HealthResponse:
+      type: object
+      required: [status, timestamp, network, contracts, fees, verifier]
+      properties:
+        status:
+          type: string
+          enum: [ok, degraded]
+        timestamp:
+          type: string
+          format: date-time
+        network:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Avalanche Fuji Testnet"
+            chainId:
+              type: integer
+              example: 43113
+            blockNumber:
+              type: string
+              description: Current block number as string (bigint safe).
+            rpc:
+              type: string
+              enum: [configured, default]
+        contracts:
+          type: object
+          properties:
+            attestationStore:
+              type: string
+            complianceGate:
+              type: string
+            totalAttestations:
+              type: integer
+              nullable: true
+        fees:
+          type: object
+          properties:
+            verificationFeeWei:
+              type: string
+              nullable: true
+              description: Current per-call fee in wei. Null if contract not configured.
+            verificationFeeAvax:
+              type: string
+              nullable: true
+              description: Same fee in AVAX (4 decimal places).
+        verifier:
+          type: string
+          description: Address of the authorized verifier account.
+        sumsub:
+          type: object
+          properties:
+            configured:
+              type: boolean
+            webhookSecret:
+              type: boolean
+
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string
+
+paths:
+  /api/token:
+    post:
+      operationId: generateToken
+      summary: Generate Sumsub SDK token
+      description: |
+        Generates a Sumsub Web SDK access token for the frontend KYC widget.
+        The token is scoped to a specific userId and verification level.
+
+        Rate limited to 20 requests per minute per IP.
+      tags: [KYC]
+      security:
+        - apiKey: []
+        - {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TokenRequest"
+            example:
+              userId: "0xD65042534CE80fcb641fd6Eb99a16eBF6C0cd076"
+              levelName: "standard-kyc"
+      responses:
+        "200":
+          description: Sumsub SDK token generated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+        "400":
+          description: Invalid request body.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Invalid or missing API key.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "429":
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Sumsub credentials not configured or Sumsub API error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /webhook/sumsub:
+    post:
+      operationId: sumsubWebhook
+      summary: Sumsub KYC webhook
+      description: |
+        Receives KYC approval notifications from Sumsub.
+        On GREEN (approved) reviews, issues an on-chain attestation to the
+        subject address on the AVALANCHE® Fuji testnet.
+
+        Authentication: HMAC-SHA256 via `x-payload-digest` header.
+        This endpoint is called by Sumsub servers — not by your application.
+
+        Rate limited to 100 requests per minute per IP.
+      tags: [Webhooks]
+      security: []
+      parameters:
+        - name: x-payload-digest
+          in: header
+          required: true
+          schema:
+            type: string
+          description: HMAC-SHA256 signature of the raw request body using SUMSUB_WEBHOOK_SECRET.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Sumsub webhook payload. See Sumsub documentation for full schema.
+              properties:
+                applicantId:
+                  type: string
+                externalUserId:
+                  type: string
+                  description: The wallet address provided as userId during token generation.
+                levelName:
+                  type: string
+                  enum: [basic-kyc, standard-kyc, enhanced-kyc, business-kyb, agent-kya]
+                reviewResult:
+                  type: object
+                  properties:
+                    reviewAnswer:
+                      type: string
+                      enum: [GREEN, RED, RETRY]
+      responses:
+        "200":
+          description: Webhook processed. Attestation issued or skipped (idempotent).
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: OK
+        "401":
+          description: Invalid HMAC signature.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "429":
+          description: Rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "503":
+          description: Attestation issuance not configured (missing private key or contract address).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /api/attestation/{address}:
+    get:
+      operationId: getAttestation
+      summary: Look up attestation for any EVM address
+      description: |
+        Returns the current compliance attestation status for a given EVM address.
+        Reads directly from the AttestationStore smart contract on Fuji.
+
+        Rate limited to 60 requests per minute per IP.
+      tags: [Attestations]
+      security: []
+      parameters:
+        - name: address
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: "^0x[0-9a-fA-F]{40}$"
+          description: EVM wallet address (checksummed or lowercase).
+          example: "0xD65042534CE80fcb641fd6Eb99a16eBF6C0cd076"
+      responses:
+        "200":
+          description: Attestation status retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AttestationResult"
+              examples:
+                verified:
+                  summary: Verified user (Tier 3)
+                  value:
+                    address: "0xD65042534CE80fcb641fd6Eb99a16eBF6C0cd076"
+                    verified: true
+                    tier: 3
+                    timestamp: 1715000000
+                    expiry: 1746536000
+                    issuedDate: "2025-05-06T14:00:00.000Z"
+                    expiryDate: "2026-05-06T14:00:00.000Z"
+                unverified:
+                  summary: Unverified address
+                  value:
+                    address: "0x000000000000000000000000000000000000dead"
+                    verified: false
+                    tier: 0
+                    timestamp: 0
+                    expiry: 0
+                    issuedDate: null
+                    expiryDate: null
+        "400":
+          description: Invalid Ethereum address format.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "503":
+          description: Contract not configured.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /api/fee:
+    get:
+      operationId: getFee
+      summary: Get current verification fee
+      description: |
+        Returns the live per-call verification fee from the AttestationStore contract
+        and cumulative protocol revenue. Part of the "Verify Once" fee model —
+        DApps pay this fee when calling `checkCompliance()` for verified addresses.
+
+        Subscribed L1 ComplianceGates bypass this fee via SaaS subscription.
+
+        Rate limited to 60 requests per minute per IP.
+      tags: [System]
+      security: []
+      responses:
+        "200":
+          description: Fee data retrieved from on-chain.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FeeResponse"
+              example:
+                verificationFeeWei: "500000000000000"
+                verificationFeeAvax: "0.0005"
+                totalFeesCollectedWei: "1250000000000000"
+                totalFeesCollectedAvax: "0.0013"
+                freeForUnverified: true
+        "503":
+          description: Contract not configured.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /health:
+    get:
+      operationId: healthCheck
+      summary: API health check with live Fuji connectivity
+      description: |
+        Returns the operational status of the API including a live block number
+        query from the AVALANCHE® Fuji testnet to confirm RPC connectivity.
+      tags: [System]
+      security: []
+      responses:
+        "200":
+          description: API is healthy and connected to Fuji.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+        "503":
+          description: API is degraded — cannot reach Fuji RPC.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: degraded
+                  timestamp:
+                    type: string
+                    format: date-time
+                  error:
+                    type: string
+
+tags:
+  - name: KYC
+    description: Token generation for the Sumsub KYC widget
+  - name: Webhooks
+    description: Sumsub approval callbacks that trigger on-chain attestation issuance
+  - name: Attestations
+    description: Read-only compliance attestation lookups
+  - name: System
+    description: Health, fee, and operational endpoints

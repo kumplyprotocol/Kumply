@@ -1,0 +1,45 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "cd apps/web && pnpm build",
+  "outputDirectory": "apps/web/.next",
+  "installCommand": "pnpm install",
+  "env": {
+    "NEXT_PUBLIC_CHAIN_ID": "43113",
+    "NEXT_PUBLIC_FUJI_RPC_URL": "https://api.avax-test.network/ext/bc/C/rpc",
+    "NEXT_PUBLIC_CONTRACT_ATTESTATION_STORE": "@contract_attestation_store",
+    "NEXT_PUBLIC_CONTRACT_COMPLIANCE_GATE": "@contract_compliance_gate",
+    "NEXT_PUBLIC_VERIFIER_ADDRESS": "@verifier_address",
+    "CONTRACT_ATTESTATION_STORE": "@contract_attestation_store",
+    "FUJI_RPC_URL": "https://api.avax-test.network/ext/bc/C/rpc",
+    "SUMSUB_APP_TOKEN": "@sumsub_app_token",
+    "SUMSUB_SECRET_KEY": "@sumsub_secret_key",
+    "SUMSUB_WEBHOOK_SECRET": "@sumsub_webhook_secret",
+    "SUMSUB_BASE_URL": "https://api.sumsub.com",
+    "DEPLOYER_PRIVATE_KEY": "@deployer_private_key"
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/v1/:path*",
+      "destination": "https://kumply-api.fly.dev/:path*"
+    }
+  ]
+}

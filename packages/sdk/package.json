@@ -1,0 +1,54 @@
+{
+  "name": "@kumply/sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for KUMPLY compliance infrastructure on the AVALANCHE® public blockchain",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "license": "MIT",
+  "author": "KUMPLY Team",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KumplyProtocol/kumply",
+    "directory": "packages/sdk"
+  },
+  "keywords": [
+    "kumply",
+    "avalanche",
+    "kyc",
+    "kyb",
+    "kya",
+    "compliance",
+    "attestation",
+    "defi",
+    "web3"
+  ],
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "viem": "^2.48.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "vitest": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

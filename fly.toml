@@ -1,0 +1,35 @@
+app = "kumply-api"
+primary_region = "dfw"
+
+[build]
+  dockerfile = "apps/api/Dockerfile"
+
+[env]
+  NODE_ENV = "production"
+  API_PORT = "3001"
+  FUJI_RPC_URL = "https://api.avax-test.network/ext/bc/C/rpc"
+  SUMSUB_BASE_URL = "https://api.sumsub.com"
+  CORS_ORIGIN = "https://kumply.vercel.app,https://www.kumply.xyz,https://kumply.xyz,http://localhost:3000"
+  # Secrets (DEPLOYER_PRIVATE_KEY, CONTRACT_*, SUMSUB_*, API_KEY) → fly secrets set
+
+[http_service]
+  internal_port = 3001
+  force_https = true
+  auto_stop_machines = "suspend"
+  auto_start_machines = true
+  min_machines_running = 1
+  [[http_service.checks]]
+    grace_period = "5s"
+    interval = "30s"
+    method = "GET"
+    path = "/health"
+    timeout = "5s"
+
+  [http_service.concurrency]
+    type = "requests"
+    hard_limit = 200
+    soft_limit = 150
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"

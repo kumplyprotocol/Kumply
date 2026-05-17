@@ -1,0 +1,43 @@
+# ══════════════════════════════════════════════════════════════════
+# KUMPLY Monorepo — .gitignore
+# ══════════════════════════════════════════════════════════════════
+
+# ── Dependencies ────────────────────────────────────────────────
+node_modules/
+.pnpm-store/
+
+# ── Environment / Secrets ───────────────────────────────────────
+.env
+.env.local
+.env.production
+.env.*.local
+
+# ── Build outputs ───────────────────────────────────────────────
+dist/
+.next/
+out/
+build/
+
+# ── Hardhat / Solidity ──────────────────────────────────────────
+contracts/artifacts/
+contracts/cache/
+contracts/typechain-types/
+coverage/
+coverage.json
+
+# ── IDE / OS ────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Misc ────────────────────────────────────────────────────────
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-error.log*
+.vercel
+.turbo
