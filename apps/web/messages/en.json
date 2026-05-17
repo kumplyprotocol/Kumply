@@ -18,7 +18,7 @@
     "badge": "Fuji Testnet Live",
     "title1": "Know Your Customers,",
     "title2": "Your Businesses, and Your AI Agents.",
-    "description": "The complete compliance toolkit for companies building on the AVALANCHE® blockchain. Verify identities (KYC), businesses (KYB), and even AI agents (KYA) — all with one platform. Your users' data stays private. Always.",
+    "description": "The complete compliance toolkit for companies building on the AVALANCHE® blockchain. Verify identities (KYC), businesses (KYB), and even AI agents (KYA) — all with one platform. Your users’ data stays private. Always.",
     "btnPrimary": "Try It Free on Testnet",
     "btnSecondary": "See How It Works"
   },
@@ -28,7 +28,7 @@
     "statsTiers": "Compliance Plans",
     "statsContracts": "Live Contracts",
     "statsFinality": "Verification Speed",
-    "howItWorksTitle": "Three Steps. That's It.",
+    "howItWorksTitle": "Three Steps. That’s It.",
     "howItWorksSubtitle": "Your users go from zero to fully compliant in under 5 minutes — no paperwork, no waiting",
     "step1Title": "Connect a Wallet",
     "step1Desc": "Your user connects MetaMask, Core, or any compatible wallet. No email. No account creation. Just plug and go.",
@@ -99,8 +99,8 @@
     "tier5Desc": "KYA for autonomous AI agents operating on behalf of a verified entity.",
     "launchBtn": "Start Verification →",
     "pendingTitle": "Creating Your Credential",
-    "pendingDesc": "Your identity has been verified. We're now writing your credential to the AVALANCHE® blockchain. This usually takes 5–30 seconds.",
-    "doneTitle": "You're Verified",
+    "pendingDesc": "Your identity has been verified. We’re now writing your credential to the AVALANCHE® blockchain. This usually takes 5–30 seconds.",
+    "doneTitle": "You’re Verified",
     "doneDesc": "Your compliance credential is now live on the blockchain. Any app on the AVALANCHE® network can confirm it instantly.",
     "tierLabel": "Plan",
     "addressLabel": "Wallet Address",
@@ -108,7 +108,7 @@
     "snowtraceBtn": "View Proof on Snowtrace ↗",
     "errorTitle": "Something went wrong",
     "tryAgainBtn": "Try Again",
-    "pollError": "Your credential hasn't appeared on-chain yet. This can take a minute or two. Refresh to check.",
+    "pollError": "Your credential hasn’t appeared on-chain yet. This can take a minute or two. Refresh to check.",
     "verifyError": "Verification error",
     "launchError": "Could not start the verification process",
     "testnetWarning": "Fuji Testnet only — not for production use",
@@ -142,7 +142,7 @@
     "rpcUrl": "RPC URL",
     "chainId": "Chain ID",
     "faucet": "Get Free Test AVAX®",
-    "faucetDesc": "You need test AVAX® tokens to interact with KUMPLY contracts on Fuji. It's free — takes 10 seconds.",
+    "faucetDesc": "You need test AVAX® tokens to interact with KUMPLY contracts on Fuji. It’s free — takes 10 seconds.",
     "contractsTitle": "KUMPLY Contracts on Fuji",
     "contractsSubtitle": "Live and ready for testing",
     "attestationStore": "AttestationStore",
@@ -168,7 +168,7 @@
     "kyb": {
       "title": "KYB — Verify Companies",
       "subtitle": "Corporate identity verification for institutional platforms and B2B onboarding",
-      "p1": "When your platform needs to onboard a company — not just a person — you need KYB. KUMPLY verifies the company's legal registration, its directors, and its real owners (beneficial owners or UBOs). All automatically.",
+      "p1": "When your platform needs to onboard a company — not just a person — you need KYB. KUMPLY verifies the company’s legal registration, its directors, and its real owners (beneficial owners or UBOs). All automatically.",
       "p2": "Once verified, the company receives an on-chain credential that works everywhere on the AVALANCHE® network. Other platforms can trust that company without making them repeat the process.",
       "f1Title": "Beneficial Owner Checks",
       "f1Desc": "We go beyond the company name. We verify who actually owns and controls the business — down to the ultimate beneficial owners.",
@@ -179,11 +179,11 @@
     },
     "kya": {
       "title": "KYA — Verify AI Agents",
-      "subtitle": "The world's first compliance standard for AI agents operating on-chain",
-      "p1": "AI agents are already trading, lending, and managing funds on-chain. But until now, there's been no way to know: who built this agent? Is it authorized? Is it compliant? KYA answers all of that.",
+      "subtitle": "The world’s first compliance standard for AI agents operating on-chain",
+      "p1": "AI agents are already trading, lending, and managing funds on-chain. But until now, there’s been no way to know: who built this agent? Is it authorized? Is it compliant? KYA answers all of that.",
       "p2": "KUMPLY links every AI agent to its verified human developer or corporate owner. Protocols can then decide: do I let this agent interact with my contracts? Based on real, verifiable compliance data — not just trust.",
       "f1Title": "Every Agent Has an Owner",
-      "f1Desc": "Each AI agent is linked to a verified person or company. If something goes wrong, there's always an accountable party.",
+      "f1Desc": "Each AI agent is linked to a verified person or company. If something goes wrong, there’s always an accountable party.",
       "f2Title": "Behavior-Based Credentials",
       "f2Desc": "Agents can earn reputation over time. Good track record? Higher trust level. Suspicious activity? Restricted access.",
       "f3Title": "Protect Your Protocol",
@@ -192,26 +192,26 @@
     "cross-l1": {
       "title": "Cross-Chain Verification",
       "subtitle": "One credential, valid across every AVALANCHE® network",
-      "p1": "Imagine your user verifies their identity on an AVALANCHE® L1. Now they want to use a different app on another AVALANCHE® L1. With KUMPLY, they don't need to verify again. Their credential travels with them automatically through Avalanche Interchain Messaging (ICM).",
+      "p1": "Imagine your user verifies their identity on an AVALANCHE® L1. Now they want to use a different app on another AVALANCHE® L1. With KUMPLY, they don’t need to verify again. Their credential travels with them automatically through Avalanche Interchain Messaging (ICM).",
       "p2": "For developers, this means you can check compliance status on any AVALANCHE® L1 with a single function call. No third-party bridges. No external oracles. No waiting. It just works.",
       "f1Title": "No Third-Party Bridges",
-      "f1Desc": "Uses Avalanche Interchain Messaging (ICM) — the AVALANCHE® network's native cross-chain protocol. No reliance on external bridges that add risk and complexity.",
+      "f1Desc": "Uses Avalanche Interchain Messaging (ICM) — the AVALANCHE® network’s native cross-chain protocol. No reliance on external bridges that add risk and complexity.",
       "f2Title": "One Identity, Everywhere",
       "f2Desc": "A single verified credential works across the entire AVALANCHE® ecosystem — C-Chain and custom AVALANCHE® L1s. No re-verification needed.",
       "f3Title": "Instant Verification",
-      "f3Desc": "Check a user's compliance status on another network in real-time. Sub-second response, built into the transaction flow."
+      "f3Desc": "Check a user’s compliance status on another network in real-time. Sub-second response, built into the transaction flow."
     }
   },
   "DevelopersDocs": {
     "contracts": {
       "title": "Smart Contract Integration",
       "subtitle": "Add compliance checks directly into your protocol — 3 lines of Solidity",
-      "p1": "Our AttestationStore contract is the central registry where all verified credentials live. It's deployed on Fuji and ready for you to query. Think of it as a compliance database that lives on-chain.",
-      "p2": "Want to block unverified users from depositing funds? Just add one line: require(kumply.getTier(user) >= 2). That's it. Your smart contract now enforces compliance automatically.",
+      "p1": "Our AttestationStore contract is the central registry where all verified credentials live. It’s deployed on Fuji and ready for you to query. Think of it as a compliance database that lives on-chain.",
+      "p2": "Want to block unverified users from depositing funds? Just add one line: require(kumply.getTier(user) >= 2). That’s it. Your smart contract now enforces compliance automatically.",
       "f1Title": "Copy, Paste, Done",
       "f1Desc": "Simple Solidity interfaces that drop right into your existing contracts. No architectural changes needed.",
       "f2Title": "Fast & Cheap Lookups",
-      "f2Desc": "Checking a user's compliance status costs almost nothing in gas. It's a simple storage read — no computation overhead.",
+      "f2Desc": "Checking a user’s compliance status costs almost nothing in gas. It’s a simple storage read — no computation overhead.",
       "f3Title": "Tested & Auditable",
       "f3Desc": "Full test coverage. Open-source contracts. Third-party security audit in progress."
     },
@@ -225,17 +225,17 @@
       "f2Title": "Real-Time Events",
       "f2Desc": "Subscribe to credential events — know instantly when a user gets verified, upgraded, or revoked.",
       "f3Title": "No Trust Required",
-      "f3Desc": "Every response is cryptographically verified. You don't need to trust our servers — you verify the proof yourself."
+      "f3Desc": "Every response is cryptographically verified. You don’t need to trust our servers — you verify the proof yourself."
     }
   },
   "Legal": {
     "privacy": {
       "title": "Privacy Policy",
-      "subtitle": "How we handle your data (short version: we don't keep it)",
-      "p1": "KUMPLY complies with Mexico's data protection law (LFPDPPP) and follows GDPR principles. But here's the simple version: we are a software tool. We process your verification through a licensed partner, create an encrypted proof, and that's it. We don't store your documents.",
+      "subtitle": "How we handle your data (short version: we don’t keep it)",
+      "p1": "KUMPLY complies with Mexico’s data protection law (LFPDPPP) and follows GDPR principles. But here’s the simple version: we are a software tool. We process your verification through a licensed partner, create an encrypted proof, and that’s it. We don’t store your documents.",
       "p2": "Your personal data is handled by Sumsub (our licensed KYC provider, SOC 2 Type II certified). KUMPLY only receives a pass/fail result and writes an encrypted credential to the blockchain. No names, no photos, no addresses on our servers. Ever.",
       "f1Title": "Zero Data Stored",
-      "f1Desc": "We literally don't have your personal data. It's processed by our licensed partner and never touches our servers.",
+      "f1Desc": "We literally don’t have your personal data. It’s processed by our licensed partner and never touches our servers.",
       "f2Title": "You Control Everything",
       "f2Desc": "Verification only happens when you explicitly approve it by signing with your wallet. No hidden consent.",
       "f3Title": "Delete Anytime",
@@ -244,22 +244,22 @@
     "terms": {
       "title": "Terms of Service",
       "subtitle": "The rules of the road — plain and simple",
-      "p1": "KUMPLY is software. We provide tools that help companies verify identities and store compliance credentials on the blockchain. We don't hold your money, we don't manage your investments, and we don't give financial advice.",
-      "p2": "You're responsible for how you use these tools. If you're a company integrating KUMPLY, you're responsible for setting up the right compliance rules for your jurisdiction. We provide the infrastructure — you define the policies.",
+      "p1": "KUMPLY is software. We provide tools that help companies verify identities and store compliance credentials on the blockchain. We don’t hold your money, we don’t manage your investments, and we don’t give financial advice.",
+      "p2": "You’re responsible for how you use these tools. If you’re a company integrating KUMPLY, you’re responsible for setting up the right compliance rules for your jurisdiction. We provide the infrastructure — you define the policies.",
       "f1Title": "We Never Touch Your Funds",
       "f1Desc": "KUMPLY is non-custodial. We have zero access to your wallet, your private keys, or your digital assets.",
       "f2Title": "Software, Not Financial Services",
-      "f2Desc": "We're a technology provider. We don't need financial licenses because we don't perform financial activities.",
+      "f2Desc": "We’re a technology provider. We don’t need financial licenses because we don’t perform financial activities.",
       "f3Title": "Your Rules, Your Responsibility",
       "f3Desc": "You decide which compliance tier to require. You decide who can access your platform. KUMPLY enforces what you configure."
     },
     "regulatory": {
       "title": "Our Regulatory Position",
       "subtitle": "How KUMPLY fits into the regulatory landscape — clearly and transparently",
-      "p1": "The compliance world is complex. Here's where KUMPLY fits: we're a software tool that helps other companies comply with regulations like AML, KYC, MiCA, and FATF guidelines. We are not ourselves a regulated financial entity.",
+      "p1": "The compliance world is complex. Here’s where KUMPLY fits: we’re a software tool that helps other companies comply with regulations like AML, KYC, MiCA, and FATF guidelines. We are not ourselves a regulated financial entity.",
       "p2": "Think of us like the company that makes the cash register — not the store that uses it. We build the compliance infrastructure. Banks, enterprises, and DeFi protocols use it to meet their regulatory obligations.",
       "f1Title": "Technology Provider, Not a Bank",
-      "f1Desc": "We're legally classified as a software infrastructure company. We don't custody funds, transmit money, or issue financial products.",
+      "f1Desc": "We’re legally classified as a software infrastructure company. We don’t custody funds, transmit money, or issue financial products.",
       "f2Title": "Works in Any Jurisdiction",
       "f2Desc": "Our compliance rules are configurable. Need stricter checks for Europe (MiCA)? Different rules for Mexico (LFPIORPI)? Just configure your tier requirements.",
       "f3Title": "Designed for Regulatory Clarity",
@@ -267,15 +267,15 @@
     },
     "audit": {
       "title": "Security Audit",
-      "subtitle": "We take security as seriously as compliance — because they're the same thing",
-      "p1": "When you're handling identity credentials, security isn't optional — it's the product. That's why we're pursuing comprehensive audits of every component: smart contracts, encryption logic, and cross-chain messaging.",
-      "p2": "Our smart contracts are open-source and fully tested. We're currently working with leading blockchain security firms to complete formal audits. All results will be published here — full transparency, no exceptions.",
+      "subtitle": "We take security as seriously as compliance — because they’re the same thing",
+      "p1": "When you’re handling identity credentials, security isn’t optional — it’s the product. That’s why we’re pursuing comprehensive audits of every component: smart contracts, encryption logic, and cross-chain messaging.",
+      "p2": "Our smart contracts are open-source and fully tested. We’re currently working with leading blockchain security firms to complete formal audits. All results will be published here — full transparency, no exceptions.",
       "f1Title": "Smart Contract Audit",
       "f1Desc": "Formal verification and manual code review of all on-chain logic. Status: In progress.",
       "f2Title": "Encryption Review",
       "f2Desc": "Independent analysis of our zero-knowledge proof circuits and the eERC (Encrypted ERC) implementation.",
       "f3Title": "Bug Bounty Program",
-      "f3Desc": "After the audit, we'll launch a public bug bounty on Immunefi. If you find a vulnerability, you get paid."
+      "f3Desc": "After the audit, we’ll launch a public bug bounty on Immunefi. If you find a vulnerability, you get paid."
     }
   },
   "Footer": {
@@ -335,7 +335,7 @@
     "status_invited": "Invited",
     "status_negotiating": "In Talks",
     "whyTitle": "Why a Dedicated L1?",
-    "whySubtitle": "The C-Chain works for today's reads. Here is why we are building the Compliance L1 for institutional scale.",
+    "whySubtitle": "The C-Chain works for today’s reads. Here is why we are building the Compliance L1 for institutional scale.",
     "why1Title": "Compliant by Construction",
     "why1Desc": "Only KYB-verified institutions validate. Every block is signed by a licensed entity — the network itself becomes a regulatory artifact.",
     "why2Title": "Sub-Cent Compliance Reads",
@@ -343,7 +343,7 @@
     "why3Title": "Cross-L1 via Warp + ICM",
     "why3Desc": "Attestations propagate to every Avalanche L1 natively. No bridges, no oracles, no third-party trust assumptions.",
     "why4Title": "Self-Healing Validator Set",
-    "why4Desc": "When a validator's KYB expires, anyone can call disableExpiredValidator(). The network removes non-compliant validators without admin intervention.",
+    "why4Desc": "When a validator’s KYB expires, anyone can call disableExpiredValidator(). The network removes non-compliant validators without admin intervention.",
     "artifactsTitle": "Deployment Artifacts",
     "artifactsDesc": "Everything required for deployment is committed and audited. One command spins the L1 up on Fuji.",
     "acpTitle": "Avalanche Community Proposals (ACPs)",
@@ -404,7 +404,7 @@
     },
     "quickstart": {
       "title": "Quickstart",
-      "subtitle": "Install the SDK and verify any address's tier in under a minute. Production-ready against Fuji today.",
+      "subtitle": "Install the SDK and verify any address’s tier in under a minute. Production-ready against Fuji today.",
       "installTitle": "1. Install",
       "verifyTitle": "2. Verify a counterparty",
       "gateTitle": "3. Gate your DApp by tier"
@@ -460,7 +460,7 @@
       },
       "f5": {
         "label": "Liveness oracle",
-        "value": "Heartbeat from the agent's runtime — proves it's still operating and reachable."
+        "value": "Heartbeat from the agent’s runtime — proves it’s still operating and reachable."
       },
       "roadmapLabel": "Status",
       "roadmap": "Tier 5 already lives in AttestationStore.sol; full AgentRegistry.sol with the 5 fields above ships Q3 2026 alongside the first agentic-DeFi pilot DApp."
