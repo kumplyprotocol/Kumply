@@ -29,7 +29,7 @@ const nextConfig: NextConfig = {
               // Sumsub iframe + self
               "frame-src 'self' https://*.sumsub.com",
               // Sumsub SDK + Google Fonts + Avalanche RPC
-              "connect-src 'self' https://api.sumsub.com https://api.avax-test.network https://api.avax.network wss://api.avax-test.network wss://api.avax.network",
+              "connect-src 'self' https://api.sumsub.com https://api.avax-test.network https://api.avax.network wss://api.avax-test.network wss://api.avax.network https://raw.githack.com",
               // Google Fonts
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
