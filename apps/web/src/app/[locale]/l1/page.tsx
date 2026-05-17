@@ -1,14 +1,17 @@
 import { useTranslations } from "next-intl";
 
 // ── KUMPLY Compliance L1 — Deploy-Ready configuration ──────────────
-const L1_CHAIN_ID         = 43210;
+const L1_CHAIN_ID         = process.env.NEXT_PUBLIC_KUMPLY_L1_CHAIN_ID || "43210";
 const L1_NAME             = "KUMPLY Compliance L1";
 const L1_SYMBOL           = "KMP";
 const L1_VM               = "Subnet-EVM v0.7.0";
 const L1_BLOCK_TIME       = "2s";
-const L1_RPC_PLACEHOLDER  = "https://kumply-l1.rpc.kumply.xyz/ext/bc/{blockchainID}/rpc";
-const L1_EXPLORER         = "https://kumply-l1.subnets.avax.network";
+const L1_RPC_URL          = process.env.NEXT_PUBLIC_KUMPLY_L1_RPC_URL || "https://subnets.avax.network/2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b/rpc";
+const L1_EXPLORER         = "https://testnet.avascan.info/subnet/2buHAwNvaybnQ6vQYRS4TeXizZhAo33bhpnonAJu21CKYLZoST";
+const SUBNET_ID           = process.env.NEXT_PUBLIC_KUMPLY_L1_SUBNET_ID || "2buHAwNvaybnQ6vQYRS4TeXizZhAo33bhpnonAJu21CKYLZoST";
+const BLOCKCHAIN_ID       = process.env.NEXT_PUBLIC_KUMPLY_L1_BLOCKCHAIN_ID || "2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b";
 const ATTESTATION_STORE   = process.env.NEXT_PUBLIC_CONTRACT_ATTESTATION_STORE || "0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76";
+const VALIDATOR_SET_MANAGER = process.env.NEXT_PUBLIC_CONTRACT_VALIDATOR_SET_MANAGER || "0x903f6E46f965C9A1127652D761400dBe487F555D";
 
 // Planned founding validators (KYB-gated — must hold Tier 4 attestation)
 const FOUNDING_VALIDATORS = [
@@ -89,6 +92,8 @@ export default function L1Page() {
           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
             <Row label={t('chainName')} value={L1_NAME} mono={false} />
             <Row label="Chain ID" value={String(L1_CHAIN_ID)} />
+            <Row label="Subnet ID" value={SUBNET_ID} />
+            <Row label="Blockchain ID" value={BLOCKCHAIN_ID} />
             <Row label={t('gasToken')} value={L1_SYMBOL} />
             <Row label="VM" value={L1_VM} />
             <Row label={t('blockTime')} value={L1_BLOCK_TIME} />
@@ -99,10 +104,19 @@ export default function L1Page() {
         <div className="glass-card" style={{ padding: '2rem' }}>
           <h3 style={{ marginBottom: '1.5rem', color: 'var(--text-primary)', fontSize: '1.05rem' }}>{t('endpoints')}</h3>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-            <Row label="RPC (planned)" value={L1_RPC_PLACEHOLDER} />
-            <Row label={t('explorer')} value={L1_EXPLORER} />
-            <Row label="AttestationStore" value={ATTESTATION_STORE} />
-            <Row label={t('validatorSetMgr')} value="Deploy-Ready (.sol)" mono={false} />
+            <Row label="RPC" value={L1_RPC_URL} />
+            <li style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', padding: '0.85rem 0', borderBottom: '1px solid var(--border)', gap: '1rem' }}>
+              <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', flexShrink: 0 }}>{t('explorer')}</span>
+              <a href={L1_EXPLORER} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)', fontFamily: 'monospace', fontSize: '0.85rem', wordBreak: 'break-all', textAlign: 'right', textDecoration: 'underline' }}>Avascan Testnet ↗</a>
+            </li>
+            <li style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', padding: '0.85rem 0', borderBottom: '1px solid var(--border)', gap: '1rem' }}>
+              <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', flexShrink: 0 }}>AttestationStore</span>
+              <a href={`https://testnet.snowtrace.io/address/${ATTESTATION_STORE}`} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)', fontFamily: 'monospace', fontSize: '0.85rem', wordBreak: 'break-all', textAlign: 'right', textDecoration: 'underline' }}>{ATTESTATION_STORE} ↗</a>
+            </li>
+            <li style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', padding: '0.85rem 0', borderBottom: '1px solid var(--border)', gap: '1rem' }}>
+              <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', flexShrink: 0 }}>{t('validatorSetMgr')}</span>
+              <a href={`https://testnet.snowtrace.io/address/${VALIDATOR_SET_MANAGER}`} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)', fontFamily: 'monospace', fontSize: '0.85rem', wordBreak: 'break-all', textAlign: 'right', textDecoration: 'underline' }}>{VALIDATOR_SET_MANAGER} ↗</a>
+            </li>
             <Row label="Warp / ICM" value={t('enabled')} mono={false} />
             <Row label="ICTT" value={t('plannedPhase2')} mono={false} />
           </ul>
