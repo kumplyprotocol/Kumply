@@ -85,8 +85,8 @@ export default function Hero3D() {
         <pointLight position={[-10, -10, -10]} intensity={1.2} color="#E84142" />
         <pointLight position={[5, 5, 10]} intensity={0.6} color="#ffffff" />
 
-        {/* Environment map for chrome reflections — lightweight preset */}
-        <Environment preset="night" />
+        {/* Environment map for chrome reflections — loaded locally */}
+        <Environment files="/dikhololo_night_1k.hdr" />
 
         <group position={[0, 0.5, 0]}>
           <Core />

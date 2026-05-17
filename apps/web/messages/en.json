@@ -110,6 +110,10 @@
     "complianceGate": "ComplianceGate",
     "viewOnSnowtr": "View on Snowtrace ↗",
     "resourcesTitle": "Developer Resources",
+    "npmTitle": "@kumply/sdk on npm",
+    "npmDesc": "Install, versions and changelog",
+    "apiTitle": "REST API — kumply-api.fly.dev",
+    "apiDesc": "Live endpoint · attestation lookup · fee query",
     "solidityTitle": "Solidity Integration",
     "soliditySubtitle": "Block non-compliant users at the smart contract level — one line of code"
   },

@@ -37,7 +37,29 @@ export default function DevelopersPage() {
 
       {/* Install + Basic Verify */}
       <div className="glass-card" style={{ padding: '2.5rem', marginBottom: '1.5rem' }}>
-        <h3 style={{ marginBottom: '1rem', color: 'var(--text-primary)', fontSize: '1.05rem' }}>{t('step1')}</h3>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+          <h3 style={{ color: 'var(--text-primary)', fontSize: '1.05rem' }}>{t('step1')}</h3>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+            <a
+              href="https://www.npmjs.com/package/@kumply/sdk"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ fontSize: '0.78rem', color: 'var(--accent-light)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0V0zm6.77 6.77h10.46v10.46H15V9.77H12.23v7.46H6.77V6.77z"/></svg>
+              npmjs.com/package/@kumply/sdk ↗
+            </a>
+            <a
+              href="https://kumply-api.fly.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ fontSize: '0.78rem', color: 'var(--accent-light)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              kumply-api.fly.dev ↗
+            </a>
+          </div>
+        </div>
         <div className="code-block" style={{ marginBottom: '2rem' }}>
           pnpm add @kumply/sdk
         </div>
@@ -116,6 +138,38 @@ export default function DevelopersPage() {
 
       {/* Resources */}
       <div className="grid-2" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+        <a
+          href="https://www.npmjs.com/package/@kumply/sdk"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="glass-card"
+          style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1.25rem', textDecoration: 'none', cursor: 'pointer' }}
+        >
+          <div style={{ width: '40px', height: '40px', borderRadius: 'var(--radius-sm)', background: 'rgba(203,56,55,0.12)', border: '1px solid rgba(203,56,55,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#cb3837"><path d="M0 0h24v24H0V0zm6.77 6.77h10.46v10.46H15V9.77H12.23v7.46H6.77V6.77z"/></svg>
+          </div>
+          <div>
+            <p style={{ color: 'var(--text-primary)', fontWeight: 600, fontSize: '0.9rem', marginBottom: '0.2rem' }}>{t('npmTitle')}</p>
+            <p style={{ color: 'var(--text-tertiary)', fontSize: '0.8rem' }}>{t('npmDesc')}</p>
+          </div>
+        </a>
+
+        <a
+          href="https://kumply-api.fly.dev"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="glass-card"
+          style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1.25rem', textDecoration: 'none', cursor: 'pointer' }}
+        >
+          <div style={{ width: '40px', height: '40px', borderRadius: 'var(--radius-sm)', background: 'rgba(99,102,241,0.12)', border: '1px solid rgba(99,102,241,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </div>
+          <div>
+            <p style={{ color: 'var(--text-primary)', fontWeight: 600, fontSize: '0.9rem', marginBottom: '0.2rem' }}>{t('apiTitle')}</p>
+            <p style={{ color: 'var(--text-tertiary)', fontSize: '0.8rem' }}>{t('apiDesc')}</p>
+          </div>
+        </a>
+
         <a
           href={`${SNOWTRACE_BASE}/${ATTESTATION_STORE}`}
           target="_blank"

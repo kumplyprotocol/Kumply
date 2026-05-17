@@ -1,6 +1,13 @@
 # @kumply/sdk
 
+[![npm version](https://img.shields.io/npm/v/@kumply/sdk)](https://www.npmjs.com/package/@kumply/sdk)
+[![npm downloads](https://img.shields.io/npm/dm/@kumply/sdk)](https://www.npmjs.com/package/@kumply/sdk)
+[![license](https://img.shields.io/npm/l/@kumply/sdk)](https://www.npmjs.com/package/@kumply/sdk)
+
 TypeScript SDK for the KUMPLY compliance infrastructure on the AVALANCHE® public blockchain.
+
+📦 **[View on npm → npmjs.com/package/@kumply/sdk](https://www.npmjs.com/package/@kumply/sdk)**  
+🌐 **[REST API → kumply-api.fly.dev](https://kumply-api.fly.dev)**
 
 *The AVALANCHE® trademark is owned by Ava Labs, Inc. KUMPLY is an independent project — not endorsed by, sponsored by, or affiliated with Ava Labs, Inc.*
 

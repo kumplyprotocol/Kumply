@@ -110,6 +110,10 @@
     "complianceGate": "ComplianceGate",
     "viewOnSnowtr": "Ver en Snowtrace ↗",
     "resourcesTitle": "Recursos para Desarrolladores",
+    "npmTitle": "@kumply/sdk en npm",
+    "npmDesc": "Instalar, versiones y changelog",
+    "apiTitle": "REST API — kumply-api.fly.dev",
+    "apiDesc": "Endpoint en vivo · consulta de attestaciones · fees",
     "solidityTitle": "Integración Solidity",
     "soliditySubtitle": "Bloquea usuarios sin verificar a nivel de contrato inteligente — con una sola línea de código"
   },

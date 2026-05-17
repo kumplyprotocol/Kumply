@@ -41,3 +41,5 @@ pnpm-debug.log*
 yarn-error.log*
 .vercel
 .turbo
+
+.vercel
