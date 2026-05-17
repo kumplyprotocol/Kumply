@@ -76,12 +76,26 @@ async function main() {
     )
   );
 
+  // ── Resolve placeholders in l1-config.json ──────────────────────
+  const l1ConfigPath = path.join(__dirname, "../l1/l1-config.json");
+  if (fs.existsSync(l1ConfigPath)) {
+    const cfg = JSON.parse(fs.readFileSync(l1ConfigPath, "utf-8"));
+    cfg.validatorSet.managerContract = managerAddr;
+    cfg.compliance.validatorSetManager = managerAddr;
+    fs.writeFileSync(l1ConfigPath, JSON.stringify(cfg, null, 2) + "\n");
+    console.log("\n✏️  Patched l1-config.json with managerContract + compliance.validatorSetManager");
+  }
+
   console.log("\nUpdate your .env with:");
   console.log(`  CONTRACT_VALIDATOR_SET_MANAGER=${managerAddr}`);
-  console.log("\nNext step:");
-  console.log("  Have institutional validators (Bankaool, Arkangeles) call");
-  console.log("    initializeValidatorRegistration(nodeID, weight)");
-  console.log("  after obtaining their Tier-4 (KYB) attestations.");
+  console.log("\nNext steps (ACP-99 two-phase lifecycle):");
+  console.log("  1. After the P-Chain processes ConvertSubnetToL1Tx, an L1_MANAGER_ROLE");
+  console.log("     holder calls initializeValidatorSet(conversionData, messageIndex).");
+  console.log("  2. Each institutional validator (Bankaool, Arkangeles, ...) calls");
+  console.log("     initiateValidatorRegistration(nodeID, blsPublicKey, balanceOwner,");
+  console.log("     disableOwner, weight) — gated by Tier-4 (KYB) attestation.");
+  console.log("  3. Their off-chain bot picks up the P-Chain ack and calls");
+  console.log("     completeValidatorRegistration(messageIndex) within 23h of step 2.");
 }
 
 main().catch((err) => {

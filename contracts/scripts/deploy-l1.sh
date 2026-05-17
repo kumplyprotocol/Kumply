@@ -78,10 +78,16 @@ echo "   RPC:            $RPC_URL"
 echo "🔐 Step 3/5 — Deploying KumplyValidatorSetManager to C-Chain…"
 pnpm hardhat run scripts/deploy-validator-manager.ts --network "$NETWORK"
 
-# ── 6) Bootstrap the validator set ──────────────────────────────────
-echo "🌐 Step 4/5 — Awaiting institutional validators to call initializeValidatorRegistration()"
-echo "   Each validator MUST hold a Tier-4 (KYB) attestation in AttestationStore."
-echo "   Expected: Bankaool, Arkangeles, KUMPLY Protocol Treasury"
+# ── 6) Bootstrap the validator set (ACP-99 two-phase) ───────────────
+echo "🌐 Step 4/5 — Bootstrap & ongoing validator lifecycle:"
+echo "   a) L1_MANAGER_ROLE calls initializeValidatorSet(conversionData, msgIdx)"
+echo "      with the SubnetToL1ConversionMessage Warp index."
+echo "   b) Each validator calls initiateValidatorRegistration("
+echo "        nodeID, blsPublicKey, remainingBalanceOwner, disableOwner, weight)"
+echo "      — gated by Tier-4 (KYB) attestation in AttestationStore."
+echo "   c) Within 23h, the validator's off-chain bot consumes the P-Chain"
+echo "      L1ValidatorRegistrationMessage and calls completeValidatorRegistration(idx)."
+echo "   Expected initial validators: Bankaool, Arkangeles, KUMPLY Protocol Treasury"
 
 # ── 7) Save chain-config so AvalancheGo picks it up ─────────────────
 NODE_CHAINS_DIR="${AVAGO_CHAINS_DIR:-$HOME/.avalanchego/configs/chains}"

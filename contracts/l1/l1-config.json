@@ -24,23 +24,25 @@
   "stateSyncEnabled": true,
   "offlinePruning": false,
   "validatorSet": {
-    "_comment": "ACP-77 PoA validator set with off-chain governance via KumplyValidatorSetManager. KYB (Tier 4) required.",
-    "managerContract": "{KUMPLY_VALIDATOR_SET_MANAGER_ADDRESS}",
+    "_comment": "ACP-77 PoA validator set with off-chain governance via KumplyValidatorSetManager (ACP-99 compliant). KYB (Tier 4) required. ACP-77 continuous fee model: ~512 nAVAX/s per validator (~1.33 AVAX/month).",
+    "managerContract": "<set post-deploy: contracts/l1/.deployment/validator-manager.json#address>",
     "managerChain": "C",
     "minValidators": 5,
     "targetValidators": 21,
     "maxValidators": 100,
     "requiredKYCTier": 4,
     "validatorChurnPeriod": "24h",
-    "maxChurnPerPeriod": 20
+    "maxChurnPerPeriod": 20,
+    "minPChainBalanceAvax": 3,
+    "registrationExpiryMax": "23h"
   },
   "fees": {
-    "_comment": "Native gas token KMP. Initial fees set low; ACP-83 dynamic multidim fees enabled post-launch.",
+    "_comment": "Native gas token KMP. Initial fees set low; dynamic multidimensional fees roadmap follows ACP-103 (ACP-83 is superseded).",
     "gasToken": "KMP",
     "gasLimit": 15000000,
     "targetBlockRate": 2,
     "minBaseFee": "1 gwei",
-    "dynamicFees": "ACP-83 (deferred until 1 month post-launch)"
+    "dynamicFees": "ACP-103 (deferred until 1 month post-launch)"
   },
   "interchain": {
     "_comment": "Avalanche Warp Messaging (AWM) + Interchain Token Transfer (ICTT) — required for cross-L1 attestation propagation",
@@ -54,7 +56,7 @@
     "_comment": "KUMPLY-specific extensions — institutional compliance hooks",
     "attestationStoreAddress": "0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76",
     "attestationStoreChain": "C",
-    "validatorSetManager": "{KUMPLY_VALIDATOR_SET_MANAGER_ADDRESS}",
+    "validatorSetManager": "<set post-deploy: contracts/l1/.deployment/validator-manager.json#address>",
     "complianceGateBuiltin": true,
     "minimumTierForValidation": 4,
     "minimumTierForTransacting": 0,

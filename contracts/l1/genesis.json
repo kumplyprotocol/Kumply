@@ -37,10 +37,10 @@
       "requirePrimaryNetworkSigners": true
     },
     "contractDeployerAllowListConfig": {
-      "_comment": "Only KYB-verified institutions (resolved off-chain at deploy time) may deploy contracts",
+      "_comment": "Only KYB-verified institutions (resolved off-chain at deploy time) may deploy contracts. Admin = KUMPLY deployer wallet (Tier 4/KYB attested in AttestationStore on C-Chain). Admin can grant deploy rights to additional KYB-verified addresses post-genesis via setEnabled.",
       "blockTimestamp": 0,
       "adminAddresses": [
-        "0x0000000000000000000000000000000000000000"
+        "0xD65042534CE80fcb641fd6Eb99a16eBF6C0cd076"
       ]
     },
     "contractNativeMinterConfig": {

@@ -3,326 +3,541 @@ pragma solidity ^0.8.28;
 
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
-import "./AttestationStore.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-/// @title KumplyValidatorSetManager — KYB-gated ValidatorSetManager for the KUMPLY Compliance L1
-/// @notice Custom implementation of the ACP-99 ValidatorSetManager standard that enforces
-///         KYB (Tier 4) verification via the KUMPLY AttestationStore as a prerequisite for
-///         joining the L1 validator set.
-/// @dev    Architecture (ACP-77 + ACP-99 compliant):
-///           - Only addresses with a valid, non-expired Tier-4 (Business) attestation can
-///             initialize a validator registration.
-///           - On attestation expiry, anyone may call `disableExpiredValidator()` to remove
-///             the node from the active set — keeps the L1 trust-minimized.
-///           - State changes emit Warp-compatible events that the P-Chain consumes to update
-///             the canonical validator set (per ACP-77 §"L1 Validator Manager Contract").
-///         The validator-set contract sits on the C-Chain (or the L1 itself once bootstrapped)
-///         and communicates with the P-Chain via Avalanche Warp Messages (AWM).
-/// @author KUMPLY Team
-contract KumplyValidatorSetManager is AccessControl, Pausable {
+import {AttestationStore} from "./AttestationStore.sol";
+import {IACP99Manager} from "./interfaces/IACP99Manager.sol";
+import {IWarpMessenger, WARP_MESSENGER} from "./interfaces/IWarpMessenger.sol";
+import {ValidatorMessages} from "./libraries/ValidatorMessages.sol";
+
+/// @title KumplyValidatorSetManager — ACP-99 ValidatorSetManager with KYB gating
+/// @notice Full ACP-99 / ACP-77 conformant L1 validator manager for the KUMPLY Compliance L1.
+///         Layers a KYB (Tier-4 AttestationStore) gate on top of the canonical two-phase
+///         lifecycle: initiate-* (emits a Warp message to the P-Chain) → P-Chain processes →
+///         complete-* (consumes the P-Chain's Warp acknowledgment).
+/// @dev    Reference: https://build.avax.network/docs/acps/99-validatorsetmanager-contract
+///         and https://build.avax.network/docs/acps/77-reinventing-subnets.
+///         Storage and validationID semantics follow ACP-99 §"Type Definitions" exactly —
+///         validators are keyed by their 32-byte `validationID`, not by EVM owner address.
+contract KumplyValidatorSetManager is
+    IACP99Manager,
+    AccessControl,
+    Pausable,
+    ReentrancyGuard
+{
+    using ValidatorMessages for bytes;
+
     // ──────────────────────────────────────────────────────────────────
     //  Roles
     // ──────────────────────────────────────────────────────────────────
 
-    /// @notice Role that may sign off on validator registrations / removals
     bytes32 public constant L1_MANAGER_ROLE = keccak256("L1_MANAGER_ROLE");
 
     // ──────────────────────────────────────────────────────────────────
-    //  Constants
+    //  Compliance Constants
     // ──────────────────────────────────────────────────────────────────
 
-    /// @notice Minimum KYC tier required to operate a validator (4 = Business / KYB)
+    /// @notice Minimum AttestationStore tier required to operate a validator (4 = KYB).
     uint32 public constant REQUIRED_VALIDATOR_TIER = 4;
 
-    /// @notice Maximum churn — number of weight changes per epoch (ACP-77 §"Churn limits")
-    uint64 public constant MAX_CHURN_PER_EPOCH = 20;
+    /// @notice Maximum number of validator-set events (add/remove/weight) per `CHURN_PERIOD`.
+    /// @dev    ACP-99 leaves churn control to the implementer; we cap by event count to mirror
+    ///         the spirit of the Ava Labs reference impl while staying gas-cheap.
+    uint64 public constant MAX_CHURN_PER_PERIOD = 20;
 
-    /// @notice Per-validator weight ceiling (basis points of total weight). 0.2 = 2000 bps.
+    /// @notice Per-validator weight ceiling in basis points of total weight (2000 bps = 20%).
     uint64 public constant MAX_VALIDATOR_WEIGHT_BPS = 2000;
+
+    /// @notice Churn window. ACP-77 mandates `expiry <= now + 24h`, so we align to 24h.
+    uint64 public constant CHURN_PERIOD = 1 days;
+
+    /// @notice Maximum lifespan accepted on a freshly issued P-Chain registration message.
+    ///         ACP-77: `expiry MUST be <= now + 24h` once the P-Chain processes the message.
+    uint64 public constant REGISTRATION_EXPIRY_MAX = 23 hours;
+
+    // ──────────────────────────────────────────────────────────────────
+    //  Wiring
+    // ──────────────────────────────────────────────────────────────────
+
+    /// @notice AttestationStore that gates validator entry (Tier-4 / KYB).
+    AttestationStore public immutable attestationStore;
+
+    /// @notice SubnetID this manager governs. Set at construction; immutable on-chain.
+    bytes32 private immutable _subnetID;
+
+    /// @notice IWarpMessenger precompile handle (0x05).
+    IWarpMessenger private constant WARP = IWarpMessenger(WARP_MESSENGER);
+
+    // ──────────────────────────────────────────────────────────────────
+    //  Storage (ACP-99 keyed by validationID)
+    // ──────────────────────────────────────────────────────────────────
+
+    mapping(bytes32 => Validator) private _validators;
+
+    /// @notice Index sha256(nodeID) → validationID. Prevents same node joining twice.
+    mapping(bytes32 => bytes32) public validationIDByNodeID;
+
+    /// @notice Index EVM owner → active validationID. Required for KYB-expiry purge.
+    mapping(address => bytes32) public validationIDByOwner;
+
+    /// @notice Reverse: validationID → owner. (Owner is the KYB-attested EVM address.)
+    mapping(bytes32 => address) public ownerByValidationID;
+
+    /// @notice Cached attestation expiry, used by `disableExpiredValidator`.
+    mapping(bytes32 => uint64) public attestationExpiryByValidationID;
+
+    /// @notice Cumulative weight of all validators in PendingAdded ∪ Active ∪ PendingRemoved.
+    uint64 private _l1TotalWeight;
+
+    /// @notice Currently `Active` (P-Chain-acked) validator count.
+    uint64 public activeValidatorCount;
+
+    /// @notice Churn counters per period.
+    uint64 public churnInPeriod;
+    uint64 public churnPeriodStart;
+
+    /// @notice True after `initializeValidatorSet` has run. Prevents double bootstrap.
+    bool public initialized;
 
     // ──────────────────────────────────────────────────────────────────
     //  Custom Errors
     // ──────────────────────────────────────────────────────────────────
 
+    error InvalidSubnetID();
     error ValidatorNotKYBVerified();
     error InsufficientValidatorTier(uint32 actual, uint32 required);
-    error ValidatorAlreadyRegistered();
-    error ValidatorNotFound();
     error InvalidNodeID();
+    error InvalidBlsPublicKey();
     error InvalidWeight();
-    error AttestationStillValid();
     error ChurnLimitExceeded();
     error WeightOverflow();
-    error InvalidSubnetID();
-
-    // ──────────────────────────────────────────────────────────────────
-    //  Data Structures (ACP-99 compatible)
-    // ──────────────────────────────────────────────────────────────────
-
-    /// @notice Validator registration record (mirrors ACP-99 §"ValidatorInfo")
-    struct Validator {
-        bytes nodeID;           // 20-byte Avalanche node ID
-        address owner;          // EVM address of the validator operator (must be KYB)
-        uint64 weight;          // Voting weight (proportional to stake/reputation)
-        uint64 registeredAt;    // Block timestamp of P-Chain acknowledgment
-        uint64 expiresAt;       // Mirror of owner's AttestationStore expiry
-        bool active;            // False when removed or attestation expired
-    }
-
-    // ──────────────────────────────────────────────────────────────────
-    //  State
-    // ──────────────────────────────────────────────────────────────────
-
-    /// @notice Reference to the KUMPLY AttestationStore that gates validator entry
-    AttestationStore public immutable attestationStore;
-
-    /// @notice The 32-byte ID of the L1 subnet this manager governs (ACP-77 §"SubnetID")
-    bytes32 public immutable subnetID;
-
-    /// @notice Validators keyed by their EVM owner address
-    mapping(address => Validator) public validators;
-
-    /// @notice Reverse index: nodeID hash → owner address
-    mapping(bytes32 => address) public nodeIDToOwner;
-
-    /// @notice List of all current validator owners (for enumeration)
-    address[] public validatorList;
-
-    /// @notice Sum of weights of all active validators
-    uint64 public totalWeight;
-
-    /// @notice Number of active validators
-    uint64 public activeValidatorCount;
-
-    /// @notice Per-epoch churn counter (resets on epoch advance)
-    uint64 public currentEpochChurn;
-
-    /// @notice The block timestamp at which the current epoch started
-    uint64 public epochStartTimestamp;
-
-    // ──────────────────────────────────────────────────────────────────
-    //  Events (Warp-compatible — consumed by P-Chain per ACP-77)
-    // ──────────────────────────────────────────────────────────────────
-
-    /// @notice Emitted when a validator is registered. Payload is read by the P-Chain.
-    event ValidatorRegistered(
-        bytes32 indexed validationID,
-        bytes nodeID,
-        address indexed owner,
-        uint64 weight,
-        uint64 expiry,
-        uint32 attestationTier
-    );
-
-    /// @notice Emitted when a validator is removed (expired KYB or admin action)
-    event ValidatorRemoved(bytes32 indexed validationID, bytes nodeID, address indexed owner, string reason);
-
-    /// @notice Emitted when a validator's weight is updated
-    event ValidatorWeightUpdated(bytes32 indexed validationID, uint64 oldWeight, uint64 newWeight);
-
-    /// @notice Emitted when the churn epoch advances
-    event EpochAdvanced(uint64 indexed epochStart, uint64 totalWeight, uint64 activeCount);
-
-    /// @notice Emitted when an expired-attestation validator is purged
-    event ExpiredValidatorPurged(address indexed owner, bytes nodeID, uint64 attestationExpiredAt);
+    error ValidatorAlreadyRegistered();
+    error UnknownValidator();
+    error InvalidValidatorStatus(ValidatorStatus current);
+    error AttestationStillValid();
+    error WarpMessageInvalid(uint32 messageIndex);
+    error WarpSourceMismatch(bytes32 expected, bytes32 actual);
+    error UnauthorizedCaller(address caller);
+    error AlreadyInitialized();
+    error NotInitialized();
+    error ConversionIDMismatch(bytes32 expected, bytes32 actual);
 
     // ──────────────────────────────────────────────────────────────────
     //  Constructor
     // ──────────────────────────────────────────────────────────────────
 
-    /// @notice Initializes the KumplyValidatorSetManager
-    /// @param _admin      Address granted DEFAULT_ADMIN_ROLE and L1_MANAGER_ROLE
-    /// @param _store      Deployed AttestationStore (KYB attestations live here)
-    /// @param _subnetID   32-byte SubnetID returned by `avalanche blockchain create`
-    constructor(address _admin, address _store, bytes32 _subnetID) {
-        if (_subnetID == bytes32(0)) revert InvalidSubnetID();
+    /// @param _admin    Initial holder of DEFAULT_ADMIN_ROLE + L1_MANAGER_ROLE.
+    /// @param _store    Deployed AttestationStore providing the KYB attestations.
+    /// @param _subnetID32  32-byte SubnetID produced by `ConvertSubnetToL1Tx`.
+    constructor(address _admin, address _store, bytes32 _subnetID32) {
+        if (_subnetID32 == bytes32(0)) revert InvalidSubnetID();
 
         _grantRole(DEFAULT_ADMIN_ROLE, _admin);
         _grantRole(L1_MANAGER_ROLE, _admin);
 
         attestationStore = AttestationStore(payable(_store));
-        subnetID = _subnetID;
-        epochStartTimestamp = uint64(block.timestamp);
+        _subnetID = _subnetID32;
+        churnPeriodStart = uint64(block.timestamp);
     }
 
     // ──────────────────────────────────────────────────────────────────
-    //  Validator Lifecycle (ACP-99 standard operations)
+    //  IACP99Manager — views
     // ──────────────────────────────────────────────────────────────────
 
-    /// @notice Initialize a validator registration — gated by KYB (Tier 4) attestation
-    /// @dev    Step 1 of ACP-77 registration flow. Caller must own a valid KYB attestation.
-    ///         Emits ValidatorRegistered which the P-Chain consumes as a Warp message.
-    /// @param  _nodeID  20-byte node ID of the AvalancheGo node to register
-    /// @param  _weight  Voting weight (subject to MAX_VALIDATOR_WEIGHT_BPS cap)
-    /// @return validationID The 32-byte registration ID (hash of nodeID + subnetID + nonce)
-    function initializeValidatorRegistration(
-        bytes calldata _nodeID,
-        uint64 _weight
-    ) external whenNotPaused returns (bytes32 validationID) {
-        if (_nodeID.length != 20) revert InvalidNodeID();
-        if (_weight == 0) revert InvalidWeight();
+    function subnetID() external view override returns (bytes32) {
+        return _subnetID;
+    }
 
-        // ── KYB gate: validator owner MUST hold a valid Business attestation ──
-        (bool ok, uint32 tier,, uint64 expiry) = attestationStore.verify(msg.sender);
+    function getValidator(bytes32 validationID)
+        external
+        view
+        override
+        returns (Validator memory)
+    {
+        return _validators[validationID];
+    }
+
+    function l1TotalWeight() external view override returns (uint64) {
+        return _l1TotalWeight;
+    }
+
+    // ──────────────────────────────────────────────────────────────────
+    //  Bootstrap — single-phase (consumes SubnetToL1ConversionMessage)
+    //
+    //  Called once, right after `ConvertSubnetToL1Tx` is accepted on the P-Chain.
+    //  The P-Chain emits a `SubnetToL1ConversionMessage` whose payload is the SHA-256
+    //  of the off-chain `ConversionData`. We re-compute that hash from `data` and
+    //  assert equality, then register every initial validator as Active.
+    // ──────────────────────────────────────────────────────────────────
+
+    function initializeValidatorSet(
+        ConversionData calldata data,
+        uint32 messageIndex
+    ) external override whenNotPaused onlyRole(L1_MANAGER_ROLE) {
+        if (initialized) revert AlreadyInitialized();
+        if (data.subnetID != _subnetID) revert InvalidSubnetID();
+
+        bytes memory payload = _getVerifiedWarpPayload(messageIndex);
+        bytes32 conversionID = ValidatorMessages.unpackSubnetToL1ConversionMessage(payload);
+        bytes32 expected = ValidatorMessages.computeConversionID(data);
+        if (conversionID != expected) revert ConversionIDMismatch(expected, conversionID);
+
+        uint64 totalW;
+        for (uint32 i = 0; i < data.initialValidators.length; i++) {
+            InitialValidator calldata iv = data.initialValidators[i];
+            if (iv.nodeID.length != ValidatorMessages.NODE_ID_LENGTH) revert InvalidNodeID();
+            if (iv.weight == 0) revert InvalidWeight();
+
+            bytes32 validationID = ValidatorMessages.initialValidationID(_subnetID, i);
+            bytes32 nodeHash = sha256(iv.nodeID);
+
+            _validators[validationID] = Validator({
+                status: ValidatorStatus.Active,
+                nodeID: iv.nodeID,
+                startingWeight: iv.weight,
+                sentNonce: 0,
+                receivedNonce: 0,
+                weight: iv.weight,
+                startTime: uint64(block.timestamp),
+                endTime: 0
+            });
+            validationIDByNodeID[nodeHash] = validationID;
+
+            totalW += iv.weight;
+            activeValidatorCount += 1;
+
+            emit RegisteredInitialValidator(
+                validationID,
+                bytes20(iv.nodeID),
+                _subnetID,
+                iv.weight,
+                i
+            );
+        }
+        _l1TotalWeight = totalW;
+        initialized = true;
+    }
+
+    // ──────────────────────────────────────────────────────────────────
+    //  Initiate Registration — KYB-gated external wrapper
+    //  Step 1 of 2. Emits RegisterL1ValidatorMessage via Warp.
+    // ──────────────────────────────────────────────────────────────────
+
+    /// @notice Initiate a validator registration. Caller MUST hold a valid Tier-4 attestation.
+    /// @param  nodeID                Avalanche node identifier (20 bytes).
+    /// @param  blsPublicKey          BLS12-381 compressed G1 public key (48 bytes, PoP-verified by P-Chain).
+    /// @param  remainingBalanceOwner P-Chain owner that may claim the validator's leftover balance on exit.
+    /// @param  disableOwner          P-Chain owner that may disable the validator.
+    /// @param  weight                Voting weight (subject to per-validator BPS cap).
+    /// @return validationID          Canonical 32-byte SHA-256 of the emitted Warp payload.
+    function initiateValidatorRegistration(
+        bytes calldata nodeID,
+        bytes calldata blsPublicKey,
+        PChainOwner calldata remainingBalanceOwner,
+        PChainOwner calldata disableOwner,
+        uint64 weight
+    ) external whenNotPaused nonReentrant returns (bytes32 validationID) {
+        if (!initialized) revert NotInitialized();
+        _requireKyb(msg.sender);
+        if (validationIDByOwner[msg.sender] != bytes32(0)) {
+            revert ValidatorAlreadyRegistered();
+        }
+        return _initiateValidatorRegistration(
+            nodeID,
+            blsPublicKey,
+            remainingBalanceOwner,
+            disableOwner,
+            weight
+        );
+    }
+
+    function _initiateValidatorRegistration(
+        bytes memory nodeID,
+        bytes memory blsPublicKey,
+        PChainOwner memory remainingBalanceOwner,
+        PChainOwner memory disableOwner,
+        uint64 weight
+    ) internal returns (bytes32 validationID) {
+        if (nodeID.length != ValidatorMessages.NODE_ID_LENGTH) revert InvalidNodeID();
+        if (blsPublicKey.length != ValidatorMessages.BLS_PUBLIC_KEY_LENGTH) {
+            revert InvalidBlsPublicKey();
+        }
+        if (weight == 0) revert InvalidWeight();
+
+        bytes32 nodeHash = sha256(nodeID);
+        if (validationIDByNodeID[nodeHash] != bytes32(0)) {
+            revert ValidatorAlreadyRegistered();
+        }
+
+        _bumpChurnCounter();
+
+        // Cache attestation expiry for self-healing purge.
+        (, , , uint64 attExpiry) = attestationStore.verify(msg.sender);
+
+        uint64 expiry = uint64(block.timestamp) + REGISTRATION_EXPIRY_MAX;
+
+        bytes memory payload;
+        (payload, validationID) = ValidatorMessages.packRegisterL1ValidatorMessage(
+            _subnetID,
+            nodeID,
+            blsPublicKey,
+            expiry,
+            remainingBalanceOwner,
+            disableOwner,
+            weight
+        );
+
+        _validators[validationID] = Validator({
+            status: ValidatorStatus.PendingAdded,
+            nodeID: nodeID,
+            startingWeight: weight,
+            sentNonce: 0,
+            receivedNonce: 0,
+            weight: weight,
+            startTime: 0,
+            endTime: 0
+        });
+        validationIDByNodeID[nodeHash] = validationID;
+        validationIDByOwner[msg.sender] = validationID;
+        ownerByValidationID[validationID] = msg.sender;
+        attestationExpiryByValidationID[validationID] = attExpiry;
+
+        uint64 newTotal = _l1TotalWeight + weight;
+        if (newTotal < _l1TotalWeight) revert WeightOverflow();
+        _checkWeightCapAgainst(weight, newTotal);
+        _l1TotalWeight = newTotal;
+
+        bytes32 messageID = WARP.sendWarpMessage(payload);
+
+        emit InitiatedValidatorRegistration(
+            validationID,
+            bytes20(nodeID),
+            messageID,
+            expiry,
+            weight
+        );
+    }
+
+    // ──────────────────────────────────────────────────────────────────
+    //  Complete Registration — consumes L1ValidatorRegistrationMessage{registered:true}
+    // ──────────────────────────────────────────────────────────────────
+
+    function completeValidatorRegistration(uint32 messageIndex)
+        external
+        override
+        nonReentrant
+        returns (bytes32 validationID)
+    {
+        bytes memory payload = _getVerifiedWarpPayload(messageIndex);
+        bool registered;
+        (validationID, registered) = ValidatorMessages.unpackL1ValidatorRegistrationMessage(payload);
+        if (!registered) revert InvalidValidatorStatus(ValidatorStatus.Invalidated);
+
+        Validator storage v = _validators[validationID];
+        if (v.status != ValidatorStatus.PendingAdded) {
+            revert InvalidValidatorStatus(v.status);
+        }
+        v.status = ValidatorStatus.Active;
+        v.startTime = uint64(block.timestamp);
+        activeValidatorCount += 1;
+
+        emit CompletedValidatorRegistration(validationID, v.weight);
+    }
+
+    // ──────────────────────────────────────────────────────────────────
+    //  Initiate Removal — voluntary, admin, or KYB-expired purge
+    //  Step 1 of 2. Emits L1ValidatorWeightMessage with weight=0.
+    // ──────────────────────────────────────────────────────────────────
+
+    /// @notice Voluntary exit by the validator owner.
+    function initiateValidatorRemoval(bytes32 validationID) external whenNotPaused nonReentrant {
+        address owner = ownerByValidationID[validationID];
+        if (owner != msg.sender) revert UnauthorizedCaller(msg.sender);
+        _initiateValidatorRemoval(validationID);
+    }
+
+    /// @notice Admin-forced removal (compliance violation, slashing). L1_MANAGER_ROLE only.
+    function adminInitiateValidatorRemoval(bytes32 validationID)
+        external
+        nonReentrant
+        onlyRole(L1_MANAGER_ROLE)
+    {
+        _initiateValidatorRemoval(validationID);
+    }
+
+    /// @notice Permissionless purge of a validator whose KYB attestation has expired/revoked.
+    function disableExpiredValidator(bytes32 validationID) external nonReentrant {
+        address owner = ownerByValidationID[validationID];
+        if (owner == address(0)) revert UnknownValidator();
+        (bool ok, , , uint64 attExpiry) = attestationStore.verify(owner);
+        if (ok && attExpiry > uint64(block.timestamp)) revert AttestationStillValid();
+        _initiateValidatorRemoval(validationID);
+    }
+
+    function _initiateValidatorRemoval(bytes32 validationID) internal {
+        Validator storage v = _validators[validationID];
+        if (v.status != ValidatorStatus.Active && v.status != ValidatorStatus.PendingAdded) {
+            revert InvalidValidatorStatus(v.status);
+        }
+
+        _bumpChurnCounter();
+
+        if (v.status == ValidatorStatus.Active) {
+            activeValidatorCount -= 1;
+        }
+        v.status = ValidatorStatus.PendingRemoved;
+        v.endTime = uint64(block.timestamp);
+        v.sentNonce += 1;
+
+        bytes memory payload = ValidatorMessages.packL1ValidatorWeightMessage(
+            validationID,
+            v.sentNonce,
+            0
+        );
+        bytes32 messageID = WARP.sendWarpMessage(payload);
+
+        emit InitiatedValidatorRemoval(validationID, messageID, v.weight, v.endTime);
+    }
+
+    // ──────────────────────────────────────────────────────────────────
+    //  Complete Removal — consumes L1ValidatorRegistrationMessage{registered:false}
+    // ──────────────────────────────────────────────────────────────────
+
+    function completeValidatorRemoval(uint32 messageIndex)
+        external
+        override
+        nonReentrant
+        returns (bytes32 validationID)
+    {
+        bytes memory payload = _getVerifiedWarpPayload(messageIndex);
+        bool registered;
+        (validationID, registered) = ValidatorMessages.unpackL1ValidatorRegistrationMessage(payload);
+        if (registered) revert InvalidValidatorStatus(ValidatorStatus.Active);
+
+        Validator storage v = _validators[validationID];
+        if (v.status != ValidatorStatus.PendingRemoved && v.status != ValidatorStatus.PendingAdded) {
+            revert InvalidValidatorStatus(v.status);
+        }
+        // Garbage-collect indices and weight.
+        _l1TotalWeight -= v.weight;
+        bytes32 nodeHash = sha256(v.nodeID);
+        address owner = ownerByValidationID[validationID];
+        delete validationIDByNodeID[nodeHash];
+        delete validationIDByOwner[owner];
+        delete ownerByValidationID[validationID];
+        delete attestationExpiryByValidationID[validationID];
+
+        v.status = ValidatorStatus.Completed;
+        emit CompletedValidatorRemoval(validationID);
+    }
+
+    // ──────────────────────────────────────────────────────────────────
+    //  Weight Update (initiate + complete) — KYB owner only
+    // ──────────────────────────────────────────────────────────────────
+
+    function initiateValidatorWeightUpdate(bytes32 validationID, uint64 newWeight)
+        external
+        whenNotPaused
+        nonReentrant
+        returns (uint64 nonce, bytes32 messageID)
+    {
+        address owner = ownerByValidationID[validationID];
+        if (owner != msg.sender) revert UnauthorizedCaller(msg.sender);
+        return _initiateValidatorWeightUpdate(validationID, newWeight);
+    }
+
+    function _initiateValidatorWeightUpdate(bytes32 validationID, uint64 newWeight)
+        internal
+        returns (uint64 nonce, bytes32 messageID)
+    {
+        if (newWeight == 0) revert InvalidWeight();
+
+        Validator storage v = _validators[validationID];
+        if (v.status != ValidatorStatus.Active) revert InvalidValidatorStatus(v.status);
+
+        uint64 oldWeight = v.weight;
+        if (oldWeight == newWeight) revert InvalidWeight();
+        _bumpChurnCounter();
+
+        uint64 newTotal;
+        if (newWeight > oldWeight) {
+            newTotal = _l1TotalWeight + (newWeight - oldWeight);
+            if (newTotal < _l1TotalWeight) revert WeightOverflow();
+            _checkWeightCapAgainst(newWeight, newTotal);
+        } else {
+            newTotal = _l1TotalWeight - (oldWeight - newWeight);
+        }
+        _l1TotalWeight = newTotal;
+
+        v.weight = newWeight;
+        v.sentNonce += 1;
+        nonce = v.sentNonce;
+
+        bytes memory payload = ValidatorMessages.packL1ValidatorWeightMessage(
+            validationID,
+            nonce,
+            newWeight
+        );
+        messageID = WARP.sendWarpMessage(payload);
+        emit InitiatedValidatorWeightUpdate(validationID, nonce, messageID, newWeight);
+    }
+
+    function completeValidatorWeightUpdate(uint32 messageIndex)
+        external
+        override
+        nonReentrant
+        returns (bytes32 validationID, uint64 nonce)
+    {
+        bytes memory payload = _getVerifiedWarpPayload(messageIndex);
+        uint64 weight;
+        (validationID, nonce, weight) = ValidatorMessages.unpackL1ValidatorWeightMessage(payload);
+
+        Validator storage v = _validators[validationID];
+        if (v.status != ValidatorStatus.Active) revert InvalidValidatorStatus(v.status);
+        if (nonce <= v.receivedNonce) revert InvalidValidatorStatus(v.status);
+        v.receivedNonce = nonce;
+
+        emit CompletedValidatorWeightUpdate(validationID, nonce, weight);
+    }
+
+    // ──────────────────────────────────────────────────────────────────
+    //  Internal helpers
+    // ──────────────────────────────────────────────────────────────────
+
+    function _requireKyb(address subject) internal view {
+        (bool ok, uint32 tier, , ) = attestationStore.verify(subject);
         if (!ok) revert ValidatorNotKYBVerified();
         if (tier < REQUIRED_VALIDATOR_TIER) {
             revert InsufficientValidatorTier(tier, REQUIRED_VALIDATOR_TIER);
         }
-
-        if (validators[msg.sender].active) revert ValidatorAlreadyRegistered();
-
-        bytes32 nodeHash = keccak256(_nodeID);
-        if (nodeIDToOwner[nodeHash] != address(0)) revert ValidatorAlreadyRegistered();
-
-        // ── Churn / weight checks (ACP-77) ──
-        _advanceEpochIfNeeded();
-        if (currentEpochChurn >= MAX_CHURN_PER_EPOCH) revert ChurnLimitExceeded();
-
-        uint64 newTotalWeight = totalWeight + _weight;
-        if (newTotalWeight < totalWeight) revert WeightOverflow();
-        if (
-            totalWeight > 0 &&
-            _weight * 10_000 > newTotalWeight * MAX_VALIDATOR_WEIGHT_BPS
-        ) revert InvalidWeight();
-
-        // ── Record ──
-        validators[msg.sender] = Validator({
-            nodeID: _nodeID,
-            owner: msg.sender,
-            weight: _weight,
-            registeredAt: uint64(block.timestamp),
-            expiresAt: expiry,
-            active: true
-        });
-        nodeIDToOwner[nodeHash] = msg.sender;
-        validatorList.push(msg.sender);
-        totalWeight = newTotalWeight;
-        activeValidatorCount += 1;
-        currentEpochChurn += 1;
-
-        validationID = keccak256(abi.encodePacked(_nodeID, subnetID, uint256(validatorList.length)));
-
-        emit ValidatorRegistered(validationID, _nodeID, msg.sender, _weight, expiry, tier);
     }
 
-    /// @notice Voluntarily exit the validator set — only the owner may call
-    /// @dev    Step 2 of ACP-77 deregistration flow (ValidatorRemoved Warp message)
-    function initializeValidatorRemoval() external whenNotPaused {
-        Validator storage v = validators[msg.sender];
-        if (!v.active) revert ValidatorNotFound();
-
-        _advanceEpochIfNeeded();
-        if (currentEpochChurn >= MAX_CHURN_PER_EPOCH) revert ChurnLimitExceeded();
-
-        _removeValidator(msg.sender, "voluntary_exit");
-        currentEpochChurn += 1;
+    function _getVerifiedWarpPayload(uint32 messageIndex) internal view returns (bytes memory) {
+        (IWarpMessenger.WarpMessage memory msg_, bool ok) = WARP.getVerifiedWarpMessage(messageIndex);
+        if (!ok) revert WarpMessageInvalid(messageIndex);
+        // sourceAddress for P-Chain-originated messages is empty per ACP-77; do not enforce here
+        // because the P-Chain ID depends on the network — let the WarpMessenger precompile do
+        // the signature/quorum verification and trust its `ok` result.
+        return msg_.payload;
     }
 
-    /// @notice Anyone may purge a validator whose KYB attestation has expired
-    /// @dev    This is the "self-healing" property of the Compliance L1: when a
-    ///         validating institution loses its Tier-4 standing, the network removes
-    ///         it automatically without human admin intervention.
-    function disableExpiredValidator(address _owner) external {
-        Validator storage v = validators[_owner];
-        if (!v.active) revert ValidatorNotFound();
-
-        (bool ok,,, uint64 expiry) = attestationStore.verify(_owner);
-        if (ok && expiry > uint64(block.timestamp)) revert AttestationStillValid();
-
-        _removeValidator(_owner, "kyb_expired");
-        emit ExpiredValidatorPurged(_owner, v.nodeID, expiry);
-    }
-
-    /// @notice L1 manager forcibly removes a validator (slashing, compliance violation, etc.)
-    function adminRemoveValidator(address _owner, string calldata _reason)
-        external
-        onlyRole(L1_MANAGER_ROLE)
-    {
-        Validator storage v = validators[_owner];
-        if (!v.active) revert ValidatorNotFound();
-        _removeValidator(_owner, _reason);
-    }
-
-    /// @notice Update a validator's weight (e.g. stake increase)
-    function updateValidatorWeight(uint64 _newWeight)
-        external
-        whenNotPaused
-    {
-        Validator storage v = validators[msg.sender];
-        if (!v.active) revert ValidatorNotFound();
-        if (_newWeight == 0) revert InvalidWeight();
-
-        uint64 oldWeight = v.weight;
-        uint64 newTotal;
-        if (_newWeight > oldWeight) {
-            newTotal = totalWeight + (_newWeight - oldWeight);
-            if (newTotal < totalWeight) revert WeightOverflow();
-        } else {
-            newTotal = totalWeight - (oldWeight - _newWeight);
+    /// @dev Event-count churn limiter (count of add/remove/weight-change ops per CHURN_PERIOD).
+    function _bumpChurnCounter() internal {
+        if (block.timestamp >= churnPeriodStart + CHURN_PERIOD) {
+            churnPeriodStart = uint64(block.timestamp);
+            churnInPeriod = 0;
         }
-
-        v.weight = _newWeight;
-        totalWeight = newTotal;
-
-        bytes32 validationID = keccak256(abi.encodePacked(v.nodeID, subnetID, uint256(0)));
-        emit ValidatorWeightUpdated(validationID, oldWeight, _newWeight);
+        if (churnInPeriod >= MAX_CHURN_PER_PERIOD) revert ChurnLimitExceeded();
+        churnInPeriod += 1;
     }
 
-    // ──────────────────────────────────────────────────────────────────
-    //  Internal Helpers
-    // ──────────────────────────────────────────────────────────────────
-
-    function _removeValidator(address _owner, string memory _reason) internal {
-        Validator storage v = validators[_owner];
-        bytes memory nodeID = v.nodeID;
-        bytes32 nodeHash = keccak256(nodeID);
-
-        totalWeight -= v.weight;
-        activeValidatorCount -= 1;
-        v.active = false;
-
-        delete nodeIDToOwner[nodeHash];
-
-        bytes32 validationID = keccak256(abi.encodePacked(nodeID, subnetID, uint256(0)));
-        emit ValidatorRemoved(validationID, nodeID, _owner, _reason);
-    }
-
-    /// @dev Advances the epoch (24h windows) and resets the churn counter
-    function _advanceEpochIfNeeded() internal {
-        if (block.timestamp >= epochStartTimestamp + 1 days) {
-            epochStartTimestamp = uint64(block.timestamp);
-            currentEpochChurn = 0;
-            emit EpochAdvanced(epochStartTimestamp, totalWeight, activeValidatorCount);
+    /// @dev Cap-against-the-new-total weight check. Skipped when the candidate is the first
+    ///      validator (no other weight to dilute) and when newTotal == weight.
+    function _checkWeightCapAgainst(uint64 weight, uint64 newTotal) internal pure {
+        if (newTotal == weight) return; // first validator
+        if (uint256(weight) * 10_000 > uint256(newTotal) * MAX_VALIDATOR_WEIGHT_BPS) {
+            revert InvalidWeight();
         }
-    }
-
-    // ──────────────────────────────────────────────────────────────────
-    //  Views
-    // ──────────────────────────────────────────────────────────────────
-
-    /// @notice Check if an address is currently an active validator
-    function isActiveValidator(address _owner) external view returns (bool) {
-        return validators[_owner].active;
-    }
-
-    /// @notice Get a validator's full record
-    function getValidator(address _owner) external view returns (Validator memory) {
-        return validators[_owner];
-    }
-
-    /// @notice Returns the count of registered (active + inactive) validators
-    function totalValidators() external view returns (uint256) {
-        return validatorList.length;
-    }
-
-    /// @notice Snapshot of the current validator set summary
-    function getSetSummary() external view returns (
-        uint64 totalWeight_,
-        uint64 activeCount,
-        uint64 epochChurn,
-        uint64 epochStart
-    ) {
-        return (totalWeight, activeValidatorCount, currentEpochChurn, epochStartTimestamp);
     }
 
     // ──────────────────────────────────────────────────────────────────

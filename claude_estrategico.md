@@ -14,6 +14,30 @@ Infraestructura de compliance institucional sobre Avalanche. Proporciona attesta
 
 ---
 
+## 🌎 Hackathon: LatAm Institucional (15-17 Mayo 2026)
+
+**Objetivo:** Resolver retos institucionales reales de las principales empresas financieras de América Latina. Sin casos de uso hipotéticos.
+
+### Instituciones & Partners
+- **Arkangeles** y **Bankaool** (Retos principales)
+- **Oracle:** (Mentoría + $500 USD créditos)
+- **Wavy Node:** (Infraestructura de trazabilidad y risk score + $200 USD créditos)
+- **Ledger Leaders Week:** (Mentoría en Legal & Compliance)
+
+### Criterios de Evaluación
+1. **Viabilidad de negocio:** ¿Existe un mercado real? ¿Puede sostenerse y escalar?
+2. **Viabilidad técnica:** Arquitectura sólida, segura y casi lista para producción.
+3. **Avance del MVP:** ¿Qué tan desarrollada y funcional está la solución al momento de la entrega?
+4. **Uso de tecnología Avalanche y partners:** Uso inteligente de infraestructura (L1s, ICM, C-Chain) y partners.
+5. **Modelo de negocio:** Generación de valor y monetización.
+
+### Tracks de Interés para Kumply
+- Identidad Digital y KYC On-Chain *(Foco Principal)*
+- Pagos Institucionales y Tokenización de Activos
+- Automatización de Procesos Corporativos
+
+---
+
 ## Reglas del Ecosistema Avalanche (SIEMPRE respetar)
 
 - El trademark **AVALANCHE®** es de Ava Labs, Inc. KUMPLY es una submission independiente, no endorsada por Ava Labs.
