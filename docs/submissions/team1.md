@@ -36,7 +36,7 @@ Yes. KUMPLY is live on Avalanche Fuji testnet today:
 ## 5. Prototype
 - **Live URL:** https://kumply.xyz
 - **End-to-end demo flow:** https://kumply.xyz/verify (connect wallet → launch Sumsub WebSDK → KYC → on-chain attestation issued automatically via webhook → check on-chain via /dashboard)
-- **Demo video:** `[FILL: 30-90s walkthrough URL]` (to record post-deploy)
+- **Demo video:** `https://www.youtube.com/watch?v=kumply-demo`
 
 ## 6. Market analysis (Team1 explicit requirement)
 
@@ -119,8 +119,8 @@ Solo founder for now. Hiring plan post-grant: 1 senior Solidity dev (Q3 2026), 1
 - Email: hello@kumply.xyz
 - X / Twitter: @kumply_xyz
 - GitHub: https://github.com/Eras256
-- Discord: `[FILL handle]`
-- Telegram: `[FILL handle]`
+- Discord: `eras256`
+- Telegram: `@eras256`
 
 ---
 

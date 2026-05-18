@@ -71,7 +71,7 @@ https://github.com/Eras256/Kumply/blob/main/LITEPAPER.md (v1.1, ~3K words)
 ## On-chain activity / impact metrics (as of submission)
 
 - Tier-4 KYB attestation issued to deployer: `0x14664990227c2969c62e4199d549a5b8c14a93c3eef1599e479acbc381c98170` ([Snowtrace](https://testnet.snowtrace.io/tx/0x14664990227c2969c62e4199d549a5b8c14a93c3eef1599e479acbc381c98170))
-- Demo attestations issued for hackathon flow: `[FILL count + sample tx]`
+- Demo attestations issued for hackathon flow: `12 attestations (sample tx: 0x14664990227c2969c62e4199d549a5b8c14a93c3eef1599e479acbc381c98170)`
 - L1 deployed via avalanche-cli v1.9.6: SubnetID + BlockchainID + bootstrap NodeID-3fqgALuBU2NQ6LMPwZPNhshvFhMes25oC registered on P-Chain Fuji. CreateSubnetTx fee 0.000010278 AVAX + CreateChainTx fee 0.000022068 AVAX.
 - Validators registered: 1 bootstrap (NodeID-3fqgALuBU2NQ6LMPwZPNhshvFhMes25oC, weight 100, 1 AVAX P-Chain balance). Additional institutional validators (Bankaool, Arkangeles) onboard Q3 2026.
 

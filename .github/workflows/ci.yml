@@ -93,6 +93,9 @@ jobs:
       - name: Build API
         run: pnpm --filter @kumply/api build
 
+      - name: Run API tests
+        run: pnpm --filter @kumply/api test
+
   # ── Frontend: build ───────────────────────────────────────────
   web:
     name: Frontend
