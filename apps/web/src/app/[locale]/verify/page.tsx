@@ -32,6 +32,7 @@ export default function VerifyPage() {
   const [selectedLevel, setSelectedLevel] = useState<string>(validLevels.includes(levelParam) ? levelParam : "standard-kyc");
   const [attestation, setAttestation] = useState<{ tier: number; expiry: number } | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [sdkLaunched, setSdkLaunched] = useState(false);
   const sumsubContainerRef = useRef<HTMLDivElement>(null);
   const sdkLaunchedRef = useRef(false);
 
@@ -69,6 +70,7 @@ export default function VerifyPage() {
     if (!address || sdkLaunchedRef.current) return;
     setError(null);
     sdkLaunchedRef.current = true;
+    setSdkLaunched(true);
 
     try {
       const tokenRes = await fetch(`/api/token`, {
@@ -106,6 +108,7 @@ export default function VerifyPage() {
         })
         .on("idCheck.onError", (err: any) => {
           sdkLaunchedRef.current = false;
+          setSdkLaunched(false);
           setError(`${t("verifyError")}: ${err?.message || "Unknown error"}`);
         })
         .build();
@@ -115,6 +118,7 @@ export default function VerifyPage() {
       }
     } catch (e: any) {
       sdkLaunchedRef.current = false;
+      setSdkLaunched(false);
       setError(e.message || t("launchError"));
     }
   }
@@ -230,7 +234,7 @@ export default function VerifyPage() {
             <button
               className="btn btn-primary"
               style={{ fontSize: "1rem", padding: "0.85rem 2.5rem" }}
-              onClick={() => setStep("kyc")}
+              onClick={() => { setStep("kyc"); launchSumsub(); }}
             >
               {t("tierSelectBtn")}
             </button>
@@ -245,7 +249,7 @@ export default function VerifyPage() {
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
             <h1 className="page-title verify-title" style={{ margin: 0 }}>{t("pageTitle")}</h1>
             <button
-              onClick={() => { sdkLaunchedRef.current = false; setStep("tierSelect"); }}
+              onClick={() => { sdkLaunchedRef.current = false; setSdkLaunched(false); setStep("tierSelect"); }}
               style={{ marginLeft: "auto", fontSize: "0.8rem", color: "var(--text-tertiary)", background: "none", border: "1px solid var(--border)", borderRadius: "var(--radius-sm)", padding: "0.3rem 0.75rem", cursor: "pointer" }}
             >
               ← {t("tierSelectTitle").split(" ")[0]}
@@ -260,9 +264,9 @@ export default function VerifyPage() {
 
           <p style={{ color: "var(--text-secondary)", marginBottom: "1.5rem", fontSize: "0.9rem", lineHeight: 1.6 }}>{t("kycExplainer")}</p>
 
-          <div id="sumsub-container" ref={sumsubContainerRef} className="verify-sumsub-box" />
-
-          {!sdkLaunchedRef.current && (
+          {sdkLaunched ? (
+            <div id="sumsub-container" ref={sumsubContainerRef} className="verify-sumsub-box" />
+          ) : (
             <div style={{ textAlign: "center" }}>
               <button className="btn btn-primary" style={{ fontSize: "1rem", padding: "0.85rem 2rem" }} onClick={launchSumsub}>
                 {t("launchBtn")}
