@@ -31,7 +31,7 @@ The product has two layers, both production-grade today:
 
 **Standards compliance verified by 110 unit tests:** ACP-30 (Warp×EVM), ACP-77 (continuous-fee L1 validators), ACP-99 (ValidatorSetManager two-phase lifecycle with Avalanche-codec bit-exact Warp payloads), ACP-103 roadmap.
 
-**Institutional pipeline:** active conversations with Bankaool, Arkangeles, and three additional LatAm enterprises (under NDA).
+**Institutional pipeline:** outreach underway to Mexican digital banks, venture funds, and additional LatAm enterprises.
 
 **Software-only positioning:** no custody, no fiat/crypto exchange, no tradable assets, no DEX listing for KMP. Designed to operate outside regulated financial classifications, with a written counsel opinion engaged for Q3 2026 before mainnet.
 
@@ -73,14 +73,14 @@ https://github.com/Eras256/Kumply/blob/main/LITEPAPER.md (v1.1, ~3K words)
 - Tier-4 KYB attestation issued to deployer: `0x14664990227c2969c62e4199d549a5b8c14a93c3eef1599e479acbc381c98170` ([Snowtrace](https://testnet.snowtrace.io/tx/0x14664990227c2969c62e4199d549a5b8c14a93c3eef1599e479acbc381c98170))
 - Demo attestations issued for hackathon flow: `12 attestations (sample tx: 0x14664990227c2969c62e4199d549a5b8c14a93c3eef1599e479acbc381c98170)`
 - L1 deployed via avalanche-cli v1.9.6: SubnetID + BlockchainID + bootstrap NodeID-3fqgALuBU2NQ6LMPwZPNhshvFhMes25oC registered on P-Chain Fuji. CreateSubnetTx fee 0.000010278 AVAX + CreateChainTx fee 0.000022068 AVAX.
-- Validators registered: 1 bootstrap (NodeID-3fqgALuBU2NQ6LMPwZPNhshvFhMes25oC, weight 100, 1 AVAX P-Chain balance). Additional institutional validators (Bankaool, Arkangeles) onboard Q3 2026.
+- Validators registered: 1 bootstrap (NodeID-3fqgALuBU2NQ6LMPwZPNhshvFhMes25oC, weight 100, 1 AVAX P-Chain balance). Additional institutional validators onboard starting Q3 2026.
 
 ## Why this advances Avalanche
 
 1. **Unlocks a category Avalanche has been losing to permissioned chains** (Polygon Supernets, Hyperledger). Banks have a clean path to on-chain operations without sacrificing the wider DeFi composability story.
 2. **First open-source ACP-99 implementation outside Ava Labs reference.** Other institutional L1 builders can fork and reuse. KumplyValidatorSetManager.sol becomes the canonical pattern for KYB-gated validator sets.
 3. **Agentic DeFi primitive (KYA Tier 5).** As AI agents become first-class on-chain actors in 2026-2027, KUMPLY is the registry every regulated agent registers against. This is greenfield — no incumbent on any major EVM L1.
-4. **LatAm institutional bridgehead.** Mexico's banking sector is the biggest unaddressed institutional Web3 market in the Americas. Bankaool + Arkangeles partnerships position KUMPLY as the on-ramp.
+4. **LatAm institutional bridgehead.** Mexico's banking sector is the biggest unaddressed institutional Web3 market in the Americas. KUMPLY is built to be the on-ramp.
 5. **Open source, MIT, no proprietary lock-in.** Every smart contract, the SDK, and the reference frontend are public.
 
 ## Team
@@ -102,7 +102,7 @@ Discretionary. If we get to specify a number: the highest-impact uses for $50K-$
 
 - AVALANCHE® is a trademark of Ava Labs, Inc. KUMPLY is an independent submission, not endorsed by Ava Labs.
 - KMP is the KUMPLY L1 gas token, not an investment instrument, not e-money, not offered for sale.
-- All claims about partnerships with Bankaool/Arkangeles refer to active conversations under NDA, not formalized contracts (formalization is Q3 2026).
+- No institutional partnerships are formalized yet; institutional onboarding is targeted for Q3 2026.
 - Mainnet launch contingent on written Mexican legal opinion.
 
 ---

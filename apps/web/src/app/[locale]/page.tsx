@@ -169,7 +169,7 @@ export default async function Home() {
 
       </section>
 
-      {/* ── Partners / Institutions ── */}
+      {/* ── Infrastructure / Stack ── */}
       <section id="partners" aria-labelledby="partners-title" style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
         <div className="container section">
           <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
@@ -178,39 +178,39 @@ export default async function Home() {
           </div>
 
           <div className="partners-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
-            {/* Bankaool */}
+            {/* AVALANCHE® Network */}
             <div className="glass-card" style={{ textAlign: 'center', padding: '2rem' }}>
-              <div style={{ width: '56px', height: '56px', borderRadius: 'var(--radius-md)', background: 'linear-gradient(135deg, #1e40af, #1d4ed8)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem', fontSize: '1.5rem' }}>
-                🏦
+              <div style={{ width: '56px', height: '56px', borderRadius: 'var(--radius-md)', background: 'linear-gradient(135deg, var(--accent-dark), var(--accent))', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem', fontSize: '1.5rem' }}>
+                🔺
               </div>
               <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>{h('partner1Name')}</h3>
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>{h('partner1Desc')}</p>
               <div style={{ marginTop: '1rem' }}>
-                <span className="badge badge-info">Hackathon Partner</span>
+                <span className="badge badge-info">Network</span>
               </div>
             </div>
 
-            {/* Arkangeles */}
+            {/* Sumsub */}
             <div className="glass-card" style={{ textAlign: 'center', padding: '2rem' }}>
-              <div style={{ width: '56px', height: '56px', borderRadius: 'var(--radius-md)', background: 'linear-gradient(135deg, #7c3aed, #6d28d9)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem', fontSize: '1.5rem' }}>
-                🚀
+              <div style={{ width: '56px', height: '56px', borderRadius: 'var(--radius-md)', background: 'linear-gradient(135deg, #1e40af, #1d4ed8)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem', fontSize: '1.5rem' }}>
+                🪪
               </div>
               <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>{h('partner2Name')}</h3>
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>{h('partner2Desc')}</p>
               <div style={{ marginTop: '1rem' }}>
-                <span className="badge badge-info">Hackathon Partner</span>
+                <span className="badge badge-info">KYC Provider</span>
               </div>
             </div>
 
-            {/* LatAm DeFi Alliance */}
+            {/* KUMPLY Compliance L1 */}
             <div className="glass-card" style={{ textAlign: 'center', padding: '2rem' }}>
-              <div style={{ width: '56px', height: '56px', borderRadius: 'var(--radius-md)', background: 'linear-gradient(135deg, var(--accent-dark), var(--accent))', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem', fontSize: '1.5rem' }}>
-                🌎
+              <div style={{ width: '56px', height: '56px', borderRadius: 'var(--radius-md)', background: 'linear-gradient(135deg, #7c3aed, #6d28d9)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem', fontSize: '1.5rem' }}>
+                ⛓️
               </div>
               <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>{h('partner3Name')}</h3>
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>{h('partner3Desc')}</p>
               <div style={{ marginTop: '1rem' }}>
-                <span className="badge badge-accent">Ecosystem</span>
+                <span className="badge badge-accent">Live on Fuji</span>
               </div>
             </div>
           </div>

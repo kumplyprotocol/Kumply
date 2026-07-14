@@ -91,7 +91,7 @@ async function main() {
   console.log("\nNext steps (ACP-99 two-phase lifecycle):");
   console.log("  1. After the P-Chain processes ConvertSubnetToL1Tx, an L1_MANAGER_ROLE");
   console.log("     holder calls initializeValidatorSet(conversionData, messageIndex).");
-  console.log("  2. Each institutional validator (Bankaool, Arkangeles, ...) calls");
+  console.log("  2. Each institutional validator (KYB-verified) calls");
   console.log("     initiateValidatorRegistration(nodeID, blsPublicKey, balanceOwner,");
   console.log("     disableOwner, weight) — gated by Tier-4 (KYB) attestation.");
   console.log("  3. Their off-chain bot picks up the P-Chain ack and calls");

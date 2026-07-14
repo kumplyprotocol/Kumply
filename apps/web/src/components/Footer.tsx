@@ -43,8 +43,8 @@ export function Footer() {
               {tFooter('brandDesc')}
             </p>
             <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem' }}>
-              <span className="badge badge-accent">LatAm Hackathon</span>
-              <span className="badge badge-info">Fuji Testnet</span>
+              <span className="badge badge-accent">Fuji Testnet</span>
+              <span className="badge badge-info">Compliance Infra</span>
             </div>
           </div>
 

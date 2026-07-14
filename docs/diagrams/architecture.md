@@ -121,7 +121,7 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-    OWNER[👔 Tier-4 KYB Owner<br/>Bankaool / Hedge Fund / VC]
+    OWNER[👔 Tier-4 KYB Owner<br/>Digital Bank / Hedge Fund / VC]
     AGENT[🤖 Autonomous Agent<br/>EVM wallet]
     AR[AgentRegistry.sol<br/>Q3 2026]
     DAPP[DApp on KUMPLY L1]

@@ -2,7 +2,7 @@
 
 This folder contains everything needed to spin up the **KUMPLY Compliance L1** on the Avalanche network using Avalanche CLI. All files conform to **ACP-77** (Reinventing Subnets) and **ACP-99** (ValidatorSetManager).
 
-> **Status:** Deploy-Ready · Not Yet Live · Awaiting institutional validator commitments (Bankaool, Arkangeles)
+> **Status:** Deploy-Ready · Not Yet Live · Institutional validator slots open (KYB-gated)
 
 ---
 
@@ -37,7 +37,7 @@ This folder contains everything needed to spin up the **KUMPLY Compliance L1** o
 1. **Quorum 67%** in `warpConfig` — required for Avalanche Warp Messages to the P-Chain (ACP-77 §"Validator manager contracts" minimum).
 2. **`contractDeployerAllowList` enabled** — only KYB-verified institutions can deploy contracts on the L1 (resolved off-chain at chain bootstrap by Hardhat deploy script).
 3. **`txAllowList` disabled** — any wallet can transact (we don't gate at the network level; gating happens at the application level via `ComplianceGate.sol`).
-4. **PoA validator set** — initially run by Bankaool, Arkangeles, and KUMPLY Protocol. PoS migration via ACP-99 ValidatorManager contract upgrade path is supported.
+4. **PoA validator set** — initially run by KUMPLY Protocol, with KYB-verified institutional validators onboarding into open slots. PoS migration via ACP-99 ValidatorManager contract upgrade path is supported.
 5. **`requirePrimaryNetworkSigners: true`** — ACP-77 requirement so the L1 can use the Primary Network's Warp signature aggregation.
 
 ---

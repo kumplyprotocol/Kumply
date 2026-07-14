@@ -4,7 +4,7 @@
 
 KUMPLY provides non-custodial, on-chain identity verification (KYC/KYB/KYA) for the AVALANCHE® network. By bridging real-world regulatory compliance with DeFi anonymity, we empower institutions, exchanges, and autonomous AI agents to operate seamlessly across the C-Chain and custom AVALANCHE® L1s without compromising user privacy.
 
-*Built for the AVALANCHE® LatAm Hackathon (2026).*
+*Live on the AVALANCHE® Fuji Testnet — mainnet is the next milestone.*
 
 > **Trademark Notice:** The AVALANCHE® and AVAX® trademarks are owned by Ava Labs, Inc. KUMPLY is an independent project — not endorsed by, sponsored by, or affiliated with Ava Labs, Inc. or the Avalanche Foundation.
 

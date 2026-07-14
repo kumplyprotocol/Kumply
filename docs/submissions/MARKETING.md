@@ -19,7 +19,7 @@
 | **0:32 – 0:42** | Cambio a Snowtrace → muestro la tx hash → Read Contract → `verify(address)` returns `(true, 4, expiry, …)` | "Aquí: tier 4, KYB. La misma atestación es leída por cualquier DApp en Avalanche en una sola llamada." |
 | **0:42 – 0:55** | Cambio a `kumply.xyz/demo` → demo del ComplianceGate → click "Protected action" → success | "Tres líneas de Solidity en un ComplianceGate. Cualquier DApp gatea acciones por tier requerido — sin re-hacer KYC por protocolo, sin walled gardens." |
 | **0:55 – 1:10** | Cambio a `kumply.xyz/l1` → muestro SubnetID + BlockchainID + Snowtrace del ValidatorSetManager | "Y ya está LIVE en Fuji: nuestra Compliance L1 propia, con validadores KYB únicamente, gobernada por nuestro KumplyValidatorSetManager — ACP-99 compliant, 110 tests verde." |
-| **1:10 – 1:25** | Frase final + logo + CTAs (kumply.xyz · GitHub · @kumply_xyz) | "Software-only, no custodial, listo para que Bankaool, Arkangeles y cualquier banco LatAm operen en cadena sin perder regulación. Buscamos partners en Retro9000, Team1 y Blizzard." |
+| **1:10 – 1:25** | Frase final + logo + CTAs (kumply.xyz · GitHub · @kumply_xyz) | "Software-only, no custodial, listo para que cualquier banco digital o VC LatAm opere en cadena sin perder regulación. Buscamos partners en Retro9000, Team1 y Blizzard." |
 
 ### Tips de producción
 
@@ -94,7 +94,7 @@ No other Avalanche L1 — and to our knowledge no other EVM L1 — has this.
 Designed to stay outside enterprise / IFPE / Actividad Vulnerable classifications
 under Mexican Enterprise Law.
 
-Active conversations: Bankaool · Arkangeles · 3 LatAm enterprises (NDA).
+Target pipeline: Mexican digital banks · venture funds · LatAm enterprises.
 
 Built solo at the @avalabs LatAm Institutional Hackathon · MIT licensed.
 ```
@@ -120,7 +120,7 @@ Aplicando a Retro9000 R3 hoy.
 
 - @avalancheavax announcements de Retro9000 → repostea con "Submitting KUMPLY today — the first ACP-99 KYB-gated L1 on @AvalancheFuji"
 - @team1network anuncios → "KUMPLY applying to the Identity track — solving counterparty resolution for LatAm institutions"
-- Cualquier publicación de Bankaool / Arkangeles sobre Web3 → "This is exactly what KUMPLY is built for. DM us"
+- Cualquier publicación de bancos digitales o VCs LatAm sobre Web3 → "This is exactly what KUMPLY is built for. DM us"
 
 ---
 
@@ -133,7 +133,7 @@ KUMPLY es la primera infraestructura de compliance institucional sobre
 Avalanche: atestaciones KYC, KYB y KYA (Know Your Agent) on-chain, más una
 L1 dedicada donde cada validador es una institución verificada.
 
-¿Por qué importa? Porque Bankaool, Arkangeles y decenas de enterprises LatAm
+¿Por qué importa? Porque bancos digitales, fondos y decenas de enterprises LatAm
 quieren operar en cadena pero no pueden mientras no exista una primitiva
 de "saber quién es la contraparte" que sea técnicamente componible y
 regulatoriamente defendible.
@@ -189,7 +189,7 @@ Submitting Retro9000 R3 today.
 
 ---
 
-## 5. Cold email — institutional outreach (a Bankaool / Arkangeles / enterprises)
+## 5. Cold email — institutional outreach (bancos / fondos / enterprises)
 
 **Subject:** KUMPLY — KYC y KYB on-chain en Avalanche, listo para piloto
 

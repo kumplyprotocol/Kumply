@@ -40,7 +40,7 @@ Yes. KUMPLY is live on Avalanche Fuji testnet today:
 
 ## 6. Market analysis (Team1 explicit requirement)
 
-**Problem we solve.** LatAm financial institutions face a structural blocker to Web3 adoption: no compliant counterparty-resolution layer. Banco Bankaool, Arkangeles, and dozens of LatAm enterprises have publicly stated they want to deploy on-chain products but cite "no on-chain KYC primitive trusted by regulators" as the gating concern. Current workarounds (off-chain whitelists, per-DApp KYC, permissioned forks) all fragment liquidity and break composability.
+**Problem we solve.** LatAm financial institutions face a structural blocker to Web3 adoption: no compliant counterparty-resolution layer. Digital banks, venture funds, and dozens of LatAm enterprises have publicly stated they want to deploy on-chain products but cite "no on-chain KYC primitive trusted by regulators" as the gating concern. Current workarounds (off-chain whitelists, per-DApp KYC, permissioned forks) all fragment liquidity and break composability.
 
 **Market size.**
 - LatAm Web3 adoption: Mexico alone has ~12M crypto users (Chainalysis 2025), with traditional banking penetration at 56% — a massive opportunity for bank-grade on-chain rails.
@@ -49,10 +49,10 @@ Yes. KUMPLY is live on Avalanche Fuji testnet today:
 
 **Pricing benchmark.** Traditional KYC providers (Sumsub, Onfido, Veriff) charge $1-$8 per verification with no on-chain composability and no programmatic API for smart contracts. KUMPLY's $0.50 per-check is a 50-94% cost reduction, plus the compliance data is reusable across every Avalanche DApp the user touches — per-user lifetime cost trends toward zero as the network effect compounds.
 
-**Initial customer pipeline (under NDA):**
-- 2 LatAm banks (Bankaool, Arkangeles — Mexico)
-- 3 LatAm enterprises (names redacted, pre-LOI conversations)
-- 1 LatAm tokenization platform (real-world assets, pre-pilot)
+**Initial customer pipeline (target segments):**
+- LatAm digital banks (Mexico — outreach underway)
+- LatAm enterprises (compliance-gated DeFi use cases)
+- LatAm tokenization platforms (real-world assets)
 
 ## 7. Revenue model — how it might work (Team1 explicit ask)
 
@@ -86,7 +86,7 @@ Use of funds (line-itemized for accountability):
 | Use | Amount | Why |
 |---|---|---|
 | Litepaper translation (EN / ES / PT) by professional Web3 translator | $1,200 | LatAm market reach + Brazil expansion prep |
-| 60-second institutional pitch video (script + animator) | $1,500 | Sales asset for Bankaool / Arkangeles formalizations |
+| 60-second institutional pitch video (script + animator) | $1,500 | Sales asset for institutional outreach (banks / funds) |
 | Integration documentation for top 5 Avalanche DApps | $800 | Trader Joe, Benqi, GMX-style protocols — onboarding kit |
 | Domain + 1 yr hosting (kumply.xyz + monitoring) | $500 | Already paid; this reimburses |
 | Smart-contract internal review by 1 external Solidity dev before audit | $1,000 | De-risk before $25K formal audit in Q3 |

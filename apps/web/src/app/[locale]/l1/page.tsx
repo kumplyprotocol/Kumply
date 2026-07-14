@@ -13,13 +13,13 @@ const BLOCKCHAIN_ID       = process.env.NEXT_PUBLIC_KUMPLY_L1_BLOCKCHAIN_ID || "
 const ATTESTATION_STORE   = process.env.NEXT_PUBLIC_CONTRACT_ATTESTATION_STORE || "0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76";
 const VALIDATOR_SET_MANAGER = process.env.NEXT_PUBLIC_CONTRACT_VALIDATOR_SET_MANAGER || "0x903f6E46f965C9A1127652D761400dBe487F555D";
 
-// Planned founding validators (KYB-gated — must hold Tier 4 attestation)
+// Founding validator slots (KYB-gated — each must hold a Tier 4 attestation)
 const FOUNDING_VALIDATORS = [
-  { name: "Bankaool",             role: "Digital bank · CNBV regulated",       tier: 4, status: "committed"   },
-  { name: "Arkangeles",           role: "Venture capital · LatAm",             tier: 4, status: "committed"   },
-  { name: "KUMPLY Protocol",      role: "Treasury validator",                  tier: 4, status: "committed"   },
-  { name: "LatAm DeFi Alliance",  role: "Regional consortium",                 tier: 4, status: "invited"     },
-  { name: "Institutional TBD #5", role: "Banking partner",                     tier: 4, status: "negotiating" },
+  { name: "KUMPLY Protocol",       role: "Treasury validator",                     tier: 4, status: "committed" },
+  { name: "Institutional Slot 2",  role: "Digital bank · onboarding open",         tier: 4, status: "open"      },
+  { name: "Institutional Slot 3",  role: "Venture fund · onboarding open",         tier: 4, status: "open"      },
+  { name: "Institutional Slot 4",  role: "Regional consortium · onboarding open",  tier: 4, status: "open"      },
+  { name: "Institutional Slot 5",  role: "Banking partner · onboarding open",      tier: 4, status: "open"      },
 ];
 
 const ACP_REFERENCES = [

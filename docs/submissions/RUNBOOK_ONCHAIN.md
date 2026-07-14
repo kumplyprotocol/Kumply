@@ -137,7 +137,7 @@ grep validatorSetManager contracts/l1/l1-config.json
 
 ## 5. Bootstrap del validator set (manual, opcional para submission)
 
-Una vez la L1 está corriendo, los validadores institucionales (tú primero, luego Bankaool/Arkangeles) llaman:
+Una vez la L1 está corriendo, los validadores institucionales (tú primero, luego las instituciones que se onboardeen) llaman:
 
 ```ts
 manager.initiateValidatorRegistration(
