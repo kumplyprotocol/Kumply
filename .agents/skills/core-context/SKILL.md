@@ -1,7 +1,7 @@
 # KUMPLY — Global Instructions for AI Assistant (Core Context Skill)
 
 > Este archivo fuerza a TODA IA (Claude, Cursor, Windsurf, Cline, Gemini) a leer la memoria del proyecto antes de actuar.
-> Actualizado: 14 Julio 2026
+> Actualizado: 16 Julio 2026
 
 ---
 
