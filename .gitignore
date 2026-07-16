@@ -60,3 +60,4 @@ update_docs.py
 *_keys.txt
 *_paths.txt
 missing_in_*.txt
+.env*
