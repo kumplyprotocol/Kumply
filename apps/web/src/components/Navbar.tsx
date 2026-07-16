@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback, useTransition } from "react";
 import { usePathname, useRouter, Link } from "@/i18n/routing";
-import { usePathname as useNextPathname } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { useAccount, useDisconnect } from "wagmi";
 import { useAppKit } from "@reown/appkit/react";
@@ -14,13 +13,17 @@ export function Navbar() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
-  const rawPathname = useNextPathname();
   const [isPending, startTransition] = useTransition();
 
-  const currentLang = rawPathname?.startsWith('/es') ? 'es' : 'en';
+  const [currentLang, setCurrentLang] = useState(locale);
+
+  useEffect(() => {
+    setCurrentLang(locale);
+  }, [locale]);
 
   const switchLocale = (newLocale: string) => {
     const search = window.location.search;
+    setCurrentLang(newLocale);
     startTransition(() => {
       router.replace(`${pathname}${search}`, { locale: newLocale });
     });
