@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { useAccount } from "wagmi";
+import { useAppKit } from "@reown/appkit/react";
 import { Link } from "@/i18n/routing";
 import { KumplyClient } from "@kumply/sdk";
 
@@ -46,12 +48,12 @@ const USE_CASES = [
     id: "defi",
     icon: "📈",
     title: "DeFi Protocol Access",
-    description: "A lending protocol requires Tier 2 (Standard KYC) to deposit funds. Wallet A is verified, Wallet B is not.",
+    description: "A lending protocol requires Tier 2 (Standard KYC) to deposit funds. The seeded demo wallet holds a real on-chain credential; the second wallet has none.",
     requiredTier: 2,
     walletA: DEMO_VERIFIED_WALLET,
     walletB: DEAD_WALLET,
-    walletALabel: "Verified User (Tier 3)",
-    walletBLabel: "Unverified User",
+    walletALabel: "Demo wallet — seeded credential",
+    walletBLabel: "Unverified wallet",
   },
   {
     id: "rwa",
@@ -61,32 +63,35 @@ const USE_CASES = [
     requiredTier: 4,
     walletA: DEMO_VERIFIED_WALLET,
     walletB: DEAD_WALLET,
-    walletALabel: "Corporate Entity (Tier 3 — insufficient)",
-    walletBLabel: "Unverified Entity",
+    walletALabel: "Demo wallet — seeded credential",
+    walletBLabel: "Unverified wallet",
   },
   {
     id: "agent",
     icon: "🤖",
     title: "AI Agent Marketplace",
-    description: "An on-chain AI marketplace requires Tier 5 (KYA) to list autonomous agents for trading.",
+    description: "An on-chain AI marketplace requires Tier 5 (KYA) to list autonomous agents for trading. The demo wallet is a business (Tier 4), not a registered agent — watch it get rejected.",
     requiredTier: 5,
     walletA: DEMO_VERIFIED_WALLET,
     walletB: DEAD_WALLET,
-    walletALabel: "Person (Tier 3 — not an agent)",
-    walletBLabel: "Unregistered Bot",
+    walletALabel: "Demo wallet — seeded credential",
+    walletBLabel: "Unverified wallet",
   },
 ];
 
 export default function DemoPage() {
   const t = useTranslations("Demo");
+  const { address: connectedAddress, isConnected } = useAccount();
+  const { open } = useAppKit();
   const [selectedUseCase, setSelectedUseCase] = useState(USE_CASES[0]);
   const [customAddress, setCustomAddress] = useState("");
   const [customRequiredTier, setCustomRequiredTier] = useState(2);
   const [results, setResults] = useState<CheckResult[]>([]);
+  const [resultLabels, setResultLabels] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function runCheck(addresses: string[], requiredTier: number) {
+  async function runCheck(addresses: string[], requiredTier: number, labels: string[]) {
     if (!CONTRACT) {
       setError("Contract address not configured. Check NEXT_PUBLIC_CONTRACT_ATTESTATION_STORE.");
       return;
@@ -94,6 +99,7 @@ export default function DemoPage() {
     setLoading(true);
     setError(null);
     setResults([]);
+    setResultLabels(labels);
 
     try {
       const client = new KumplyClient({ network: "fuji", contractAddress: CONTRACT });
@@ -123,7 +129,19 @@ export default function DemoPage() {
   }
 
   function handleUseCaseDemo() {
-    runCheck([selectedUseCase.walletA, selectedUseCase.walletB], selectedUseCase.requiredTier);
+    runCheck(
+      [selectedUseCase.walletA, selectedUseCase.walletB],
+      selectedUseCase.requiredTier,
+      [selectedUseCase.walletALabel, selectedUseCase.walletBLabel]
+    );
+  }
+
+  function handleMyWalletCheck() {
+    if (!isConnected || !connectedAddress) {
+      open();
+      return;
+    }
+    runCheck([connectedAddress], selectedUseCase.requiredTier, ["Your connected wallet"]);
   }
 
   function handleCustomCheck() {
@@ -132,7 +150,7 @@ export default function DemoPage() {
       setError("Invalid Ethereum address (must be 0x + 40 hex chars)");
       return;
     }
-    runCheck([addr], customRequiredTier);
+    runCheck([addr], customRequiredTier, ["Custom address"]);
   }
 
   return (
@@ -217,14 +235,31 @@ export default function DemoPage() {
           </div>
         </div>
 
-        <button
-          className="btn btn-primary"
-          onClick={handleUseCaseDemo}
-          disabled={loading}
-          style={{ fontSize: "0.95rem", padding: "0.75rem 1.75rem" }}
-        >
-          {loading ? "Checking on-chain…" : t("runDemoBtn")}
-        </button>
+        <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center" }}>
+          <button
+            className="btn btn-primary"
+            onClick={handleUseCaseDemo}
+            disabled={loading}
+            style={{ fontSize: "0.95rem", padding: "0.75rem 1.75rem" }}
+          >
+            {loading ? "Checking on-chain…" : t("runDemoBtn")}
+          </button>
+          <button
+            className="btn btn-secondary"
+            onClick={handleMyWalletCheck}
+            disabled={loading}
+            style={{ fontSize: "0.95rem", padding: "0.75rem 1.5rem" }}
+          >
+            {isConnected && connectedAddress
+              ? `Check my wallet (${connectedAddress.slice(0, 6)}…${connectedAddress.slice(-4)})`
+              : "Connect wallet to test yours"}
+          </button>
+        </div>
+        {isConnected && (
+          <p style={{ marginTop: "0.75rem", fontSize: "0.78rem", color: "var(--text-tertiary)" }}>
+            Runs the same on-chain read against your own address — if you completed verification, you&apos;ll see your real credential answer here.
+          </p>
+        )}
       </div>
 
       {/* ── Results ── */}
@@ -237,7 +272,6 @@ export default function DemoPage() {
       {results.length > 0 && (
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "2rem" }}>
           {results.map((r, i) => {
-            const labels = [selectedUseCase.walletALabel, selectedUseCase.walletBLabel];
             const isWalletA = i === 0;
             return (
               <div
@@ -252,7 +286,7 @@ export default function DemoPage() {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem", flexWrap: "wrap" }}>
                   <div>
                     <div style={{ fontSize: "0.75rem", color: "var(--text-tertiary)", marginBottom: "0.25rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                      {labels[i] || (isWalletA ? "Wallet A" : "Wallet B")}
+                      {resultLabels[i] || (isWalletA ? "Wallet A" : "Wallet B")}
                     </div>
                     <code style={{ fontSize: "0.875rem", color: "var(--text-primary)", fontFamily: "monospace" }}>
                       {r.address.slice(0, 10)}…{r.address.slice(-8)}
