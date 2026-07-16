@@ -1,0 +1,38 @@
+# KUMPLY L1 validator node on Fly.io
+# ACP-77 partial-sync validator: tracks the Fuji P-Chain + the KUMPLY subnet.
+# Staking keys + DB live on the persistent volume (/data).
+
+app = "kumply-l1-node"
+primary_region = "dfw"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  AVAGO_NETWORK_ID = "fuji"
+  AVAGO_DATA_DIR = "/data"
+  AVAGO_PARTIAL_SYNC_PRIMARY_NETWORK = "true"
+  AVAGO_TRACK_SUBNETS = "2buHAwNvaybnQ6vQYRS4TeXizZhAo33bhpnonAJu21CKYLZoST"
+  AVAGO_PUBLIC_IP = "149.248.220.4"
+  # Fly machines cap fds at 10240; avalanchego's default ask (32768) crashes it.
+  AVAGO_FD_LIMIT = "10000"
+  # Node API stays on 127.0.0.1 (default) — reach it via `fly proxy`, never the internet.
+
+[mounts]
+  source = "avago_data"
+  destination = "/data"
+
+# P2P — raw TCP passthrough on the dedicated IPv4 (AvalancheGo runs its own TLS).
+# The node HTTP API (9650) is intentionally NOT exposed.
+[[services]]
+  protocol = "tcp"
+  internal_port = 9651
+  auto_stop_machines = "off"
+  auto_start_machines = false
+  min_machines_running = 1
+  [[services.ports]]
+    port = 9651
+
+[[vm]]
+  size = "shared-cpu-4x"
+  memory = "8gb"
