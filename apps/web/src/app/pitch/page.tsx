@@ -32,7 +32,7 @@ async function getTotalAttestations(): Promise<string> {
     });
     return total.toString();
   } catch {
-    return "8"; // last known count if the RPC is unreachable at render time
+    return "10"; // last known count if the RPC is unreachable at render time
   }
 }
 

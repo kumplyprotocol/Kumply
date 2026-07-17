@@ -273,13 +273,18 @@ export const DECK_HTML = `
     </div>
     <div class="grid cols-2">
       <div class="cell">
-        <h3>Contracts verified on Mainnet C-Chain</h3>
-        <p class="proof"><span class="label">AttestationStore</span>
+        <h3>Contracts verified on both networks</h3>
+        <p class="proof"><span class="label">AttestationStore · Mainnet</span>
           <a class="addr" href="https://snowtrace.io/address/0xa116261Ed3a848A9E1cd34923D5A0442D1455F71">0xa116…5F71</a></p>
-        <p class="proof"><span class="label">ComplianceGate</span>
+        <p class="proof"><span class="label">ComplianceGate · Mainnet</span>
           <a class="addr" href="https://snowtrace.io/address/0x01BEEA13A485c7bAD58f926E345325e9e3773bEe">0x01BE…3bEe</a></p>
+        <p class="proof"><span class="label">AttestationStore · Fuji</span>
+          <a class="addr" href="https://testnet.snowtrace.io/address/0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD">0xa3Bc…22dD</a></p>
+        <p class="proof"><span class="label">ComplianceGate · Fuji</span>
+          <a class="addr" href="https://testnet.snowtrace.io/address/0xcFDdeA5482baE9A6733B58F6a39FC36BCe6164cF">0xcFDd…64cF</a></p>
         <p class="proof"><span class="label">ValidatorSetManager (Fuji)</span>
           <a class="addr" href="https://testnet.snowtrace.io/address/0x903f6E46f965C9A1127652D761400dBe487F555D">0x903f…555D</a></p>
+        <p style="margin-top: 0.6rem; font-size: 0.85em;">Read-path smoke tests run live against both deployments on every release: <strong>8/8 on mainnet, 10/10 on Fuji</strong> (incl. gate rejection/admission paths).</p>
       </div>
       <div class="cell">
         <h3>End-to-end flow, live</h3>
@@ -505,18 +510,23 @@ export const DECK_HTML = `
         <tbody>
           <tr><td>M1</td><td>Security &amp; quality hardening of AttestationStore + ComplianceGate: static analysis (Slither/Aderyn), fuzz + invariant test suite, expanded edge-case coverage, and a published threat-model report — findings fixed, all in-repo</td><td class="num">1–3</td><td class="num">$1,500</td></tr>
           <tr><td>M2</td><td>Sumsub production tier activated (Compliance plan); first real KYC/KYB attestations issued on-chain end-to-end</td><td class="num">2–6</td><td class="num">$3,500</td></tr>
-          <tr><td>M3</td><td>On-chain query fee activation on Mainnet C-Chain — the free read layer is already live and verified on mainnet (self-funded, July 2026); this milestone enables fees post-hardening with cold-key treasury ops, and ships the SDK mainnet release on npm</td><td class="num">6–9</td><td class="num">$2,000</td></tr>
+          <tr><td>M3</td><td>On-chain query fee activation on Mainnet C-Chain — the free read layer is already live and verified on mainnet (self-funded, July 2026); this milestone adds a written Mexican fintech legal opinion, migrates admin/treasury to cold-key ops, enables fees post-hardening, and ships the SDK mainnet release on npm</td><td class="num">6–9</td><td class="num">$2,000</td></tr>
           <tr><td>M4</td><td>KUMPLY L1 validator activation on Fuji; ICM integration for cross-L1 attestation reads; 2 pilot integrations generating real mainnet activity</td><td class="num">9–12</td><td class="num">$3,000</td></tr>
         </tbody>
       </table>
     </div>
+    <p class="note"><strong>Where the dollars actually go.</strong> Hard costs dominate: M2 is chiefly Sumsub's production
+      plan (subscription + per-verification pricing); M3 covers a written Mexican fintech legal opinion and cold-key
+      treasury setup before any fee is switched on; M4 covers validator node hosting and pilot integration work.
+      M1 is scoped builder time on open-source tooling (Slither, Aderyn, fuzzing) plus a published threat model.</p>
     <p class="note"><strong>Sized for discretion.</strong> Milestones are independently scoped, so the plan degrades gracefully
       if funded below the full ask: <strong>$5,000</strong> delivers M1–M2 (hardened contracts + real production verifications),
       <strong>$7,000</strong> adds mainnet fee activation, and the full <strong>$10,000</strong> completes L1 activation and pilot
-      integrations. Every milestone is builder time plus hard costs — chiefly Sumsub's production tier. What this
-      budget deliberately does <strong>not</strong> include: a formal third-party audit of the L1 validator manager,
-      scoped for Retro9000 / Accelerator funding once mainnet usage proves demand. Nothing this grant puts on
-      mainnet custodies user funds.</p>
+      integrations. What this budget deliberately does <strong>not</strong> include: a formal third-party audit of the L1
+      validator manager, scoped for Retro9000 / Accelerator funding once mainnet usage proves demand. Nothing this grant
+      puts on mainnet custodies user funds. <strong>Already shipped self-funded before this application</strong> — and not
+      billed to it: the mainnet C-Chain launch of the non-custodial core (verified on Snowtrace), the 157-test suite with CI,
+      the published SDK on npm, and the live dashboard/demo at kumply.xyz.</p>
   </section>
 
   <!-- 12 · Ask -->
