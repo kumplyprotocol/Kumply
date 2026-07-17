@@ -466,6 +466,9 @@ a:hover {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
   gap: 1rem;
 }
 
@@ -863,6 +866,7 @@ a:hover {
 
 @media (max-width: 480px) {
   .container { padding: 0 1rem; }
+  .navbar__inner { padding: 0 1rem; }
   .glass-card { padding: 1rem; }
   .section-title { font-size: 1.5rem; }
   .stat-value { font-size: 1.75rem; }

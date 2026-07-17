@@ -96,7 +96,7 @@ export function Navbar() {
         aria-label="Main navigation"
         className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}
       >
-        <div className="navbar__inner container">
+        <div className="navbar__inner">
           {/* LOGO */}
           <Link href="/" className="navbar__logo">
             <Image src={KumplyLogo} alt="Kumply Logo" width={32} height={32} style={{ borderRadius: '8px' }} />
