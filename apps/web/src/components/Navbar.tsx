@@ -288,7 +288,7 @@ export function Navbar() {
       </div>
       <style dangerouslySetInnerHTML={{ __html: `
         .navbar__mobile-actions { display: none; align-items: center; gap: 0.75rem; }
-        @media (max-width: 1100px) {
+        @media (max-width: 1250px) {
           .navbar__mobile-actions { display: flex; }
         }
         @media (max-width: 380px) {
