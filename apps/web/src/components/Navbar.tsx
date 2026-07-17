@@ -37,6 +37,25 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [theme, setTheme] = useState<string | null>(null);
+
+  useEffect(() => {
+    const activeTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    setTheme(activeTheme);
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  };
+
+  const selectTheme = (newTheme: 'light' | 'dark') => {
+    setTheme(newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -99,7 +118,7 @@ export function Navbar() {
         <div className="navbar__inner">
           {/* LOGO */}
           <Link href="/" className="navbar__logo">
-            <Image src={KumplyLogo} alt="Kumply Logo" width={32} height={32} style={{ borderRadius: '8px' }} />
+            <Image src={KumplyLogo} alt="Kumply Logo" width={32} height={32} className="navbar__logo-img" style={{ borderRadius: '8px' }} />
             <span className="navbar__brand">KUMPLY</span>
           </Link>
 
@@ -143,6 +162,25 @@ export function Navbar() {
                 className={`navbar__lang-btn ${currentLang === 'es' ? 'navbar__lang-btn--active' : ''}`}
               >ES</button>
             </div>
+
+            {/* THEME SWITCHER */}
+            <button
+              onClick={toggleTheme}
+              className="navbar__theme-btn"
+              aria-label="Toggle theme"
+              style={{ marginLeft: "0.5rem" }}
+            >
+              {theme === "light" ? (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                </svg>
+              ) : (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="4" />
+                  <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+                </svg>
+              )}
+            </button>
 
             {/* WALLET */}
             {mounted && isConnected ? (
@@ -262,6 +300,35 @@ export function Navbar() {
               onClick={() => { switchLocale('es'); closeMenu(); }}
               className={`navbar__lang-btn navbar__lang-btn--lg ${currentLang === 'es' ? 'navbar__lang-btn--active' : ''}`}
             >ES</button>
+          </div>
+
+          {/* MOBILE THEME SWITCHER */}
+          <div className="navbar__mobile-lang" style={{ marginTop: "1rem" }}>
+            <button
+              onClick={() => selectTheme('light')}
+              className={`navbar__lang-btn navbar__lang-btn--lg ${theme === 'light' ? 'navbar__lang-btn--active' : ''}`}
+              style={theme === 'light' ? { fontWeight: 700 } : {}}
+            >
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="4" />
+                  <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+                </svg>
+                {t('themeLight')}
+              </span>
+            </button>
+            <button
+              onClick={() => selectTheme('dark')}
+              className={`navbar__lang-btn navbar__lang-btn--lg ${theme === 'dark' || theme === null ? 'navbar__lang-btn--active' : ''}`}
+              style={theme === 'dark' || theme === null ? { fontWeight: 700 } : {}}
+            >
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                </svg>
+                {t('themeDark')}
+              </span>
+            </button>
           </div>
 
           {/* MOBILE WALLET */}

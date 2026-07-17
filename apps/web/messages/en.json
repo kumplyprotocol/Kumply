@@ -12,7 +12,9 @@
     "verify": "Get Verified",
     "connect": "Connect Wallet",
     "disconnect": "Disconnect",
-    "connected": "Connected"
+    "connected": "Connected",
+    "themeLight": "Light",
+    "themeDark": "Dark"
   },
   "Hero": {
     "badge": "Live on Mainnet C-Chain · Beta",
