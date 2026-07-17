@@ -4,8 +4,10 @@ dotenv.config({ path: "../.env" });
 
 // Seed demo attestations for hackathon presentation
 // Addresses used as demo subjects — must be real wallets to verify on-chain
+// Tier 4 (KYB) — kumply.xyz/demo expects the seeded wallet to pass the Tier 2
+// and Tier 4 use cases and be rejected by the Tier 5 (KYA) one.
 const DEMO_ATTESTATIONS = [
-  { address: "0xD65042534CE80fcb641fd6Eb99a16eBF6C0cd076", tier: 3, label: "Demo Enhanced KYC User" },
+  { address: "0xD65042534CE80fcb641fd6Eb99a16eBF6C0cd076", tier: 4, label: "Demo KYB Business" },
 ];
 
 async function main() {

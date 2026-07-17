@@ -67,7 +67,7 @@ export async function POST(request: Request) {
     const contractAddress = (
       process.env.CONTRACT_ATTESTATION_STORE ||
       process.env.NEXT_PUBLIC_CONTRACT_ATTESTATION_STORE ||
-      '0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76'
+      '0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD'
     ) as `0x${string}`;
     const rpcUrl =
       process.env.FUJI_RPC_URL ||

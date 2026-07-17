@@ -17,8 +17,8 @@ interface KumplyNetworkContextType {
 
 const KumplyNetworkContext = createContext<KumplyNetworkContextType | undefined>(undefined);
 
-const CONTRACT_STORE_FUJI = "0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76";
-const CONTRACT_GATE_FUJI = "0x3Bf8F8ea2573Eb3f386aDF72D191869c4827062B";
+const CONTRACT_STORE_FUJI = "0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD";
+const CONTRACT_GATE_FUJI = "0xcFDdeA5482baE9A6733B58F6a39FC36BCe6164cF";
 
 // Placeholders for mainnet. Can be overridden via env vars.
 const CONTRACT_STORE_MAINNET = process.env.NEXT_PUBLIC_CONTRACT_ATTESTATION_STORE_MAINNET || "0x0000000000000000000000000000000000000000";

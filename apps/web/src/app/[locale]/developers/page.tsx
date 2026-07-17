@@ -1,16 +1,19 @@
 import { useTranslations } from "next-intl";
 
-const ATTESTATION_STORE = "0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76";
-const COMPLIANCE_GATE   = "0x3Bf8F8ea2573Eb3f386aDF72D191869c4827062B";
+const ATTESTATION_STORE_MAINNET = "0xa116261Ed3a848A9E1cd34923D5A0442D1455F71";
+const COMPLIANCE_GATE_MAINNET   = "0x01BEEA13A485c7bAD58f926E345325e9e3773bEe";
+const ATTESTATION_STORE = "0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD";
+const COMPLIANCE_GATE   = "0xcFDdeA5482baE9A6733B58F6a39FC36BCe6164cF";
+const SNOWTRACE_BASE_MAINNET = "https://snowtrace.io/address";
 const SNOWTRACE_BASE    = "https://testnet.snowtrace.io/address";
 
-function ContractRow({ label, address }: { label: string; address: string }) {
+function ContractRow({ label, address, explorerBase = SNOWTRACE_BASE }: { label: string; address: string; explorerBase?: string }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', padding: '1rem 0', borderBottom: '1px solid var(--border)' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.5rem' }}>
         <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{label}</span>
         <a
-          href={`${SNOWTRACE_BASE}/${address}`}
+          href={`${explorerBase}/${address}`}
           target="_blank"
           rel="noopener noreferrer"
           style={{ fontSize: '0.75rem', color: 'var(--accent-light)' }}
@@ -69,8 +72,8 @@ export default function DevelopersPage() {
           <span className="keyword">import</span> {'{'} <span className="function">KumplyClient</span> {'}'} <span className="keyword">from</span> <span className="string">'@kumply/sdk'</span>;<br/><br/>
 
           <span className="keyword">const</span> client = <span className="keyword">new</span> <span className="function">KumplyClient</span>({'{'}<br/>
-          &nbsp;&nbsp;network: <span className="string">'fuji'</span>,<br/>
-          &nbsp;&nbsp;contractAddress: <span className="string">'{ATTESTATION_STORE}'</span><br/>
+          &nbsp;&nbsp;network: <span className="string">'mainnet'</span>,<br/>
+          &nbsp;&nbsp;contractAddress: <span className="string">'{ATTESTATION_STORE_MAINNET}'</span><br/>
           {'}'});<br/><br/>
 
           <span className="comment">// Verify a wallet address</span><br/>
@@ -93,7 +96,16 @@ export default function DevelopersPage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
           <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--success)', boxShadow: '0 0 10px var(--success)', flexShrink: 0 }}></div>
           <h3 style={{ color: 'var(--text-primary)', fontSize: '1.05rem' }}>{t('step3')}</h3>
-          <span className="badge badge-info" style={{ marginLeft: 'auto' }}>Fuji Testnet · chainId 43113</span>
+          <span className="badge badge-success" style={{ marginLeft: 'auto' }}>Mainnet C-Chain · chainId 43114</span>
+        </div>
+
+        <div style={{ marginBottom: '2.5rem' }}>
+          <ContractRow label={t('attestationStore')} address={ATTESTATION_STORE_MAINNET} explorerBase={SNOWTRACE_BASE_MAINNET} />
+          <ContractRow label={t('complianceGate')} address={COMPLIANCE_GATE_MAINNET} explorerBase={SNOWTRACE_BASE_MAINNET} />
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+          <span className="badge badge-info">Fuji Testnet · chainId 43113</span>
         </div>
 
         <div>
@@ -122,7 +134,7 @@ export default function DevelopersPage() {
 
           &nbsp;&nbsp;<span className="function">constructor</span>() {'{'}<br/>
           &nbsp;&nbsp;&nbsp;&nbsp;kumply = <span className="function">IAttestationStore</span>(<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="string">{ATTESTATION_STORE}</span><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="string">{ATTESTATION_STORE_MAINNET}</span><br/>
           &nbsp;&nbsp;&nbsp;&nbsp;);<br/>
           &nbsp;&nbsp;{'}'}<br/><br/>
 
@@ -171,7 +183,7 @@ export default function DevelopersPage() {
         </a>
 
         <a
-          href={`${SNOWTRACE_BASE}/${ATTESTATION_STORE}`}
+          href={`${SNOWTRACE_BASE_MAINNET}/${ATTESTATION_STORE_MAINNET}`}
           target="_blank"
           rel="noopener noreferrer"
           className="glass-card"

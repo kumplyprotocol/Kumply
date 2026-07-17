@@ -122,7 +122,7 @@ export default function DemoPage() {
       );
       setResults(checks);
     } catch (e) {
-      setError("Could not connect to Fuji testnet. Please check your connection.");
+      setError(`Could not connect to Avalanche ${network === "mainnet" ? "Mainnet" : "Fuji testnet"}. Please check your connection.`);
     } finally {
       setLoading(false);
     }

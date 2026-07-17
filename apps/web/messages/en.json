@@ -15,7 +15,7 @@
     "connected": "Connected"
   },
   "Hero": {
-    "badge": "Fuji Testnet Live",
+    "badge": "Live on Mainnet C-Chain · Beta",
     "title1": "Know Your Customers,",
     "title2": "Your Businesses, and Your AI Agents.",
     "description": "The complete compliance toolkit for companies building on the AVALANCHE® blockchain. Verify identities (KYC), businesses (KYB), and even AI agents (KYA) — all with one platform. Your users’ data stays private. Always.",
@@ -23,7 +23,7 @@
     "btnSecondary": "See How It Works"
   },
   "Home": {
-    "testnetBanner": "Fuji Testnet — This is a demo environment. Not for production use yet.",
+    "testnetBanner": "Live on Avalanche Mainnet C-Chain (read-only Beta). Automated KYC demos run on Fuji Testnet.",
     "statsAttestation": "Verified Credential",
     "statsTiers": "Compliance Plans",
     "statsContracts": "Live Contracts",
@@ -122,7 +122,7 @@
     "subtitle": "Add compliance checks to your app in under 10 minutes with our TypeScript SDK.",
     "step1": "1. Install the SDK",
     "step2": "2. Check if a User is Verified",
-    "step3": "3. Live Contracts on Fuji Testnet",
+    "step3": "3. Live Contracts — Mainnet & Fuji",
     "contractsTitle": "Contract Addresses",
     "attestationStore": "AttestationStore",
     "complianceGate": "ComplianceGate",
@@ -145,7 +145,7 @@
     "chainId": "Chain ID",
     "faucet": "Get Free Test AVAX®",
     "faucetDesc": "You need test AVAX® tokens to interact with KUMPLY contracts on Fuji. It’s free — takes 10 seconds.",
-    "contractsTitle": "KUMPLY Contracts on Fuji",
+    "contractsTitle": "KUMPLY Contracts",
     "contractsSubtitle": "Live and ready for testing",
     "attestationStore": "AttestationStore",
     "complianceGate": "ComplianceGate",
@@ -208,7 +208,7 @@
     "contracts": {
       "title": "Smart Contract Integration",
       "subtitle": "Add compliance checks directly into your protocol — 3 lines of Solidity",
-      "p1": "Our AttestationStore contract is the central registry where all verified credentials live. It’s deployed on Fuji and ready for you to query. Think of it as a compliance database that lives on-chain.",
+      "p1": "Our AttestationStore contract is the central registry where all verified credentials live. It’s deployed on Avalanche Mainnet C-Chain and Fuji Testnet, ready for you to query. Think of it as a compliance database that lives on-chain.",
       "p2": "Want to block unverified users from depositing funds? Just add one line: require(kumply.getTier(user) >= 2). That’s it. Your smart contract now enforces compliance automatically.",
       "f1Title": "Copy, Paste, Done",
       "f1Desc": "Simple Solidity interfaces that drop right into your existing contracts. No architectural changes needed.",
@@ -292,7 +292,7 @@
   },
   "Dashboard": {
     "title": "Compliance Dashboard",
-    "subtitle": "Real-time view of all attestations issued on the AVALANCHE® Fuji testnet. Query any wallet and inspect credential status.",
+    "subtitle": "Real-time view of all attestations issued on the selected AVALANCHE® network — Mainnet C-Chain or Fuji Testnet. Query any wallet and inspect credential status.",
     "statTotal": "Total Attestations",
     "lookupTitle": "Verify Any Wallet",
     "lookupDesc": "Enter any EVM address to check its current compliance tier, issuance date, and expiry.",
@@ -354,13 +354,13 @@
   },
   "Demo": {
     "title": "See KUMPLY in Action",
-    "subtitle": "Select a real-world use case and run a live compliance check against the AVALANCHE® Fuji testnet. No wallets required.",
+    "subtitle": "Select a real-world use case and run a live compliance check against the selected AVALANCHE® network — Mainnet or Fuji. No wallets required.",
     "gateTitle": "How ComplianceGate Works",
     "gateDesc": "Every DeFi protocol, RWA platform, or AI marketplace can add one modifier to their Solidity contract that gates access by KYC tier. The check is instant, gasless for reads, and fully on-chain — no APIs, no servers, no trust required.",
     "useCaseTitle": "Choose a Use Case",
     "runDemoBtn": "Run Live Check →",
     "customTitle": "Check Any Address",
-    "customDesc": "Enter any wallet address and select the required compliance tier. The check reads directly from the deployed contract on Fuji.",
+    "customDesc": "Enter any wallet address and select the required compliance tier. The check reads directly from the KUMPLY contract on the selected network.",
     "checkBtn": "Check",
     "solidityTitle": "Add Compliance in 3 Lines of Solidity",
     "solidityDesc": "Copy this pattern into your contract. Replace the constructor arguments with the live KUMPLY addresses."
@@ -407,14 +407,14 @@
     },
     "quickstart": {
       "title": "Quickstart",
-      "subtitle": "Install the SDK and verify any address’s tier in under a minute. Production-ready against Fuji today.",
+      "subtitle": "Install the SDK and verify any address’s tier in under a minute. Production-ready against Mainnet C-Chain today.",
       "installTitle": "1. Install",
       "verifyTitle": "2. Verify a counterparty",
       "gateTitle": "3. Gate your DApp by tier"
     },
     "contracts": {
       "title": "Smart Contracts",
-      "subtitle": "All KUMPLY contracts are deployed and verified on Avalanche Fuji. Each is open-source, audited internally, and documented with NatSpec.",
+      "subtitle": "All KUMPLY contracts are deployed and verified on Avalanche Mainnet C-Chain and Fuji. Each is open-source, audited internally, and documented with NatSpec.",
       "methodsLabel": "Key methods"
     },
     "sdk": {

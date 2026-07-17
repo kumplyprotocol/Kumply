@@ -15,7 +15,7 @@
     "connected": "Conectado"
   },
   "Hero": {
-    "badge": "Testnet Fuji en Vivo",
+    "badge": "En Vivo en Mainnet C-Chain · Beta",
     "title1": "Conoce a tus Clientes,",
     "title2": "tus Empresas y tus Agentes IA.",
     "description": "La plataforma de compliance completa para empresas que construyen en la blockchain AVALANCHE®. Verifica personas (KYC), empresas (KYB) e incluso agentes de IA (KYA) — todo en un solo lugar. Los datos de tus usuarios siempre están protegidos.",
@@ -23,7 +23,7 @@
     "btnSecondary": "Ver Cómo Funciona"
   },
   "Home": {
-    "testnetBanner": "Fuji Testnet — Este es un entorno de demostración. Aún no es para uso en producción.",
+    "testnetBanner": "En vivo en Avalanche Mainnet C-Chain (Beta de solo lectura). Los demos de KYC automático corren en Fuji Testnet.",
     "statsAttestation": "Credencial Verificada",
     "statsTiers": "Planes de Compliance",
     "statsContracts": "Contratos en Vivo",
@@ -122,7 +122,7 @@
     "subtitle": "Agrega verificación de compliance a tu app en menos de 10 minutos con nuestro SDK de TypeScript.",
     "step1": "1. Instalar el SDK",
     "step2": "2. Verificar si un Usuario está Verificado",
-    "step3": "3. Contratos en Vivo en Fuji Testnet",
+    "step3": "3. Contratos en Vivo — Mainnet y Fuji",
     "contractsTitle": "Direcciones de Contratos",
     "attestationStore": "AttestationStore",
     "complianceGate": "ComplianceGate",
@@ -145,7 +145,7 @@
     "chainId": "ID de Cadena",
     "faucet": "Obtener AVAX® de Prueba Gratis",
     "faucetDesc": "Necesitas tokens AVAX® de prueba para interactuar con los contratos de KUMPLY en Fuji. Es gratis — toma 10 segundos.",
-    "contractsTitle": "Contratos KUMPLY en Fuji",
+    "contractsTitle": "Contratos KUMPLY",
     "contractsSubtitle": "En vivo y listos para probar",
     "attestationStore": "AttestationStore",
     "complianceGate": "ComplianceGate",
@@ -208,7 +208,7 @@
     "contracts": {
       "title": "Integración de Contratos Inteligentes",
       "subtitle": "Agrega verificación de compliance directamente a tu protocolo — 3 líneas de Solidity",
-      "p1": "Nuestro contrato AttestationStore es el registro central donde viven todas las credenciales verificadas. Está desplegado en Fuji y listo para que lo consultes. Piensa en él como una base de datos de compliance que vive en la blockchain.",
+      "p1": "Nuestro contrato AttestationStore es el registro central donde viven todas las credenciales verificadas. Está desplegado en Avalanche Mainnet C-Chain y en Fuji Testnet, listo para que lo consultes. Piensa en él como una base de datos de compliance que vive en la blockchain.",
       "p2": "¿Quieres bloquear a usuarios no verificados para que no depositen fondos? Solo agrega una línea: require(kumply.getTier(user) >= 2). Eso es todo. Tu contrato inteligente ahora aplica compliance automáticamente.",
       "f1Title": "Copiar, Pegar, Listo",
       "f1Desc": "Interfaces de Solidity simples que se integran directamente en tus contratos existentes. Sin cambios de arquitectura.",
@@ -292,7 +292,7 @@
   },
   "Dashboard": {
     "title": "Panel de Compliance",
-    "subtitle": "Vista en tiempo real de todas las attestaciones emitidas en la testnet Fuji de AVALANCHE®. Consulta cualquier wallet e inspecciona el estado de sus credenciales.",
+    "subtitle": "Vista en tiempo real de todas las attestaciones emitidas en la red AVALANCHE® seleccionada — Mainnet C-Chain o Fuji Testnet. Consulta cualquier wallet e inspecciona el estado de sus credenciales.",
     "statTotal": "Total de Attestaciones",
     "lookupTitle": "Verificar Cualquier Wallet",
     "lookupDesc": "Ingresa cualquier dirección EVM para ver su tier de compliance, fecha de emisión y vencimiento.",
@@ -354,13 +354,13 @@
   },
   "Demo": {
     "title": "KUMPLY en Acción",
-    "subtitle": "Selecciona un caso de uso real y ejecuta una verificación de compliance en vivo contra la testnet Fuji de AVALANCHE®. No necesitas wallet.",
+    "subtitle": "Selecciona un caso de uso real y ejecuta una verificación de compliance en vivo contra la red AVALANCHE® seleccionada — Mainnet o Fuji. No necesitas wallet.",
     "gateTitle": "Cómo Funciona ComplianceGate",
     "gateDesc": "Cualquier protocolo DeFi, plataforma RWA o marketplace de IA puede agregar un modifier a su contrato Solidity que restringe el acceso por tier de KYC. La verificación es instantánea, gratuita para lecturas y totalmente on-chain — sin APIs, sin servidores, sin confianza ciega.",
     "useCaseTitle": "Elige un Caso de Uso",
     "runDemoBtn": "Ejecutar Verificación en Vivo →",
     "customTitle": "Verificar Cualquier Dirección",
-    "customDesc": "Ingresa cualquier dirección de wallet y selecciona el tier requerido. La verificación lee directamente del contrato desplegado en Fuji.",
+    "customDesc": "Ingresa cualquier dirección de wallet y selecciona el tier requerido. La verificación lee directamente del contrato KUMPLY en la red seleccionada.",
     "checkBtn": "Verificar",
     "solidityTitle": "Agrega Compliance en 3 Líneas de Solidity",
     "solidityDesc": "Copia este patrón en tu contrato. Reemplaza los argumentos del constructor con las direcciones live de KUMPLY."
@@ -407,14 +407,14 @@
     },
     "quickstart": {
       "title": "Inicio rápido",
-      "subtitle": "Instala el SDK y verifica el tier de cualquier address en menos de un minuto. Listo para producción contra Fuji hoy.",
+      "subtitle": "Instala el SDK y verifica el tier de cualquier address en menos de un minuto. Listo para producción contra Mainnet C-Chain hoy.",
       "installTitle": "1. Instalar",
       "verifyTitle": "2. Verificar una contraparte",
       "gateTitle": "3. Gatear tu DApp por tier"
     },
     "contracts": {
       "title": "Smart Contracts",
-      "subtitle": "Todos los contratos KUMPLY están desplegados y verificados en Avalanche Fuji. Cada uno es open-source, con revisión interna, y documentado con NatSpec.",
+      "subtitle": "Todos los contratos KUMPLY están desplegados y verificados en Avalanche Mainnet C-Chain y Fuji. Cada uno es open-source, con revisión interna, y documentado con NatSpec.",
       "methodsLabel": "Métodos clave"
     },
     "sdk": {

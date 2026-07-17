@@ -1,8 +1,10 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 
-const ATTESTATION_STORE = "0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76";
-const COMPLIANCE_GATE = "0x3Bf8F8ea2573Eb3f386aDF72D191869c4827062B";
+const ATTESTATION_STORE_MAINNET = "0xa116261Ed3a848A9E1cd34923D5A0442D1455F71";
+const COMPLIANCE_GATE_MAINNET = "0x01BEEA13A485c7bAD58f926E345325e9e3773bEe";
+const ATTESTATION_STORE = "0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD";
+const COMPLIANCE_GATE = "0xcFDdeA5482baE9A6733B58F6a39FC36BCe6164cF";
 const VALIDATOR_SET_MANAGER = "0x903f6E46f965C9A1127652D761400dBe487F555D";
 const L1_SUBNET_ID = "2buHAwNvaybnQ6vQYRS4TeXizZhAo33bhpnonAJu21CKYLZoST";
 const L1_BLOCKCHAIN_ID = "2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b";
@@ -195,8 +197,8 @@ export default function DocsPage() {
               <code style={CODE_BLOCK}>{`import { KumplyClient } from "@kumply/sdk";
 
 const client = new KumplyClient({
-  network: "fuji",
-  contractAddress: "${ATTESTATION_STORE}",
+  network: "mainnet",
+  contractAddress: "${ATTESTATION_STORE_MAINNET}",
 });
 
 const { verified, tier, expiry } = await client.verify(
@@ -214,7 +216,7 @@ import { ComplianceGate } from "@kumply/contracts";
 
 contract MyDApp {
   ComplianceGate immutable gate;
-  constructor() { gate = ComplianceGate(${COMPLIANCE_GATE}); }
+  constructor() { gate = ComplianceGate(${COMPLIANCE_GATE_MAINNET}); }
 
   function protectedAction() external payable {
     gate.protectedAction{value: msg.value}();
@@ -227,9 +229,11 @@ contract MyDApp {
           {/* 03 CONTRACTS */}
           <section className="glass-card" style={SECTION_PADDING}>
             <SectionHead id="contracts" num="03" title={t("contracts.title")} subtitle={t("contracts.subtitle")} />
-            <AddressRow label="AttestationStore" value={ATTESTATION_STORE} href={`https://testnet.snowtrace.io/address/${ATTESTATION_STORE}`} />
-            <AddressRow label="ComplianceGate" value={COMPLIANCE_GATE} href={`https://testnet.snowtrace.io/address/${COMPLIANCE_GATE}`} />
-            <AddressRow label="KumplyValidatorSetManager (ACP-99)" value={VALIDATOR_SET_MANAGER} href={`https://testnet.snowtrace.io/address/${VALIDATOR_SET_MANAGER}`} />
+            <AddressRow label="AttestationStore · Mainnet C-Chain" value={ATTESTATION_STORE_MAINNET} href={`https://snowtrace.io/address/${ATTESTATION_STORE_MAINNET}`} />
+            <AddressRow label="ComplianceGate · Mainnet C-Chain" value={COMPLIANCE_GATE_MAINNET} href={`https://snowtrace.io/address/${COMPLIANCE_GATE_MAINNET}`} />
+            <AddressRow label="AttestationStore · Fuji Testnet" value={ATTESTATION_STORE} href={`https://testnet.snowtrace.io/address/${ATTESTATION_STORE}`} />
+            <AddressRow label="ComplianceGate · Fuji Testnet" value={COMPLIANCE_GATE} href={`https://testnet.snowtrace.io/address/${COMPLIANCE_GATE}`} />
+            <AddressRow label="KumplyValidatorSetManager (ACP-99) · Fuji" value={VALIDATOR_SET_MANAGER} href={`https://testnet.snowtrace.io/address/${VALIDATOR_SET_MANAGER}`} />
             <div style={{ marginTop: "1rem", padding: "0.85rem", background: "var(--bg-secondary)", border: "1px solid var(--border)", borderRadius: "var(--radius-sm)" }}>
               <div style={{ fontSize: "0.78rem", color: "var(--text-secondary)", marginBottom: "0.5rem" }}>{t("contracts.methodsLabel")}</div>
               <code style={{ ...CODE_BLOCK, padding: "0.6rem 0.75rem", fontSize: "0.76rem" }}>
@@ -263,8 +267,8 @@ disableExpiredValidator(validationID)`}
             <code style={CODE_BLOCK}>{`import { KumplyClient, ATTESTATION_STORE_ABI, TIER } from "@kumply/sdk";
 
 const client = new KumplyClient({
-  network: "fuji",
-  contractAddress: "${ATTESTATION_STORE}",
+  network: "mainnet",
+  contractAddress: "${ATTESTATION_STORE_MAINNET}",
 });
 
 // Read methods (free, no gas)
@@ -407,7 +411,7 @@ client.publicClient;                     // viem PublicClient (advanced use)`}</
                 <span style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--text-primary)" }}>Litepaper v1.1</span>
                 <span style={{ fontSize: "0.75rem", color: "var(--text-secondary)" }}>{t("resources.litepaper")}</span>
               </a>
-              <a href="https://testnet.snowtrace.io/address/0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76" target="_blank" rel="noopener noreferrer" className="docs-resource">
+              <a href={`https://snowtrace.io/address/${ATTESTATION_STORE_MAINNET}`} target="_blank" rel="noopener noreferrer" className="docs-resource">
                 <span style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--text-primary)" }}>Snowtrace</span>
                 <span style={{ fontSize: "0.75rem", color: "var(--text-secondary)" }}>{t("resources.snowtrace")}</span>
               </a>

@@ -7,7 +7,9 @@ export default function NetworkPage() {
   const t = useTranslations('Network');
   const { network, contractAddress, complianceGateAddress, rpcUrl, chainId } = useKumplyNetwork();
   
-  const verifierAddress = process.env.NEXT_PUBLIC_VERIFIER_ADDRESS || "0xD65042534CE80fcb641fd6Eb99a16eBF6C0cd076";
+  const verifierAddress = network === "mainnet"
+    ? "0x55a3D0a6bF61bFcE5b2526cd6e089545007aFE8D"
+    : (process.env.NEXT_PUBLIC_VERIFIER_ADDRESS || "0xD65042534CE80fcb641fd6Eb99a16eBF6C0cd076");
   const snowtraceBase = network === "mainnet" 
     ? "https://snowtrace.io/address" 
     : "https://testnet.snowtrace.io/address";
@@ -16,7 +18,7 @@ export default function NetworkPage() {
   return (
     <div className="container" style={{ paddingTop: '2rem', paddingBottom: '5rem' }}>
       <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-        <h1 className="section-title">{t('title')}</h1>
+        <h1 className="section-title">{networkLabel}</h1>
         <p className="section-subtitle" style={{ margin: '0 auto' }}>{t('subtitle')}</p>
       </div>
 

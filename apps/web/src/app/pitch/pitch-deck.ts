@@ -189,9 +189,9 @@ export const DECK_HTML = `
       plus the first Avalanche L1 designed so that every validator must pass business verification (KYB) to join consensus.
     </p>
     <div class="title-badges">
-      <span class="badge live">Live on Fuji Testnet</span>
+      <span class="badge live">Live on Mainnet C-Chain · Beta</span>
       <span class="badge brand">ACP-99 · ACP-77 · ICM</span>
-      <span class="badge warn">Mainnet is the next milestone</span>
+      <span class="badge warn">Production KYC is the next milestone</span>
     </div>
     <div class="footer-links">
       <a href="https://kumply.xyz">kumply.xyz</a>
@@ -273,12 +273,12 @@ export const DECK_HTML = `
     </div>
     <div class="grid cols-2">
       <div class="cell">
-        <h3>Contracts verified on Fuji</h3>
+        <h3>Contracts verified on Mainnet C-Chain</h3>
         <p class="proof"><span class="label">AttestationStore</span>
-          <a class="addr" href="https://testnet.snowtrace.io/address/0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76">0x9Bbb…7d76</a></p>
+          <a class="addr" href="https://snowtrace.io/address/0xa116261Ed3a848A9E1cd34923D5A0442D1455F71">0xa116…5F71</a></p>
         <p class="proof"><span class="label">ComplianceGate</span>
-          <a class="addr" href="https://testnet.snowtrace.io/address/0x3Bf8F8ea2573Eb3f386aDF72D191869c4827062B">0x3Bf8…062B</a></p>
-        <p class="proof"><span class="label">ValidatorSetManager</span>
+          <a class="addr" href="https://snowtrace.io/address/0x01BEEA13A485c7bAD58f926E345325e9e3773bEe">0x01BE…3bEe</a></p>
+        <p class="proof"><span class="label">ValidatorSetManager (Fuji)</span>
           <a class="addr" href="https://testnet.snowtrace.io/address/0x903f6E46f965C9A1127652D761400dBe487F555D">0x903f…555D</a></p>
       </div>
       <div class="cell">
@@ -298,13 +298,15 @@ export const DECK_HTML = `
       </div>
       <div class="cell">
         <h3>Interactive demo</h3>
-        <p>Three scenarios (DeFi pool, RWA transfer, agent marketplace) checking real attestations against Fuji — no login, no wallet needed.</p>
+        <p>Three scenarios (DeFi pool, RWA transfer, agent marketplace) checking real attestations on the selected network — Mainnet or Fuji — no login, no wallet needed.</p>
         <p class="proof" style="margin-top: 0.6rem;"><a href="https://kumply.xyz/demo">kumply.xyz/demo</a></p>
       </div>
     </div>
-    <p class="note"><strong>Honest status:</strong> identity checks currently run on Sumsub's sandbox tier and all contracts live on Fuji Testnet.
+    <p class="note"><strong>Honest status:</strong> the non-custodial core (AttestationStore + ComplianceGate) is live and verified on
+      <strong>Mainnet C-Chain</strong> as a read-only beta with fees at zero — self-funded, July 2026 — alongside the full suite on Fuji Testnet.
+      Identity checks currently run on Sumsub's sandbox tier.
       The KUMPLY L1 is registered on Fuji with validator activation in progress — live status at <a href="https://kumply.xyz/l1">kumply.xyz/l1</a>.
-      Production identity checks and mainnet are exactly what this grant funds — see slide 11.</p>
+      Production identity checks and mainnet fee activation are exactly what this grant funds — see slide 11.</p>
   </section>
 
   <!-- 05 · How it works -->
@@ -415,7 +417,7 @@ export const DECK_HTML = `
         <h3>Pay-per-check · $0.50</h3>
         <p><code>checkCompliance(address)</code> is a payable read for dApps that want verified counterparties without
         a subscription. The fee logic, treasury accounting, and withdrawal are live in AttestationStore today —
-        currently set to zero on testnet.</p>
+        currently set to zero on both mainnet and testnet.</p>
       </div>
       <div class="cell">
         <h3>SaaS subscription</h3>
@@ -426,7 +428,7 @@ export const DECK_HTML = `
     <p class="lede" style="margin-top: 1.5rem;">
       <strong>Software-only by design:</strong> non-custodial, no fiat rails, no tradable token sale.
       KMP is the L1 gas token, not an investment product. This posture keeps KUMPLY outside regulated
-      financial classifications — a written Mexican legal opinion is scoped for Q3 2026, before mainnet.
+      financial classifications — a written Mexican legal opinion is scoped for Q3 2026, before fee activation on mainnet.
     </p>
   </section>
 
@@ -503,14 +505,14 @@ export const DECK_HTML = `
         <tbody>
           <tr><td>M1</td><td>Security &amp; quality hardening of AttestationStore + ComplianceGate: static analysis (Slither/Aderyn), fuzz + invariant test suite, expanded edge-case coverage, and a published threat-model report — findings fixed, all in-repo</td><td class="num">1–3</td><td class="num">$1,500</td></tr>
           <tr><td>M2</td><td>Sumsub production tier activated (Compliance plan); first real KYC/KYB attestations issued on-chain end-to-end</td><td class="num">2–6</td><td class="num">$3,500</td></tr>
-          <tr><td>M3</td><td>Mainnet C-Chain launch of the non-custodial core — AttestationStore + ComplianceGate with fees at zero (no funds custodied), contracts verified; SDK mainnet release on npm</td><td class="num">6–9</td><td class="num">$2,000</td></tr>
+          <tr><td>M3</td><td>On-chain query fee activation on Mainnet C-Chain — the free read layer is already live and verified on mainnet (self-funded, July 2026); this milestone enables fees post-hardening with cold-key treasury ops, and ships the SDK mainnet release on npm</td><td class="num">6–9</td><td class="num">$2,000</td></tr>
           <tr><td>M4</td><td>KUMPLY L1 validator activation on Fuji; ICM integration for cross-L1 attestation reads; 2 pilot integrations generating real mainnet activity</td><td class="num">9–12</td><td class="num">$3,000</td></tr>
         </tbody>
       </table>
     </div>
     <p class="note"><strong>Sized for discretion.</strong> Milestones are independently scoped, so the plan degrades gracefully
       if funded below the full ask: <strong>$5,000</strong> delivers M1–M2 (hardened contracts + real production verifications),
-      <strong>$7,000</strong> adds the mainnet launch, and the full <strong>$10,000</strong> completes L1 activation and pilot
+      <strong>$7,000</strong> adds mainnet fee activation, and the full <strong>$10,000</strong> completes L1 activation and pilot
       integrations. Every milestone is builder time plus hard costs — chiefly Sumsub's production tier. What this
       budget deliberately does <strong>not</strong> include: a formal third-party audit of the L1 validator manager,
       scoped for Retro9000 / Accelerator funding once mainnet usage proves demand. Nothing this grant puts on
@@ -523,12 +525,12 @@ export const DECK_HTML = `
       <span class="eyebrow">The ask</span>
       <span class="slide-num">12 / 12</span>
     </div>
-    <h2>Fund the bridge from testnet to mainnet.</h2>
+    <h2>Fund the bridge from beta to production.</h2>
     <p class="lede">
-      KUMPLY is already built, deployed, tested, and demonstrable. What stands between a working testnet
-      product and real verifications on mainnet are exactly two things a bootstrapped two-person team cannot
-      self-fund: <strong>production identity-verification costs</strong> and a <strong>disciplined
-      security-hardening pass</strong> before the non-custodial core ships to mainnet.
+      KUMPLY is already built, tested, and live on Mainnet C-Chain as a free read-only beta — we shipped
+      that ourselves. What stands between this beta and real production verifications are exactly two things
+      a bootstrapped two-person team cannot self-fund: <strong>production identity-verification costs</strong>
+      and a <strong>disciplined security-hardening pass</strong> before fees go live on the mainnet core.
       That is what this grant buys — everything else, we ship ourselves.
     </p>
     <div class="grid cols-2">
@@ -547,12 +549,13 @@ export const DECK_HTML = `
       <a href="https://kumply.xyz/verify">Verification flow</a>
       <a href="https://github.com/Eras256/Kumply">GitHub</a>
       <a href="https://www.npmjs.com/package/@kumply/sdk">@kumply/sdk</a>
-      <a href="https://testnet.snowtrace.io/address/0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76">Snowtrace</a>
+      <a href="https://snowtrace.io/address/0xa116261Ed3a848A9E1cd34923D5A0442D1455F71">Snowtrace</a>
     </div>
     <p class="legal">
       The AVALANCHE® and AVAX® trademarks are owned by Ava Labs, Inc. KUMPLY is an independent project —
       not endorsed by, sponsored by, or affiliated with Ava Labs, Inc. or the Avalanche Foundation.
-      All contracts currently deployed on Fuji Testnet; not for production use yet.
+      Core contracts live on Avalanche Mainnet C-Chain (read-only beta, fees at zero) and Fuji Testnet.
+      Automated identity checks remain on Sumsub's sandbox tier; not for production verifications yet.
     </p>
   </section>
 
