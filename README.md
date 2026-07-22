@@ -10,7 +10,7 @@ KUMPLY provides non-custodial, on-chain identity verification (KYC/KYB/KYA) for 
 
 [![CI](https://github.com/kumplyprotocol/Kumply/actions/workflows/ci.yml/badge.svg)](https://github.com/kumplyprotocol/Kumply/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/@kumply/sdk)](https://www.npmjs.com/package/@kumply/sdk)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
 ## 🌐 Live Contracts
 
@@ -220,7 +220,7 @@ KUMPLY rigorously adheres to the May 2026 Ava Labs Trademark Usage Policy and AV
 - ✅ Categorizes autonomous actors as **"AI Agents"** with KYA verification
 - ✅ Follows **responsible disclosure** practices for security vulnerabilities
 - ✅ Operates as **Software-Only** infrastructure — non-custodial, no financial intermediation
-- ✅ Published under **MIT License** for open-source transparency
+- ✅ Published under the **Apache License 2.0** — permissive, with an explicit patent grant and no trademark license
 
 ## 📚 Official Avalanche Resources & References
 
@@ -239,7 +239,11 @@ The architecture and implementation of KUMPLY were built strictly following the 
 
 ## 📄 License
 
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **Apache License 2.0** — see [LICENSE](LICENSE) and [NOTICE](NOTICE).
+
+Apache 2.0 was chosen over MIT deliberately: it carries an express patent grant (important for institutional adopters integrating a compliance primitive) and explicitly does not license trademarks.
+
+> **Note on already-deployed contracts:** the contracts currently live on Fuji and Mainnet C-Chain were compiled and verified on Snowtrace under MIT, and remain verified as such. The license change affects only the Solidity `SPDX` identifier, which lives in contract metadata — it does not alter executable logic (verified: recompiling changes only the 86-byte CBOR metadata trailer, 99.24% of the bytecode is byte-identical). The next deployment will carry Apache 2.0 end to end.
 
 ---
 

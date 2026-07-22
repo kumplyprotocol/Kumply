@@ -119,7 +119,7 @@ export default function DevelopersPage() {
         <h3 style={{ marginBottom: '0.5rem', color: 'var(--text-primary)', fontSize: '1.05rem' }}>{t('solidityTitle')}</h3>
         <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginBottom: '1.5rem' }}>{t('soliditySubtitle')}</p>
         <div className="code-block dev-code-block">
-          <span className="comment">// SPDX-License-Identifier: MIT</span><br/>
+          <span className="comment">// SPDX-License-Identifier: Apache-2.0</span><br/>
           <span className="keyword">pragma solidity</span> ^<span className="number">0.8</span>.<span className="number">28</span>;<br/><br/>
 
           <span className="keyword">interface</span> <span className="function">IAttestationStore</span> {'{'}<br/>

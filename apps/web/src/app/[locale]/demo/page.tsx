@@ -424,7 +424,7 @@ export default function DemoPage() {
           lineHeight: 1.6,
           margin: 0,
         }}>
-{`// SPDX-License-Identifier: MIT
+{`// SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.28;
 
 interface IAttestationStore {

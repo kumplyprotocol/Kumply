@@ -255,7 +255,7 @@ export const DECK_HTML = `
         </tbody>
       </table>
     </div>
-    <p class="note"><strong>A primitive, not a walled SaaS.</strong> KUMPLY is MIT-licensed contracts plus a TypeScript SDK.
+    <p class="note"><strong>A primitive, not a walled SaaS.</strong> KUMPLY is Apache 2.0-licensed contracts plus a TypeScript SDK.
       Any Avalanche dApp or sovereign L1 integrates compliance in a few lines — nobody has to route through our app.</p>
   </section>
 

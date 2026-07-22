@@ -186,7 +186,7 @@ Testnet (Fuji) genesis allocation: **1,000,000,000 KMP, 100% to the KUMPLY opera
 - **Two co-founders.** Giovanny Amador — technical lead: smart contracts, L1, SDK and infrastructure (authorship visible in the public commit history). Monserrat Mendoza — product, design and content lead; ETH Uruguay 2025 hackathon winner. Both are Team1 Network Collaborators (accepted July 2026).
 - **Code:** monorepo with pnpm workspaces — contracts, SDK, API, web — 164 tests, CI on every push (GitHub Actions, 4 parallel jobs).
 - **Go-to-market:** targeting Mexican digital banks, venture funds and LatAm enterprises. No commercial agreements are signed to date; any partner will be named only once a relationship is formalized.
-- **Open source:** MIT licensed, public GitHub, no proprietary lock-in.
+- **Open source:** Apache 2.0 licensed (express patent grant, no trademark license), public GitHub, no proprietary lock-in.
 - **Public commitment:** all smart contracts will be immutably renounced to a 3-of-5 multisig before mainnet; KMP mainnet genesis defined by community governance; quarterly treasury transparency reports starting Q4 2026.
 
 ## 9. Grant Programs & Funding Asks

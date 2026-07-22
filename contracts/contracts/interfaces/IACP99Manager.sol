@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.28;
 
 /// @title IACP99Manager — Standard interface for an ACP-99 ValidatorSetManager

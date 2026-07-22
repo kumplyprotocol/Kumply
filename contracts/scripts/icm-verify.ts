@@ -82,7 +82,7 @@ const TIER_LABELS: Record<number, string> = {
  *
  * @example Solidity snippet for remote L1:
  * ```solidity
- * // SPDX-License-Identifier: MIT
+ * // SPDX-License-Identifier: Apache-2.0
  * pragma solidity ^0.8.28;
  *
  * import "@avalabs/icm-contracts/contracts/interfaces/ITeleporterMessenger.sol";

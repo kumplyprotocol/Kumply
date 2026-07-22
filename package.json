@@ -4,7 +4,7 @@
   "private": true,
   "description": "Compliance infrastructure for Avalanche — on-chain KYC/KYB attestations with eERC20 privacy and ICM cross-L1 verification",
   "author": "KUMPLY Team",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "scripts": {
     "dev": "pnpm --filter web dev",
     "dev:api": "pnpm --filter api dev",

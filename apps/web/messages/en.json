@@ -306,7 +306,7 @@
     "docs": "Docs",
     "legal": "Legal",
     "trademark": "Trademark Notice: AVALANCHE® and AVAX® are registered trademarks of Ava Labs, Inc. KUMPLY is an independent project and is not endorsed by, sponsored by, or affiliated with Ava Labs, Inc. KUMPLY is software infrastructure — it does not operate as a financial institution, custodian, or money transmitter.",
-    "rights": "© 2026 KUMPLY Protocol. Open source under MIT License."
+    "rights": "© 2026 KUMPLY Protocol. Open source under the Apache License 2.0."
   },
   "Dashboard": {
     "title": "Compliance Dashboard",
@@ -420,7 +420,7 @@
       },
       "cardC": {
         "label": "License",
-        "value": "MIT — open source, no proprietary lock-in"
+        "value": "Apache 2.0 — open source, patent grant included, no proprietary lock-in"
       }
     },
     "quickstart": {
