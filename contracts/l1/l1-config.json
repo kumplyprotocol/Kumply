@@ -54,7 +54,7 @@
   },
   "compliance": {
     "_comment": "KUMPLY-specific extensions — institutional compliance hooks",
-    "attestationStoreAddress": "0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76",
+    "attestationStoreAddress": "0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD",
     "attestationStoreChain": "C",
     "validatorSetManager": "0x903f6E46f965C9A1127652D761400dBe487F555D",
     "complianceGateBuiltin": true,

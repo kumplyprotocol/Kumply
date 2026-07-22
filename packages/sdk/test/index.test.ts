@@ -169,7 +169,7 @@ describe('@kumply/sdk', () => {
     it('should create an instance with valid options', () => {
       const client = new KumplyClient({
         network: 'fuji',
-        contractAddress: '0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76',
+        contractAddress: '0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD',
       });
       expect(client).toBeInstanceOf(KumplyClient);
     });
@@ -177,7 +177,7 @@ describe('@kumply/sdk', () => {
     it('should create an instance with mainnet network', () => {
       const client = new KumplyClient({
         network: 'mainnet',
-        contractAddress: '0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76',
+        contractAddress: '0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD',
       });
       expect(client).toBeInstanceOf(KumplyClient);
     });
@@ -185,7 +185,7 @@ describe('@kumply/sdk', () => {
     it('should create an instance with custom RPC URL', () => {
       const client = new KumplyClient({
         network: 'fuji',
-        contractAddress: '0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76',
+        contractAddress: '0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD',
         rpcUrl: 'https://custom-rpc.example.com',
       });
       expect(client).toBeInstanceOf(KumplyClient);
@@ -194,7 +194,7 @@ describe('@kumply/sdk', () => {
     it('should expose listTiers as a method', async () => {
       const client = new KumplyClient({
         network: 'fuji',
-        contractAddress: '0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76',
+        contractAddress: '0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD',
       });
       const tiers = await client.listTiers();
       expect(tiers).toHaveLength(5);

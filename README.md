@@ -4,16 +4,36 @@
 
 KUMPLY provides non-custodial, on-chain identity verification (KYC/KYB/KYA) for the AVALANCHE® network. By bridging real-world regulatory compliance with DeFi anonymity, we empower institutions, exchanges, and autonomous AI agents to operate seamlessly across the C-Chain and custom AVALANCHE® L1s without compromising user privacy.
 
-*Live on the AVALANCHE® Fuji Testnet — mainnet is the next milestone.*
+*Live on the AVALANCHE® Fuji Testnet, with a read-only beta on Mainnet C-Chain.*
 
 > **Trademark Notice:** The AVALANCHE® and AVAX® trademarks are owned by Ava Labs, Inc. KUMPLY is an independent project — not endorsed by, sponsored by, or affiliated with Ava Labs, Inc. or the Avalanche Foundation.
 
-## 🌐 Live Contracts (Fuji Testnet)
+[![CI](https://github.com/kumplyprotocol/Kumply/actions/workflows/ci.yml/badge.svg)](https://github.com/kumplyprotocol/Kumply/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/@kumply/sdk)](https://www.npmjs.com/package/@kumply/sdk)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-All our smart contracts are deployed and verified on the Avalanche Fuji Testnet.
+## 🌐 Live Contracts
 
-- **AttestationStore**: [`0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76`](https://testnet.snowtrace.io/address/0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76)
-- **ComplianceGate**: [`0x3Bf8F8ea2573Eb3f386aDF72D191869c4827062B`](https://testnet.snowtrace.io/address/0x3Bf8F8ea2573Eb3f386aDF72D191869c4827062B)
+All contracts are deployed and verified. **164 tests** run on every push.
+
+### Mainnet C-Chain (read-only beta)
+
+The read layer is live on mainnet. `verificationFee` is currently **0**, so compliance reads and the SDK are free. Paid queries are enabled in a later milestone — see the [litepaper roadmap](LITEPAPER.md#7-roadmap).
+
+| Contract | Address |
+|---|---|
+| AttestationStore | [`0xa116261Ed3a848A9E1cd34923D5A0442D1455F71`](https://snowtrace.io/address/0xa116261Ed3a848A9E1cd34923D5A0442D1455F71) |
+| ComplianceGate | [`0x01BEEA13A485c7bAD58f926E345325e9e3773bEe`](https://snowtrace.io/address/0x01BEEA13A485c7bAD58f926E345325e9e3773bEe) |
+
+### Fuji Testnet
+
+Full read/write environment — this is where the KYC flow at [kumply.xyz/verify](https://kumply.xyz/verify) issues attestations.
+
+| Contract | Address |
+|---|---|
+| AttestationStore | [`0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD`](https://testnet.snowtrace.io/address/0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD) |
+| ComplianceGate | [`0xcFDdeA5482baE9A6733B58F6a39FC36BCe6164cF`](https://testnet.snowtrace.io/address/0xcFDdeA5482baE9A6733B58F6a39FC36BCe6164cF) |
+| KumplyValidatorSetManager | [`0x903f6E46f965C9A1127652D761400dBe487F555D`](https://testnet.snowtrace.io/address/0x903f6E46f965C9A1127652D761400dBe487F555D) |
 
 ## ⚡ The Problem
 
@@ -24,7 +44,7 @@ DApps must enforce KYC/AML laws, but forcing users to verify their identity on e
 
 KUMPLY is a "Verify Once, Use Everywhere" protocol.
 1. Users/Businesses/Agents complete identity verification via our licensed partner (Sumsub).
-2. We issue a 100% privacy-preserving **on-chain attestation credential** to their wallet.
+2. We issue an **on-chain attestation credential** to their wallet. The credential holds only `(tier, expiry, issuer, revocation status)` — **no personal data is ever written on-chain**. Documents stay with Sumsub; KUMPLY never stores them.
 3. Avalanche Smart Contracts can check a user's compliance Tier (`1-5`) natively via our `AttestationStore` or `ComplianceGate` without touching personal data.
 
 ### Verification Tiers
@@ -36,11 +56,14 @@ KUMPLY is a "Verify Once, Use Everywhere" protocol.
 
 ## 🏗️ Architecture
 
-KUMPLY is built entirely around the Avalanche technical stack (May 2026 standards):
+KUMPLY is built entirely around the Avalanche technical stack.
 
-- **Encrypted ERC (eERC)**: Identity attestations remain private and encrypted. Only authorized compliance protocols can read the underlying data.
-- **Avalanche L1 Interoperability**: Through Interchain Messaging (ICM), a credential minted on the C-Chain can be queried seamlessly from any customized Avalanche L1 (formerly Subnets), enabling cross-chain compliance out-of-the-box.
-- **Software-Only Protocol**: We never store user documents. Data is processed securely by Sumsub, while Kumply exclusively handles the cryptographic on-chain proofs.
+- **Software-Only Protocol** *(shipped)*: We never store user documents. Data is processed by Sumsub, while KUMPLY exclusively handles the cryptographic on-chain proofs. No custody, no financial intermediation.
+- **PII-free attestations** *(shipped)*: `AttestationStore` records only tier, expiry, issuer and revocation status against an address. Reads are public and free.
+- **Avalanche L1 Interoperability via ICM** *(designed, not yet shipped)*: The architecture targets Interchain Messaging so a credential issued on C-Chain can be read from any Avalanche L1 without a bridge. `AttestationStoreL1.sol` (the ICM-mirrored reader) is on the Q3 2026 roadmap — today, cross-chain reads are not yet live.
+- **Encrypted ERC (eERC)** *(Phase 2, not yet shipped)*: `AttestationStore` exposes an admin-only `setEercToken()` hook so encrypted credentials can be added once AvaCloud's EncryptedERC integration lands. In Phase 1 this is set to `address(0)` — attestations today are plaintext tier records, not encrypted tokens.
+
+> We list roadmap items explicitly as roadmap. If it says *shipped*, you can verify it on Snowtrace or in the test suite right now.
 
 ## ⛓️ KUMPLY Compliance L1 (Registered on Fuji — Activation Pending)
 
@@ -64,7 +87,46 @@ We are introducing the first Avalanche L1 where only **KYB-verified institutions
 - **Smart Contracts**: Solidity 0.8.28, Hardhat, OpenZeppelin
 - **Frontend**: Next.js 16 (App Router), React 19, Vanilla CSS (custom design system)
 - **Web3 Interaction**: Wagmi v3, Viem v2, MetaMask / Core Wallet
-- **SDK**: `@kumply/sdk` (TypeScript package for DApps)
+- **API**: Express + TypeScript, Zod validation, HMAC-SHA256 webhooks
+- **SDK**: [`@kumply/sdk`](https://www.npmjs.com/package/@kumply/sdk) (TypeScript package for DApps)
+
+## 📦 Monorepo Layout
+
+pnpm workspaces. Each package is independently testable and CI-gated.
+
+```
+kumply/
+├── contracts/          # @kumply/contracts — Solidity 0.8.28 + Hardhat
+│   ├── contracts/      #   AttestationStore · ComplianceGate · KumplyValidatorSetManager
+│   └── l1/             #   KUMPLY Compliance L1: genesis, ACP-77 config, validator node
+├── packages/sdk/       # @kumply/sdk — TypeScript SDK (viem-based), published to npm
+├── apps/
+│   ├── api/            # @kumply/api — Express API (Sumsub token proxy + webhook)
+│   └── web/            # Next.js 16 frontend — kumply.xyz (EN/ES via next-intl)
+└── docs/diagrams/      # Architecture diagrams (Mermaid)
+```
+
+## 🧪 Tests
+
+```bash
+pnpm test                              # everything — 164 tests
+pnpm --filter @kumply/contracts test   # 110 — Hardhat + Chai
+pnpm --filter @kumply/sdk test         # 37  — Vitest
+pnpm --filter @kumply/api test         # 17  — Vitest + Supertest
+```
+
+Contract coverage includes roles and access control, pausability, the five tiers, revocation and expiry, the fee/subscription billing paths, and a bit-exact Avalanche-codec round-trip for the ACP-99 Warp payloads.
+
+## 📖 Documentation
+
+| Document | What it covers |
+|---|---|
+| [LITEPAPER.md](LITEPAPER.md) | Problem, architecture, tiers, business model, roadmap |
+| [L1.md](L1.md) | KUMPLY Compliance L1 design and deployment path |
+| [docs/diagrams/architecture.md](docs/diagrams/architecture.md) | Mermaid architecture diagrams |
+| [contracts/l1/README.md](contracts/l1/README.md) | L1 genesis and node operation |
+| [packages/sdk/README.md](packages/sdk/README.md) | SDK API reference |
+| [apps/api/openapi.yaml](apps/api/openapi.yaml) | OpenAPI 3.0 spec for the REST API |
 
 ## 🚀 Getting Started
 
@@ -76,8 +138,8 @@ We are introducing the first Avalanche L1 where only **KYB-verified institutions
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/KumplyProtocol/kumply.git
-   cd kumply
+   git clone https://github.com/kumplyprotocol/Kumply.git
+   cd Kumply
    ```
 
 2. Install dependencies:
@@ -101,35 +163,51 @@ We are introducing the first Avalanche L1 where only **KYB-verified institutions
 
 Integrating KUMPLY into your DApp is incredibly simple:
 
-```typescript
-import { KumplyClient } from '@kumply/sdk';
+```bash
+pnpm add @kumply/sdk    # or npm / yarn
+```
 
-const client = new KumplyClient({ network: 'fuji' });
+```typescript
+import { KumplyClient, DEPLOYMENTS, TIER } from '@kumply/sdk';
+
+// `contractAddress` is required — use DEPLOYMENTS for the canonical addresses.
+const client = new KumplyClient({
+  network: 'mainnet',
+  contractAddress: DEPLOYMENTS.mainnet.attestationStore,
+});
 
 // Check if a user has passed KYC Tier 2
 const result = await client.verify('0xUserAddress');
 
-if (result.verified && result.tier >= 2) {
+if (result.verified && result.tier >= TIER.STANDARD) {
     // Allow deposit
 } else {
     // Block action
 }
 ```
 
-Or enforce it directly in your Solidity Contracts:
+Reads are free while `verificationFee` is 0. Swap `network: 'fuji'` with `DEPLOYMENTS.fuji.attestationStore` to target testnet.
+
+Or enforce it directly in your Solidity contracts:
 
 ```solidity
-import {ComplianceGate} from "./ComplianceGate.sol";
+import {ComplianceGate} from "@kumply/contracts/ComplianceGate.sol";
 
 contract MyDeFiVault is ComplianceGate {
+    // Require Tier 2 (Standard KYC) to interact.
     constructor(address _attestationStore) ComplianceGate(_attestationStore, 2) {}
 
-    function deposit() external {
-        _requireVerified(msg.sender); // Automatically reverts if not Tier 2+
+    // `payable` matters: when a read fee is active and this gate is not
+    // subscribed, `_requireVerified` forwards msg.value to checkCompliance.
+    // While verificationFee is 0, calling with no value works fine.
+    function deposit() external payable {
+        _requireVerified(msg.sender); // reverts NotVerified / InsufficientTier
         // ... execute deposit
     }
 }
 ```
+
+Call `getVerificationFee()` on the gate to show users the current cost before they transact.
 
 ## 📜 Compliance & Brand Alignment
 
@@ -137,7 +215,8 @@ KUMPLY rigorously adheres to the May 2026 Ava Labs Trademark Usage Policy and AV
 
 - ✅ Uses **AVALANCHE®** and **AVAX®** as adjectives (never as nouns or verbs)
 - ✅ Uses the official **"AVALANCHE® L1"** nomenclature (not "Subnets")
-- ✅ Implements **eERC** (Encrypted ERC) for privacy-preserving credentials
+- ✅ Stores **no personal data on-chain** — attestations are tier records, documents stay with Sumsub
+- 🔜 **eERC** (Encrypted ERC) integration hook in place for Phase 2 — not yet active
 - ✅ Categorizes autonomous actors as **"AI Agents"** with KYA verification
 - ✅ Follows **responsible disclosure** practices for security vulnerabilities
 - ✅ Operates as **Software-Only** infrastructure — non-custodial, no financial intermediation

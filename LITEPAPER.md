@@ -218,8 +218,8 @@ Four structural moats:
 | **Repository** | https://github.com/kumplyprotocol/Kumply |
 | **Mainnet AttestationStore** (C-Chain, beta) | https://snowtrace.io/address/0xa116261Ed3a848A9E1cd34923D5A0442D1455F71 |
 | **Mainnet ComplianceGate** (C-Chain, beta) | https://snowtrace.io/address/0x01BEEA13A485c7bAD58f926E345325e9e3773bEe |
-| **Snowtrace AttestationStore** | https://testnet.snowtrace.io/address/0x9Bbb0797EA92277c268fe7E45BdB16b70E787d76 |
-| **Snowtrace ComplianceGate** | https://testnet.snowtrace.io/address/0x3Bf8F8ea2573Eb3f386aDF72D191869c4827062B |
+| **Snowtrace AttestationStore** | https://testnet.snowtrace.io/address/0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD |
+| **Snowtrace ComplianceGate** | https://testnet.snowtrace.io/address/0xcFDdeA5482baE9A6733B58F6a39FC36BCe6164cF |
 | **Snowtrace ValidatorSetManager** | https://testnet.snowtrace.io/address/0x903f6E46f965C9A1127652D761400dBe487F555D |
 | **L1 Subnet ID** | `2buHAwNvaybnQ6vQYRS4TeXizZhAo33bhpnonAJu21CKYLZoST` |
 | **L1 Blockchain ID** | `2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b` |
