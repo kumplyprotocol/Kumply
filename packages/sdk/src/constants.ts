@@ -69,7 +69,7 @@ export const DEPLOYMENTS = {
   fuji: {
     attestationStore: "0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD",
     complianceGate: "0xcFDdeA5482baE9A6733B58F6a39FC36BCe6164cF",
-    validatorSetManager: "0x903f6E46f965C9A1127652D761400dBe487F555D",
+    validatorSetManager: "0x7Dc03c4Af8a604E602A0237eb2f6868B95097333",
   },
 } as const;
 

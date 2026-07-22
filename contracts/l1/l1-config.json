@@ -25,7 +25,7 @@
   "offlinePruning": false,
   "validatorSet": {
     "_comment": "ACP-77 PoA validator set with off-chain governance via KumplyValidatorSetManager (ACP-99 compliant). KYB (Tier 4) required. ACP-77 continuous fee model: ~512 nAVAX/s per validator (~1.33 AVAX/month).",
-    "managerContract": "0x903f6E46f965C9A1127652D761400dBe487F555D",
+    "managerContract": "0x7Dc03c4Af8a604E602A0237eb2f6868B95097333",
     "managerChain": "C",
     "minValidators": 5,
     "targetValidators": 21,
@@ -56,7 +56,7 @@
     "_comment": "KUMPLY-specific extensions — institutional compliance hooks",
     "attestationStoreAddress": "0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD",
     "attestationStoreChain": "C",
-    "validatorSetManager": "0x903f6E46f965C9A1127652D761400dBe487F555D",
+    "validatorSetManager": "0x7Dc03c4Af8a604E602A0237eb2f6868B95097333",
     "complianceGateBuiltin": true,
     "minimumTierForValidation": 4,
     "minimumTierForTransacting": 0,

@@ -33,7 +33,7 @@ Full read/write environment — this is where the KYC flow at [kumply.xyz/verify
 |---|---|
 | AttestationStore | [`0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD`](https://testnet.snowtrace.io/address/0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD) |
 | ComplianceGate | [`0xcFDdeA5482baE9A6733B58F6a39FC36BCe6164cF`](https://testnet.snowtrace.io/address/0xcFDdeA5482baE9A6733B58F6a39FC36BCe6164cF) |
-| KumplyValidatorSetManager | [`0x903f6E46f965C9A1127652D761400dBe487F555D`](https://testnet.snowtrace.io/address/0x903f6E46f965C9A1127652D761400dBe487F555D) |
+| KumplyValidatorSetManager | [`0x7Dc03c4Af8a604E602A0237eb2f6868B95097333`](https://testnet.snowtrace.io/address/0x7Dc03c4Af8a604E602A0237eb2f6868B95097333) |
 
 ## ⚡ The Problem
 
@@ -80,7 +80,7 @@ We are introducing the first Avalanche L1 where only **KYB-verified institutions
 - **Currency Symbol:** `KMP`
 - **Subnet ID:** `2buHAwNvaybnQ6vQYRS4TeXizZhAo33bhpnonAJu21CKYLZoST`
 - **Blockchain ID:** `2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b`
-- **Validator Set Manager:** [`0x903f6E46f965C9A1127652D761400dBe487F555D`](https://testnet.snowtrace.io/address/0x903f6E46f965C9A1127652D761400dBe487F555D)
+- **Validator Set Manager:** [`0x7Dc03c4Af8a604E602A0237eb2f6868B95097333`](https://testnet.snowtrace.io/address/0x7Dc03c4Af8a604E602A0237eb2f6868B95097333)
 
 ## 💻 Tech Stack
 

@@ -283,7 +283,7 @@ export const DECK_HTML = `
         <p class="proof"><span class="label">ComplianceGate · Fuji</span>
           <a class="addr" href="https://testnet.snowtrace.io/address/0xcFDdeA5482baE9A6733B58F6a39FC36BCe6164cF">0xcFDd…64cF</a></p>
         <p class="proof"><span class="label">ValidatorSetManager (Fuji)</span>
-          <a class="addr" href="https://testnet.snowtrace.io/address/0x903f6E46f965C9A1127652D761400dBe487F555D">0x903f…555D</a></p>
+          <a class="addr" href="https://testnet.snowtrace.io/address/0x7Dc03c4Af8a604E602A0237eb2f6868B95097333">0x903f…555D</a></p>
         <p style="margin-top: 0.6rem; font-size: 0.85em;">Read-path smoke tests run live against both deployments on every release: <strong>8/8 on mainnet, 10/10 on Fuji</strong> (incl. gate rejection/admission paths).</p>
       </div>
       <div class="cell">

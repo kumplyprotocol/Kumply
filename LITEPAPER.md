@@ -220,7 +220,7 @@ Four structural moats:
 | **Mainnet ComplianceGate** (C-Chain, beta) | https://snowtrace.io/address/0x01BEEA13A485c7bAD58f926E345325e9e3773bEe |
 | **Snowtrace AttestationStore** | https://testnet.snowtrace.io/address/0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD |
 | **Snowtrace ComplianceGate** | https://testnet.snowtrace.io/address/0xcFDdeA5482baE9A6733B58F6a39FC36BCe6164cF |
-| **Snowtrace ValidatorSetManager** | https://testnet.snowtrace.io/address/0x903f6E46f965C9A1127652D761400dBe487F555D |
+| **Snowtrace ValidatorSetManager** | https://testnet.snowtrace.io/address/0x7Dc03c4Af8a604E602A0237eb2f6868B95097333 |
 | **L1 Subnet ID** | `2buHAwNvaybnQ6vQYRS4TeXizZhAo33bhpnonAJu21CKYLZoST` |
 | **L1 Blockchain ID** | `2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b` |
 | **L1 RPC URL** | `https://subnets.avax.network/2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b/rpc` |

@@ -58,7 +58,7 @@ export default function L1Page() {
   const L1_EXPLORER         = "https://testnet.avascan.info/blockchain/p/tx/2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b";
   const SUBNET_ID           = process.env.NEXT_PUBLIC_KUMPLY_L1_SUBNET_ID || "2buHAwNvaybnQ6vQYRS4TeXizZhAo33bhpnonAJu21CKYLZoST";
   const BLOCKCHAIN_ID       = process.env.NEXT_PUBLIC_KUMPLY_L1_BLOCKCHAIN_ID || "2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b";
-  const VALIDATOR_SET_MANAGER = process.env.NEXT_PUBLIC_CONTRACT_VALIDATOR_SET_MANAGER || "0x903f6E46f965C9A1127652D761400dBe487F555D";
+  const VALIDATOR_SET_MANAGER = process.env.NEXT_PUBLIC_CONTRACT_VALIDATOR_SET_MANAGER || "0x7Dc03c4Af8a604E602A0237eb2f6868B95097333";
 
   const snowtraceBase = network === "mainnet" ? "https://snowtrace.io" : "https://testnet.snowtrace.io";
 
