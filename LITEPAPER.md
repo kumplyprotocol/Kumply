@@ -201,6 +201,8 @@ The weakest part of this project is unproven demand (§1.1), so closing it is th
 
 **Deliverable:** a published findings document with attributable quotes, and either (a) 2 confirmed pilot integrators — Avalanche builders or startups willing to test `ComplianceGate` or the SDK, KUMPLY's actual near-term buyer, not necessarily a regulated institution — or (b) a documented decision to re-target the ideal customer profile. Outcome (b) is a valid result, not a failure — it is cheaper to learn it in week two than in month six. Outcome (a)'s integrators are the candidates for M4's pilot integrations — the demand-validation and proof-of-concept work share one pipeline, not two.
 
+**Status:** M0 is already in motion. Two candidate integrators — Avalanche-ecosystem builders — are in active conversation, with expected close dates within the next two weeks. Neither is signed yet; this is real-time status, not a completed deliverable.
+
 ## 8. Team & Traction
 
 - **Two co-founders.** Giovanny Amador — technical lead: smart contracts, L1, SDK and infrastructure (authorship visible in the public commit history). Monserrat Mendoza — product, design and content lead; ETH Uruguay 2025 hackathon winner. Both are Team1 Network Collaborators (accepted July 2026).
