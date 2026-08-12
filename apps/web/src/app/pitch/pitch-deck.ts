@@ -448,9 +448,10 @@ export const DECK_HTML = `
     <h2>The LatAm institutional wedge - and what we can't prove yet.</h2>
     <p class="note"><strong>Stated plainly: KUMPLY is pre-revenue, with no users and no signed counterparties.</strong>
       The case below is structural - the regulatory and ecosystem conditions that make this layer necessary - not
-      evidence of committed demand. Converting it into named design partners is milestone M0: scoped, dated, and
-      costed at zero on slide 11. The same 2 design-partner letters of intent M0 is scoped to produce are the
-      candidate institutions for M4's pilot integrations - one proof-of-concept pipeline, not two separate asks.
+      evidence of committed demand. Converting it into named design partners - Avalanche builders and startups,
+      KUMPLY's actual near-term buyer, not necessarily a regulated institution - is milestone M0: scoped, dated,
+      and costed at zero on slide 11. The same 2 confirmed pilot integrators M0 is scoped to produce are the
+      candidates for M4's pilot integrations - one proof-of-concept pipeline, not two separate asks.
       We would rather show you the gap than have you find it.</p>
     <div class="grid cols-3">
       <div class="cell">
@@ -545,7 +546,7 @@ export const DECK_HTML = `
       <table>
         <thead><tr><th>Milestone</th><th>Deliverable</th><th>Weeks</th><th>Budget</th></tr></thead>
         <tbody>
-          <tr><td>M0</td><td>Demand validation - 5 structured interviews with Avalanche L1 operators, payment platforms, and KYC providers serving LatAm. Deliverable: a published findings document with attributable quotes, plus either 2 signed design-partner letters of intent or a documented decision to re-target the ICP. Runs whether or not this grant is funded, and is not a disbursement gate - M1 starts in parallel in week 1</td><td class="num">1–2</td><td class="num">$0</td></tr>
+          <tr><td>M0</td><td>Demand validation - 5 structured interviews with Avalanche L1 operators, payment platforms, and KYC providers serving LatAm. Deliverable: a published findings document with attributable quotes, plus either 2 confirmed pilot integrators (Avalanche builders/startups, not necessarily regulated institutions) or a documented decision to re-target the ICP. Runs whether or not this grant is funded, and is not a disbursement gate - M1 starts in parallel in week 1</td><td class="num">1–2</td><td class="num">$0</td></tr>
           <tr><td>M1</td><td>Security &amp; quality hardening of AttestationStore + ComplianceGate: static analysis (Slither/Aderyn), fuzz + invariant test suite, expanded edge-case coverage, failure detection and alerting on the attestation-issuance path, and a published threat-model report - findings fixed, all in-repo</td><td class="num">1–3</td><td class="num">$2,000</td></tr>
           <tr><td>M2</td><td>Mexican legal entity incorporated (a hard prerequisite: Sumsub's production tier requires one), then Sumsub production activated and the first real KYC attestations issued on-chain end-to-end. Includes a ring-fenced reserve for Tier-4 KYB provisioning, which M4's validator gating depends on</td><td class="num">2–6</td><td class="num">$3,000</td></tr>
           <tr><td>M3</td><td>On-chain query fee activation on Mainnet C-Chain - the free read layer is already live and verified on mainnet (self-funded, July 2026); this milestone adds a written Mexican fintech legal opinion, trademark registration with IMPI, migrates admin/treasury to cold-key ops, enables fees post-hardening, and ships the SDK mainnet release on npm</td><td class="num">6–9</td><td class="num">$2,000</td></tr>

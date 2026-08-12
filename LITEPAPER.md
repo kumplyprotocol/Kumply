@@ -199,7 +199,7 @@ The weakest part of this project is unproven demand (§1.1), so closing it is th
 
 **Scope:** 5 structured interviews with Avalanche L1 operators, on-chain payment platforms, and identity/KYC providers serving LatAm. The question is not "will you buy" but "how do you resolve counterparty identity today, and what does it cost you."
 
-**Deliverable:** a published findings document with attributable quotes, and either (a) 2 signed design-partner letters of intent, or (b) a documented decision to re-target the ideal customer profile. Outcome (b) is a valid result, not a failure — it is cheaper to learn it in week two than in month six. Outcome (a)'s design partners are the candidate institutions for M4's pilot integrations — the demand-validation and proof-of-concept work share one pipeline, not two.
+**Deliverable:** a published findings document with attributable quotes, and either (a) 2 confirmed pilot integrators — Avalanche builders or startups willing to test `ComplianceGate` or the SDK, KUMPLY's actual near-term buyer, not necessarily a regulated institution — or (b) a documented decision to re-target the ideal customer profile. Outcome (b) is a valid result, not a failure — it is cheaper to learn it in week two than in month six. Outcome (a)'s integrators are the candidates for M4's pilot integrations — the demand-validation and proof-of-concept work share one pipeline, not two.
 
 ## 8. Team & Traction
 
