@@ -8,7 +8,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kumply.xyz"),
-  title: "KUMPLY — Grant Pitch Deck",
+  title: "KUMPLY - Grant Pitch Deck",
   description:
     "Compliance infrastructure for the Avalanche ecosystem: on-chain KYC/KYB/KYA attestations live on Fuji, a KYB-gated L1, and a milestone-scoped roadmap to mainnet.",
   icons: {
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     apple: "/favicon.png",
   },
   openGraph: {
-    title: "KUMPLY — Grant Pitch Deck",
+    title: "KUMPLY - Grant Pitch Deck",
     description:
       "On-chain KYC/KYB/KYA attestations live on Fuji, a KYB-gated Avalanche L1, and a milestone-scoped roadmap to mainnet.",
     type: "website",
@@ -26,13 +26,13 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "KUMPLY — Grant Pitch Deck",
+        alt: "KUMPLY - Grant Pitch Deck",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "KUMPLY — Grant Pitch Deck",
+    title: "KUMPLY - Grant Pitch Deck",
     images: ["/og-image.png"],
   },
   robots: {
