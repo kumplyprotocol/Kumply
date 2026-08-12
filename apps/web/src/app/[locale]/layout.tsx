@@ -3,6 +3,7 @@ import { DM_Sans } from "next/font/google";
 import "../globals.css";
 import { Web3Provider } from "@/providers/Web3Provider";
 import { Navbar } from "@/components/Navbar";
+import { NetworkSwitchDialog } from "@/components/NetworkSwitchDialog";
 import { Footer } from "@/components/Footer";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getLocale } from 'next-intl/server';
@@ -128,6 +129,7 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <Web3Provider>
             <Navbar />
+            <NetworkSwitchDialog />
             <main id="main-content" className="page" role="main">
               {children}
             </main>

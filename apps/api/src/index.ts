@@ -321,11 +321,16 @@ app.post('/webhook/sumsub', webhookLimiter, async (req: Request, res: Response):
       expiry: expiry.toString(),
     });
 
+    // Gas is pinned rather than estimated: Fuji's RPC has intermittently returned
+    // absurd eth_estimateGas values (observed 9.3e15, far above the block limit),
+    // which surfaces as "exceeds block gas limit" and silently drops the attestation.
+    // issueAttestation is a bounded storage write — 300k is a generous ceiling.
     const txHash = await walletClient.writeContract({
       address: contractAddress,
       abi: ATTESTATION_STORE_ABI,
       functionName: 'issueAttestation',
       args: [externalUserId as `0x${string}`, tier, expiry],
+      gas: 300_000n,
     });
 
     const receipt = await publicClient.waitForTransactionReceipt({ hash: txHash });

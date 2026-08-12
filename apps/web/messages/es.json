@@ -528,5 +528,27 @@
       "acp77": "Reinventando Subnets — validadores L1 con fee continuo.",
       "contact": "Partnerships, soporte de integración, prensa."
     }
+  },
+  "NetworkMode": {
+    "available": "disponible",
+    "dialogTitle": "¿Cambiar a Mainnet?",
+    "dialogDesc": "Estás por apuntar todo el sitio a Avalanche Mainnet C-Chain. El núcleo no custodial está desplegado y verificado ahí, y las lecturas son gratuitas, pero la emisión de credenciales aún no está activa — depende de activar el tier de producción de nuestro proveedor de identidad. Fuji sigue siendo un sandbox completo y sin costo al que puedes volver cuando quieras.",
+    "colCapability": "Capacidad",
+    "colFuji": "Fuji",
+    "colMainnet": "Mainnet",
+    "capIssuance": "Verificarte (flujo KYC)",
+    "capReads": "Leer attestations",
+    "capFeed": "Explorador de attestations",
+    "capDemo": "Demo de ComplianceGate",
+    "capFee": "Costo de consulta",
+    "capL1": "Compliance L1 + ACP-99",
+    "notLive": "aún no",
+    "fujiOnly": "solo Fuji",
+    "feeZero": "gratis",
+    "feeBeta": "gratis · beta",
+    "registered": "registrada",
+    "sharedFeed": "El explorador de attestations funciona en ambas redes — lee la que esté activa, y cada dirección y hash de transacción abre en el Snowtrace de esa red.",
+    "stayFuji": "Quedarme en Fuji",
+    "goMainnet": "Cambiar a Mainnet"
   }
 }
