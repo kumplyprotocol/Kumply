@@ -390,3 +390,13 @@ and mainnet C-Chain today, confirmed repeatedly earlier in this same audit. The 
 Teleporter-mocking pattern (a standalone `MockTeleporter` contract) is a different, also-valid
 approach from KUMPLY's precompile-level mock, not a contradiction. No genuine finding in either
 skill this round.
+
+## Round 5 (same day) - remaining named skills
+
+`skills/avalanche-sdk` and `skills/avalanche-js` (the official Ava Labs JS/TS SDK): checked
+`package.json` in every workspace and `pnpm-lock.yaml` for any direct or transitive dependency on
+either package. Zero matches. KUMPLY's entire stack (SDK, API, frontend) is built on plain viem
+and wagmi, with no Avalanche-specific JS SDK anywhere in the tree. No comparison surface exists,
+so no finding is possible either way -- not "checked and clean," genuinely not applicable.
+`skills/contract-verification` was already checked in Round 1 (finding 4's context) against the
+real `verify-contracts.ts` workflow and Snowtrace/Routescan API, no issue found there.
