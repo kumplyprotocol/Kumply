@@ -378,3 +378,15 @@ https://github.com/Ayomisco/avaxskills/issues/4
 Checked and clean: `skills/viem` against the actually-installed `viem@2.48.11` (KUMPLY's SDK
 dependency) -- chain IDs (43114 mainnet, 43113 Fuji), RPC URLs, block explorer URLs, and the
 Multicall3 address all match the installed package's own chain definitions exactly. No finding.
+
+## Round 4 (same day) - evm-hardhat and testing, against KUMPLY's real hardhat.config.ts
+
+Checked `skills/evm-hardhat` and `skills/testing` against `contracts/hardhat.config.ts` and the
+real test harness (`MockWarpMessenger` installed via `hardhat_setCode`). The skill's
+`evmVersion: "paris"` recommendation differs from KUMPLY's own `"cancun"`, but this is a
+conservative default for custom Subnets that may predate Cancun opcode support, not a factual
+error -- KUMPLY's own `cancun` target compiles, deploys, and verifies successfully on both Fuji
+and mainnet C-Chain today, confirmed repeatedly earlier in this same audit. The skill's
+Teleporter-mocking pattern (a standalone `MockTeleporter` contract) is a different, also-valid
+approach from KUMPLY's precompile-level mock, not a contradiction. No genuine finding in either
+skill this round.
