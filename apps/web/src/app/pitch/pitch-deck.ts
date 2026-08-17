@@ -600,6 +600,15 @@ export const DECK_HTML = `
       puts on mainnet custodies user funds. <strong>Already shipped self-funded before this application</strong> - and not
       billed to it: the mainnet C-Chain launch of the non-custodial core (verified on Snowtrace), the 164-test suite with CI,
       the published SDK on npm, and the live dashboard/demo at kumply.xyz.</p>
+    <p class="note"><strong>Also self-funded before this application: an audit against the real Avalanche source, not just docs.</strong>
+      Checking KumplyValidatorSetManager against ava-labs/icm-contracts directly found a critical bug that would have
+      permanently blocked L1 activation - fixed, redeployed, and re-verified on Fuji. The same pass filed 3 real
+      documentation bugs upstream in the community AVAXSKILLS package
+      (<a href="https://github.com/Ayomisco/avaxskills/issues/2" target="_blank" rel="noopener noreferrer">#2</a>,
+      <a href="https://github.com/Ayomisco/avaxskills/issues/3" target="_blank" rel="noopener noreferrer">#3</a>,
+      <a href="https://github.com/Ayomisco/avaxskills/issues/4" target="_blank" rel="noopener noreferrer">#4</a>,
+      all open), plus 2 more comments on the same class of bug. Full writeup:
+      <a href="https://github.com/kumplyprotocol/Kumply/blob/main/docs/audits/avalanche-ecosystem-audit-2026-08-17.md" target="_blank" rel="noopener noreferrer">docs/audits</a>.</p>
   </section>
 
   <!-- 12 · Ask -->

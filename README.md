@@ -119,7 +119,19 @@ Contract coverage includes roles and access control, pausability, the five tiers
 
 ## 🔍 Security & Engineering Rigor
 
-Before attempting to activate KUMPLY's L1 on Fuji, we audited `KumplyValidatorSetManager` against the real source of [ava-labs/icm-contracts](https://github.com/ava-labs/icm-contracts) — not just its documentation. We found that `ValidatorMessages.computeConversionID` was missing the 4-byte length prefix the real P-Chain wire format requires: the hash it computed would never have matched the conversionID the network actually signs, so `initializeValidatorSet` would have reverted every time. The existing 27 tests didn't catch this because the Warp mock reimplemented the same error as the contract. Fixed, redeployed, and re-verified on Fuji ([`0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64`](https://testnet.snowtrace.io/address/0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64)), with a test that now exercises the real P-Chain format. Along the way, we also reported a real gap in AVAXSKILLS' community documentation — filed upstream, [open as of 17 Aug 2026](https://github.com/Ayomisco/avaxskills/issues/2).
+Before attempting to activate KUMPLY's L1 on Fuji, we audited `KumplyValidatorSetManager` against the real source of [ava-labs/icm-contracts](https://github.com/ava-labs/icm-contracts) — not just its documentation. We found that `ValidatorMessages.computeConversionID` was missing the 4-byte length prefix the real P-Chain wire format requires: the hash it computed would never have matched the conversionID the network actually signs, so `initializeValidatorSet` would have reverted every time. The existing 27 tests didn't catch this because the Warp mock reimplemented the same error as the contract. Fixed, redeployed, and re-verified on Fuji ([`0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64`](https://testnet.snowtrace.io/address/0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64)), with a test that now exercises the real P-Chain format.
+
+The same audit, over three passes, also verified and filed real gaps upstream in AVAXSKILLS (a community skills package for Avalanche), none of them KUMPLY's own bugs:
+
+| Where | What | Status |
+|---|---|---|
+| [avaxskills#2](https://github.com/Ayomisco/avaxskills/issues/2) | `subnet-deployment` skill documents CLI commands (`platform subnet create`, and others) that don't exist in the real `ava-labs/avalanche-cli` | Open |
+| [avaxskills#2 (comment)](https://github.com/Ayomisco/avaxskills/issues/2#issuecomment-5320383561) | `validator-management` skill: same issue, `avalanche primaryNetwork addValidator` / `avalanche subnet addValidator` don't exist | Open |
+| [avaxskills#2 (comment)](https://github.com/Ayomisco/avaxskills/issues/2#issuecomment-5321360572) | `custom-vm` skill: same issue again, `avalanche subnet create/deploy` | Open |
+| [avaxskills#3](https://github.com/Ayomisco/avaxskills/issues/3) | `precompiles` skill: wrong genesis key for TxAllowList (`transactionAllowListConfig` vs. the real `txAllowListConfig`), confirmed against `ava-labs/subnet-evm` source | Open |
+| [avaxskills#4](https://github.com/Ayomisco/avaxskills/issues/4) | `wagmi` skill: claims v2 is latest (v3 has shipped) and its example uses `useAccount`, deprecated in wagmi's own types in favor of `useConnection` | Open |
+
+Also checked, with nothing genuine to report: `kyc-aml-integration`, `subnet-governance`, `security`, `audit`, `contract-verification`, `viem`, OpenZeppelin `contracts`, and `ava-labs/precompile-evm`. "Nothing found" was treated as a valid, honest result throughout, not a gap to force-fill.
 
 Full writeup: [docs/audits/avalanche-ecosystem-audit-2026-08-17.md](docs/audits/avalanche-ecosystem-audit-2026-08-17.md). AI-assistance disclosure: [docs/AI-USAGE.md](docs/AI-USAGE.md).
 
