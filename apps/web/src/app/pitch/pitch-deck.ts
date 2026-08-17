@@ -554,9 +554,10 @@ export const DECK_HTML = `
         </tbody>
       </table>
     </div>
-    <p class="note"><strong>M0 is already in motion.</strong> Two candidate integrators - Avalanche-ecosystem builders -
-      are in active conversation, with expected close dates within the next two weeks. Neither is signed yet; this is
-      real-time status, not a completed deliverable.</p>
+    <p class="note"><strong>M0 is already producing signal, not just plans.</strong> One candidate integrator is in
+      active conversation, expected to close within the next two weeks. A separate early conversation closed with a
+      clear "not yet" - no real funds at stake today, revisit once third parties can publish paid agents on the
+      platform - itself a real M0 finding, not a setback.</p>
     <p class="note"><strong>M1 is not theoretical - here is one we found this week.</strong> While preparing this
       application, a verified identity check failed to produce its on-chain credential. The cause: Fuji's public RPC
       intermittently returned a gas estimate of ~9.3&times;10<sup>15</sup>, far above the block limit, so issuance reverted

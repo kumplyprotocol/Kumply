@@ -201,7 +201,7 @@ The weakest part of this project is unproven demand (§1.1), so closing it is th
 
 **Deliverable:** a published findings document with attributable quotes, and either (a) 2 confirmed pilot integrators — Avalanche builders or startups willing to test `ComplianceGate` or the SDK, KUMPLY's actual near-term buyer, not necessarily a regulated institution — or (b) a documented decision to re-target the ideal customer profile. Outcome (b) is a valid result, not a failure — it is cheaper to learn it in week two than in month six. Outcome (a)'s integrators are the candidates for M4's pilot integrations — the demand-validation and proof-of-concept work share one pipeline, not two.
 
-**Status:** M0 is already in motion. Two candidate integrators — Avalanche-ecosystem builders — are in active conversation, with expected close dates within the next two weeks. Neither is signed yet; this is real-time status, not a completed deliverable.
+**Status:** M0 is already producing signal, not just plans. One candidate integrator is in active conversation, with an expected close date within the next two weeks — not signed yet. A separate early conversation closed with a clear "not yet": no real funds at stake today, revisit once third parties can publish paid agents on the platform. That answer is itself real-time M0 evidence, not a setback.
 
 ## 8. Team & Traction
 
