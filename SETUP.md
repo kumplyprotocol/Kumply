@@ -25,6 +25,7 @@ git clone --depth 1 https://github.com/ava-labs/avalanche-cli.git
 git clone --depth 1 https://github.com/ava-labs/avalanche-starter-kit.git
 git clone --depth 1 https://github.com/ava-labs/icm-contracts.git
 git clone --depth 1 https://github.com/ava-labs/subnet-evm.git
+git clone --depth 1 https://github.com/ava-labs/precompile-evm.git
 cd ..
 ```
 
@@ -53,7 +54,7 @@ Already verified, listed here for reference (do not re-verify unless a license f
 |---|---|---|
 | AVAXSKILLS | Apache-2.0 | None. Use freely. |
 | `avalanche-cli`, `icm-contracts` | Ava Labs Ecosystem License 1.1 | Use/redistribution allowed only while the project stays "operationally connected" to the Avalanche Public Blockchain (Mainnet, Fuji, C/P/X-Chain, or subnets/L1s). KUMPLY qualifies natively. Do not use either as a base for anything that also needs to run on a non-Avalanche network. |
-| `subnet-evm` | LGPL-3.0 | Copyleft on modifications to the library itself, not on separate works that merely link/interact with it. KUMPLY does not vendor or modify subnet-evm code, only reads it as reference for genesis/config correctness. Same read-only rule as the rest: never copy code verbatim into KUMPLY. |
+| `subnet-evm`, `precompile-evm` | LGPL-3.0 | Copyleft on modifications to the library itself, not on separate works that merely link/interact with it. KUMPLY does not vendor or modify either, only reads them as reference. Same read-only rule as the rest: never copy code verbatim into KUMPLY. |
 | `avalanche-starter-kit` | none (no `LICENSE` file) | Treat as **read-only**: study the pattern (cross-chain messages, calling contracts on another chain, Teleporter asset bridging), never copy code verbatim into KUMPLY without confirming terms with Ava Labs first. |
 
 ## Removing the reference tooling

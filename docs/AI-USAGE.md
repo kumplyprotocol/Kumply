@@ -57,3 +57,18 @@ either agreed to run a KUMPLY validator, so the line was scrubbed rather than le
 comment, since an unverified name sitting in a public script keeps reading as true until someone
 happens to question it closely. Full detail in
 `docs/audits/avalanche-ecosystem-audit-2026-08-17.md`, "Round 2" section.
+
+## 17 Aug 2026 - third pass, ava-labs/precompile-evm and frontend/SDK skills
+
+A third pass, same day, cloned `ava-labs/precompile-evm` (LGPL-3.0) as directed and checked the
+AVAXSKILLS skills matching KUMPLY's actual frontend/SDK stack (viem, wagmi). No comparison surface
+was found for precompile-evm specifically (it covers custom Go precompile registration, an
+architecturally different path from KUMPLY's genesis-config approach, already checked in the
+second pass) -- reported honestly as checked with nothing to find, rather than forcing a result.
+Two more real findings: `skills/custom-vm` repeats the same non-existent `avalanche subnet
+create/deploy` commands as two earlier findings (filed as a third comment on
+https://github.com/Ayomisco/avaxskills/issues/2), and `skills/wagmi` claims "wagmi v2 (latest)"
+when v3 has since shipped and its own example code uses `useAccount`, an API wagmi's own type
+declarations mark `@deprecated` in favor of `useConnection` (filed:
+https://github.com/Ayomisco/avaxskills/issues/4). `skills/viem` was checked against KUMPLY's
+actually-installed viem version and found accurate, no finding.

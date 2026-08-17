@@ -246,6 +246,8 @@ https://github.com/Ayomisco/avaxskills/issues/2
 | 8 | External (upstream) | AVAXSKILLS skills/validator-management | N/A | Filed as comment on avaxskills#2, open |
 | 9 | Fix | contracts/scripts/deploy-l1.sh | N/A (deploy tooling) | Flag renames applied; jq/describe issue flagged, not applied |
 | 10 | Fix | contracts/scripts/deploy-l1.sh | N/A (unverified named entities) | Scrubbed |
+| 11 | External (upstream) | AVAXSKILLS skills/custom-vm | N/A | Filed as comment on avaxskills#2, open |
+| 12 | External (upstream) | AVAXSKILLS skills/wagmi | N/A | Filed, avaxskills#4, open |
 
 New Fuji deployment from this audit: `KumplyValidatorSetManager` at
 `0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64` (supersedes `0x7Dc03c4Af8a604E602A0237eb2f6868B95097333`,
@@ -340,3 +342,39 @@ OpenZeppelin `contracts` (v5.6.1, used unmodified for `AccessControl`, `Pausable
 `ReentrancyGuard`): the version is current, the usage pattern is vanilla with no overrides, and
 this library is audited far beyond what a source read in this pass could add to. Reporting this
 plainly rather than manufacturing something to fill the section.
+
+## Round 3 (same day) - ava-labs/precompile-evm, and skills KUMPLY's frontend/SDK actually use
+
+Cloned `ava-labs/precompile-evm` (LGPL-3.0, added to SETUP.md) as directed. It is a template for
+registering custom Go precompiles into a Subnet-EVM build, an architecturally different path from
+what KUMPLY does today (genesis-level configuration of existing built-in precompiles, already
+checked in Round 2). No AVAXSKILLS skill makes claims about custom precompile registration that
+this repo could confirm or contradict, and precompile-evm's own build/test scripts are internally
+consistent on inspection. No genuine finding here: reporting the repo as checked, with no
+comparison surface found, rather than forcing one.
+
+### 11. AVAXSKILLS custom-vm skill: same stale CLI commands, third instance
+
+`skills/custom-vm/SKILL.md` Step 6 documents `avalanche subnet create` / `avalanche subnet
+deploy`, the same non-existent command family as issues covered in #2 (subnet-deployment) and the
+validator-management comment on the same issue. Custom-VM support in the real CLI is exposed via
+flags on `blockchain create` (`--custom-vm-repo-url`, `--custom-vm-branch`,
+`--custom-vm-build-script`, `--custom-vm-path`, all confirmed present in `cmd/blockchaincmd/create.go`),
+not a separate `subnet` verb. Filed as a third comment on the same issue rather than a new one:
+https://github.com/Ayomisco/avaxskills/issues/2#issuecomment-5321360572
+
+### 12. AVAXSKILLS wagmi skill: stale version claim and a now-deprecated hook
+
+`skills/wagmi/SKILL.md` states it covers "wagmi v2 (latest)." wagmi v3 has since shipped and is
+what `npm install wagmi` resolves to today (checked: `npm view wagmi version` -> 3.7.6). KUMPLY's
+own web app is already on wagmi ^3.6.15. The skill's own example code calls `useAccount()`, which
+is not removed in v3 but is an explicitly `@deprecated` alias for the renamed `useConnection()`
+hook (confirmed directly in the installed package's type declarations:
+`node_modules/wagmi/dist/types/exports/index.d.ts`). Lower severity than the CLI findings, since
+the code still runs, not a hard break, but the skill teaches a wrong "latest" version number and
+an API the library itself says to stop using. Filed:
+https://github.com/Ayomisco/avaxskills/issues/4
+
+Checked and clean: `skills/viem` against the actually-installed `viem@2.48.11` (KUMPLY's SDK
+dependency) -- chain IDs (43114 mainnet, 43113 Fuji), RPC URLs, block explorer URLs, and the
+Multicall3 address all match the installed package's own chain definitions exactly. No finding.
