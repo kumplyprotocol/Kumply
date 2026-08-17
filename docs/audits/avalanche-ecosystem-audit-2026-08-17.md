@@ -400,3 +400,46 @@ and wagmi, with no Avalanche-specific JS SDK anywhere in the tree. No comparison
 so no finding is possible either way -- not "checked and clean," genuinely not applicable.
 `skills/contract-verification` was already checked in Round 1 (finding 4's context) against the
 real `verify-contracts.ts` workflow and Snowtrace/Routescan API, no issue found there.
+
+## Round 6 (same day) - remaining real dependencies (wallet connector, OpenZeppelin depth)
+
+Listed every `dependencies`/`devDependencies` entry across all 5 `package.json` files in the
+monorepo to find any AVAXSKILLS-relevant package not yet checked. Non-Avalanche-specific
+libraries (Express, Zod, Next.js, React Three Fiber, TanStack Query) have no matching skill and
+were skipped as genuinely out of scope, not silently ignored.
+
+### 13. Real dependency found: `@reown/appkit` / `@reown/appkit-adapter-wagmi` (KUMPLY's actual wallet connector)
+
+Cross-checked `skills/evm-wallet-integration` against `apps/web/src/providers/Web3Provider.tsx`.
+The skill's documented pattern imports `avalanche`/`avalancheFuji` from `@reown/appkit/networks`;
+KUMPLY's code imported them from `wagmi/chains` instead, with `const networks = [avalancheFuji,
+avalanche] as any;` -- an `as any` cast papering over a real type mismatch. Traced it precisely:
+`@reown/appkit-adapter-wagmi`'s `WagmiAdapter` and `@reown/appkit`'s `createAppKit` both type
+their `networks` parameter as `AppKitNetwork` (from `@reown/appkit-common`), not viem/wagmi's
+`Chain` type, even though `@reown/appkit/networks` itself just re-exports `viem/chains` under the
+hood (confirmed: `export * from 'viem/chains'` in the installed package's source) -- so the
+runtime values are identical, but the exported type identity differs, which is exactly what the
+`as any` was silently hiding.
+
+This is not an AVAXSKILLS bug -- the skill's guidance is correct. It is a small type-safety gap in
+KUMPLY's own code, matching the same category as the deploy-l1.sh findings: found as a byproduct
+of verifying the skill against real, currently-used code. Fixed: import from
+`@reown/appkit/networks` instead of `wagmi/chains`, and typed `networks` explicitly as
+`[AppKitNetwork, ...AppKitNetwork[]]` (the tuple `createAppKit` actually requires -- a plain
+`AppKitNetwork[]` still fails type-check, since array literals widen to non-tuple arrays by
+default; confirmed by re-running `tsc` after the import-only change and seeing the same class of
+error resurface one level up). `as any` removed entirely. `apps/web` type-checks clean
+(`npx tsc --noEmit`, zero errors) and builds clean (`pnpm --filter web build`, succeeds,
+all 15 routes generated) after the fix.
+
+### 14. OpenZeppelin `contracts`, checked past the surface this time
+
+Round 2 noted "no genuine finding" in OpenZeppelin based on version currency and unmodified usage
+alone. Went further this round: pulled OpenZeppelin's actual published GitHub Security Advisories
+(`gh api repos/OpenZeppelin/openzeppelin-contracts/security-advisories`, 19 advisories returned,
+spanning 2021 to 2025). None affect `AccessControl`, `Pausable`, or `ReentrancyGuard` -- the only
+three OpenZeppelin modules KUMPLY imports, all unmodified. Every advisory found instead touches
+Bytes/Base64 utilities, Governor variants, ERC165Checker, ERC721Consecutive, ERC1155Supply,
+UUPSUpgradeable, TimelockController, ECDSA, TransparentUpgradeableProxy, or cross-chain/ERC2771
+utilities -- none of which KUMPLY's contracts use. This is now a substantiated "nothing found,"
+not a surface-level pass.

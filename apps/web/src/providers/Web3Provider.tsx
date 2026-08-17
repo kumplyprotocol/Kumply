@@ -2,7 +2,8 @@
 
 import { type ReactNode } from "react";
 import { WagmiProvider } from "wagmi";
-import { avalancheFuji, avalanche } from "wagmi/chains";
+import { avalancheFuji, avalanche } from "@reown/appkit/networks";
+import type { AppKitNetwork } from "@reown/appkit/networks";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createAppKit } from "@reown/appkit/react";
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
@@ -23,7 +24,7 @@ const metadata = {
   icons: ["https://kumply.xyz/logo.png"],
 };
 
-const networks = [avalancheFuji, avalanche] as any;
+const networks: [AppKitNetwork, ...AppKitNetwork[]] = [avalancheFuji, avalanche];
 
 const wagmiAdapter = new WagmiAdapter({
   networks,

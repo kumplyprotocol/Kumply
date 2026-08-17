@@ -72,3 +72,23 @@ when v3 has since shipped and its own example code uses `useAccount`, an API wag
 declarations mark `@deprecated` in favor of `useConnection` (filed:
 https://github.com/Ayomisco/avaxskills/issues/4). `skills/viem` was checked against KUMPLY's
 actually-installed viem version and found accurate, no finding.
+
+## 17 Aug 2026 - rounds 4 to 6, remaining real surface
+
+Rounds 4 and 5 checked `skills/evm-hardhat`, `skills/testing`, `skills/avalanche-sdk`, and
+`skills/avalanche-js` against KUMPLY's actual `hardhat.config.ts`, test harness, and dependency
+tree (`package.json` plus `pnpm-lock.yaml` in every workspace). No finding in the first two
+(differences noted were reasonable alternatives, not errors); the SDK skills were genuinely not
+applicable, since KUMPLY has zero Avalanche-specific JS SDK dependencies anywhere in the tree.
+
+Round 6 found something real by listing every dependency across all 5 `package.json` files:
+`skills/evm-wallet-integration` documents importing `avalanche`/`avalancheFuji` from
+`@reown/appkit/networks`; KUMPLY's `Web3Provider.tsx` imported them from `wagmi/chains` instead
+and papered over the resulting type error with `as any`. The skill was right, not KUMPLY's
+original code. Fixed: switched the import and typed the network list as the tuple
+`createAppKit`/`WagmiAdapter` actually require, removing the `as any` entirely. Verified with a
+clean `tsc --noEmit` and a successful production build. Also went deeper on OpenZeppelin than the
+earlier "looks fine" pass: pulled OpenZeppelin's own published GitHub Security Advisories (19
+total) and confirmed none affect `AccessControl`, `Pausable`, or `ReentrancyGuard`, the only
+modules KUMPLY imports, unmodified. Full detail in
+`docs/audits/avalanche-ecosystem-audit-2026-08-17.md`, "Round 6" section.
