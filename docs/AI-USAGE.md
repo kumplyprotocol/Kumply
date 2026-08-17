@@ -50,5 +50,10 @@ of problem). As a byproduct rather than the stated goal, it also found a real bu
 the current CLI, and a `jq`/JSON extraction step that cannot work since `avalanche blockchain
 describe` has no machine-readable output mode. The flag names were fixed; the JSON extraction
 problem was flagged in the script with a comment rather than silently worked around, since it
-needs a real design decision, not a typo fix. Full detail in
+needs a real design decision, not a typo fix. The same script also named two real companies
+("Expected initial validators: Bankaool, Arkangeles...") as if they were confirmed validators,
+inconsistent with how both are correctly caveated everywhere else in the repo. Nothing establishes
+either agreed to run a KUMPLY validator, so the line was scrubbed rather than left as a flagged
+comment, since an unverified name sitting in a public script keeps reading as true until someone
+happens to question it closely. Full detail in
 `docs/audits/avalanche-ecosystem-audit-2026-08-17.md`, "Round 2" section.

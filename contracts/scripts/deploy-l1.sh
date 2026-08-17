@@ -96,7 +96,10 @@ echo "        nodeID, blsPublicKey, remainingBalanceOwner, disableOwner, weight)
 echo "      — gated by Tier-4 (KYB) attestation in AttestationStore."
 echo "   c) Within 23h, the validator's off-chain bot consumes the P-Chain"
 echo "      L1ValidatorRegistrationMessage and calls completeValidatorRegistration(idx)."
-echo "   Expected initial validators: Bankaool, Arkangeles, KUMPLY Protocol Treasury"
+echo "   No initial validators are confirmed yet beyond the KUMPLY Protocol Treasury wallet."
+echo "   Any KYB-verified (Tier 4) address can run step (b)-(c) once it holds an"
+echo "   AttestationStore attestation. See LITEPAPER.md section 7.1 (M0) for the current,"
+echo "   real-time status of candidate integrators."
 
 # ── 7) Save chain-config so AvalancheGo picks it up ─────────────────
 NODE_CHAINS_DIR="${AVAGO_CHAINS_DIR:-$HOME/.avalanchego/configs/chains}"

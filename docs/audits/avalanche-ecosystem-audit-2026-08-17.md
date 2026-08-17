@@ -245,6 +245,7 @@ https://github.com/Ayomisco/avaxskills/issues/2
 | 7 | External (upstream) | AVAXSKILLS skills/precompiles | N/A | Filed, avaxskills#3, open |
 | 8 | External (upstream) | AVAXSKILLS skills/validator-management | N/A | Filed as comment on avaxskills#2, open |
 | 9 | Fix | contracts/scripts/deploy-l1.sh | N/A (deploy tooling) | Flag renames applied; jq/describe issue flagged, not applied |
+| 10 | Fix | contracts/scripts/deploy-l1.sh | N/A (unverified named entities) | Scrubbed |
 
 New Fuji deployment from this audit: `KumplyValidatorSetManager` at
 `0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64` (supersedes `0x7Dc03c4Af8a604E602A0237eb2f6868B95097333`,
@@ -314,11 +315,24 @@ CLI's own on-disk sidecar data (`pkg/models/sidecar.go` has a `SubnetID` field; 
 and field names not fully traced in this pass) - worth resolving before this script is next run
 for real, likely ahead of M4.
 
-Also noticed, not fixed (a narrative accuracy question, not a technical one): the script's Step
-4/5 output still says "Expected initial validators: Bankaool, Arkangeles, KUMPLY Protocol
-Treasury" - neither Bankaool nor Arkangeles is a confirmed validator or counterparty as of this
-audit (see the litepaper's own demand-thesis section). Flagging for whoever next touches this
-script, not changing it here since it is a business-narrative call, not a code bug.
+### 10. Unconfirmed named entities in deploy-l1.sh, scrubbed
+
+Also noticed in the same script: Step 4/5's output listed "Expected initial validators:
+Bankaool, Arkangeles, KUMPLY Protocol Treasury." Checked against every other mention of these two
+names in the repo (LITEPAPER.md section 1.1, pitch-deck.ts slide 9): both are consistently and
+correctly scoped everywhere else as the entities who defined institutional challenges for
+Avalanche's LatAm Institutional Hackathon in May 2026, explicitly caveated ("that demand signal
+belongs to Avalanche, not to us"; "KUMPLY participated; we did not place"). Nothing anywhere in
+the repo, in this audit, or in prior project history establishes that either entity agreed to run
+a KUMPLY L1 validator, or has any confirmed operational relationship with KUMPLY at all. This one
+script line was the sole exception to an otherwise consistently honest framing, and named two real
+companies as if they were confirmed counterparties without their consent. Scrubbed: the line now
+states plainly that no initial validators are confirmed beyond the treasury wallet, and points to
+the litepaper's real-time M0 status instead of naming anyone. This was not left as a flagged
+comment, unlike finding 9's `jq`/JSON issue, because the risk profile is different: an unresolved
+technical gap fails loudly the next time the script runs, while an uncorrected unverified name in
+a public, committed script keeps being true-sounding indefinitely until someone reads closely
+enough to question it.
 
 No genuine finding in kyc-aml-integration, subnet-governance, security, audit, or
 contract-verification beyond what was already covered in the first pass. No genuine finding in
