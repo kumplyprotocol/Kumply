@@ -260,7 +260,15 @@ app.post('/webhook/sumsub', webhookLimiter, async (req: Request, res: Response):
     hmac.update(req.body);
     const calculated = hmac.digest('hex');
 
-    if (!signature || signature !== calculated) {
+    // Constant-time comparison — a plain !== leaks timing information proportional to
+    // the position of the first differing byte, a known side channel on HMAC checks.
+    const providedBuf = Buffer.from(signature ?? '', 'utf8');
+    const calculatedBuf = Buffer.from(calculated, 'utf8');
+    const validSignature =
+      providedBuf.length === calculatedBuf.length &&
+      crypto.timingSafeEqual(providedBuf, calculatedBuf);
+
+    if (!signature || !validSignature) {
       log('WARN', 'webhook_invalid_signature', { provided: signature?.slice(0, 10) });
       res.status(401).json({ error: 'Invalid signature' });
       return;

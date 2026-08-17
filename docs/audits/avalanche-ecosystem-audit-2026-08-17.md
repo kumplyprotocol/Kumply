@@ -11,7 +11,13 @@ Tooling versions used: AVAXSKILLS as installed via `npx openskills install Ayomi
 on 17 Aug 2026; avalanche-cli, avalanche-starter-kit, icm-contracts as shallow clones (depth 1)
 of `main` on the same date.
 
-## Fix - needs confirmation before applying
+## Fix - confirmed and applied same day
+
+Findings 1 through 3 below were reported first, then confirmed by the project owner and applied
+the same day. `KumplyValidatorSetManager` was redeployed and re-verified on Fuji at
+`0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64` (superseding `0x7Dc03c4Af8a604E602A0237eb2f6868B95097333`,
+which carried the bug described in finding 1 and is now itself superseded, following the same
+pattern as the 21 Jul 2026 redeploy). All 164 tests pass after the fix.
 
 ### 1. L1 bootstrap will fail against the real P-Chain (Critical)
 
@@ -59,11 +65,12 @@ suite calls the real `icm-contracts` packing function to build the injected mess
 Suggested fix: insert `uint32(20)` into the pre-image immediately before
 `data.validatorManagerAddress`, matching the reference layout exactly.
 
-Confirmation needed because: this changes the compiled bytecode of `KumplyValidatorSetManager`,
-which is already deployed and Snowtrace-verified on Fuji at
-`0x7Dc03c4Af8a604E602A0237eb2f6868B95097333`. Fixing this requires a redeploy, the same situation
-already documented for the 21 Jul 2026 redeploy after the immutable AttestationStore reference
-bug.
+Status: fixed and redeployed. `uint32(20)` added to the pre-image in
+`contracts/contracts/libraries/ValidatorMessages.sol`. The test suite's off-chain JS
+re-implementation of this same packing (`contracts/test/KumplyValidatorSetManager.test.ts`) had
+the identical gap and was fixed in lockstep, since it is what let the bug pass 27/27 tests
+undetected in the first place. Redeployed to Fuji at
+`0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64`, Snowtrace-verified, 110/110 contract tests pass.
 
 ### 2. initializeValidatorSet is missing two sanity checks present in the reference (Medium)
 
@@ -88,8 +95,8 @@ for this exact subnet could produce a Warp message with a matching conversionID.
 defense-in-depth against operational mistakes, for example the same calldata being replayed
 against a different contract deployment or the wrong network, and it is cheap to add.
 
-Confirmation needed because: same deployed, verified contract as finding 1. If finding 1 is
-fixed and redeployed, this should go in the same redeploy.
+Status: fixed in the same redeploy as finding 1. Both checks added to `initializeValidatorSet`,
+with two new custom errors (`InvalidValidatorManagerBlockchainID`, `InvalidValidatorManagerAddress`).
 
 ### 3. Webhook HMAC comparison is not constant-time (Medium)
 
@@ -119,10 +126,11 @@ exploitability here is limited (network jitter, and the attacker would need to g
 384-bit HMAC digest byte by byte), but the fix is small and this endpoint gates on-chain
 attestation issuance.
 
-Confirmation needed because: this is identity verification logic per repo policy, even though
-neither file is a deployed contract.
+Status: fixed. Both handlers now compare with `crypto.timingSafeEqual` behind a length-equality
+guard. 17/17 API tests pass, including the existing invalid-signature and truncated-signature
+cases.
 
-## Improve - applied directly
+## Improve - also applied directly
 
 ### 4. verify-contracts.ts did not cover KumplyValidatorSetManager
 
@@ -228,12 +236,16 @@ https://github.com/Ayomisco/avaxskills/issues/2
 
 | # | Category | File | Severity | Status |
 |---|---|---|---|---|
-| 1 | Fix | contracts/contracts/libraries/ValidatorMessages.sol | Critical | Reported, needs confirmation |
-| 2 | Fix | contracts/contracts/KumplyValidatorSetManager.sol | Medium | Reported, needs confirmation |
-| 3 | Fix | apps/web/src/app/api/webhook/route.ts, apps/api/src/index.ts | Medium | Reported, needs confirmation |
+| 1 | Fix | contracts/contracts/libraries/ValidatorMessages.sol | Critical | Fixed, redeployed, verified |
+| 2 | Fix | contracts/contracts/KumplyValidatorSetManager.sol | Medium | Fixed in same redeploy |
+| 3 | Fix | apps/web/src/app/api/webhook/route.ts, apps/api/src/index.ts | Medium | Fixed |
 | 4 | Improve | contracts/scripts/verify-contracts.ts | N/A | Applied |
 | 5 | Add | gas optimization | N/A | Flagged, not applied (Retro9000 trade-off) |
 | 6 | Add | contracts/contracts/AttestationStore.sol | Low | Reported, needs confirmation |
+
+New Fuji deployment from this audit: `KumplyValidatorSetManager` at
+`0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64` (supersedes `0x7Dc03c4Af8a604E602A0237eb2f6868B95097333`,
+which carried finding 1's bug).
 
 External finding filed upstream, not a KUMPLY issue: AVAXSKILLS `subnet-deployment` skill
 documents CLI commands that do not exist in `ava-labs/avalanche-cli`

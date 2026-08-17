@@ -1,8 +1,8 @@
 {
-  "address": "0x7Dc03c4Af8a604E602A0237eb2f6868B95097333",
+  "address": "0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64",
   "admin": "0xD65042534CE80fcb641fd6Eb99a16eBF6C0cd076",
   "attestationStore": "0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD",
   "subnetID": "0xd2f1a372fc88310d678b0eb893d8e54a70d1d5a5652cdba9575f6abf94519c3f",
   "chainId": "43113",
-  "deployedAt": "2026-07-22T03:09:22.856Z"
+  "deployedAt": "2026-08-17T20:45:14.263Z"
 }

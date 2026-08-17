@@ -56,11 +56,12 @@ function computeConversionID(
   initialValidators: { nodeID: string; blsPublicKey: string; weight: bigint }[]
 ): string {
   let pre = ethers.solidityPacked(
-    ["uint16", "bytes32", "bytes32", "address", "uint32"],
+    ["uint16", "bytes32", "bytes32", "uint32", "address", "uint32"],
     [
       CODEC_ID,
       subnetID,
       validatorManagerBlockchainID,
+      20, // length prefix for validatorManagerAddress, per Ava Labs' ConversionData wire format
       validatorManagerAddress,
       initialValidators.length,
     ]

@@ -68,9 +68,10 @@ library ValidatorMessages {
     }
 
     /// @notice Re-computes the off-chain `conversionID` from the on-chain `ConversionData`.
-    /// @dev    Pre-image layout (Avalanche codec):
+    /// @dev    Pre-image layout (Avalanche codec), matching icm-contracts'
+    ///         ValidatorMessages.packConversionData exactly:
     ///           codecID(2) || subnetID(32) || managerChainID(32) ||
-    ///           managerAddress(20) || validators-len(uint32) ||
+    ///           managerAddressLen(uint32=20) || managerAddress(20) || validators-len(uint32) ||
     ///           N × [ nodeIDLen(uint32) || nodeID || blsPubKey(48) || weight(uint64) ]
     ///         conversionID = sha256(pre-image).
     function computeConversionID(IACP99Manager.ConversionData calldata data)
@@ -82,7 +83,8 @@ library ValidatorMessages {
             CODEC_ID,
             data.subnetID,
             data.validatorManagerBlockchainID,
-            data.validatorManagerAddress, // 20 bytes, no length prefix
+            uint32(20), // length prefix for validatorManagerAddress, per Ava Labs' ConversionData wire format
+            data.validatorManagerAddress,
             uint32(data.initialValidators.length)
         );
         for (uint256 i = 0; i < data.initialValidators.length; i++) {

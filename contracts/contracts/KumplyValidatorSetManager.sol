@@ -121,6 +121,8 @@ contract KumplyValidatorSetManager is
     error AlreadyInitialized();
     error NotInitialized();
     error ConversionIDMismatch(bytes32 expected, bytes32 actual);
+    error InvalidValidatorManagerBlockchainID(bytes32 actual);
+    error InvalidValidatorManagerAddress(address actual);
 
     // ──────────────────────────────────────────────────────────────────
     //  Constructor
@@ -176,6 +178,15 @@ contract KumplyValidatorSetManager is
     ) external override whenNotPaused onlyRole(L1_MANAGER_ROLE) {
         if (initialized) revert AlreadyInitialized();
         if (data.subnetID != _subnetID) revert InvalidSubnetID();
+        // Defense-in-depth: the P-Chain-signed conversionID already ties `data` to this exact
+        // subnet cryptographically, but these two checks catch operational mistakes such as the
+        // same calldata being replayed against a different manager deployment or network.
+        if (data.validatorManagerBlockchainID != WARP.getBlockchainID()) {
+            revert InvalidValidatorManagerBlockchainID(data.validatorManagerBlockchainID);
+        }
+        if (data.validatorManagerAddress != address(this)) {
+            revert InvalidValidatorManagerAddress(data.validatorManagerAddress);
+        }
 
         bytes memory payload = _getVerifiedWarpPayload(messageIndex);
         bytes32 conversionID = ValidatorMessages.unpackSubnetToL1ConversionMessage(payload);
