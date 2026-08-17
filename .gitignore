@@ -25,6 +25,13 @@ contracts/typechain-types/
 coverage/
 coverage.json
 
+# ── Avalanche reference tooling (project-scoped, dev-only) ─────
+# Cloned/installed for auditing KUMPLY against official Avalanche patterns.
+# avalanche-starter-kit ships with no LICENSE file: treat as read-only
+# reference, never copy its code verbatim. See SETUP.md.
+.claude/skills/avalanche-skills/
+.reference/
+
 # ── IDE / OS ────────────────────────────────────────────────────
 .vscode/
 .idea/
