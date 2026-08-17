@@ -117,6 +117,12 @@ pnpm --filter @kumply/api test         # 17  — Vitest + Supertest
 
 Contract coverage includes roles and access control, pausability, the five tiers, revocation and expiry, the fee/subscription billing paths, and a bit-exact Avalanche-codec round-trip for the ACP-99 Warp payloads.
 
+## 🔍 Security & Engineering Rigor
+
+Before attempting to activate KUMPLY's L1 on Fuji, we audited `KumplyValidatorSetManager` against the real source of [ava-labs/icm-contracts](https://github.com/ava-labs/icm-contracts) — not just its documentation. We found that `ValidatorMessages.computeConversionID` was missing the 4-byte length prefix the real P-Chain wire format requires: the hash it computed would never have matched the conversionID the network actually signs, so `initializeValidatorSet` would have reverted every time. The existing 27 tests didn't catch this because the Warp mock reimplemented the same error as the contract. Fixed, redeployed, and re-verified on Fuji ([`0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64`](https://testnet.snowtrace.io/address/0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64)), with a test that now exercises the real P-Chain format. Along the way, we also reported a real gap in AVAXSKILLS' community documentation — filed upstream, [open as of 17 Aug 2026](https://github.com/Ayomisco/avaxskills/issues/2).
+
+Full writeup: [docs/audits/avalanche-ecosystem-audit-2026-08-17.md](docs/audits/avalanche-ecosystem-audit-2026-08-17.md). AI-assistance disclosure: [docs/AI-USAGE.md](docs/AI-USAGE.md).
+
 ## 📖 Documentation
 
 | Document | What it covers |
@@ -127,6 +133,8 @@ Contract coverage includes roles and access control, pausability, the five tiers
 | [contracts/l1/README.md](contracts/l1/README.md) | L1 genesis and node operation |
 | [packages/sdk/README.md](packages/sdk/README.md) | SDK API reference |
 | [apps/api/openapi.yaml](apps/api/openapi.yaml) | OpenAPI 3.0 spec for the REST API |
+| [docs/audits/avalanche-ecosystem-audit-2026-08-17.md](docs/audits/avalanche-ecosystem-audit-2026-08-17.md) | Security audit against official Avalanche tooling |
+| [docs/AI-USAGE.md](docs/AI-USAGE.md) | AI-assistance disclosure |
 
 ## 🚀 Getting Started
 
