@@ -39,8 +39,8 @@ command -v jq >/dev/null 2>&1 || { echo "❌ jq not found. Install: brew install
 echo "🔧 Step 1/5 — Creating blockchain config…"
 avalanche blockchain create "$L1_NAME" \
   --evm \
-  --evm-defaults \
-  --custom-vm-genesis "$GENESIS_FILE" \
+  --test-defaults \
+  --genesis "$GENESIS_FILE" \
   --proof-of-authority \
   --warp \
   --evm-token KMP \
@@ -52,6 +52,15 @@ echo "🚀 Step 2/5 — Deploying $L1_NAME to $NETWORK… (~3 hours bootstrap)"
 avalanche blockchain deploy "$L1_NAME" --"$NETWORK" --output-tx-path "$OUTPUT_DIR/deploy-tx.json"
 
 # ── 4) Extract identifiers ──────────────────────────────────────────
+# KNOWN BROKEN as of 17 Aug 2026 audit: `avalanche blockchain describe` prints a
+# human-readable table (github.com/jedib0t/go-pretty), not JSON. It has no --json
+# or --output flag in the current avalanche-cli (checked cmd/blockchaincmd/describe.go
+# and cmd/root.go). The `jq -r` calls below will fail to parse the table and the
+# `|| echo ""` fallback will silently produce empty IDs instead of erroring loudly.
+# Needs a real fix before this script is next run: either parse `describe`'s table
+# output, or read subnetID/blockchainID directly from the CLI's own on-disk sidecar
+# file for this blockchain (see AVALANCHE_CLI_HOME or ~/.avalanche-cli/subnets/).
+# See docs/audits/avalanche-ecosystem-audit-2026-08-17.md, finding on deploy-l1.sh.
 SUBNET_ID=$(avalanche blockchain describe "$L1_NAME" --network "$NETWORK" | jq -r '.subnetID' || echo "")
 BLOCKCHAIN_ID=$(avalanche blockchain describe "$L1_NAME" --network "$NETWORK" | jq -r '.blockchainID' || echo "")
 RPC_URL=$(avalanche blockchain describe "$L1_NAME" --network "$NETWORK" | jq -r '.rpcURL' || echo "")

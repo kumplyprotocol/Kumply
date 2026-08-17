@@ -242,6 +242,9 @@ https://github.com/Ayomisco/avaxskills/issues/2
 | 4 | Improve | contracts/scripts/verify-contracts.ts | N/A | Applied |
 | 5 | Add | gas optimization | N/A | Flagged, not applied (Retro9000 trade-off) |
 | 6 | Add | contracts/contracts/AttestationStore.sol | Low | Reported, needs confirmation |
+| 7 | External (upstream) | AVAXSKILLS skills/precompiles | N/A | Filed, avaxskills#3, open |
+| 8 | External (upstream) | AVAXSKILLS skills/validator-management | N/A | Filed as comment on avaxskills#2, open |
+| 9 | Fix | contracts/scripts/deploy-l1.sh | N/A (deploy tooling) | Flag renames applied; jq/describe issue flagged, not applied |
 
 New Fuji deployment from this audit: `KumplyValidatorSetManager` at
 `0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64` (supersedes `0x7Dc03c4Af8a604E602A0237eb2f6868B95097333`,
@@ -250,3 +253,76 @@ which carried finding 1's bug).
 External finding filed upstream, not a KUMPLY issue: AVAXSKILLS `subnet-deployment` skill
 documents CLI commands that do not exist in `ava-labs/avalanche-cli`
 (https://github.com/Ayomisco/avaxskills/issues/2).
+
+## Round 2 (same day) - a second pass focused on skills KUMPLY actually uses
+
+A second pass targeted the AVAXSKILLS skills KUMPLY's own patterns actually match
+(kyc-aml-integration, validator-management, subnet-governance, security, audit,
+contract-verification), plus `ava-labs/subnet-evm` (freshly cloned, LGPL-3.0) checked against
+KUMPLY's real `genesis.json`, and a closer look at `avalanche-cli`'s actual genesis-generation
+flags against `contracts/scripts/deploy-l1.sh`, the script KUMPLY would run to redeploy or deploy
+a second L1 environment.
+
+### 7. AVAXSKILLS precompiles skill: wrong TxAllowList genesis key
+
+`skills/precompiles/SKILL.md` documents the TxAllowList precompile's genesis config key as
+`transactionAllowListConfig`. The real key, confirmed against `ava-labs/subnet-evm`
+(`precompile/contracts/txallowlist/module.go:20`, `const ConfigKey = "txAllowListConfig"`), is
+`txAllowListConfig`. The other four precompile keys documented in the same skill file
+(`contractDeployerAllowListConfig`, `contractNativeMinterConfig`, `feeManagerConfig`,
+`warpConfig`, `rewardManagerConfig`) all check out correct against the same source. KUMPLY's own
+`contracts/l1/genesis.json` already uses the correct `txAllowListConfig`, independently of this
+skill, so no KUMPLY-side fix was needed here. Filed upstream:
+https://github.com/Ayomisco/avaxskills/issues/3
+
+### 8. AVAXSKILLS validator-management skill: CLI commands that do not exist
+
+Same root cause as finding in issue #2 (stale CLI vocabulary), found in a different skill file.
+`skills/validator-management/SKILL.md` documents `avalanche primaryNetwork addValidator` (real:
+`avalanche primary addValidator`, confirmed in `cmd/primarycmd/`) and `avalanche subnet
+addValidator` / `avalanche subnet removeValidator` (no `subnet` command family exists at all;
+`cmd/validatorcmd` currently exposes `increaseBalance`, `list`, and `getBalance`, not
+add/removeValidator). Filed as a comment on the existing issue rather than a new one, since it's
+the same class of problem: https://github.com/Ayomisco/avaxskills/issues/2#issuecomment-5320383561
+
+### 9. KUMPLY's own deploy-l1.sh does not match the current avalanche-cli (Fix - applied where unambiguous)
+
+Not an external finding. Checking `contracts/scripts/deploy-l1.sh` against the actual flags
+registered on `avalanche blockchain create`/`deploy`/`describe` in the cloned `avalanche-cli`
+source turned up three real breakages:
+
+- `--evm-defaults` does not exist on `avalanche blockchain create`. It exists only on the separate
+  `avalanche node wiz` command (`cmd/nodecmd/wiz.go:118`). The real flags on `blockchain create`
+  for this purpose are `--production-defaults` / `--test-defaults`.
+- `--custom-vm-genesis` does not exist anywhere in `avalanche-cli`. The real flag to supply a
+  genesis file to `blockchain create` is `--genesis` (`cmd/blockchaincmd/create.go:104`).
+- `avalanche blockchain describe` has no JSON or machine-readable output mode at all (confirmed:
+  no `--json`/`--output` flag on the command or on root; it prints a formatted table via
+  `github.com/jedib0t/go-pretty`). The script pipes its output through `jq -r '.subnetID'` and
+  similar, which cannot work against table output. The `|| echo ""` fallback means this fails
+  silently into empty IDs rather than a loud error.
+
+`avalanche blockchain deploy "$L1_NAME" --"$NETWORK"` (expanding to `--fuji`/`--mainnet`) and
+`--output-tx-path` were both checked and are correct as written.
+
+Applied directly, since these are unambiguous syntax corrections in a deploy script, not a
+deployed contract: `--evm-defaults` to `--test-defaults` (matching the script's own stated
+default of targeting Fuji), `--custom-vm-genesis` to `--genesis`. Not applied, left as a flagged
+comment in the script itself: the `describe`/`jq` extraction is a real design problem, not a typo,
+and needs either table-output parsing or reading `subnetID`/`blockchainID` directly from the
+CLI's own on-disk sidecar data (`pkg/models/sidecar.go` has a `SubnetID` field; exact on-disk path
+and field names not fully traced in this pass) - worth resolving before this script is next run
+for real, likely ahead of M4.
+
+Also noticed, not fixed (a narrative accuracy question, not a technical one): the script's Step
+4/5 output still says "Expected initial validators: Bankaool, Arkangeles, KUMPLY Protocol
+Treasury" - neither Bankaool nor Arkangeles is a confirmed validator or counterparty as of this
+audit (see the litepaper's own demand-thesis section). Flagging for whoever next touches this
+script, not changing it here since it is a business-narrative call, not a code bug.
+
+No genuine finding in kyc-aml-integration, subnet-governance, security, audit, or
+contract-verification beyond what was already covered in the first pass. No genuine finding in
+OpenZeppelin `contracts` (v5.6.1, used unmodified for `AccessControl`, `Pausable`,
+`ReentrancyGuard`): the version is current, the usage pattern is vanilla with no overrides, and
+this library is audited far beyond what a source read in this pass could add to. Reporting this
+plainly rather than manufacturing something to fill the section.

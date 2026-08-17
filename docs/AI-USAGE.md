@@ -35,3 +35,20 @@ The same audit found and reported a real, reproducible bug in AVAXSKILLS itself,
 code: its `subnet-deployment` skill documents CLI commands (`platform subnet create`, and others)
 that do not exist in the actual `ava-labs/avalanche-cli` source. Filed upstream, open as of
 17 Aug 2026: https://github.com/Ayomisco/avaxskills/issues/2.
+
+## 17 Aug 2026 - second pass, skills KUMPLY actually uses
+
+A second AI-assisted pass, same day, targeted the AVAXSKILLS skills matching KUMPLY's own
+patterns and cloned `ava-labs/subnet-evm` fresh to check against KUMPLY's real `genesis.json`.
+This found two more real AVAXSKILLS inaccuracies: a wrong genesis key in `skills/precompiles`
+(`transactionAllowListConfig` instead of the real `txAllowListConfig`, confirmed against
+`subnet-evm` source, filed as
+https://github.com/Ayomisco/avaxskills/issues/3), and more of the same stale CLI command naming
+found in `skills/validator-management` (filed as a comment on issue #2, since it's the same class
+of problem). As a byproduct rather than the stated goal, it also found a real bug in KUMPLY's own
+`contracts/scripts/deploy-l1.sh`: two flags that do not exist on `avalanche blockchain create` in
+the current CLI, and a `jq`/JSON extraction step that cannot work since `avalanche blockchain
+describe` has no machine-readable output mode. The flag names were fixed; the JSON extraction
+problem was flagged in the script with a comment rather than silently worked around, since it
+needs a real design decision, not a typo fix. Full detail in
+`docs/audits/avalanche-ecosystem-audit-2026-08-17.md`, "Round 2" section.
