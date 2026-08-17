@@ -1,4 +1,6 @@
 import * as dotenv from "dotenv";
+import * as fs from "fs";
+import * as path from "path";
 dotenv.config({ path: "../.env" });
 
 /**
@@ -94,11 +96,51 @@ async function main() {
     }
   }
 
+  // 3. Verify KumplyValidatorSetManager (Fuji only — the manager governs the
+  //    KUMPLY Compliance L1's validator set and is not deployed on mainnet).
+  //    Reads from l1/.deployment/validator-manager.json, written by
+  //    deploy-validator-manager.ts, falling back to CONTRACT_VALIDATOR_SET_MANAGER.
+  let managerInfo: { address?: string; admin?: string; attestationStore?: string; subnetID?: string } = {};
+  const managerDeploymentFile = path.join(__dirname, "../l1/.deployment/validator-manager.json");
+  if (fs.existsSync(managerDeploymentFile)) {
+    managerInfo = JSON.parse(fs.readFileSync(managerDeploymentFile, "utf-8"));
+  }
+  const managerAddress = managerInfo.address || process.env.CONTRACT_VALIDATOR_SET_MANAGER;
+
+  if (!isMainnet && managerAddress) {
+    const managerAdmin = managerInfo.admin || deployerAddress;
+    const managerStore = managerInfo.attestationStore || storeAddress;
+    const managerSubnetID = managerInfo.subnetID;
+
+    console.log("3. Verifying KumplyValidatorSetManager...");
+    if (!managerSubnetID) {
+      console.log("   Skipped: subnetID not found in l1/.deployment/validator-manager.json\n");
+    } else {
+      try {
+        await run("verify:verify", {
+          address: managerAddress,
+          constructorArguments: [managerAdmin, managerStore, managerSubnetID],
+          contract: "contracts/KumplyValidatorSetManager.sol:KumplyValidatorSetManager",
+        });
+        console.log("   ✅ KumplyValidatorSetManager verified\n");
+      } catch (error: any) {
+        if (error.message.includes("Already Verified") || error.message.includes("already verified")) {
+          console.log("   ⏭️  Already verified\n");
+        } else {
+          console.error("   ❌ Error:", error.message, "\n");
+        }
+      }
+    }
+  }
+
   const explorerBase = isMainnet ? "https://snowtrace.io" : "https://testnet.snowtrace.io";
   console.log("═══════════════════════════════════════════");
   console.log("  Verification Complete");
   console.log(`  AttestationStore: ${explorerBase}/address/${storeAddress}`);
   console.log(`  ComplianceGate:   ${explorerBase}/address/${gateAddress}`);
+  if (!isMainnet && managerAddress) {
+    console.log(`  ValidatorSetManager: ${explorerBase}/address/${managerAddress}`);
+  }
   console.log("═══════════════════════════════════════════");
 }
 
