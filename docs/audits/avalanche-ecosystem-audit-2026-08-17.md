@@ -443,3 +443,27 @@ Bytes/Base64 utilities, Governor variants, ERC165Checker, ERC721Consecutive, ERC
 UUPSUpgradeable, TimelockController, ECDSA, TransparentUpgradeableProxy, or cross-chain/ERC2771
 utilities -- none of which KUMPLY's contracts use. This is now a substantiated "nothing found,"
 not a surface-level pass.
+
+## Round 7 (same day) - PR path to icm-contracts, not just an issue
+
+Checked which of the four reference repos have a real CONTRIBUTING.md, the only legitimate path to
+a PR rather than an issue. `icm-contracts` has one (signed commits required; pre-discussion in
+GitHub Discussions required only for new features, not fixes). `avalanche-starter-kit`,
+`avalanche-cli`, and `subnet-evm` do not -- issue-only for any of the three.
+
+### 15. icm-contracts CONTRIBUTING.md typo, PR prepared but not opened
+
+Found a real, trivial typo at `CONTRIBUTING.md:20`: "modfiication" instead of "modification" --
+safe PR target, no feature-discussion gate applies since it is a doc fix, not a feature.
+
+Forked `ava-labs/icm-contracts` to `Eras256/icm-contracts` and created branch
+`fix-contributing-typo` with the fix. Attempted to commit via GitHub's REST Contents API on the
+assumption it would auto-sign the way GitHub's own web file editor does -- it does not: the
+resulting commit came back `verified: false, reason: unsigned`. Their CONTRIBUTING.md requires
+signed commits, and this sandbox has no commit-signing key configured. Explicitly did not generate
+one without direct confirmation: a persistent signing key is broad, standing power (signs
+anything, in any repo, indefinitely), not a scoped, one-time action, and the user's call on
+whether to create one. No PR was opened to `ava-labs/icm-contracts` -- an unsigned commit would
+fail their stated CI gate. The fork and branch are left as-is for the project owner to sign and
+push from their own machine, or edit directly through GitHub's web UI (which does auto-sign),
+before opening the PR themselves.
