@@ -1,6 +1,6 @@
 # KUMPLY 🛡️
 
-**The First Institutional-Grade Compliance Identity Layer for the AVALANCHE® Public Blockchain**
+**The first to combine KYC, KYB, and KYA — including AI agent verification — in a single on-chain attestation layer for AVALANCHE®**
 
 KUMPLY provides non-custodial, on-chain identity verification (KYC/KYB/KYA) for the AVALANCHE® network. By bridging real-world regulatory compliance with DeFi anonymity, we empower institutions, exchanges, and autonomous AI agents to operate seamlessly across the C-Chain and custom AVALANCHE® L1s without compromising user privacy.
 
