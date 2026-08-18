@@ -43,12 +43,27 @@ export const metadata: Metadata = {
 
 // Standalone root layout: /pitch renders the deck as a full document,
 // outside the [locale] tree (no Navbar/Footer, no i18n).
+//
+// data-theme="light" is the server-rendered default (institutional reviewers,
+// not a dev-tool audience — light reads more professional than this deck's
+// dark-by-default CSS). The inline script below runs synchronously before
+// paint and flips to dark only if a returning visitor previously chose it
+// (localStorage), so there's no flash for the common first-visit case and
+// no flash for a returning dark-mode visitor either.
 export default function PitchLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" data-theme="light">
+      <body>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(localStorage.getItem('kumply-pitch-theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}",
+          }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

@@ -171,6 +171,22 @@ export const DECK_CSS = `
     .slide:hover { border-color: var(--ink-3); }
   }
 
+  .pitch-controls {
+    position: fixed; top: 1rem; right: 1rem; z-index: 50;
+    display: flex; gap: 0.5rem;
+  }
+  .pitch-controls button {
+    font-family: var(--mono); font-size: 0.78rem; font-weight: 600;
+    background: var(--panel); border: 1px solid var(--line); color: var(--ink);
+    border-radius: 8px; padding: 0.45em 0.75em; cursor: pointer; line-height: 1;
+  }
+  .pitch-controls button:hover, .pitch-controls button:focus-visible {
+    border-color: var(--crimson); outline: none;
+  }
+  @media (max-width: 640px) {
+    .pitch-controls { top: 0.6rem; right: 0.6rem; }
+  }
+
 `;
 
 export const DECK_HTML = `
@@ -648,6 +664,491 @@ export const DECK_HTML = `
       not endorsed by, sponsored by, or affiliated with Ava Labs, Inc. or the Avalanche Foundation.
       Core contracts live on Avalanche Mainnet C-Chain (read-only beta, fees at zero) and Fuji Testnet.
       Automated identity checks remain on Sumsub's sandbox tier; not for production verifications yet.
+    </p>
+  </section>
+
+</div>
+`;
+
+// Spanish translation of DECK_HTML. Same structure, classes, links, and numbers -
+// only the prose is translated. Kept in sync manually; if DECK_HTML changes, mirror
+// the change here.
+export const DECK_HTML_ES = `
+<div class="deck">
+
+  <!-- 01 · Portada -->
+  <section class="slide title-slide">
+    <div class="slide-head">
+      <span class="eyebrow">Presentación para Grant · Agosto 2026</span>
+      <span class="slide-num">01 / 12</span>
+    </div>
+    <p class="wordmark">KUMPLY<span class="dot">.</span></p>
+    <h1>La capa de cumplimiento para el ecosistema Avalanche.</h1>
+    <p class="lede" style="margin-top: 1.4rem;">
+      Attestations on-chain de KYC, KYB y KYA que cualquier dApp o L1 soberana puede verificar en menos de un segundo -
+      además de la primera L1 de Avalanche diseñada para que cada validador deba pasar verificación empresarial (KYB) para unirse al consenso.
+    </p>
+    <div class="title-badges">
+      <span class="badge live">En vivo en Mainnet C-Chain · Beta</span>
+      <span class="badge brand">ACP-99 · ACP-77 · ICM</span>
+      <span class="badge warn">KYC de producción es el próximo milestone</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://kumply.xyz">kumply.xyz</a>
+      <a href="https://github.com/kumplyprotocol/Kumply">github.com/kumplyprotocol/Kumply</a>
+      <a href="https://www.npmjs.com/package/@kumply/sdk">npm: @kumply/sdk</a>
+    </div>
+  </section>
+
+  <!-- 02 · Problema -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="eyebrow">Problema</span>
+      <span class="slide-num">02 / 12</span>
+    </div>
+    <h2>Las instituciones no pueden responder una pregunta on-chain: ¿quién es la contraparte?</h2>
+    <p class="lede">
+      Una entidad regulada no puede transaccionar con una dirección EVM que no puede resolver. Y bajo la ley mexicana
+      de protección de datos (LFPDPPP), cada parte que almacena los documentos de identidad detrás de esa resolución
+      carga con la responsabilidad de conservarlos. Así que los parches de abajo no solo agregan fricción - cada uno
+      duplica una exposición legal que nadie quiere. Lo que falta es una <strong>capa de resolución de contraparte
+      conforme a la ley</strong>: una forma de probar quién está del otro lado sin que cada participante conserve
+      los documentos subyacentes.
+    </p>
+    <div class="grid cols-3">
+      <div class="cell">
+        <h3>Whitelists off-chain</h3>
+        <p>Rompen la composabilidad. Cada integración es un acuerdo bilateral a medida.</p>
+      </div>
+      <div class="cell">
+        <h3>KYC por dApp</h3>
+        <p>Los usuarios se re-verifican en cada app. Los costos se repiten; la liquidez se fragmenta.</p>
+      </div>
+      <div class="cell">
+        <h3>Forks permisionados</h3>
+        <p>Jardines amurallados desconectados de las DeFi públicas y su liquidez.</p>
+      </div>
+    </div>
+    <p class="lede" style="margin-top: 1.5rem;">
+      Y una nueva clase de contraparte está llegando más rápido de lo que cualquiera de estos parches puede manejar:
+      <strong>agentes de IA autónomos</strong> transaccionando con capital real.
+    </p>
+  </section>
+
+  <!-- 03 · Solución -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="eyebrow">Solución</span>
+      <span class="slide-num">03 / 12</span>
+    </div>
+    <h2>Verifícate una vez. Componible en todas partes.</h2>
+    <p class="lede">
+      Una persona, empresa o agente de IA se verifica una vez a través de KUMPLY. La credencial se escribe en el
+      contrato <strong>AttestationStore</strong> - sin datos personales on-chain, solo wallet, tier y expiración.
+      Desde ese momento, cualquier contrato en Avalanche resuelve la contraparte con una llamada gratuita a
+      <code>verify(address)</code>.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tier</th><th>Credencial</th><th>Para quién es</th></tr></thead>
+        <tbody>
+          <tr><td>Tier 1–3</td><td>KYC - Básico / Estándar / Mejorado</td><td>Personas, desde DeFi retail hasta productos regulados</td></tr>
+          <tr><td>Tier 4</td><td>KYB - Verificación empresarial</td><td>Empresas; requerido para validar en la L1 de KUMPLY</td></tr>
+          <tr><td>Tier 5</td><td>KYA - Know Your Agent</td><td>Agentes de IA autónomos operando capital on-chain</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note"><strong>Una primitiva, no un SaaS amurallado.</strong> KUMPLY son contratos con licencia Apache 2.0 más un SDK de TypeScript.
+      Cualquier dApp de Avalanche o L1 soberana integra compliance en pocas líneas - nadie tiene que pasar por nuestra app.</p>
+  </section>
+
+  <!-- 04 · Prueba en vivo -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="eyebrow">Funcionando hoy - cada dato es verificable con un clic</span>
+      <span class="slide-num">04 / 12</span>
+    </div>
+    <h2>No confíes en el deck. Compruébalo tú mismo.</h2>
+    <div class="grid cols-3">
+      <div class="cell"><div class="kpi">164</div><div class="kpi-label">tests automatizados, CI en cada push</div></div>
+      <div class="cell"><div class="kpi">&lt; 1 s</div><div class="kpi-label">consulta de credencial on-chain</div></div>
+      <div class="cell"><div class="kpi">~3 s</div><div class="kpi-label">aprobación KYC → credencial on-chain</div></div>
+    </div>
+    <div class="grid cols-2">
+      <div class="cell">
+        <h3>Contratos verificados en ambas redes</h3>
+        <p class="proof"><span class="label">AttestationStore · Mainnet</span>
+          <a class="addr" href="https://snowtrace.io/address/0xa116261Ed3a848A9E1cd34923D5A0442D1455F71">0xa116…5F71</a></p>
+        <p class="proof"><span class="label">ComplianceGate · Mainnet</span>
+          <a class="addr" href="https://snowtrace.io/address/0x01BEEA13A485c7bAD58f926E345325e9e3773bEe">0x01BE…3bEe</a></p>
+        <p class="proof"><span class="label">AttestationStore · Fuji</span>
+          <a class="addr" href="https://testnet.snowtrace.io/address/0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD">0xa3Bc…22dD</a></p>
+        <p class="proof"><span class="label">ComplianceGate · Fuji</span>
+          <a class="addr" href="https://testnet.snowtrace.io/address/0xcFDdeA5482baE9A6733B58F6a39FC36BCe6164cF">0xcFDd…64cF</a></p>
+        <p class="proof"><span class="label">ValidatorSetManager (Fuji)</span>
+          <a class="addr" href="https://testnet.snowtrace.io/address/0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64">0x9351…E6f64</a></p>
+        <p style="margin-top: 0.6rem; font-size: 0.85em;">Se corren smoke tests de lectura en vivo contra ambos despliegues en cada release: <strong>8/8 en mainnet, 10/10 en Fuji</strong> (incl. rutas de rechazo/admisión del gate).</p>
+      </div>
+      <div class="cell">
+        <h3>Flujo end-to-end, en vivo</h3>
+        <p>Conecta wallet → verificación de identidad con Sumsub → el webhook emite la attestation on-chain → la app muestra la credencial.
+          El ciclo completo toma unos tres segundos tras la aprobación.</p>
+        <p class="proof" style="margin-top: 0.6rem;">
+          <a href="https://kumply.xyz/verify">Pruébalo: kumply.xyz/verify</a>
+        </p>
+        <p class="proof" style="margin-top: 0.4rem;">
+          <a href="https://kumply.xyz/dashboard">__TOTAL_ATTESTATIONS__ attestations emitidas en Fuji - explóralas en vivo</a>
+        </p>
+      </div>
+      <div class="cell">
+        <h3>SDK publicado</h3>
+        <p><code>@kumply/sdk</code> v1.x en npm - cliente basado en viem, ABIs, configuración de red para Fuji, mainnet y la L1 de KUMPLY.</p>
+      </div>
+      <div class="cell">
+        <h3>Demo interactivo</h3>
+        <p>Tres escenarios (pool DeFi, transferencia RWA, marketplace de agentes) que verifican attestations reales en la red seleccionada - Mainnet o Fuji - sin login, sin wallet.</p>
+        <p class="proof" style="margin-top: 0.6rem;"><a href="https://kumply.xyz/demo">kumply.xyz/demo</a></p>
+      </div>
+    </div>
+    <p class="note"><strong>Estado honesto:</strong> el núcleo no-custodial (AttestationStore + ComplianceGate) está en vivo y verificado en
+      <strong>Mainnet C-Chain</strong> como beta de solo lectura con comisiones en cero - autofinanciado, julio 2026 - junto con la suite completa en Fuji Testnet.
+      Las verificaciones de identidad corren hoy en el tier sandbox de Sumsub.
+      La L1 de KUMPLY está registrada en Fuji con activación de validadores en progreso - estado en vivo en <a href="https://kumply.xyz/l1">kumply.xyz/l1</a>.
+      Verificaciones de identidad en producción y activación de comisiones en mainnet es exactamente lo que financia este grant - ver diapositiva 11.</p>
+  </section>
+
+  <!-- 05 · Cómo funciona -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="eyebrow">Arquitectura</span>
+      <span class="slide-num">05 / 12</span>
+    </div>
+    <h2>Una escritura, lecturas ilimitadas.</h2>
+    <div class="flow">
+      <div class="flow-step">
+        <span class="step-label">1 · Verificar</span>
+        <h3>El usuario conecta su wallet</h3>
+        <p>Elige un tier, completa la verificación de identidad (Sumsub WebSDK). KUMPLY nunca almacena datos personales.</p>
+      </div>
+      <div class="flow-step">
+        <span class="step-label">2 · Atestar</span>
+        <h3>El webhook firma el resultado</h3>
+        <p>Un webhook verificado con HMAC emite <code>issueAttestation</code> on-chain: wallet, tier, expiración. Idempotente por diseño.</p>
+      </div>
+      <div class="flow-step">
+        <span class="step-label">3 · Componer</span>
+        <h3>Cualquiera verifica gratis</h3>
+        <p><code>verify(address)</code> desde cualquier contrato, el SDK, o cross-L1 vía ICM. Menos de un segundo, sin API keys.</p>
+      </div>
+      <div class="flow-step">
+        <span class="step-label">4 · Exigir</span>
+        <h3>Gates y validadores</h3>
+        <p><code>ComplianceGate</code> protege acciones de dApps por tier mínimo; el gestor de validadores de la L1 exige Tier 4 para unirse al consenso.</p>
+      </div>
+    </div>
+    <p class="lede" style="margin-top: 1.5rem;">
+      Las attestations expiran y pueden revocarse. Si la attestation KYB de un validador vence, el contrato ACP-99
+      lo remueve del set automáticamente - <strong>cualquiera puede disparar la purga</strong>. El cumplimiento no es
+      un documento de política; lo hace cumplir el consenso.
+    </p>
+  </section>
+
+  <!-- 06 · Nativo de Avalanche -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="eyebrow">Por qué Avalanche - y solo Avalanche</span>
+      <span class="slide-num">06 / 12</span>
+    </div>
+    <h2>Construido con las primitivas que este ecosistema inventó.</h2>
+    <div class="grid cols-2">
+      <div class="cell">
+        <h3>ACP-99 ValidatorSetManager, con gating KYB</h3>
+        <p>Nuestro <code>KumplyValidatorSetManager</code> implementa el ciclo de vida completo de dos fases para validadores con
+        payloads Warp en el codec de Avalanche - y agrega un requisito que no hemos visto en otra L1: los validadores deben mantener
+        una attestation Tier-4 vigente. 27 tests dedicados.</p>
+      </div>
+      <div class="cell">
+        <h3>L1 soberana ACP-77</h3>
+        <p>KUMPLY Compliance L1, registrada en Fuji con activación de validadores en progreso: Subnet-EVM,
+        chainId 43210, bloques de 2 segundos, token de gas KMP, allow-list de deployers con gating KYB.</p>
+      </div>
+      <div class="cell">
+        <h3>ICM: una primitiva de toda la red</h3>
+        <p>Las attestations emitidas en C-Chain se propagan a cualquier L1 de Avalanche vía Interchain Messaging -
+        una sola verificación sirve a todo el ecosistema, no a una sola cadena.</p>
+      </div>
+      <div class="cell">
+        <h3>Composabilidad en C-Chain</h3>
+        <p><code>ComplianceGate</code> se integra en cualquier dApp EVM como una dependencia de 3 líneas: pools institucionales,
+        mercados acreditados, lending calificado - sin migrar nada.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 · KYA -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="eyebrow">Diferenciador</span>
+      <span class="slide-num">07 / 12</span>
+    </div>
+    <h2>KYA - Know Your Agent. Primero en su tipo en Avalanche.</h2>
+    <p class="lede">
+      Las DeFi agénticas están llegando: market makers autónomos, gestores de portafolio con IA, agentes on-chain
+      manejando presupuestos reales. Todo protocolo va a necesitar distinguir un <strong>agente confiable y acotado</strong>
+      de un script anónimo - y hoy no existe ningún riel de compliance para eso.
+    </p>
+    <div class="grid cols-3">
+      <div class="cell">
+        <h3>Attestations Tier 5</h3>
+        <p>Los agentes obtienen credenciales on-chain ligadas a un dueño verificado (Tier 4 KYB) - la responsabilidad encadena hacia arriba.</p>
+      </div>
+      <div class="cell">
+        <h3>Primero en el ecosistema</h3>
+        <p>Hasta donde sabemos, la primera L1 de Avalanche - y la primera capa de compliance EVM - construida específicamente para identidad de agentes.</p>
+      </div>
+      <div class="cell">
+        <h3>Profundidad planeada</h3>
+        <p>Extensión AgentRegistry.sol: huella del modelo, límites de comportamiento, liveness - planeado para Q3 2026.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 · Modelo de negocio -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="eyebrow">Modelo de negocio - ya implementado en los contratos</span>
+      <span class="slide-num">08 / 12</span>
+    </div>
+    <h2>Dos rieles de ingreso, ambos implementados on-chain.</h2>
+    <div class="grid cols-2">
+      <div class="cell">
+        <h3>Pago por consulta · $0.50</h3>
+        <p><code>checkCompliance(address)</code> es una lectura pagable para dApps que quieren contrapartes verificadas sin
+        suscripción. La lógica de comisiones, la contabilidad del treasury, y el retiro ya están en vivo en AttestationStore hoy -
+        actualmente en cero tanto en mainnet como en testnet.</p>
+      </div>
+      <div class="cell">
+        <h3>Suscripción SaaS</h3>
+        <p><code>setSubscription</code> exime el ComplianceGate de un partner de las comisiones por llamada - facturación mensual plana
+        para integradores de alto volumen, exigida por el contrato, no por una factura.</p>
+      </div>
+    </div>
+    <p class="lede" style="margin-top: 1.5rem;">
+      <strong>Software-only por diseño:</strong> no custodial, sin rieles fiat, sin venta de token negociable.
+      KMP es el token de gas de la L1, no un producto de inversión. Esta postura mantiene a KUMPLY fuera de clasificaciones
+      financieras reguladas - una opinión legal mexicana por escrito está planeada para Q3 2026, antes de activar comisiones en mainnet.
+    </p>
+  </section>
+
+  <!-- 09 · Mercado -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="eyebrow">Tesis de mercado y demanda</span>
+      <span class="slide-num">09 / 12</span>
+    </div>
+    <h2>La cuña institucional de LatAm - y lo que todavía no podemos probar.</h2>
+    <p class="note"><strong>Dicho sin rodeos: KUMPLY es pre-revenue, sin usuarios ni contrapartes firmadas.</strong>
+      El caso de abajo es estructural - las condiciones regulatorias y del ecosistema que hacen necesaria esta capa - no
+      evidencia de demanda comprometida. Convertirlo en design partners nombrados - builders y startups de Avalanche,
+      el comprador real de corto plazo de KUMPLY, no necesariamente una institución regulada - es el milestone M0: acotado, con fecha,
+      y con costo cero en la diapositiva 11. Los mismos 2 integradores piloto confirmados que M0 está diseñado para producir son los
+      candidatos para las integraciones piloto de M4 - un solo pipeline de proof-of-concept, no dos pedidos separados.
+      Preferimos mostrarte el hueco antes de que lo encuentres tú.</p>
+    <div class="grid cols-3">
+      <div class="cell">
+        <h3>Presión regulatoria</h3>
+        <p>Bajo LFPDPPP, cada parte que almacena documentos de identidad carga con la responsabilidad de conservarlos. Las attestations ponen la
+        <em>prueba</em> on-chain y dejan los <em>documentos</em> con un solo procesador regulado - la exposición deja de duplicarse.</p>
+      </div>
+      <div class="cell">
+        <h3>El estándar institucional, a escala</h3>
+        <p>ERC-3643 ha tokenizado <strong>más de $32B en activos del mundo real en más de 180 jurisdicciones</strong>. La SEC lo nombra
+        en discursos oficiales, DTCC lo integró en ComposerX, MAS lo usa en Project Guardian, y avanza un proceso ISO.
+        Su arquitectura es la misma a la que llegamos de forma independiente: un registro de identidad on-chain,
+        claims verificados, emisores confiables, y un check de compliance antes de cada transferencia.</p>
+      </div>
+      <div class="cell">
+        <h3>Avalanche ya es donde van las instituciones</h3>
+        <p>Los subnets Evergreen incrustan KYC/KYB a nivel de cadena mediante permisionamiento de validadores y allow-lists, y
+        Franklin Templeton y Hamilton Lane han explorado despliegues en Avalanche para fondos tokenizados. El atractivo declarado
+        es una cadena <em>donde cada validador es conocido y pasó KYC</em>. Eso es exactamente lo que nuestra L1 exige en
+        código de contrato en vez de por política.</p>
+      </div>
+      <div class="cell">
+        <h3>Señal del ecosistema</h3>
+        <p>El Hackathon LatAm Institucional de Avalanche (mayo 2026) se construyó alrededor de retos definidos por Arkangeles y
+        Bankaool. El ecosistema está activamente buscando rutas de despliegue institucional para esta región - esa señal de
+        demanda es de Avalanche, no algo que nosotros podamos reclamar.</p>
+      </div>
+      <div class="cell">
+        <h3>Lo que la respuesta líder no puede hacer</h3>
+        <p>Base lanzó identidad on-chain en julio 2026 - más de 200,000 verificaciones en su predecesor - probando unicidad
+        a partir de una cuenta social o de exchange. Ninguna contraparte regulada puede aceptar eso como KYC: sin documento, sin
+        entidad legal detrás, sin expiración, sin revocación. El hueco que deja es exactamente el nuestro, y es la mitad más difícil.</p>
+      </div>
+      <div class="cell">
+        <h3>El costo del status quo</h3>
+        <p>El KYC por dApp recobra la misma verificación para el mismo usuario en cada protocolo que toca. El costo unitario
+        es conocible y se repite. Esa repetición es el mercado.</p>
+      </div>
+    </div>
+    <p class="lede" style="margin-top: 1.5rem;">
+      <strong>Cabeza de playa:</strong> bancos digitales y fintechs mexicanas, alcanzados a través de la comunidad LatAm de Avalanche.
+      <strong>Expansión:</strong> Colombia, Brasil, Chile, con definiciones de tier multi-jurisdicción planeadas para 2027.
+      Cada institución que confía en una attestation de KUMPLY reduce el costo de onboarding para la siguiente.
+    </p>
+  </section>
+
+  <!-- 10 · Equipo -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="eyebrow">Equipo</span>
+      <span class="slide-num">10 / 12</span>
+    </div>
+    <h2>Dos builders que envían código cada semana.</h2>
+    <div class="grid cols-2">
+      <div class="cell founder-cell">
+        <img class="avatar" src="/pitch-giovanny.jpg" alt="Giovanny Amador" width="56" height="56" />
+        <div class="founder-info">
+          <h3>Giovanny Amador - Líder técnico</h3>
+          <p>Contratos, L1, SDK, infraestructura. Avalanche Team1 Collaborator.
+            <a href="https://github.com/Eras256">github.com/Eras256</a> · <a href="https://x.com/vaiossx">@vaiossx</a></p>
+        </div>
+      </div>
+      <div class="cell founder-cell">
+        <img class="avatar" src="/pitch-monserrat.jpg" alt="Monserrat Mendoza" width="56" height="56" />
+        <div class="founder-info">
+          <h3>Monserrat Mendoza - Líder de producto y diseño</h3>
+          <p>Producto, diseño, contenido. Ganadora de ETH Uruguay 2025. Avalanche Team1 Collaborator.
+            <a href="https://github.com/M0nsxx">github.com/M0nsxx</a> · <a href="https://x.com/smithserrat">@smithserrat</a></p>
+        </div>
+      </div>
+    </div>
+    <p class="lede" style="margin-top: 1.5rem;">
+      Activos en la comunidad LatAm de Team1 - presentaron KUMPLY en una llamada semanal de Team1, y enviaron dos builds
+      adicionales de Avalanche en un solo fin de semana (una app de boletos de museo con blockchain invisible y una demo de
+      trazabilidad agrícola), compartidos con la comunidad. <strong>Construir en Avalanche es lo que hacemos, con o sin grant.</strong>
+    </p>
+    <p class="note" style="margin-top: 1rem;"><strong>Bus factor, resuelto:</strong> hoy tanto el código como las
+      partnerships pasan por dos personas, y M0-M3 están acotados para seguir siendo entregables así. M4 es el
+      disparador financiado para sumar a un tercer contribuidor técnico - las integraciones piloto y las operaciones de
+      validadores son exactamente la carga que jala el tiempo de un founder hacia reuniones y lejos de construir, así que
+      ahí es donde sumamos manos, no antes de que haga falta.</p>
+  </section>
+
+  <!-- 11 · Roadmap y fondos -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="eyebrow">Roadmap y uso de fondos</span>
+      <span class="slide-num">11 / 12</span>
+    </div>
+    <h2>Cada dólar mapea a un milestone verificable.</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Milestone</th><th>Entregable</th><th>Semanas</th><th>Presupuesto</th></tr></thead>
+        <tbody>
+          <tr><td>M0</td><td>Validación de demanda - 5 entrevistas estructuradas con operadores de L1 de Avalanche, plataformas de pago y proveedores de KYC sirviendo a LatAm. Entregable: un documento de hallazgos publicado con citas atribuibles, más 2 integradores piloto confirmados (builders/startups de Avalanche, no necesariamente instituciones reguladas) o una decisión documentada de re-enfocar el ICP. Corre haya o no grant, y no es un gate de desembolso - M1 arranca en paralelo en la semana 1</td><td class="num">1–2</td><td class="num">$0</td></tr>
+          <tr><td>M1</td><td>Hardening de seguridad y calidad de AttestationStore + ComplianceGate: análisis estático (Slither/Aderyn), suite de fuzz + invariant tests, cobertura ampliada de edge cases, detección de fallos y alertas en el path de emisión, y un threat-model report publicado - hallazgos corregidos, todo en el repo</td><td class="num">1–3</td><td class="num">$2,000</td></tr>
+          <tr><td>M2</td><td>Entidad legal mexicana incorporada (prerrequisito duro: el tier de producción de Sumsub lo requiere), luego activación de producción de Sumsub y las primeras attestations KYC reales emitidas on-chain de punta a punta. Incluye una reserva acotada para el aprovisionamiento de KYB Tier-4, del que depende el gating de validadores de M4</td><td class="num">2–6</td><td class="num">$3,000</td></tr>
+          <tr><td>M3</td><td>Activación de comisiones de consulta on-chain en Mainnet C-Chain - la capa de lectura gratis ya está en vivo y verificada en mainnet (autofinanciada, julio 2026); este milestone agrega una opinión legal fintech mexicana por escrito, registro de marca ante el IMPI, migra admin/treasury a operación con cold-key, activa comisiones tras el hardening, y libera el release del SDK para mainnet en npm</td><td class="num">6–9</td><td class="num">$2,000</td></tr>
+          <tr><td>M4</td><td>Activación de validador de la L1 de KUMPLY en Fuji; integración de ICM para lecturas de attestation cross-L1; 2 integraciones piloto generando actividad real en mainnet</td><td class="num">9–12</td><td class="num">$3,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note"><strong>M0 ya está produciendo señal, no solo planes.</strong> Un integrador candidato está en
+      conversación activa, con cierre esperado dentro de las próximas dos semanas. Una conversación temprana distinta cerró con un
+      claro "todavía no" - sin fondos reales en juego hoy, revisar cuando terceros puedan publicar agentes pagados en la
+      plataforma - eso en sí es un hallazgo real de M0, no un tropiezo.</p>
+    <p class="note"><strong>M1 no es teórico - aquí hay uno que encontramos esta semana.</strong> Mientras preparábamos esta
+      aplicación, una verificación de identidad aprobada no logró producir su credencial on-chain. La causa: el RPC público de Fuji
+      devolvió intermitentemente una estimación de gas de ~9.3&times;10<sup>15</sup>, muy por encima del límite de bloque, así que la emisión revirtió
+      <em>después</em> de que el usuario ya había pasado la verificación. Se corrigió fijando el gas en el path de emisión. El defecto real
+      no fue la mala estimación - fue que el fallo era <strong>silencioso</strong>. Ese es exactamente el tipo de trabajo que
+      financia M1: no solo análisis estático, sino detección y alertas para que una attestation perdida aparezca de inmediato
+      en vez de parecer un spinner colgado.</p>
+    <p class="note"><strong>A dónde va realmente el dinero.</strong> M0 no cuesta nada salvo secuenciación - es lo primero que
+      hacemos, porque la parte más débil de esta aplicación es la demanda no comprobada y preferimos resolverla en la semana dos
+      que descubrirla en el mes seis. Todo lo que sigue son costos duros, desglosados contra las
+      <strong>tarifas publicadas de Sumsub (revisadas en agosto 2026)</strong>: Basic es $149/mes mínimo a $1.35 por
+      verificación, Compliance $299/mes a $1.85. <strong>Los $3,000 de M2 se desglosan en ~$900 para seis meses de Sumsub
+      Basic, ~$1,000 para incorporar la entidad mexicana, y ~$1,100 acotados contra la cotización pendiente de Enterprise
+      para KYB Tier-4.</strong> Esa reserva es deliberada, no relleno: KYB es el gate para el registro de validadores, así que
+      M4 no se puede entregar tal como está diseñado si el aprovisionamiento de Tier-4 no está financiado - y el precio de Enterprise
+      es la única línea que genuinamente no podemos pronosticar. Si la cotización sale más baja, el saldo se regresa o se
+      reasigna con tu aprobación; si sale más alta, re-acotamos el alcance en vez de sobrepasarnos. A nuestro volumen, el piso mensual
+      de Basic ya cubre ~110 verificaciones, así que no hace falta una línea aparte por consulta.
+      Empezamos en Basic y no en Compliance a propósito: la diferencia es el filtrado AML, y la postura legal de KUMPLY
+      es que no es una entidad obligada a AML - subiremos de tier el mes en que un cliente lo requiera, no antes. Seis meses de
+      runway, no doce, porque este es un programa de doce semanas y preferimos devolver alcance sin usar que prepagar una
+      suscripción para un producto que todavía está probando demanda. El KYB Tier-4 es <strong>solo Enterprise y se cotiza
+      por cliente; esa cotización está pendiente</strong>, y re-acotaremos contra ella en vez de rellenar ahora.
+      M3 cubre la opinión legal fintech mexicana por escrito, el registro de marca ante el IMPI, y la configuración
+      de treasury con cold-key antes de activar cualquier comisión. <strong>M4</strong> cubre un año de hosting dedicado del nodo
+      validador junto con el trabajo de ICM y dos integraciones piloto.
+      <strong>M1 es $2,000</strong>, más que nuestro primer borrador, porque su alcance creció: además del tooling open-source
+      (Slither, Aderyn, fuzzing) y el threat model publicado, ahora financia detección y alertas de fallos en el
+      path de emisión - el hueco que expuso el incidente de arriba.</p>
+    <p class="note"><strong>Diseñado para discreción.</strong> Los milestones están acotados de forma independiente, así que el plan se degrada con gracia
+      si se financia por debajo del pedido completo: <strong>$5,000</strong> entrega M1–M2 (contratos endurecidos, entidad incorporada, verificaciones
+      reales de producción), <strong>$7,000</strong> agrega activación de comisiones en mainnet y la opinión legal, y el
+      <strong>$10,000</strong> completo completa la activación de la L1 e integraciones piloto. Nota dónde el dinero <em>no</em> se
+      concentra: los costos del proveedor de verificación de identidad son aproximadamente el <strong>20% del pedido total</strong>, y más de la mitad
+      de eso es la reserva retornable de KYB. El resto es
+      trabajo de seguridad, una entidad legal y su opinión, e infraestructura que mantiene corriendo una L1 de compliance. Lo que este
+      presupuesto deliberadamente
+      <strong>no</strong> incluye: una auditoría formal de terceros del gestor de validadores de la L1,
+      acotada para financiamiento de Retro9000 / Accelerator una vez que el uso en mainnet demuestre demanda. Nada de lo que financia este grant
+      pone fondos de usuarios bajo custodia en mainnet. <strong>Ya enviado y autofinanciado antes de esta aplicación</strong> - y no
+      facturado a ella: el lanzamiento en Mainnet C-Chain del núcleo no-custodial (verificado en Snowtrace), la suite de 164 tests con CI,
+      el SDK publicado en npm, y el dashboard/demo en vivo en kumply.xyz.</p>
+    <p class="note"><strong>También autofinanciado antes de esta aplicación: una auditoría contra el código fuente real de Avalanche, no solo la documentación.</strong>
+      Revisar KumplyValidatorSetManager directamente contra ava-labs/icm-contracts encontró un bug crítico que hubiera
+      bloqueado permanentemente la activación de la L1 - corregido, redesplegado, y re-verificado en Fuji. El mismo proceso reportó 3 bugs
+      reales de documentación en el paquete comunitario AVAXSKILLS
+      (<a href="https://github.com/Ayomisco/avaxskills/issues/2" target="_blank" rel="noopener noreferrer">#2</a>,
+      <a href="https://github.com/Ayomisco/avaxskills/issues/3" target="_blank" rel="noopener noreferrer">#3</a>,
+      <a href="https://github.com/Ayomisco/avaxskills/issues/4" target="_blank" rel="noopener noreferrer">#4</a>,
+      todos abiertos), más 2 comentarios adicionales sobre el mismo tipo de bug. Reporte completo:
+      <a href="https://github.com/kumplyprotocol/Kumply/blob/main/docs/audits/avalanche-ecosystem-audit-2026-08-17.md" target="_blank" rel="noopener noreferrer">docs/audits</a>.</p>
+  </section>
+
+  <!-- 12 · La solicitud -->
+  <section class="slide">
+    <div class="slide-head">
+      <span class="eyebrow">La solicitud</span>
+      <span class="slide-num">12 / 12</span>
+    </div>
+    <h2>Financia el puente de beta a producción.</h2>
+    <p class="lede">
+      KUMPLY ya está construido, probado, y en vivo en Mainnet C-Chain como beta gratuita de solo lectura - eso lo
+      enviamos nosotros mismos. Lo que separa esta beta de verificaciones reales de producción son exactamente dos cosas
+      que un equipo de dos personas autofinanciado no puede pagar por su cuenta: <strong>los costos de verificación de identidad en producción</strong>
+      y un <strong>proceso disciplinado de hardening de seguridad</strong> antes de que las comisiones se activen en el núcleo de mainnet.
+      Eso es lo que compra este grant - todo lo demás lo enviamos nosotros.
+    </p>
+    <div class="grid cols-2">
+      <div class="cell">
+        <h3>Giovanny Amador - Líder técnico</h3>
+        <p>Discord <code>Vaiosx</code> · Telegram <a href="https://t.me/Vaiosx">@Vaiosx</a> · X <a href="https://x.com/vaiossx">@vaiossx</a></p>
+      </div>
+      <div class="cell">
+        <h3>Monserrat Mendoza - Líder de producto y diseño</h3>
+        <p>Discord <code>smithserrat</code> · Telegram <a href="https://t.me/M0nsxx">@M0nsxx</a> · X <a href="https://x.com/smithserrat">@smithserrat</a></p>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="https://kumply.xyz">kumply.xyz</a>
+      <a href="https://kumply.xyz/demo">Demo en vivo</a>
+      <a href="https://kumply.xyz/verify">Flujo de verificación</a>
+      <a href="https://github.com/kumplyprotocol/Kumply">GitHub</a>
+      <a href="https://www.npmjs.com/package/@kumply/sdk">@kumply/sdk</a>
+      <a href="https://snowtrace.io/address/0xa116261Ed3a848A9E1cd34923D5A0442D1455F71">Snowtrace</a>
+    </div>
+    <p class="legal">
+      Las marcas AVALANCHE® y AVAX® son propiedad de Ava Labs, Inc. KUMPLY es un proyecto independiente -
+      no avalado, patrocinado, ni afiliado con Ava Labs, Inc. ni con la Avalanche Foundation.
+      Los contratos principales viven en Avalanche Mainnet C-Chain (beta de solo lectura, comisiones en cero) y Fuji Testnet.
+      Las verificaciones automatizadas de identidad siguen en el tier sandbox de Sumsub; todavía no para verificaciones de producción.
     </p>
   </section>
 

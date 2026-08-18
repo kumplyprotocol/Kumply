@@ -1,6 +1,7 @@
 import { createPublicClient, http } from "viem";
 import { avalancheFuji } from "viem/chains";
-import { DECK_CSS, DECK_HTML } from "./pitch-deck";
+import { DECK_CSS } from "./pitch-deck";
+import { PitchDeckClient } from "./PitchDeckClient";
 
 // ISR: refresh the on-chain attestation count at most once an hour.
 export const revalidate = 3600;
@@ -38,12 +39,11 @@ async function getTotalAttestations(): Promise<string> {
 
 export default async function PitchPage() {
   const total = await getTotalAttestations();
-  const html = DECK_HTML.replace("__TOTAL_ATTESTATIONS__", total);
 
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: DECK_CSS }} />
-      <div dangerouslySetInnerHTML={{ __html: html }} />
+      <PitchDeckClient total={total} />
     </>
   );
 }
