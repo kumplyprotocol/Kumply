@@ -481,7 +481,7 @@ export const DECK_HTML = `
       </div>
       <div class="cell">
         <h3>What the leading answer can't do</h3>
-        <p>Base shipped onchain identity in July 2026 - 300,000+ verifications on its predecessor - proving uniqueness
+        <p>Base shipped onchain identity in July 2026 - 200,000+ verifications on its predecessor - proving uniqueness
         from a social or exchange account. No regulated counterparty can accept that as KYC: no document, no legal
         entity behind it, no expiry, no revocation. The gap it leaves is exactly ours, and it is the harder half.</p>
       </div>
