@@ -1,0 +1,64 @@
+# KUMPLY — Agent Rules
+
+This file carries the hard rules that apply to any AI agent working in this
+repo, regardless of tool (Claude Code, Antigravity, Cursor, etc.). It is
+public and safe to read by anyone — internal strategy, team, and grant
+context live in `CLAUDE.md` / `claude_estrategico.md` / `Memory.md`, which
+are gitignored on purpose (see "Public/private boundary" below) and never
+duplicated here.
+
+For architecture, contracts, and full technical detail, start with
+[README.md](README.md) and [LITEPAPER.md](LITEPAPER.md), not this file —
+this is rules, not documentation.
+
+## Public/private boundary
+
+`CLAUDE.md`, `claude_estrategico.md`, `Memory.md`, `.agents/`,
+`.cursorrules`/`.windsurfrules`/`.clinerules`, and `docs/submissions/` are
+intentionally excluded from this public repo (see `.gitignore`). They hold
+internal strategy, team contacts, and grant-negotiation context; copies sync
+manually to a private repo. Never move content from those files into this
+one or into any other public file — if something in them needs to be public,
+it gets rewritten for a public audience first (see `docs/AI-USAGE.md` and
+the README's "Security & Engineering Rigor" section for the pattern already
+used).
+
+## Solidity
+
+- Natspec on every public function.
+- Custom errors, not `require` strings.
+- Events on every state-changing mutation.
+- OpenZeppelin `AccessControl` + `Pausable` for access control and
+  emergency stops; do not roll a custom equivalent.
+
+## TypeScript / Node
+
+- Strict mode everywhere.
+- Zod for input validation on the API.
+- Structured JSON logging: `{ ts, level, event, ...data }`. Levels: `INFO`,
+  `WARN`, `ERROR`, `AUDIT`.
+- HMAC-SHA256 on every webhook, no environment-based bypass, ever.
+
+## Frontend (Next.js)
+
+- Import `Link` from `@/i18n/routing`, never `next/link` directly, inside
+  `[locale]` pages.
+- Every new page under `[locale]` uses `useTranslations()` from
+  `next-intl`; add both `en` and `es` entries in `messages/`, not just one.
+
+## Testing
+
+- New code needs tests. `pnpm test` runs the full monorepo suite; keep it
+  green before committing.
+- Contracts: Hardhat + Chai. SDK/API: Vitest, with Supertest for the API's
+  HTTP assertions.
+
+## Commits
+
+- Every AI-assisted commit carries a `Co-Authored-By: Claude Sonnet 5
+  <noreply@anthropic.com>` trailer (or the equivalent for whichever model
+  did the work), no exceptions. This is the running, code-level version of
+  the disclosure in `docs/AI-USAGE.md`.
+- Findings or fixes that touch identity-verification logic, custody, or an
+  already-deployed and verified contract get reported and confirmed by a
+  human before being applied — not applied automatically.
