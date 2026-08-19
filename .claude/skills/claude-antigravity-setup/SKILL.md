@@ -7,8 +7,9 @@ description: >
   persistent memory tool. Use when starting a brand-new project or folder in
   this workspace, when CLAUDE.md is getting long, when a session hits
   context/compaction limits, when deciding whether something should be a
-  Skill vs. a hook vs. inline CLAUDE.md content, or when asked about
-  performance, token usage, or session duration.
+  Skill vs. a hook vs. inline CLAUDE.md content, when asked about
+  performance, token usage, or session duration, when pasting an image or
+  screenshot into a session, or when resuming a session with `--continue`.
 allowed-tools: [Read, Edit, Write, Grep, Glob, Bash]
 ---
 
@@ -41,6 +42,11 @@ allowed-tools: [Read, Edit, Write, Grep, Glob, Bash]
 7. Copy `.claude/commands/session-close.md` (given below) into this
    project too, and use `/session-close` at the end of a session instead
    of a vague "make sure everything's updated."
+8. Copy `playbooks/continue.md` into this project, and add its two rules
+   to the end of `AGENTS.md` — the file alone does nothing, only
+   `AGENTS.md` loads automatically every session.
+9. Copy `playbooks/images.md` into this project, and add its two rules
+   to the end of `AGENTS.md` — same pattern as step 8.
 
 ## Quick facts
 

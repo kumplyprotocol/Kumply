@@ -11,27 +11,29 @@ Investigado 18-ago-2026, con fuentes reales citadas. Aplica a cualquier
 proyecto en cualquier carpeta, no solo a los de Stellar — esto es
 configuración de herramienta, no de blockchain.
 
-> **Nota de esta copia (KUMPLY, sincronizada desde el playbook original):**
-> la cifra de "515 líneas" en §1 fue medida en el workspace donde se
-> escribió este playbook por primera vez, no en KUMPLY. El `CLAUDE.md`
-> real de este repo tiene **339 líneas** al momento de instalar esta
-> copia (18-ago-2026) — corregido aquí en vez de copiado ciego, siguiendo
-> la misma disciplina de "verificar antes de reportar" que ya se aplicó
-> en la auditoría de Avalanche de este workspace. Sigue por encima de la
-> guía de ~200 líneas, así que la recomendación de §1 aplica igual, solo
-> que con el número real.
+> **Nota de esta copia (KUMPLY):** la cifra de "515 líneas" en §1 fue
+> medida en el workspace de estrategia donde se escribió este playbook
+> por primera vez (Stellar/RFP-1), no en KUMPLY ni en ningún otro
+> proyecto — la versión de origen ya lo aclara explícitamente después de
+> que una copia instalada hizo la suposición incorrecta. El `CLAUDE.md`
+> real de KUMPLY tiene **340 líneas** (verificado con `wc -l` el
+> 19-ago-2026, tras agregar la línea `@AGENTS.md`). Sigue por encima de
+> la guía de ~200 líneas, así que la recomendación de §1 aplica igual,
+> solo que con el número real de este repo, no el de otro.
 
 ---
 
 ## 1. Lo que ya tienes bien, y lo que hay que corregir ya
 
-**Hallazgo real, verificado en el workspace donde se escribió este
-playbook — no asumido igual en cada copia:** la guía oficial de
-Anthropic dice que hay que mantener `CLAUDE.md` bajo 200 líneas — los
-modelos siguen de forma confiable entre 150 y 200 instrucciones, y más
-allá de eso el cumplimiento empieza a diluirse ("context rot"), justo
-porque `CLAUDE.md` se carga completo en cada sesión nueva, sin excepción.
-**En KUMPLY, el `CLAUDE.md` real mide 339 líneas** (verificado con
+**Hallazgo real, verificado en el workspace de estrategia donde se
+escribió este playbook (Stellar/RFP-1), no en general y no
+automáticamente aplicable a cualquier copia:** `CLAUDE.md` tenía **515
+líneas** ahí específicamente, ya recortado a 82 el mismo día. La guía
+oficial de Anthropic dice que hay que mantenerlo bajo 200 — los modelos
+siguen de forma confiable entre 150 y 200 instrucciones, y más allá de
+eso el cumplimiento empieza a diluirse ("context rot"), justo porque
+`CLAUDE.md` se carga completo en cada sesión nueva, sin excepción.
+**En KUMPLY, el `CLAUDE.md` real mide 340 líneas** (verificado con
 `wc -l` al instalar esta copia) — por encima del límite recomendado,
 aunque no en el mismo grado que en el workspace original.
 
@@ -106,7 +108,8 @@ dentro de `CLAUDE.md`, usar el import real de Claude Code —
 contenido de `AGENTS.md` automáticamente. Así, sin importar si Claude Code
 alguna vez lee `AGENTS.md` por su cuenta, siempre lo va a ver a través de
 `CLAUDE.md`. Es la opción segura mencionada en la documentación oficial de
-memoria de Anthropic para justo este caso.
+memoria de Anthropic para justo este caso. **En KUMPLY: ya instalado** —
+`CLAUDE.md` empieza con `@AGENTS.md` seguido de `@claude_estrategico.md`.
 
 ## 5. Los Skills son compartidos, no son de una sola herramienta
 
@@ -138,7 +141,8 @@ historial y libera espacio real (de 10,000-20,000 tokens de conversación a
 completa, no esperar a estar cerca del límite. `/clear` limpia del todo.
 `/recap` (nuevo, abril 2026) da un resumen de dónde se quedó la sesión sin
 tener que repasar toda la conversación — ahorra tokens específicamente al
-retomar trabajo después de una pausa.
+retomar trabajo después de una pausa. Ver también `playbooks/continue.md`
+para la diferencia entre `/recap` y `claude --continue`.
 
 ## 7. Reducir tokens y mejorar rendimiento — con números reales
 
@@ -159,6 +163,15 @@ retomar trabajo después de una pausa.
   modelo más económico resuelve igual de bien.
 - Combinadas, estas prácticas recortan uso de tokens **40-60%** sin bajar
   la calidad del resultado.
+- **Imágenes y capturas de pantalla, verificado 19-ago-2026:** el costo es
+  `⌈ancho/28⌉ × ⌈alto/28⌉` tokens visuales — geométrico, no de peso de
+  archivo. Una captura 1080p sin recortar cuesta 2691 tokens en el nivel
+  de alta resolución (Claude 4.7+, incluye Sonnet 5 y Opus 5) contra 1560
+  en el nivel estándar. Recortar al área relevante antes de pegar es la
+  técnica de mayor impacto; comprimir el archivo no ahorra tokens y puede
+  dañar la legibilidad. Cifras completas, límites de request y la
+  interacción con prompt caching (agregar/quitar una imagen invalida el
+  cache de mensajes) en `playbooks/images.md`.
 
 ## 8. La memoria persistente real, a nivel de API — más allá de `CLAUDE.md`
 
@@ -195,7 +208,7 @@ entorno específico.
    y se referencian por link).
 2. Crear `AGENTS.md` en la raíz con las mismas reglas duras, y agregar
    `@AGENTS.md` al inicio de `CLAUDE.md` para que ambos queden
-   sincronizados desde una sola fuente real.
+   sincronizados desde una sola fuente real. **Hecho en KUMPLY.**
 3. Revisar si algún proceso manual repetido (limpieza de registro,
    chequeo de prescreen, verificación de claims técnicos antes de
    publicar) merece volverse hook o slash command en vez de quedarse
@@ -204,6 +217,14 @@ entorno específico.
    cualquier comportamiento de compatibilidad con `AGENTS.md` — la
    incertidumbre de §4 se resuelve mirando la versión real, no
    adivinando.
+5. Copiar `playbooks/continue.md` y agregar sus dos reglas al final de
+   `AGENTS.md`. Sin esas dos líneas en `AGENTS.md`, `continue.md` es solo
+   un archivo suelto que nadie lee automáticamente — misma lección que ya
+   se aprendió con este playbook antes de volverse Skill. **Hecho en
+   KUMPLY.**
+6. Copiar `playbooks/images.md` y agregar sus dos reglas al final de
+   `AGENTS.md` — mismo patrón que el paso 5, mismo motivo. **Hecho en
+   KUMPLY.**
 
 ## 10. Cierre de sesión — un comando, no una frase distinta cada vez
 
@@ -253,3 +274,6 @@ asumir que funciona igual.
 - [Claude Platform Docs — Memory tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool)
 - [Anthropic adds persistent memory to Claude Managed Agents (public beta)](https://www.edtechinnovationhub.com/news/anthropic-brings-persistent-memory-to-claude-managed-agents-in-public-beta)
 - [Claude Code Commands: A Practical Guide for 2026 — DataCamp](https://www.datacamp.com/tutorial/claude-code-slash-commands)
+- [Vision — Claude Platform Docs](https://platform.claude.com/docs/en/build-with-claude/vision) (fetched 19-ago-2026)
+- [Prompt caching — Claude Platform Docs](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) (fetched 19-ago-2026)
+- [Common workflows — Claude Code Docs](https://code.claude.com/docs/en/common-workflows) (fetched 19-ago-2026)
