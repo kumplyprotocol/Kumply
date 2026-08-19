@@ -14,7 +14,8 @@
     "disconnect": "Disconnect",
     "connected": "Connected",
     "themeLight": "Light",
-    "themeDark": "Dark"
+    "themeDark": "Dark",
+    "blog": "Blog"
   },
   "Hero": {
     "badge": "Live on Mainnet C-Chain · Beta",
@@ -550,5 +551,15 @@
     "sharedFeed": "The attestation explorer works on both networks — it reads whichever one is active, and every address and transaction hash resolves on that network's Snowtrace.",
     "stayFuji": "Stay on Fuji",
     "goMainnet": "Switch to Mainnet"
+  },
+  "Blog": {
+    "eyebrow": "KUMPLY Blog",
+    "indexTitle": "Notes on compliance, DeFi, and AI agents",
+    "indexDescription": "Writing from the KUMPLY team on on-chain identity, composable compliance, and what changes when AI agents become DeFi counterparties.",
+    "indexSubtitle": "Writing from the KUMPLY team on on-chain identity, composable compliance, and what changes when AI agents become DeFi counterparties.",
+    "readMore": "Read",
+    "backToBlog": "Back to blog",
+    "ctaVerify": "Get verified",
+    "minRead": "{minutes} min read"
   }
 }

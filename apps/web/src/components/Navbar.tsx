@@ -106,6 +106,7 @@ export function Navbar() {
     { href: "/l1" as const, label: t('l1') },
     { href: "/developers" as const, label: t('developers') },
     { href: "/docs" as const, label: t('docs') },
+    { href: "/blog" as const, label: t('blog') },
   ];
 
   return (
