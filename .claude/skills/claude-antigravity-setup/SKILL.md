@@ -9,7 +9,8 @@ description: >
   context/compaction limits, when deciding whether something should be a
   Skill vs. a hook vs. inline CLAUDE.md content, when asked about
   performance, token usage, or session duration, when pasting an image or
-  screenshot into a session, or when resuming a session with `--continue`.
+  screenshot into a session, when resuming a session with `--continue`, or
+  when writing a PR, issue, or comment to publish on GitHub.
 allowed-tools: [Read, Edit, Write, Grep, Glob, Bash]
 ---
 
@@ -47,6 +48,12 @@ allowed-tools: [Read, Edit, Write, Grep, Glob, Bash]
    `AGENTS.md` loads automatically every session.
 9. Copy `playbooks/images.md` into this project, and add its two rules
    to the end of `AGENTS.md` — same pattern as step 8.
+10. Copy `playbooks/git.md` into this project, and add its two rules to
+    the end of `AGENTS.md` — same pattern as step 8. Covers how PRs,
+    issues, and comments get written before anything is published to
+    GitHub: humanized, no AI-writing tells, Co-Authored-By never
+    stripped, and a proposed fix included whenever the root cause is
+    already confirmed.
 
 ## Quick facts
 

@@ -225,6 +225,12 @@ entorno específico.
 6. Copiar `playbooks/images.md` y agregar sus dos reglas al final de
    `AGENTS.md` — mismo patrón que el paso 5, mismo motivo. **Hecho en
    KUMPLY.**
+7. Copiar `playbooks/git.md` y agregar sus dos reglas al final de
+   `AGENTS.md` — mismo patrón, mismo motivo. Cubre cómo se escribe
+   cualquier PR/issue/comentario antes de publicarlo en GitHub:
+   humanizado, sin verbosidad, trailer de coautoría siempre visible, y
+   con el fix propuesto cuando la causa raíz ya está confirmada, no solo
+   el reporte. **Hecho en KUMPLY.**
 
 ## 10. Cierre de sesión — un comando, no una frase distinta cada vez
 

@@ -88,3 +88,14 @@ at a time across separate turns.** Each new image invalidates the
 prompt cache from that point forward — pasting one at a time forces
 repeated cache rewrites instead of cheap reads. Detail in
 `playbooks/images.md`.
+
+## Writing PRs, issues, and comments on GitHub
+
+**Every PR, issue, and comment published to GitHub is written humanized
+and tight - no padding, no AI-writing tells (em dashes, curly quotes,
+unicode ellipsis), and the Co-Authored-By disclosure stays visible,
+never stripped out to look more human.** Detail in `playbooks/git.md`.
+
+**When the root cause is already confirmed, propose the actual fix, not
+just the report.** A diff, corrected line, or exact reproduction beats
+"this seems broken." Detail in `playbooks/git.md`.
