@@ -270,27 +270,27 @@
       "f1Title": "We Never Touch Your Funds",
       "f1Desc": "KUMPLY is non-custodial. We have zero access to your wallet, your private keys, or your digital assets.",
       "f2Title": "Software, Not Financial Services",
-      "f2Desc": "We’re a technology provider. We don’t need financial licenses because we don’t perform financial activities.",
+      "f2Desc": "Designed to operate as a technology provider, not a licensed financial service — formal legal opinion in process, scheduled for Q3 2026.",
       "f3Title": "Your Rules, Your Responsibility",
       "f3Desc": "You decide which compliance tier to require. You decide who can access your platform. KUMPLY enforces what you configure."
     },
     "regulatory": {
       "title": "Our Regulatory Position",
       "subtitle": "How KUMPLY fits into the regulatory landscape — clearly and transparently",
-      "p1": "The compliance world is complex. Here’s where KUMPLY fits: we’re a software tool that helps other companies comply with regulations like AML, KYC, MiCA, and FATF guidelines. We are not ourselves a regulated financial entity.",
+      "p1": "The compliance world is complex. Here’s where KUMPLY fits: we’re a software tool that helps other companies comply with regulations like AML, KYC, MiCA, and FATF guidelines.",
       "p2": "Think of us like the company that makes the cash register — not the store that uses it. We build the compliance infrastructure. Banks, enterprises, and DeFi protocols use it to meet their regulatory obligations.",
       "f1Title": "Technology Provider, Not a Bank",
-      "f1Desc": "We’re legally classified as a software infrastructure company. We don’t custody funds, transmit money, or issue financial products.",
+      "f1Desc": "We don’t custody funds, transmit money, or issue financial products.",
       "f2Title": "Works in Any Jurisdiction",
       "f2Desc": "Our compliance rules are configurable. Need stricter checks for Europe (MiCA)? Different rules for Mexico (LFPIORPI)? Just configure your tier requirements.",
       "f3Title": "Designed for Regulatory Clarity",
-      "f3Desc": "Built from day one to fit cleanly within existing legal frameworks. No gray areas. No regulatory risk for you."
+      "f3Desc": "Designed to operate within existing regulatory frameworks — formal legal opinion in process, scheduled for Q3 2026."
     },
     "audit": {
       "title": "Security Audit",
       "subtitle": "We take security as seriously as compliance — because they’re the same thing",
       "p1": "When you’re handling identity credentials, security isn’t optional — it’s the product. That’s why we’re pursuing comprehensive audits of every component: smart contracts, encryption logic, and cross-chain messaging.",
-      "p2": "Our smart contracts are open-source and fully tested. We’re currently working with leading blockchain security firms to complete formal audits. All results will be published here — full transparency, no exceptions.",
+      "p2": "Our smart contracts are open-source and fully tested. We’re running team-led security hardening now — static analysis, fuzz testing, a published threat-model report — with formal third-party audits planned as a next step. All results will be published here — full transparency, no exceptions.",
       "f1Title": "Smart Contract Audit",
       "f1Desc": "Formal verification and manual code review of all on-chain logic. Status: In progress.",
       "f2Title": "Encryption Review",

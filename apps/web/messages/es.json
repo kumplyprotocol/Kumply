@@ -270,27 +270,27 @@
       "f1Title": "Nunca Tocamos tus Fondos",
       "f1Desc": "KUMPLY es non-custodial. Tenemos cero acceso a tu wallet, tus llaves privadas o tus activos digitales.",
       "f2Title": "Software, No Servicios Financieros",
-      "f2Desc": "Somos un proveedor de tecnología. No necesitamos licencias financieras porque no realizamos actividades financieras.",
+      "f2Desc": "Diseñado para operar como proveedor de tecnología, no como servicio financiero regulado — opinión legal formal en proceso, programada para Q3 2026.",
       "f3Title": "Tus Reglas, Tu Responsabilidad",
       "f3Desc": "Tú decides qué nivel de compliance exigir. Tú decides quién puede acceder a tu plataforma. KUMPLY ejecuta lo que tú configures."
     },
     "regulatory": {
       "title": "Nuestra Posición Regulatoria",
       "subtitle": "Cómo encaja KUMPLY en el panorama regulatorio — clara y transparentemente",
-      "p1": "El mundo del compliance es complejo. Aquí es donde encaja KUMPLY: somos una herramienta de software que ayuda a otras empresas a cumplir con regulaciones como AML, KYC, MiCA y las directrices del GAFI. Nosotros mismos no somos una entidad financiera regulada.",
+      "p1": "El mundo del compliance es complejo. Aquí es donde encaja KUMPLY: somos una herramienta de software que ayuda a otras empresas a cumplir con regulaciones como AML, KYC, MiCA y las directrices del GAFI.",
       "p2": "Piensa en nosotros como la empresa que fabrica la caja registradora — no la tienda que la usa. Construimos la infraestructura de compliance. Bancos, empresas y protocolos DeFi la usan para cumplir con sus obligaciones regulatorias.",
       "f1Title": "Proveedor de Tecnología, No un Banco",
-      "f1Desc": "Estamos clasificados legalmente como una empresa de infraestructura de software. No custodiamos fondos, no transmitimos dinero, ni emitimos productos financieros.",
+      "f1Desc": "No custodiamos fondos, no transmitimos dinero, ni emitimos productos financieros.",
       "f2Title": "Funciona en Cualquier Jurisdicción",
       "f2Desc": "Nuestras reglas de compliance son configurables. ¿Necesitas verificaciones más estrictas para Europa (MiCA)? ¿Reglas diferentes para México (LFPIORPI)? Solo configura los requisitos de tu nivel.",
       "f3Title": "Diseñado para Claridad Regulatoria",
-      "f3Desc": "Construido desde el día uno para encajar limpiamente dentro de los marcos legales existentes. Sin zonas grises. Sin riesgo regulatorio para ti."
+      "f3Desc": "Diseñado para operar dentro de marcos regulatorios existentes — opinión legal formal en proceso, programada para Q3 2026."
     },
     "audit": {
       "title": "Auditoría de Seguridad",
       "subtitle": "Tomamos la seguridad tan en serio como el compliance — porque son lo mismo",
       "p1": "Cuando manejas credenciales de identidad, la seguridad no es opcional — es el producto. Por eso estamos realizando auditorías integrales de cada componente: contratos inteligentes, lógica de cifrado y mensajería entre cadenas.",
-      "p2": "Nuestros contratos inteligentes son de código abierto y están completamente probados. Actualmente estamos trabajando con firmas líderes de seguridad blockchain para completar las auditorías formales. Todos los resultados serán publicados aquí — transparencia total, sin excepciones.",
+      "p2": "Nuestros contratos inteligentes son de código abierto y están completamente probados. Estamos corriendo hardening de seguridad liderado por el propio equipo — análisis estático, fuzz testing, un reporte de threat-model publicado — con auditorías formales de terceros planeadas como siguiente paso. Todos los resultados serán publicados aquí — transparencia total, sin excepciones.",
       "f1Title": "Auditoría de Smart Contracts",
       "f1Desc": "Verificación formal y revisión manual del código de toda la lógica on-chain. Estado: En proceso.",
       "f2Title": "Revisión de Cifrado",
