@@ -497,8 +497,8 @@ export const DECK_HTML = `
       </div>
       <div class="cell">
         <h3>What the leading answer can't do</h3>
-        <p>Base shipped onchain identity in July 2026 - 200,000+ verifications on its predecessor - proving uniqueness
-        from a social or exchange account. No regulated counterparty can accept that as KYC: no document, no legal
+        <p>Some of the largest L2 ecosystems have shipped onchain identity that proves uniqueness from a social or
+        exchange account. No regulated counterparty can accept that as KYC: no document, no legal
         entity behind it, no expiry, no revocation. The gap it leaves is exactly ours, and it is the harder half.</p>
       </div>
       <div class="cell">
@@ -982,7 +982,7 @@ export const DECK_HTML_ES = `
       </div>
       <div class="cell">
         <h3>Lo que la respuesta líder no puede hacer</h3>
-        <p>Base lanzó identidad on-chain en julio 2026 - más de 200,000 verificaciones en su predecesor - probando unicidad
+        <p>Algunos de los ecosistemas L2 más grandes ya lanzaron identidad on-chain que prueba unicidad
         a partir de una cuenta social o de exchange. Ninguna contraparte regulada puede aceptar eso como KYC: sin documento, sin
         entidad legal detrás, sin expiración, sin revocación. El hueco que deja es exactamente el nuestro, y es la mitad más difícil.</p>
       </div>
