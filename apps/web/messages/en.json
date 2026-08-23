@@ -234,7 +234,7 @@
       "f2Title": "Fast & Cheap Lookups",
       "f2Desc": "Checking a user’s compliance status costs almost nothing in gas. It’s a simple storage read — no computation overhead.",
       "f3Title": "Tested & Auditable",
-      "f3Desc": "Full test coverage. Open-source contracts. Third-party security audit in progress."
+      "f3Desc": "Full test coverage. Open-source contracts. Team-led security hardening now, formal third-party audit planned next."
     },
     "api": {
       "title": "Cross-Chain API",
@@ -253,7 +253,7 @@
     "privacy": {
       "title": "Privacy Policy",
       "subtitle": "How we handle your data (short version: we don’t keep it)",
-      "p1": "KUMPLY complies with Mexico’s data protection law (LFPDPPP) and follows GDPR principles. But here’s the simple version: we are a software tool. We process your verification through a licensed partner, create an encrypted proof, and that’s it. We don’t store your documents.",
+      "p1": "KUMPLY is designed to align with Mexico’s data protection law (LFPDPPP) and GDPR principles — formal legal opinion in process, scheduled for Q3 2026. But here’s the simple version: we are a software tool. We process your verification through a licensed partner, create an encrypted proof, and that’s it. We don’t store your documents.",
       "p2": "Your personal data is handled by Sumsub (our licensed KYC provider, SOC 2 Type II certified). KUMPLY only receives a pass/fail result and writes an encrypted credential to the blockchain. No names, no photos, no addresses on our servers. Ever.",
       "f1Title": "Zero Data Stored",
       "f1Desc": "We literally don’t have your personal data. It’s processed by our licensed partner and never touches our servers.",
@@ -306,7 +306,7 @@
     "l1": "Compliance L1",
     "docs": "Docs",
     "legal": "Legal",
-    "trademark": "Trademark Notice: AVALANCHE® and AVAX® are registered trademarks of Ava Labs, Inc. KUMPLY is an independent project and is not endorsed by, sponsored by, or affiliated with Ava Labs, Inc. KUMPLY is software infrastructure — it does not operate as a financial institution, custodian, or money transmitter.",
+    "trademark": "Trademark Notice: AVALANCHE® and AVAX® are registered trademarks of Ava Labs, Inc. KUMPLY is an independent project and is not endorsed by, sponsored by, or affiliated with Ava Labs, Inc. KUMPLY is designed to operate as software infrastructure, not as a financial institution, custodian, or money transmitter — formal legal opinion in process, scheduled for Q3 2026.",
     "rights": "© 2026 KUMPLY Protocol. Open source under the Apache License 2.0."
   },
   "Dashboard": {
@@ -334,7 +334,7 @@
   "L1": {
     "badge": "Chain Registered on Fuji · Activation In Progress",
     "title": "KUMPLY Compliance L1",
-    "subtitle": "The first Avalanche L1 designed so only KYB-verified institutions can validate. Every block signed by a licensed entity — compliance baked into consensus.",
+    "subtitle": "The first Avalanche L1 designed so only KYB-verified institutions can validate. Every block signed by a KYB-verified entity — compliance baked into consensus.",
     "statusTitle": "Chain Registered on Fuji — Validator Activation In Progress",
     "statusDesc": "The KUMPLY chain (ID 43210, KMP gas token) is registered on the Fuji P-Chain with its genesis committed, and the ACP-99 KumplyValidatorSetManager is deployed and verified on C-Chain with 27 dedicated tests. Next step: ACP-77 conversion and first validator node activation. Founding validator slots are open — any KYB-verified institution can join.",
     "viewOnGitHub": "View Source on GitHub",
@@ -359,7 +359,7 @@
     "whyTitle": "Why a Dedicated L1?",
     "whySubtitle": "The C-Chain works for today’s reads. Here is why we are building the Compliance L1 for institutional scale.",
     "why1Title": "Compliant by Construction",
-    "why1Desc": "Only KYB-verified institutions validate. Every block is signed by a licensed entity — the network itself becomes a regulatory artifact.",
+    "why1Desc": "Only KYB-verified institutions validate. Every block is signed by a KYB-verified entity — compliance is structural, not a policy add-on.",
     "why2Title": "Sub-Cent Compliance Reads",
     "why2Desc": "Predictable, near-zero fees for compliance lookups at institutional scale. No more gas spikes blocking enterprise integrations.",
     "why3Title": "Cross-L1 via Warp + ICM",

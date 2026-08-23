@@ -234,7 +234,7 @@
       "f2Title": "Consultas Rápidas y Baratas",
       "f2Desc": "Verificar el estado de compliance de un usuario cuesta casi nada en gas. Es una simple lectura de almacenamiento — sin procesamiento adicional.",
       "f3Title": "Probado y Auditable",
-      "f3Desc": "Cobertura completa de tests. Contratos de código abierto. Auditoría de seguridad de terceros en proceso."
+      "f3Desc": "Cobertura completa de tests. Contratos de código abierto. Hardening de seguridad liderado por el equipo ahora, auditoría formal de terceros planeada como siguiente paso."
     },
     "api": {
       "title": "API Cross-Chain",
@@ -253,7 +253,7 @@
     "privacy": {
       "title": "Política de Privacidad",
       "subtitle": "Cómo manejamos tus datos (versión corta: no los guardamos)",
-      "p1": "KUMPLY cumple con la ley de protección de datos de México (LFPDPPP) y sigue los principios del GDPR. Pero aquí va la versión simple: somos una herramienta de software. Procesamos tu verificación a través de un socio certificado, creamos una prueba cifrada, y listo. No guardamos tus documentos.",
+      "p1": "KUMPLY está diseñado para alinearse con la ley de protección de datos de México (LFPDPPP) y los principios del GDPR — opinión legal formal en proceso, programada para Q3 2026. Pero aquí va la versión simple: somos una herramienta de software. Procesamos tu verificación a través de un socio certificado, creamos una prueba cifrada, y listo. No guardamos tus documentos.",
       "p2": "Tus datos personales los maneja Sumsub (nuestro proveedor de KYC certificado SOC 2 Type II). KUMPLY solo recibe un resultado aprobado/rechazado y escribe una credencial cifrada en la blockchain. Sin nombres, sin fotos, sin direcciones en nuestros servidores. Nunca.",
       "f1Title": "Cero Datos Almacenados",
       "f1Desc": "Literalmente no tenemos tus datos personales. Los procesa nuestro socio certificado y nunca tocan nuestros servidores.",
@@ -306,7 +306,7 @@
     "l1": "Compliance L1",
     "docs": "Documentación",
     "legal": "Legal",
-    "trademark": "Aviso de Marca: AVALANCHE® y AVAX® son marcas registradas de Ava Labs, Inc. KUMPLY es un proyecto independiente y no está respaldado, patrocinado ni afiliado con Ava Labs, Inc. KUMPLY es infraestructura de software — no opera como institución financiera, custodio ni transmisor de dinero.",
+    "trademark": "Aviso de Marca: AVALANCHE® y AVAX® son marcas registradas de Ava Labs, Inc. KUMPLY es un proyecto independiente y no está respaldado, patrocinado ni afiliado con Ava Labs, Inc. KUMPLY está diseñado para operar como infraestructura de software, no como institución financiera, custodio ni transmisor de dinero — opinión legal formal en proceso, programada para Q3 2026.",
     "rights": "© 2026 Protocolo KUMPLY. Código abierto bajo Licencia Apache 2.0."
   },
   "Dashboard": {
@@ -334,7 +334,7 @@
   "L1": {
     "badge": "Cadena Registrada en Fuji · Activación en Progreso",
     "title": "KUMPLY Compliance L1",
-    "subtitle": "La primera L1 de Avalanche diseñada para que solo instituciones KYB-verificadas puedan validar. Cada bloque firmado por una entidad regulada — el compliance vive dentro del consenso.",
+    "subtitle": "La primera L1 de Avalanche diseñada para que solo instituciones KYB-verificadas puedan validar. Cada bloque firmado por una entidad KYB-verificada — el compliance vive dentro del consenso.",
     "statusTitle": "Cadena Registrada en Fuji — Activación de Validadores en Progreso",
     "statusDesc": "La cadena KUMPLY (ID 43210, token de gas KMP) está registrada en el P-Chain de Fuji con su genesis comprometido, y el KumplyValidatorSetManager (ACP-99) está desplegado y verificado en C-Chain con 27 tests dedicados. Siguiente paso: la conversión ACP-77 y la activación del primer nodo validador. Los slots de validador fundador están abiertos — cualquier institución verificada por KYB puede unirse.",
     "viewOnGitHub": "Ver Código en GitHub",
@@ -359,7 +359,7 @@
     "whyTitle": "¿Por Qué una L1 Dedicada?",
     "whySubtitle": "C-Chain funciona para las lecturas de hoy. Aquí está por qué construimos la Compliance L1 a escala institucional.",
     "why1Title": "Compliance por Construcción",
-    "why1Desc": "Solo validan instituciones KYB-verificadas. Cada bloque firmado por una entidad regulada — la red misma se convierte en un artefacto regulatorio.",
+    "why1Desc": "Solo validan instituciones KYB-verificadas. Cada bloque firmado por una entidad KYB-verificada — el compliance es estructural, no una política agregada encima.",
     "why2Title": "Lecturas Compliance Sub-Centavo",
     "why2Desc": "Fees predecibles y casi cero para consultas a escala institucional. Sin spikes de gas que bloqueen integraciones empresariales.",
     "why3Title": "Cross-L1 vía Warp + ICM",
