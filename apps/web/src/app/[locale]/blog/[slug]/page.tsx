@@ -15,6 +15,14 @@ export async function generateMetadata({
   const locale = await getLocale();
   const lang = locale === "es" ? "es" : "en";
 
+  // Next's file-convention opengraph-image resolves its absolute URL from
+  // the internal [locale] route segment even under localePrefix: "never",
+  // producing a /en/... or /es/... URL that 307-redirects to the real,
+  // prefix-less one. Crawlers (Telegram, WhatsApp, Discord, X) don't follow
+  // redirects on og:image, so that broke link previews. Set it explicitly
+  // to the working, prefix-less URL instead of letting Next infer it.
+  const ogImage = { url: `/blog/${slug}/opengraph-image`, width: 1200, height: 630, alt: post.title[lang] };
+
   return {
     title: post.title[lang],
     description: post.excerpt[lang],
@@ -25,11 +33,13 @@ export async function generateMetadata({
       type: "article",
       publishedTime: post.date,
       authors: [post.author.name],
+      images: [ogImage],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title[lang],
       description: post.excerpt[lang],
+      images: [ogImage.url],
     },
   };
 }
