@@ -46,6 +46,17 @@ used).
 - Every new page under `[locale]` uses `useTranslations()` from
   `next-intl`; add both `en` and `es` entries in `messages/`, not just one.
 
+## Public-facing legal & compliance copy
+
+- Don't state a legal/regulatory classification, license-exemption, or
+  "no risk" claim as settled fact until a real legal opinion confirms
+  it. Hedge with what's actually true today (e.g. "designed to operate
+  as X — formal legal opinion in process, scheduled for Q3 2026")
+  instead of declaring the conclusion.
+- A certification (SOC 2, ISO 27001, PCI DSS) or a KYB check is not a
+  financial/regulatory license — don't call a certified or
+  KYB-verified party "licensed."
+
 ## Testing
 
 - New code needs tests. `pnpm test` runs the full monorepo suite; keep it
