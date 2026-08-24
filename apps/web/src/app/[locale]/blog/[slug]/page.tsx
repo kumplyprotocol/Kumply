@@ -79,6 +79,9 @@ export default async function BlogPostPage({
 
       <header className="blog-post__head">
         <span className="blog-eyebrow">{t("eyebrow")}</span>
+        {post.category && (
+          <span className="badge badge-accent blog-post__category">{post.category}</span>
+        )}
         <h1 className="blog-post__title">{post.title[lang]}</h1>
         <div className="blog-post__meta">
           <span className="blog-post__author">{post.author.name}</span>
@@ -114,6 +117,7 @@ export default async function BlogPostPage({
         .blog-post__back:hover { color: var(--accent); }
 
         .blog-post__head { margin-bottom: 2.5rem; }
+        .blog-post__category { display: inline-flex; margin-top: 0.5rem; }
         .blog-post__title {
           font-size: 2.5rem; font-weight: 800; line-height: 1.15;
           letter-spacing: -0.02em; margin: 0.75rem 0 1.25rem; color: var(--text-primary);

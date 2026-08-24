@@ -8,6 +8,7 @@ export interface BlogPost {
   date: string; // ISO 8601
   author: { name: string; role: { en: string; es: string } };
   readMinutes: number;
+  category?: string; // fixed label, same in both locales (e.g. "AVALANCHE NEWS")
   title: { en: string; es: string };
   excerpt: { en: string; es: string };
   bodyHtml: { en: string; es: string };
@@ -96,6 +97,72 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Nuestra arquitectura base ya está viva en la Mainnet C-Chain (Beta) y la suite completa corre en Fuji Testnet, usando primitivas como ACP-99 para obligar a los validadores a pasar un KYB por consenso.</p>
 
 <p>¿Y tú, crees que tu protocolo está listo para sobrevivir a la llegada de los agentes de IA operando capital, o seguirás confiando en bases de datos centralizadas?</p>
+`,
+    },
+  },
+  {
+    slug: "avalanche-news-august-2026",
+    date: "2026-08-24",
+    author: {
+      name: "KUMPLY Team",
+      role: { en: "Ecosystem Coverage", es: "Cobertura del Ecosistema" },
+    },
+    readMinutes: 3,
+    category: "AVALANCHE NEWS",
+    title: {
+      en: "Three Signals From Avalanche's August",
+      es: "Tres señales del agosto de Avalanche",
+    },
+    excerpt: {
+      en: "New leadership at Ava Labs, a new metric that shows who actually captures Avalanche's value, and 15 million academic records anchored in Kenya — three verified signals from the ecosystem this August, sourced directly from Ava Labs, not aggregators.",
+      es: "Nuevo liderazgo en Ava Labs, una métrica nueva que muestra quién captura realmente el valor de Avalanche, y 15 millones de registros académicos anclados en Kenia — tres señales verificadas del ecosistema este agosto, con fuente directa en Ava Labs, no en agregadores.",
+    },
+    bodyHtml: {
+      en: `
+<p>Three stories from Avalanche this month point in the same direction: the ecosystem is being asked to prove itself with numbers, not narratives.</p>
+
+<h2>New leadership, an operator's focus</h2>
+
+<p>On August 18, Ava Labs announced a leadership shift: Charley Cooper, previously COO, becomes President, with day-to-day operations now his mandate. John Wu, stepping back from the President role, moves to Senior Advisor, focused on long-term strategy. Lydia Chiu, who had been serving as interim CFO, is now CFO.</p>
+
+<p>Cooper brings a background spanning R3, State Street, Deutsche Bank, and the CFTC — public and private sector experience in exactly the kind of institutional plumbing Avalanche has been courting. His stated focus areas — 24/7 markets, tokenization, AI — aren't new territory for Avalanche, but the framing is: turning existing traction into "sustainable business growth" rather than expansion for its own sake. For builders, the signal worth watching is whether that translates into closer, faster engagement from Ava Labs itself.</p>
+
+<h2>A new way to measure who actually gets paid</h2>
+
+<p>On August 12, the Avalanche Foundation published a new framework: Gross Chain Income (GCI). Where Gross Chain Product (GCP) measures what the on-chain economy produces, GCI asks who actually captures the value — including income that originates off-chain but flows to residents holding tokenized assets and yield-bearing stablecoins. A further layer, GCI-general, adds issuer reserve income currently captured by external parties rather than ecosystem participants.</p>
+
+<p>The June 2026 numbers make the gap concrete: $3.1M of on-chain production (NGCP) for the month, $2.7M more once holder yield is added ($5.8M NGCI), and $6.9M more once reserve income is counted ($12.7M NGCI-general). Since January 2024, the ecosystem has burned roughly $23.5M in fees against a cumulative $954.8M of GCP and $242.8M of issuer reserve income — most of which isn't landing with ecosystem residents yet. It's a metric built to be uncomfortable, and that's the point: it names a growth lever (routing more of that reserve income back to residents) that a vaguer metric would have left invisible.</p>
+
+<h2>Fifteen million records, one country, zero paper</h2>
+
+<p>On August 3, Kenya's National Examinations Council (KNEC) anchored more than 15 million academic records onto Avalanche's C-Chain, in partnership with local technology provider LegitDoc. The dataset reaches back to 1989 — decades of primary, secondary, advanced diploma, and teacher-training results — and nearly 1 million KCSE 2025 certificates are now issued exclusively through the resulting e-certificate platform. Employers and institutions that used to wait weeks for a paper verification can now check a credential in seconds.</p>
+
+<p>It's a reminder of what "real-world usage" looks like when it isn't denominated in TVL: a national institution moving its actual system of record on-chain, at a scale — fifteen million records and counting — that most crypto infrastructure never gets asked to handle.</p>
+
+<p>Sources: <a href="https://www.avax.network/about/blog/leadership-announcement-from-ava-labs" target="_blank" rel="noopener noreferrer">Ava Labs leadership announcement</a>, <a href="https://www.avax.network/about/blog/from-gross-chain-product-to-gross-chain-income-where-the-value-goes" target="_blank" rel="noopener noreferrer">Avalanche Foundation, Gross Chain Income</a>, <a href="https://www.avax.network/about/blog/securing-a-nations-credentials-kenya-anchors-academic-records-on-avalanche" target="_blank" rel="noopener noreferrer">Ava Labs, Kenya academic records</a>.</p>
+`,
+      es: `
+<p>Tres noticias de Avalanche este mes apuntan en la misma dirección: al ecosistema le están pidiendo que se demuestre con números, no con narrativa.</p>
+
+<h2>Nuevo liderazgo, enfoque de operador</h2>
+
+<p>El 18 de agosto, Ava Labs anunció un cambio de liderazgo: Charley Cooper, antes COO, pasa a ser Presidente, con la operación del día a día ahora bajo su mandato. John Wu, que deja el rol de Presidente, pasa a Senior Advisor, enfocado en estrategia de largo plazo. Lydia Chiu, que venía como CFO interina, ahora es CFO.</p>
+
+<p>Cooper trae una trayectoria que pasa por R3, State Street, Deutsche Bank y la CFTC — experiencia tanto en sector público como privado, justo el tipo de infraestructura institucional que Avalanche ha estado cortejando. Sus áreas de foco declaradas — mercados 24/7, tokenización, IA — no son territorio nuevo para Avalanche, pero el enfoque sí lo es: convertir la tracción ya existente en "crecimiento de negocio sostenible" en vez de expansión por sí misma. Para los builders, la señal a seguir es si eso se traduce en un involucramiento más cercano y rápido de Ava Labs.</p>
+
+<h2>Una nueva forma de medir quién realmente cobra</h2>
+
+<p>El 12 de agosto, la Avalanche Foundation publicó un nuevo marco: Gross Chain Income (GCI). Donde Gross Chain Product (GCP) mide lo que produce la economía on-chain, GCI pregunta quién captura realmente ese valor — incluyendo ingresos que se originan fuera de la cadena pero fluyen hacia residentes que tienen activos tokenizados y stablecoins que generan yield. Una capa adicional, GCI-general, suma el ingreso de reservas de emisores que hoy captan terceros externos en vez de participantes del ecosistema.</p>
+
+<p>Los números de junio de 2026 hacen el hueco concreto: $3.1M de producción on-chain (NGCP) en el mes, $2.7M más al sumar el holder yield ($5.8M de NGCI), y $6.9M más al contar el ingreso de reservas ($12.7M de NGCI-general). Desde enero de 2024, el ecosistema ha quemado cerca de $23.5M en fees contra un acumulado de $954.8M de GCP y $242.8M de ingreso de reservas de emisores — la mayoría de lo cual todavía no llega a los residentes del ecosistema. Es una métrica diseñada para ser incómoda, y ese es el punto: nombra una palanca de crecimiento (redirigir más de ese ingreso de reservas hacia los residentes) que una métrica más vaga habría dejado invisible.</p>
+
+<h2>Quince millones de registros, un país, cero papel</h2>
+
+<p>El 3 de agosto, el Consejo Nacional de Exámenes de Kenia (KNEC) ancló más de 15 millones de registros académicos en la C-Chain de Avalanche, en alianza con el proveedor de tecnología local LegitDoc. El conjunto de datos llega hasta 1989 — décadas de resultados de primaria, secundaria, diplomados avanzados y formación docente — y casi 1 millón de certificados KCSE 2025 ya se emiten exclusivamente a través de la plataforma de e-certificados resultante. Empleadores e instituciones que antes esperaban semanas por una verificación en papel ahora pueden confirmar una credencial en segundos.</p>
+
+<p>Es un recordatorio de cómo se ve el "uso real" cuando no se mide en TVL: una institución nacional moviendo su sistema de registro real on-chain, a una escala — quince millones de registros y sumando — que a la mayoría de la infraestructura cripto nunca le piden manejar.</p>
+
+<p>Fuentes: <a href="https://www.avax.network/about/blog/leadership-announcement-from-ava-labs" target="_blank" rel="noopener noreferrer">anuncio de liderazgo de Ava Labs</a>, <a href="https://www.avax.network/about/blog/from-gross-chain-product-to-gross-chain-income-where-the-value-goes" target="_blank" rel="noopener noreferrer">Avalanche Foundation, Gross Chain Income</a>, <a href="https://www.avax.network/about/blog/securing-a-nations-credentials-kenya-anchors-academic-records-on-avalanche" target="_blank" rel="noopener noreferrer">Ava Labs, registros académicos de Kenia</a>.</p>
 `,
     },
   },

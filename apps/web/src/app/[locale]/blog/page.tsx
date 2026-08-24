@@ -41,6 +41,9 @@ export default async function BlogIndexPage() {
       <div className="blog-list">
         {posts.map((post) => (
           <Link key={post.slug} href={`/blog/${post.slug}`} className="glass-card blog-card">
+            {post.category && (
+              <span className="badge badge-accent blog-card__category">{post.category}</span>
+            )}
             <div className="blog-card__meta">
               <time dateTime={post.date}>{formatDate(post.date, lang)}</time>
               <span className="blog-card__dot" aria-hidden="true">•</span>
@@ -85,6 +88,7 @@ export default async function BlogIndexPage() {
           color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.04em;
         }
         .blog-card__dot { opacity: 0.5; }
+        .blog-card__category { align-self: flex-start; }
         .blog-card__title {
           font-size: 1.35rem; font-weight: 800; line-height: 1.3;
           color: var(--text-primary); margin: 0;
