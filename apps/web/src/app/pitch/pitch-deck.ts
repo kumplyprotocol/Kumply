@@ -410,7 +410,7 @@ export const DECK_HTML = `
     <p class="lede">
       Agentic DeFi is arriving: autonomous market makers, AI portfolio managers, on-chain agents holding real budgets.
       Every protocol will need to distinguish a <strong>trusted, bounded agent</strong> from an anonymous script -
-      and no compliance rail exists for that today.
+      and no composable on-chain compliance rail exists for that today.
     </p>
     <div class="grid cols-3">
       <div class="cell">
@@ -895,7 +895,7 @@ export const DECK_HTML_ES = `
     <p class="lede">
       Las DeFi agénticas están llegando: market makers autónomos, gestores de portafolio con IA, agentes on-chain
       manejando presupuestos reales. Todo protocolo va a necesitar distinguir un <strong>agente confiable y acotado</strong>
-      de un script anónimo - y hoy no existe ningún riel de compliance para eso.
+      de un script anónimo - y hoy no existe ningún riel de compliance componible on-chain para eso.
     </p>
     <div class="grid cols-3">
       <div class="cell">
