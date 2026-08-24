@@ -45,6 +45,15 @@ used).
   `[locale]` pages.
 - Every new page under `[locale]` uses `useTranslations()` from
   `next-intl`; add both `en` and `es` entries in `messages/`, not just one.
+- This app uses `localePrefix: 'never'` (see `src/i18n/routing.ts`) — public
+  URLs never carry `/en/` or `/es/`. Next's automatic metadata for
+  file-convention routes (`opengraph-image.tsx` and similar) still resolves
+  its absolute URL from the internal `[locale]` route segment, producing a
+  `/en/...`/`/es/...` URL that 307-redirects and breaks link previews on
+  Telegram/WhatsApp/Discord/X (none of which follow redirects on `og:image`).
+  Any new dynamic route with a file-convention image/metadata export needs
+  its `openGraph.images`/`twitter.images` set explicitly in
+  `generateMetadata` to the prefix-less URL, not left to Next's inference.
 
 ## Public-facing legal & compliance copy
 
