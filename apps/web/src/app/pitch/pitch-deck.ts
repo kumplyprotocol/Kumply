@@ -419,7 +419,7 @@ export const DECK_HTML = `
       </div>
       <div class="cell">
         <h3>First in the ecosystem</h3>
-        <p>To our knowledge, the first Avalanche L1 - and the first EVM compliance layer - purpose-built for agent identity.</p>
+        <p>To our knowledge, the first Avalanche L1 - and the first EVM compliance layer - that ties an AI agent's on-chain identity to a legally accountable owner verified via KYB.</p>
       </div>
       <div class="cell">
         <h3>Roadmapped depth</h3>
@@ -904,7 +904,7 @@ export const DECK_HTML_ES = `
       </div>
       <div class="cell">
         <h3>Primero en el ecosistema</h3>
-        <p>Hasta donde sabemos, la primera L1 de Avalanche - y la primera capa de compliance EVM - construida específicamente para identidad de agentes.</p>
+        <p>Hasta donde sabemos, la primera L1 de Avalanche - y la primera capa de compliance EVM - que ata la identidad on-chain de un agente de IA a un dueño legalmente responsable verificado con KYB.</p>
       </div>
       <div class="cell">
         <h3>Profundidad planeada</h3>
