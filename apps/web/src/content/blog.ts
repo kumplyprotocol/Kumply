@@ -104,8 +104,8 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "avalanche-news-august-2026",
     date: "2026-08-24",
     author: {
-      name: "KUMPLY Team",
-      role: { en: "Ecosystem Coverage", es: "Cobertura del Ecosistema" },
+      name: "Giovanny Amador",
+      role: { en: "Co-founder, Technical Lead", es: "Co-founder, Líder Técnico" },
     },
     readMinutes: 3,
     category: "AVALANCHE NEWS",
