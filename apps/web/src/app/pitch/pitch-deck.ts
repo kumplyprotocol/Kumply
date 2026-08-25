@@ -571,9 +571,10 @@ export const DECK_HTML = `
       </table>
     </div>
     <p class="note"><strong>M0 is already producing signal, not just plans.</strong> One candidate integrator is in
-      active conversation, expected to close within the next two weeks. A separate early conversation closed with a
-      clear "not yet" - no real funds at stake today, revisit once third parties can publish paid agents on the
-      platform - itself a real M0 finding, not a setback.</p>
+      active conversation, expected to close within the next two weeks. A separate early conversation - with Fer,
+      founder of WasiAI, an Avalanche agentic-economy/remittances project - closed with a clear "not yet": no real
+      funds at stake today, revisit once third parties can publish paid agents on the platform. Itself a real M0
+      finding, not a setback.</p>
     <p class="note"><strong>M1 is not theoretical - here is one we found this week.</strong> While preparing this
       application, a verified identity check failed to produce its on-chain credential. The cause: Fuji's public RPC
       intermittently returned a gas estimate of ~9.3&times;10<sup>15</sup>, far above the block limit, so issuance reverted
@@ -1056,9 +1057,10 @@ export const DECK_HTML_ES = `
       </table>
     </div>
     <p class="note"><strong>M0 ya está produciendo señal, no solo planes.</strong> Un integrador candidato está en
-      conversación activa, con cierre esperado dentro de las próximas dos semanas. Una conversación temprana distinta cerró con un
-      claro "todavía no" - sin fondos reales en juego hoy, revisar cuando terceros puedan publicar agentes pagados en la
-      plataforma - eso en sí es un hallazgo real de M0, no un tropiezo.</p>
+      conversación activa, con cierre esperado dentro de las próximas dos semanas. Una conversación temprana distinta -
+      con Fer, fundador de WasiAI, un proyecto de economía agéntica/remesas en Avalanche - cerró con un claro
+      "todavía no": sin fondos reales en juego hoy, revisar cuando terceros puedan publicar agentes pagados en la
+      plataforma. Eso en sí es un hallazgo real de M0, no un tropiezo.</p>
     <p class="note"><strong>M1 no es teórico - aquí hay uno que encontramos esta semana.</strong> Mientras preparábamos esta
       aplicación, una verificación de identidad aprobada no logró producir su credencial on-chain. La causa: el RPC público de Fuji
       devolvió intermitentemente una estimación de gas de ~9.3&times;10<sup>15</sup>, muy por encima del límite de bloque, así que la emisión revirtió
