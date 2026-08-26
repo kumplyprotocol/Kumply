@@ -43,6 +43,35 @@ already public in `docs/AI-USAGE.md`: the point isn't to hide the
 tooling, it's to make the finding itself hold up on its own regardless
 of who or what found it.
 
+## Re-read before quoting another thread
+
+When a PR, issue, or comment cites or paraphrases something from another
+thread, the order of operations matters:
+
+1. Re-read the actual source today, before writing the citation - never
+   quote from what this session already read earlier.
+2. Only then, and only if the source really was re-read, does the
+   disclosure get a second sentence:
+
+```
+Disclosure: drafted with AI assistance under my direction and reviewed
+by hand. Both quotations above were re-verified against the linked
+comments today.
+```
+
+Adjust "Both" / "the" to the actual number of quotes.
+
+That second sentence is the consequence of re-reading, not a template
+pasted first and justified after the fact. If there wasn't time to
+re-read the source before publishing, leave the sentence out - a short,
+true disclosure beats a longer one nothing backs up. A specific claim
+that turns out false is worse than a vague one nobody ever checks,
+because now there's something concrete to contradict if someone
+verifies it.
+
+Applies to new comments going forward, not a retroactive fix for
+anything already published.
+
 ## Propose the fix, not just the report - when the root cause is confirmed
 
 If the investigation already nailed the root cause, the issue includes
@@ -69,7 +98,10 @@ found X, haven't traced the cause yet" is a valid report on its own.
    or the exact corrected value/line.
 4. No em dash, curly quote, or unicode ellipsis anywhere in the text.
 5. If AI assisted the finding or the writeup, that's not hidden.
-6. Read it once as the maintainer who'll see it cold - does it explain
+6. If citing or paraphrasing another thread: the source was re-read
+   today, and the disclosure's re-verification sentence appears only if
+   that's actually true.
+7. Read it once as the maintainer who'll see it cold - does it explain
    itself without needing the conversation that produced it?
 
 ## Installing this in a new project - two steps, not one
@@ -86,4 +118,10 @@ never stripped out to look more human.** Detail in `playbooks/git.md`.
 **When the root cause is already confirmed, propose the actual fix, not
 just the report.** A diff, corrected line, or exact reproduction beats
 "this seems broken." Detail in `playbooks/git.md`.
+
+**When citing or paraphrasing another thread, re-read the actual source
+today before writing the citation - the disclosure's re-verification
+sentence is only added if that re-read really happened.** A short, true
+disclosure beats a longer one nothing backs up. Detail in
+`playbooks/git.md`.
 ```

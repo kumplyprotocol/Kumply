@@ -119,3 +119,9 @@ never stripped out to look more human.** Detail in `playbooks/git.md`.
 **When the root cause is already confirmed, propose the actual fix, not
 just the report.** A diff, corrected line, or exact reproduction beats
 "this seems broken." Detail in `playbooks/git.md`.
+
+**When citing or paraphrasing another thread, re-read the actual source
+today before writing the citation - the disclosure's re-verification
+sentence is only added if that re-read really happened.** A short, true
+disclosure beats a longer one nothing backs up. Detail in
+`playbooks/git.md`.
