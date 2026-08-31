@@ -1,0 +1,6 @@
+{
+  "name": "run-web-driver",
+  "private": true,
+  "type": "module",
+  "description": "Local-only deps for driver.mjs - not part of the app's real dependency graph."
+}
