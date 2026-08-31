@@ -40,9 +40,31 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <p>KYA (Know Your Agent) is KUMPLY's Tier 5 attestation. It doesn't try to identify the agent itself as a legal person - agents aren't legal persons. What it verifies is the chain of accountability behind it: a Tier 5 credential is tied to a Tier 4 (KYB) verified owner, a business or individual that already went through business verification. If the agent acts, the accountability chains upward to that owner. That's the actual mechanism: not "trust the agent," but "know who answers for the agent."</p>
 
+<figure class="blog-diagram">
+<svg viewBox="0 0 640 170" width="100%" role="img" aria-label="Diagram: an agent's Tier 5 credential is tied to its owner's Tier 4 KYB-verified credential, so accountability chains upward from the agent to the owner">
+<rect x="8" y="35" width="230" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="28" y="65" font-family="'Fira Code', Consolas, monospace" font-size="12" font-weight="700" letter-spacing="1" fill="var(--accent)">TIER 5 &#183; KYA</text>
+<text x="28" y="92" font-size="18" font-weight="800" fill="var(--text-primary)">Agent</text>
+<text x="28" y="112" font-size="12" fill="var(--text-tertiary)">on-chain credential</text>
+<rect x="402" y="35" width="230" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="422" y="65" font-family="'Fira Code', Consolas, monospace" font-size="12" font-weight="700" letter-spacing="1" fill="var(--accent)">TIER 4 &#183; KYB</text>
+<text x="422" y="92" font-size="18" font-weight="800" fill="var(--text-primary)">Verified owner</text>
+<text x="422" y="112" font-size="12" fill="var(--text-tertiary)">legally accountable</text>
+<text x="320" y="20" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="11" letter-spacing="0.5" fill="var(--text-secondary)">accountability chains upward</text>
+<path d="M240 85 L392 85" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#kya-arrowhead-en)"/>
+<defs>
+<marker id="kya-arrowhead-en" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/>
+</marker>
+</defs>
+</svg>
+</figure>
+
 <h2>What's live today</h2>
 
 <p>The core mechanism is live: any contract can check an address's tier and expiry with a single <code>verify(address)</code> call, or pay for a stronger read via <code>checkCompliance(address)</code>, a payable function that's fully implemented in AttestationStore on both Fuji and Mainnet C-Chain. That fee is currently set to zero on both networks. It's real, tested code, not a promise - but it's priced at zero while we're in beta, not because the metering doesn't exist yet.</p>
+
+<p>A concrete example of the mechanism, illustrative, not a real transaction: an agent tries to execute a $50,000 trade. Before letting it through, the protocol's contract calls <code>verify(agentAddress)</code>. The response returns the agent's tier, its expiry, and, through the Tier 4 credential it's tied to, who the verified owner behind it is. Tier 5 and unexpired: the trade proceeds, and the protocol already knows who's accountable if it doesn't go as planned. Missing, expired, or below Tier 5: the protocol rejects the trade or falls back to a human signer, before any funds move.</p>
 
 <p>You can see the mechanism in action without a wallet: the <a href="https://kumply.xyz/demo" target="_blank" rel="noopener noreferrer">interactive demo</a> runs three scenarios against real attestations on the network of your choice, including an agent marketplace scenario - the exact context where a Tier 5 check would decide whether an agent can execute.</p>
 
@@ -63,9 +85,31 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <p>KYA (Know Your Agent) es la attestation Tier 5 de KUMPLY. No intenta identificar al agente en sí como persona legal - los agentes no son personas legales. Lo que verifica es la cadena de responsabilidad detrás de él: una credencial Tier 5 está ligada a un dueño verificado con Tier 4 (KYB), una empresa o individuo que ya pasó por verificación empresarial. Si el agente actúa, la responsabilidad encadena hacia arriba, hasta ese dueño. Ese es el mecanismo real: no "confía en el agente", sino "sabe quién responde por el agente".</p>
 
+<figure class="blog-diagram">
+<svg viewBox="0 0 640 170" width="100%" role="img" aria-label="Diagrama: la credencial Tier 5 de un agente está ligada a la credencial Tier 4 KYB-verificada de su dueño, así que la responsabilidad encadena hacia arriba, del agente al dueño">
+<rect x="8" y="35" width="230" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="28" y="65" font-family="'Fira Code', Consolas, monospace" font-size="12" font-weight="700" letter-spacing="1" fill="var(--accent)">TIER 5 &#183; KYA</text>
+<text x="28" y="92" font-size="18" font-weight="800" fill="var(--text-primary)">Agente</text>
+<text x="28" y="112" font-size="12" fill="var(--text-tertiary)">credencial on-chain</text>
+<rect x="402" y="35" width="230" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="422" y="65" font-family="'Fira Code', Consolas, monospace" font-size="12" font-weight="700" letter-spacing="1" fill="var(--accent)">TIER 4 &#183; KYB</text>
+<text x="422" y="92" font-size="18" font-weight="800" fill="var(--text-primary)">Dueño verificado</text>
+<text x="422" y="112" font-size="12" fill="var(--text-tertiary)">legalmente responsable</text>
+<text x="320" y="20" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="11" letter-spacing="0.5" fill="var(--text-secondary)">la responsabilidad encadena hacia arriba</text>
+<path d="M240 85 L392 85" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#kya-arrowhead-es)"/>
+<defs>
+<marker id="kya-arrowhead-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/>
+</marker>
+</defs>
+</svg>
+</figure>
+
 <h2>Qué está en vivo hoy</h2>
 
 <p>El mecanismo central está en vivo: cualquier contrato puede consultar el tier y la expiración de una dirección con una sola llamada <code>verify(address)</code>, o pagar por una lectura más fuerte vía <code>checkCompliance(address)</code>, una función pagable que está completamente implementada en AttestationStore tanto en Fuji como en Mainnet C-Chain. Ese fee está fijado en cero en ambas redes hoy. Es código real, probado, no una promesa - pero está en cero mientras estamos en beta, no porque el medidor todavía no exista.</p>
+
+<p>Un ejemplo concreto del mecanismo, ilustrativo, no una transacción real: un agente intenta ejecutar una operación de $50,000. Antes de dejarlo pasar, el contrato del protocolo llama a <code>verify(agentAddress)</code>. La respuesta trae el tier del agente, su expiración, y, a través de la credencial Tier 4 a la que está ligado, quién es el dueño verificado detrás. Tier 5 y sin expirar: la operación avanza, y el protocolo ya sabe quién responde si algo sale mal. Faltante, expirada, o por debajo de Tier 5: el protocolo rechaza la operación o recurre a un firmante humano, antes de que se mueva cualquier fondo.</p>
 
 <p>Podés ver el mecanismo funcionando sin wallet: el <a href="https://kumply.xyz/demo" target="_blank" rel="noopener noreferrer">demo interactivo</a> corre tres escenarios contra attestations reales en la red que elijas, incluyendo un escenario de marketplace de agentes - justo el contexto donde una verificación Tier 5 decidiría si un agente puede ejecutar.</p>
 

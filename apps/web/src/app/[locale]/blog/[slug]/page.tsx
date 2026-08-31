@@ -159,6 +159,8 @@ export default async function BlogPostPage({
         }
         .blog-post__body .blog-scenario p { margin-bottom: 0.9rem; font-size: 1rem; }
         .blog-post__body .blog-scenario p:last-child { margin-bottom: 0; }
+        .blog-post__body .blog-diagram { margin: 1.75rem 0; }
+        .blog-post__body .blog-diagram svg { display: block; max-width: 100%; height: auto; }
 
         .blog-post__footer {
           display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 3rem;
