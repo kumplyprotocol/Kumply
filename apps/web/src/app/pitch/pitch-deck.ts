@@ -600,7 +600,9 @@ export const DECK_HTML = `
       unspent scope than pre-buy a subscription for a product still proving demand. Tier-4 <strong>KYB is Enterprise-only
       and quoted per customer; that quote is pending</strong>, and we will re-scope against it rather than pad now.
       M3 covers the written Mexican fintech legal opinion, IMPI trademark registration, and cold-key
-      treasury setup before any fee is switched on. <strong>M4</strong> covers a year of dedicated validator node hosting
+      treasury setup before any fee is switched on. If the legal opinion or IMPI trademark costs turn out not to be
+      grant-eligible, that portion of M3 gets reassigned to extending M1's security scope instead - the milestone
+      still delivers, just with more hardening and less paperwork. <strong>M4</strong> covers a year of dedicated validator node hosting
       alongside the ICM work and two pilot integrations.
       <strong>M1 is $2,000</strong>, up from our first draft, because its scope grew: on top of the open-source tooling
       (Slither, Aderyn, fuzzing) and the published threat model, it now funds failure detection and alerting on the
@@ -1087,7 +1089,9 @@ export const DECK_HTML_ES = `
       suscripción para un producto que todavía está probando demanda. El KYB Tier-4 es <strong>solo Enterprise y se cotiza
       por cliente; esa cotización está pendiente</strong>, y re-acotaremos contra ella en vez de rellenar ahora.
       M3 cubre la opinión legal fintech mexicana por escrito, el registro de marca ante el IMPI, y la configuración
-      de treasury con cold-key antes de activar cualquier comisión. <strong>M4</strong> cubre un año de hosting dedicado del nodo
+      de treasury con cold-key antes de activar cualquier comisión. Si la opinión legal o el registro de marca ante
+      el IMPI resultan no ser elegibles para el grant, esa porción de M3 se reasigna a extender el alcance de
+      seguridad de M1 - el milestone se sigue entregando, solo con más hardening y menos papeleo. <strong>M4</strong> cubre un año de hosting dedicado del nodo
       validador junto con el trabajo de ICM y dos integraciones piloto.
       <strong>M1 es $2,000</strong>, más que nuestro primer borrador, porque su alcance creció: además del tooling open-source
       (Slither, Aderyn, fuzzing) y el threat model publicado, ahora financia detección y alertas de fallos en el

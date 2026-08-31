@@ -17,7 +17,7 @@ export interface BlogPost {
 export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "kya-know-your-agent-tier-5",
-    date: "2026-08-26",
+    date: "2026-08-31",
     author: {
       name: "Monserrat Mendoza",
       role: { en: "Co-founder, Product & Design", es: "Co-founder, Producto y Diseño" },
