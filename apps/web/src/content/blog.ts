@@ -16,6 +16,72 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "kya-know-your-agent-tier-5",
+    date: "2026-08-26",
+    author: {
+      name: "Monserrat Mendoza",
+      role: { en: "Co-founder, Product & Design", es: "Co-founder, Producto y Diseño" },
+    },
+    readMinutes: 4,
+    category: "DEEP DIVE",
+    title: {
+      en: "Know Your Agent: Verifying AI Agents Without Losing Accountability",
+      es: "Know Your Agent: Verificar Agentes de IA Sin Perder la Responsabilidad",
+    },
+    excerpt: {
+      en: "An autonomous AI agent moving real capital needs to prove it's not an anonymous script, but most compliance tooling wasn't built for that. Here's how KUMPLY's Tier 5 (KYA) ties an agent's on-chain identity to a KYB-verified, legally accountable owner, and what's shipped today versus what's still roadmap.",
+      es: "Un agente de IA autónomo moviendo capital real necesita probar que no es un script anónimo, pero la mayoría del tooling de compliance no fue pensado para eso. Así ata KUMPLY el Tier 5 (KYA) la identidad on-chain de un agente a un dueño verificado con KYB, legalmente responsable, y qué está en producción hoy frente a lo que sigue siendo roadmap.",
+    },
+    bodyHtml: {
+      en: `
+<p>Agentic DeFi is arriving: autonomous market makers, AI portfolio managers, on-chain agents holding real budgets. Every protocol that lets an agent touch real capital will need to answer the same question: is this a trusted, bounded agent, or an anonymous script? Today, there's no composable on-chain compliance rail for that distinction.</p>
+
+<h2>What KYA actually verifies</h2>
+
+<p>KYA (Know Your Agent) is KUMPLY's Tier 5 attestation. It doesn't try to identify the agent itself as a legal person - agents aren't legal persons. What it verifies is the chain of accountability behind it: a Tier 5 credential is tied to a Tier 4 (KYB) verified owner, a business or individual that already went through business verification. If the agent acts, the accountability chains upward to that owner. That's the actual mechanism: not "trust the agent," but "know who answers for the agent."</p>
+
+<h2>What's live today</h2>
+
+<p>The core mechanism is live: any contract can check an address's tier and expiry with a single <code>verify(address)</code> call, or pay for a stronger read via <code>checkCompliance(address)</code>, a payable function that's fully implemented in AttestationStore on both Fuji and Mainnet C-Chain. That fee is currently set to zero on both networks. It's real, tested code, not a promise - but it's priced at zero while we're in beta, not because the metering doesn't exist yet.</p>
+
+<p>You can see the mechanism in action without a wallet: the <a href="https://kumply.xyz/demo" target="_blank" rel="noopener noreferrer">interactive demo</a> runs three scenarios against real attestations on the network of your choice, including an agent marketplace scenario - the exact context where a Tier 5 check would decide whether an agent can execute.</p>
+
+<h2>What's roadmap, not shipped</h2>
+
+<p>Two things worth being precise about, since it's easy to round "planned" up to "live" when describing your own roadmap. First, deeper agent-specific verification - model fingerprinting, behavior bounds, liveness checks - lives in a planned <code>AgentRegistry.sol</code> extension, scoped for Q3 2026. It doesn't exist in the contracts yet. Second, per-agent payment standards like x402 are part of where this is heading, not something running in production today. Tier 5 attestation and the compliance check are real; automated micropayment rails on top of it are still ahead of us.</p>
+
+<h2>Why "first" needs a qualifier</h2>
+
+<p>KUMPLY isn't the first project building agent identity on Avalanche. Kite AI's Agent Passport, live on its own Avalanche L1, also gives agents a persistent cryptographic identity - by design pseudonymous, with no KYB behind it. What we believe is actually new: tying that on-chain identity to a KYB-verified, legally accountable owner. To our knowledge, KUMPLY is the first Avalanche L1, and the first EVM compliance layer, built specifically for that link - not for agent identity in general.</p>
+
+<p>That distinction matters more than the "first" itself. An agent with a pseudonymous passport can prove it's consistently the same agent. A Tier 5 agent can prove that, and prove who's legally on the hook if it isn't.</p>
+`,
+      es: `
+<p>Las DeFi agénticas están llegando: market makers autónomos, gestores de portafolio con IA, agentes on-chain manejando presupuestos reales. Todo protocolo que deje a un agente tocar capital real va a necesitar responder la misma pregunta: ¿es un agente confiable y acotado, o un script anónimo? Hoy no existe ningún riel de compliance componible on-chain para esa distinción.</p>
+
+<h2>Qué verifica realmente KYA</h2>
+
+<p>KYA (Know Your Agent) es la attestation Tier 5 de KUMPLY. No intenta identificar al agente en sí como persona legal - los agentes no son personas legales. Lo que verifica es la cadena de responsabilidad detrás de él: una credencial Tier 5 está ligada a un dueño verificado con Tier 4 (KYB), una empresa o individuo que ya pasó por verificación empresarial. Si el agente actúa, la responsabilidad encadena hacia arriba, hasta ese dueño. Ese es el mecanismo real: no "confía en el agente", sino "sabe quién responde por el agente".</p>
+
+<h2>Qué está en vivo hoy</h2>
+
+<p>El mecanismo central está en vivo: cualquier contrato puede consultar el tier y la expiración de una dirección con una sola llamada <code>verify(address)</code>, o pagar por una lectura más fuerte vía <code>checkCompliance(address)</code>, una función pagable que está completamente implementada en AttestationStore tanto en Fuji como en Mainnet C-Chain. Ese fee está fijado en cero en ambas redes hoy. Es código real, probado, no una promesa - pero está en cero mientras estamos en beta, no porque el medidor todavía no exista.</p>
+
+<p>Podés ver el mecanismo funcionando sin wallet: el <a href="https://kumply.xyz/demo" target="_blank" rel="noopener noreferrer">demo interactivo</a> corre tres escenarios contra attestations reales en la red que elijas, incluyendo un escenario de marketplace de agentes - justo el contexto donde una verificación Tier 5 decidiría si un agente puede ejecutar.</p>
+
+<h2>Qué es roadmap, no está enviado</h2>
+
+<p>Dos cosas vale la pena precisar, porque es fácil redondear "planeado" hacia "en vivo" cuando describís tu propio roadmap. Primero, la verificación específica de agentes más profunda - huella del modelo, límites de comportamiento, checks de liveness - vive en una extensión planeada, <code>AgentRegistry.sol</code>, programada para Q3 2026. Todavía no existe en los contratos. Segundo, los estándares de pago por agente como x402 son parte de hacia dónde va esto, no algo corriendo en producción hoy. La attestation Tier 5 y el check de compliance son reales; los rieles de micropago automatizado encima de eso todavía están por delante.</p>
+
+<h2>Por qué "primero" necesita un matiz</h2>
+
+<p>KUMPLY no es el primer proyecto construyendo identidad de agentes en Avalanche. El Agent Passport de Kite AI, en vivo en su propia L1 de Avalanche, también le da a los agentes una identidad criptográfica persistente - por diseño pseudónima, sin KYB detrás. Lo que creemos que sí es nuevo: atar esa identidad on-chain a un dueño verificado con KYB, legalmente responsable. Hasta donde sabemos, KUMPLY es la primera L1 de Avalanche, y la primera capa de compliance EVM, construida específicamente para ese vínculo - no para identidad de agentes en general.</p>
+
+<p>Esa distinción importa más que el "primero" en sí. Un agente con un passport pseudónimo puede probar que es consistentemente el mismo agente. Un agente Tier 5 puede probar eso, y probar quién responde legalmente si no lo es.</p>
+`,
+    },
+  },
+  {
     slug: "kyc-composability-ai-agents",
     date: "2026-08-18",
     author: {
