@@ -599,6 +599,9 @@ export const DECK_HTML = `
       before. Six months of runway, not twelve, because this is a twelve-week programme and we would rather return
       unspent scope than pre-buy a subscription for a product still proving demand. Tier-4 <strong>KYB is Enterprise-only
       and quoted per customer; that quote is pending</strong>, and we will re-scope against it rather than pad now.
+      Unlike the recurring identity-verification and hardening costs this grant is designed to cover, M2's $1,000
+      incorporation fee is a one-time cost we can self-fund if needed - it would come out of runway we'd rather put
+      elsewhere, delaying other non-critical spend, not blocking the milestone.
       M3 covers the written Mexican fintech legal opinion, IMPI trademark registration, and cold-key
       treasury setup before any fee is switched on. If the legal opinion or IMPI trademark costs turn out not to be
       grant-eligible, that portion of M3 gets reassigned to extending M1's security scope instead - the milestone
@@ -1088,6 +1091,9 @@ export const DECK_HTML_ES = `
       runway, no doce, porque este es un programa de doce semanas y preferimos devolver alcance sin usar que prepagar una
       suscripción para un producto que todavía está probando demanda. El KYB Tier-4 es <strong>solo Enterprise y se cotiza
       por cliente; esa cotización está pendiente</strong>, y re-acotaremos contra ella en vez de rellenar ahora.
+      A diferencia de los costos recurrentes de verificación de identidad y hardening que este grant está diseñado
+      para cubrir, los $1,000 de incorporación en M2 son un gasto único que podemos autofinanciar si hace falta -
+      saldría de runway que preferiríamos usar en otra cosa, retrasando gasto no crítico, no bloqueando el milestone.
       M3 cubre la opinión legal fintech mexicana por escrito, el registro de marca ante el IMPI, y la configuración
       de treasury con cold-key antes de activar cualquier comisión. Si la opinión legal o el registro de marca ante
       el IMPI resultan no ser elegibles para el grant, esa porción de M3 se reasigna a extender el alcance de
