@@ -16,6 +16,164 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "acp99-kyb-gated-consensus-validator-bug",
+    date: "2026-09-07",
+    author: {
+      name: "Giovanny Amador",
+      role: { en: "Co-founder, Technical Lead", es: "Co-founder, Líder Técnico" },
+    },
+    readMinutes: 6,
+    category: "DEEP DIVE",
+    title: {
+      en: "KYB-Gated Consensus: How KumplyValidatorSetManager Works, and the Bug That Almost Broke It",
+      es: "Consenso Gateado por KYB: Cómo Funciona KumplyValidatorSetManager, y el Bug Que Casi lo Rompe",
+    },
+    excerpt: {
+      en: "Every validator on KUMPLY's Compliance L1 needs a live Tier-4 KYB attestation to join consensus, and loses its seat automatically the moment it expires. Here's how that gate actually works, plus a bug in the ACP-99 conversion logic that would have permanently blocked the L1 from ever activating, caught by comparing our code against Ava Labs' own reference implementation.",
+      es: "Todo validador en la L1 de Compliance de KUMPLY necesita una attestation Tier-4 (KYB) vigente para entrar al consenso, y pierde su lugar automáticamente en el momento en que expira. Así funciona ese gate en la práctica, más la historia de un bug en la lógica de conversión de ACP-99 que hubiera bloqueado la activación de la L1 para siempre, encontrado al comparar nuestro código contra la implementación de referencia real de Ava Labs.",
+    },
+    bodyHtml: {
+      en: `
+<p>Avalanche's own pitch for institutional adoption keeps coming back to one idea: a chain where every validator is known and KYC'd. Evergreen Subnets embed that at the chain level through permissioning and allow-lists. KUMPLY's Compliance L1 takes the same idea further and enforces it in contract code, not policy: <code>KumplyValidatorSetManager</code> (ACP-99) requires a live Tier-4 (KYB) attestation to hold a seat in the validator set, checked on registration and re-checked continuously after.</p>
+
+<h2>How the gate actually works</h2>
+
+<p>The rule is a single immutable constant, <code>REQUIRED_VALIDATOR_TIER == 4</code>. Registering as a validator means the contract calls into <code>AttestationStore</code> and confirms the candidate address holds a Tier 4 (Business/KYB) credential that hasn't expired. No credential, no seat. The gate isn't just at the door, either: if a validator's KYB attestation expires while it's already active, anyone, not just an admin, can call <code>disableExpiredValidator()</code> and purge it from the set. Self-healing, permissionless, no one has to notice and act.</p>
+
+<p>Two more mechanics keep the set stable while that's happening: churn is capped at <code>MAX_CHURN_PER_PERIOD == 20</code> validator changes per rolling <code>CHURN_PERIOD == 1 day</code>, and no single validator can hold more than <code>MAX_VALIDATOR_WEIGHT_BPS == 2000</code> (20%) of total stake weight. And the contract is <code>Pausable</code> in a specific, deliberate way: pausing blocks new <code>initiate</code> operations (registrations, removals starting) but never blocks <code>complete</code> operations, because those are settlement, and settlement should never get stuck mid-flight just because something else triggered a pause.</p>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 190" width="100%" role="img" aria-label="Diagram: a Tier 4 KYB-verified institution registers as a validator through the Tier 4 gate, becomes an active validator, and if its attestation expires, anyone can permissionlessly purge it from the set">
+<rect x="8" y="45" width="190" height="90" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">TIER 4 &#183; KYB</text>
+<text x="26" y="98" font-size="16" font-weight="800" fill="var(--text-primary)">Institution</text>
+<text x="26" y="118" font-size="11" fill="var(--text-tertiary)">verified owner</text>
+<rect x="255" y="45" width="190" height="90" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="273" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">ACP-99 GATE</text>
+<text x="273" y="98" font-size="16" font-weight="800" fill="var(--text-primary)">Active validator</text>
+<text x="273" y="118" font-size="11" fill="var(--text-tertiary)">in consensus set</text>
+<rect x="502" y="45" width="190" height="90" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="520" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PERMISSIONLESS</text>
+<text x="520" y="98" font-size="16" font-weight="800" fill="var(--text-primary)">Removed</text>
+<text x="520" y="118" font-size="11" fill="var(--text-tertiary)">anyone can trigger</text>
+<text x="326" y="25" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="10" letter-spacing="0.5" fill="var(--text-secondary)">register (tier == 4 required)</text>
+<path d="M200 90 L253 90" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#acp99-arrow1)"/>
+<text x="573" y="25" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="10" letter-spacing="0.5" fill="var(--text-secondary)">attestation expires</text>
+<path d="M447 90 L500 90" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#acp99-arrow2)"/>
+<defs>
+<marker id="acp99-arrow1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="acp99-arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
+
+<h2>Tested, not just written</h2>
+
+<p><code>KumplyValidatorSetManager.test.ts</code> has grown to 50 dedicated tests today, covering the full two-phase registration and removal lifecycle, weight updates, the 20-per-day churn cap, and pausable settlement behavior. Across the whole contracts package, that's 110 tests passing (43 for <code>AttestationStore</code>, 17 for <code>ComplianceGate</code>, 50 here), verified live before writing this.</p>
+
+<h2>The bug we found comparing against the real thing</h2>
+
+<p>ACP-99 validator sets activate through a P-Chain conversion message. Building the hash for that message means packing several fields together in an exact byte layout, and Avalanche's reference implementation, <code>icm-contracts</code>, defines what that layout has to be. Comparing KUMPLY's <code>computeConversionID</code> function against that reference directly (not against its own docs) found a real mismatch: KUMPLY's version packed the validator manager's address as raw 20 bytes with no length prefix. The reference implementation packs a <code>uint32(20)</code> length prefix immediately before that same address. Four bytes, in the wrong place, and the resulting hash would never match a genuine P-Chain conversionID. Not a cosmetic bug: <code>initializeValidatorSet</code> would have reverted against every real conversion message, forever, and the L1 could never have activated.</p>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 200" width="100%" role="img" aria-label="Diagram: the buggy pre-image packs the manager address with no length prefix, while the fixed version matching Ava Labs' reference implementation inserts a uint32(20) length prefix immediately before the address">
+<text x="8" y="20" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" fill="var(--accent)">BEFORE (buggy)</text>
+<rect x="8" y="35" width="90" height="40" fill="var(--bg-card)" stroke="var(--border)"/><text x="53" y="59" text-anchor="middle" font-size="10" fill="var(--text-secondary)">codec</text>
+<rect x="98" y="35" width="110" height="40" fill="var(--bg-card)" stroke="var(--border)"/><text x="153" y="59" text-anchor="middle" font-size="10" fill="var(--text-secondary)">subnetID</text>
+<rect x="208" y="35" width="130" height="40" fill="var(--bg-card)" stroke="var(--border)"/><text x="273" y="59" text-anchor="middle" font-size="10" fill="var(--text-secondary)">blockchainID</text>
+<rect x="338" y="35" width="160" height="40" stroke-dasharray="4 3" fill="none" stroke="var(--text-tertiary)"/><text x="418" y="59" text-anchor="middle" font-size="9" fill="var(--text-tertiary)">missing prefix</text>
+<rect x="498" y="35" width="130" height="40" fill="var(--bg-card)" stroke="var(--border)"/><text x="563" y="59" text-anchor="middle" font-size="9" fill="var(--text-secondary)">managerAddress</text>
+<text x="8" y="115" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" fill="var(--accent)">AFTER (matches icm-contracts)</text>
+<rect x="8" y="130" width="90" height="40" fill="var(--bg-card)" stroke="var(--border)"/><text x="53" y="154" text-anchor="middle" font-size="10" fill="var(--text-secondary)">codec</text>
+<rect x="98" y="130" width="110" height="40" fill="var(--bg-card)" stroke="var(--border)"/><text x="153" y="154" text-anchor="middle" font-size="10" fill="var(--text-secondary)">subnetID</text>
+<rect x="208" y="130" width="130" height="40" fill="var(--bg-card)" stroke="var(--border)"/><text x="273" y="154" text-anchor="middle" font-size="10" fill="var(--text-secondary)">blockchainID</text>
+<rect x="338" y="130" width="70" height="40" fill="var(--accent-glow, rgba(232,65,66,0.15))" stroke="var(--accent)"/><text x="373" y="149" text-anchor="middle" font-size="9" fill="var(--accent)">uint32</text><text x="373" y="161" text-anchor="middle" font-size="9" fill="var(--accent)">(20)</text>
+<rect x="408" y="130" width="130" height="40" fill="var(--bg-card)" stroke="var(--border)"/><text x="473" y="154" text-anchor="middle" font-size="9" fill="var(--text-secondary)">managerAddress</text>
+</svg>
+</figure>
+
+<h2>Why 27/27 passing tests didn't catch it</h2>
+
+<p>At the time this was found, <code>KumplyValidatorSetManager.test.ts</code> had 27 tests, and all 27 passed, every time. That wasn't reassuring once we understood why: the test suite's mock Warp messenger lets a test inject any payload directly, so a test that builds its mock conversion message using KUMPLY's own (buggy) packing function will always agree with itself. Nothing in the suite ever called the real <code>icm-contracts</code> packing function to build the injected message, so the mismatch against reality was invisible from the inside. The fix went in two places at once: the pre-image in <code>ValidatorMessages.sol</code>, and the test suite's own off-chain re-implementation of that same packing, which had the identical gap.</p>
+
+<p>Fixed, redeployed to Fuji, Snowtrace-verified: <a href="https://testnet.snowtrace.io/address/0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64" target="_blank" rel="noopener noreferrer"><code>0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64</code></a>. Full writeup, including a second, lower-severity finding from the same pass: <a href="https://github.com/kumplyprotocol/Kumply/blob/main/docs/audits/avalanche-ecosystem-audit-2026-08-17.md" target="_blank" rel="noopener noreferrer">docs/audits</a>.</p>
+
+<h2>Where this actually stands, September 2026</h2>
+
+<p>Honestly: the L1 is registered on Fuji with its ACP-99 validator manager live and verified, and validator activation is still in progress, not a running consensus set with real institutional validators yet. What's real today is the mechanism and the demand pattern behind it, not a live customer list. Avalanche is already positioning Evergreen Subnets around exactly this idea for institutions moving into tokenized funds, and KUMPLY's validator gate is that same idea enforced as code instead of chain-level policy. Founding validator slots are open to any KYB-verified institution; none are confirmed and named publicly yet, and this post won't pretend otherwise.</p>
+`,
+      es: `
+<p>El propio argumento de Avalanche para adopción institucional vuelve siempre a la misma idea: una cadena donde cada validador es conocido y pasó KYC. Los Evergreen Subnets meten eso a nivel de cadena con permissioning y allow-lists. La Compliance L1 de KUMPLY lleva la misma idea más lejos y la aplica en código de contrato, no en política: <code>KumplyValidatorSetManager</code> (ACP-99) exige una attestation Tier-4 (KYB) vigente para tener un lugar en el validator set, verificada al registrarse y revisada continuamente después.</p>
+
+<h2>Cómo funciona el gate en la práctica</h2>
+
+<p>La regla es una sola constante inmutable, <code>REQUIRED_VALIDATOR_TIER == 4</code>. Registrarse como validador significa que el contrato llama a <code>AttestationStore</code> y confirma que la dirección candidata tiene una credencial Tier 4 (Empresarial/KYB) vigente, sin expirar. Sin credencial, no hay lugar. Y el gate no es solo en la entrada: si la attestation KYB de un validador ya activo expira, cualquiera, no solo un admin, puede llamar a <code>disableExpiredValidator()</code> y purgarlo del set. Self-healing, permissionless, nadie tiene que notarlo y actuar.</p>
+
+<p>Dos mecanismos más mantienen el set estable mientras eso pasa: el churn está limitado a <code>MAX_CHURN_PER_PERIOD == 20</code> cambios de validador por <code>CHURN_PERIOD == 1 día</code> móvil, y ningún validador puede tener más de <code>MAX_VALIDATOR_WEIGHT_BPS == 2000</code> (20%) del peso total de stake. Y el contrato es <code>Pausable</code> de una forma específica y deliberada: pausar bloquea las operaciones <code>initiate</code> nuevas (registros, remociones que arrancan) pero nunca bloquea las operaciones <code>complete</code>, porque esas son settlement, y el settlement no debería quedar colgado a mitad de camino solo porque algo más disparó una pausa.</p>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 190" width="100%" role="img" aria-label="Diagrama: una institución verificada con Tier 4 KYB se registra como validador a través del gate Tier 4, se vuelve validador activo, y si su attestation expira, cualquiera puede purgarla del set de forma permissionless">
+<rect x="8" y="45" width="190" height="90" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">TIER 4 &#183; KYB</text>
+<text x="26" y="98" font-size="16" font-weight="800" fill="var(--text-primary)">Institución</text>
+<text x="26" y="118" font-size="11" fill="var(--text-tertiary)">dueño verificado</text>
+<rect x="255" y="45" width="190" height="90" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="273" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">GATE ACP-99</text>
+<text x="273" y="98" font-size="16" font-weight="800" fill="var(--text-primary)">Validador activo</text>
+<text x="273" y="118" font-size="11" fill="var(--text-tertiary)">en el set de consenso</text>
+<rect x="502" y="45" width="190" height="90" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="520" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PERMISSIONLESS</text>
+<text x="520" y="98" font-size="16" font-weight="800" fill="var(--text-primary)">Removido</text>
+<text x="520" y="118" font-size="11" fill="var(--text-tertiary)">cualquiera lo dispara</text>
+<text x="326" y="25" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="10" letter-spacing="0.5" fill="var(--text-secondary)">registro (exige tier == 4)</text>
+<path d="M200 90 L253 90" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#acp99-arrow1-es)"/>
+<text x="573" y="25" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="10" letter-spacing="0.5" fill="var(--text-secondary)">expira la attestation</text>
+<path d="M447 90 L500 90" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#acp99-arrow2-es)"/>
+<defs>
+<marker id="acp99-arrow1-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="acp99-arrow2-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
+
+<h2>Probado, no solo escrito</h2>
+
+<p><code>KumplyValidatorSetManager.test.ts</code> ya creció a 50 tests dedicados hoy, cubriendo el ciclo de vida completo de dos fases de registro y remoción, actualizaciones de peso, el límite de churn de 20 por día, y el comportamiento de settlement bajo pausa. En todo el paquete de contratos, son 110 tests pasando (43 de <code>AttestationStore</code>, 17 de <code>ComplianceGate</code>, 50 acá), verificado en vivo antes de escribir esto.</p>
+
+<h2>El bug que encontramos comparando contra el original</h2>
+
+<p>Los validator sets de ACP-99 se activan a través de un mensaje de conversión de la P-Chain. Armar el hash de ese mensaje significa empaquetar varios campos juntos en un layout de bytes exacto, y la implementación de referencia de Avalanche, <code>icm-contracts</code>, define cuál tiene que ser ese layout. Comparar la función <code>computeConversionID</code> de KUMPLY directamente contra esa referencia (no contra su propia documentación) encontró un desajuste real: la versión de KUMPLY empaquetaba la dirección del validator manager como 20 bytes crudos, sin prefijo de longitud. La implementación de referencia empaqueta un prefijo de longitud <code>uint32(20)</code> justo antes de esa misma dirección. Cuatro bytes, en el lugar equivocado, y el hash resultante nunca iba a coincidir con un conversionID real de la P-Chain. No era un bug cosmético: <code>initializeValidatorSet</code> hubiera revertido contra cualquier mensaje de conversión real, para siempre, y la L1 nunca hubiera podido activarse.</p>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 200" width="100%" role="img" aria-label="Diagrama: el pre-image con el bug empaqueta la direccion del manager sin prefijo de longitud, mientras que la version corregida, igual a la implementacion de referencia de Ava Labs, inserta un prefijo uint32(20) justo antes de la direccion">
+<text x="8" y="20" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" fill="var(--accent)">ANTES (con bug)</text>
+<rect x="8" y="35" width="90" height="40" fill="var(--bg-card)" stroke="var(--border)"/><text x="53" y="59" text-anchor="middle" font-size="10" fill="var(--text-secondary)">codec</text>
+<rect x="98" y="35" width="110" height="40" fill="var(--bg-card)" stroke="var(--border)"/><text x="153" y="59" text-anchor="middle" font-size="10" fill="var(--text-secondary)">subnetID</text>
+<rect x="208" y="35" width="130" height="40" fill="var(--bg-card)" stroke="var(--border)"/><text x="273" y="59" text-anchor="middle" font-size="10" fill="var(--text-secondary)">blockchainID</text>
+<rect x="338" y="35" width="160" height="40" stroke-dasharray="4 3" fill="none" stroke="var(--text-tertiary)"/><text x="418" y="59" text-anchor="middle" font-size="9" fill="var(--text-tertiary)">falta el prefijo</text>
+<rect x="498" y="35" width="130" height="40" fill="var(--bg-card)" stroke="var(--border)"/><text x="563" y="59" text-anchor="middle" font-size="9" fill="var(--text-secondary)">managerAddress</text>
+<text x="8" y="115" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" fill="var(--accent)">DESPUES (igual a icm-contracts)</text>
+<rect x="8" y="130" width="90" height="40" fill="var(--bg-card)" stroke="var(--border)"/><text x="53" y="154" text-anchor="middle" font-size="10" fill="var(--text-secondary)">codec</text>
+<rect x="98" y="130" width="110" height="40" fill="var(--bg-card)" stroke="var(--border)"/><text x="153" y="154" text-anchor="middle" font-size="10" fill="var(--text-secondary)">subnetID</text>
+<rect x="208" y="130" width="130" height="40" fill="var(--bg-card)" stroke="var(--border)"/><text x="273" y="154" text-anchor="middle" font-size="10" fill="var(--text-secondary)">blockchainID</text>
+<rect x="338" y="130" width="70" height="40" fill="var(--accent-glow, rgba(232,65,66,0.15))" stroke="var(--accent)"/><text x="373" y="149" text-anchor="middle" font-size="9" fill="var(--accent)">uint32</text><text x="373" y="161" text-anchor="middle" font-size="9" fill="var(--accent)">(20)</text>
+<rect x="408" y="130" width="130" height="40" fill="var(--bg-card)" stroke="var(--border)"/><text x="473" y="154" text-anchor="middle" font-size="9" fill="var(--text-secondary)">managerAddress</text>
+</svg>
+</figure>
+
+<h2>Por qué 27/27 tests pasando no lo agarraron</h2>
+
+<p>Cuando esto se encontró, <code>KumplyValidatorSetManager.test.ts</code> tenía 27 tests, y los 27 pasaban, siempre. Eso no tranquilizaba nada una vez que entendimos por qué: el mock del Warp messenger de la suite de tests deja inyectar cualquier payload directamente, así que un test que arma su mensaje de conversión mock usando la propia función de empaquetado de KUMPLY (con el bug) siempre va a coincidir consigo mismo. Nada en la suite llamaba nunca a la función real de empaquetado de <code>icm-contracts</code> para armar el mensaje inyectado, así que el desajuste contra la realidad era invisible desde adentro. El fix entró en dos lugares a la vez: el pre-image en <code>ValidatorMessages.sol</code>, y la reimplementación off-chain de ese mismo empaquetado en la suite de tests, que tenía el mismo hueco idéntico.</p>
+
+<p>Arreglado, redesplegado en Fuji, verificado en Snowtrace: <a href="https://testnet.snowtrace.io/address/0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64" target="_blank" rel="noopener noreferrer"><code>0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64</code></a>. Reporte completo, incluyendo un segundo hallazgo de menor severidad de la misma pasada: <a href="https://github.com/kumplyprotocol/Kumply/blob/main/docs/audits/avalanche-ecosystem-audit-2026-08-17.md" target="_blank" rel="noopener noreferrer">docs/audits</a>.</p>
+
+<h2>Dónde queda esto realmente, septiembre 2026</h2>
+
+<p>Con honestidad: la L1 está registrada en Fuji con su validator manager ACP-99 en vivo y verificado, y la activación de validadores sigue en progreso, no es todavía un set de consenso corriendo con validadores institucionales reales. Lo que es real hoy es el mecanismo y el patrón de demanda detrás de él, no una lista de clientes en vivo. Avalanche ya está posicionando los Evergreen Subnets alrededor de exactamente esta idea para instituciones moviéndose hacia fondos tokenizados, y el gate de validadores de KUMPLY es esa misma idea aplicada como código en vez de política a nivel de cadena. Los slots de validador fundador están abiertos para cualquier institución verificada con KYB; ninguno está confirmado ni nombrado públicamente todavía, y este post no va a fingir lo contrario.</p>
+`,
+    },
+  },
+  {
     slug: "kya-know-your-agent-tier-5",
     date: "2026-08-31",
     author: {
