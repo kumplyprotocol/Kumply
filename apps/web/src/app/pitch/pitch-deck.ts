@@ -485,7 +485,7 @@ export const DECK_HTML = `
       <div class="cell">
         <h3>Avalanche is already where institutions go</h3>
         <p>Evergreen subnets embed KYC/KYB at the chain level through validator permissioning and allow-lists, and
-        Franklin Templeton and Hamilton Lane have explored Avalanche deployments for tokenised funds. The stated appeal
+        Franklin Templeton and KKR have already launched tokenised funds on Avalanche. The stated appeal
         is a chain <em>where every validator is known and KYC'd</em>. That is precisely what our L1 enforces in
         contract code rather than by policy.</p>
       </div>
@@ -977,7 +977,7 @@ export const DECK_HTML_ES = `
       <div class="cell">
         <h3>Avalanche ya es donde van las instituciones</h3>
         <p>Los subnets Evergreen incrustan KYC/KYB a nivel de cadena mediante permisionamiento de validadores y allow-lists, y
-        Franklin Templeton y Hamilton Lane han explorado despliegues en Avalanche para fondos tokenizados. El atractivo declarado
+        Franklin Templeton y KKR ya lanzaron fondos tokenizados en Avalanche. El atractivo declarado
         es una cadena <em>donde cada validador es conocido y pasó KYC</em>. Eso es exactamente lo que nuestra L1 exige en
         código de contrato en vez de por política.</p>
       </div>
