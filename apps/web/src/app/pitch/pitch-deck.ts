@@ -380,7 +380,7 @@ export const DECK_HTML = `
         <h3>ACP-99 ValidatorSetManager, KYB-gated</h3>
         <p>Our <code>KumplyValidatorSetManager</code> implements the full two-phase validator lifecycle with
         Avalanche-codec Warp payloads - and adds a requirement we have not seen on another L1: validators must hold a live
-        Tier-4 attestation. 27 dedicated tests.</p>
+        Tier-4 attestation. 50 dedicated tests.</p>
       </div>
       <div class="cell">
         <h3>ACP-77 sovereign L1</h3>
@@ -872,7 +872,7 @@ export const DECK_HTML_ES = `
         <h3>ACP-99 ValidatorSetManager, con gating KYB</h3>
         <p>Nuestro <code>KumplyValidatorSetManager</code> implementa el ciclo de vida completo de dos fases para validadores con
         payloads Warp en el codec de Avalanche - y agrega un requisito que no hemos visto en otra L1: los validadores deben mantener
-        una attestation Tier-4 vigente. 27 tests dedicados.</p>
+        una attestation Tier-4 vigente. 50 tests dedicados.</p>
       </div>
       <div class="cell">
         <h3>L1 soberana ACP-77</h3>
