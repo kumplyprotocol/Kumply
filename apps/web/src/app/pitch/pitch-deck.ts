@@ -539,7 +539,7 @@ export const DECK_HTML = `
         <img class="avatar" src="/pitch-monserrat.jpg" alt="Monserrat Mendoza" width="56" height="56" />
         <div class="founder-info">
           <h3>Monserrat Mendoza - Dev Lead</h3>
-          <p>Frontend UX/UI and Backend developer. ETH Uruguay 2025 winner. Avalanche Team1 Collaborator (T1-040-314).
+          <p>Frontend UX/UI and Backend developer. Avalanche Team1 Collaborator (T1-040-314). Also a hackathon winner outside Avalanche - ETH Uruguay 2025.
             <a href="https://github.com/M0nsxx">github.com/M0nsxx</a> · <a href="https://x.com/smithserrat">@smithserrat</a></p>
         </div>
       </div>
@@ -1043,7 +1043,7 @@ export const DECK_HTML_ES = `
         <img class="avatar" src="/pitch-monserrat.jpg" alt="Monserrat Mendoza" width="56" height="56" />
         <div class="founder-info">
           <h3>Monserrat Mendoza - Dev Lead</h3>
-          <p>Frontend UX/UI and Backend developer. Ganadora de ETH Uruguay 2025. Avalanche Team1 Collaborator (T1-040-314).
+          <p>Frontend UX/UI and Backend developer. Avalanche Team1 Collaborator (T1-040-314). Also a hackathon winner outside Avalanche - ETH Uruguay 2025.
             <a href="https://github.com/M0nsxx">github.com/M0nsxx</a> · <a href="https://x.com/smithserrat">@smithserrat</a></p>
         </div>
       </div>
