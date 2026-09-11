@@ -156,10 +156,12 @@ export function Navbar() {
             <div className="navbar__lang">
               <button
                 onClick={() => switchLocale('en')}
+                disabled={isPending}
                 className={`navbar__lang-btn ${currentLang === 'en' ? 'navbar__lang-btn--active' : ''}`}
               >EN</button>
               <button
                 onClick={() => switchLocale('es')}
+                disabled={isPending}
                 className={`navbar__lang-btn ${currentLang === 'es' ? 'navbar__lang-btn--active' : ''}`}
               >ES</button>
             </div>
@@ -214,10 +216,12 @@ export function Navbar() {
             <div className="navbar__lang navbar__mobile-toplang">
               <button
                 onClick={() => switchLocale('en')}
+                disabled={isPending}
                 className={`navbar__lang-btn ${currentLang === 'en' ? 'navbar__lang-btn--active' : ''}`}
               >EN</button>
               <button
                 onClick={() => switchLocale('es')}
+                disabled={isPending}
                 className={`navbar__lang-btn ${currentLang === 'es' ? 'navbar__lang-btn--active' : ''}`}
               >ES</button>
             </div>
@@ -295,10 +299,12 @@ export function Navbar() {
           <div className="navbar__mobile-lang">
             <button
               onClick={() => { switchLocale('en'); closeMenu(); }}
+              disabled={isPending}
               className={`navbar__lang-btn navbar__lang-btn--lg ${currentLang === 'en' ? 'navbar__lang-btn--active' : ''}`}
             >EN</button>
             <button
               onClick={() => { switchLocale('es'); closeMenu(); }}
+              disabled={isPending}
               className={`navbar__lang-btn navbar__lang-btn--lg ${currentLang === 'es' ? 'navbar__lang-btn--active' : ''}`}
             >ES</button>
           </div>
