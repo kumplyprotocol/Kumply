@@ -128,11 +128,20 @@ here) - use the driver above instead.
   uses `localePrefix: 'never'` - there is no `/es/...` URL. To load a
   page pre-set to Spanish, use `--cookie "NEXT_LOCALE=es"`, not a URL
   segment.
-- **Buttons only match by exact visible text**, and the site renders
-  both a desktop and a mobile nav with the same button labels (`EN`,
-  `ES`, ...) - `driver.mjs` clicks `.first()` match, which is the
-  desktop one at the default 1280x900 viewport this driver uses. If
-  you resize the viewport, check which one is actually visible.
+- **`--click` matches the accessible name, not necessarily the visible
+  text** - if a button has an `aria-label`, that overrides the visible
+  text as its accessible name and `--click` has to use the label, not
+  what's printed on the button. Hit this on `/pitch`'s language toggle:
+  it renders "ES"/"EN" but carries `aria-label="Cambiar a español"` /
+  `"Switch to English"`, so `--click "ES"` times out there even though
+  `--click "ES"` works fine on the main site's navbar (no aria-label
+  override there). If a click times out, check the button's actual
+  `aria-label` in the source before assuming the visible text is wrong.
+- **The site also renders both a desktop and a mobile nav with the
+  same button labels** (`EN`, `ES`, ...) - `driver.mjs` clicks
+  `.first()` match, which is the desktop one at the default 1280x900
+  viewport this driver uses. If you resize the viewport, check which
+  one is actually visible.
 
 ## Troubleshooting
 
@@ -142,4 +151,4 @@ here) - use the driver above instead.
 | `apt-get download` prints `Unable to locate package X` | Package name changed for this base image - see the `t64` Gotcha above. |
 | `No Playwright Chromium cache at ~/.cache/ms-playwright` | Run `npx --yes playwright install chromium` (Prerequisites). |
 | `Cannot find package 'playwright'` when running `node driver.mjs` from elsewhere | Playwright is installed local to `.claude/skills/run-web/`, and Node resolves relative to the *script's* location - this should already work regardless of your cwd. If it doesn't, re-run the `npm install` from the Prerequisites step inside that exact directory. |
-| Click times out / `getByRole('button', {name: ...})` not found | Text must match exactly (case-sensitive) what's rendered - check the actual label first, e.g. by inspecting `bodyTextSample` from a run with no `--click`. |
+| Click times out / `getByRole('button', {name: ...})` not found | Check the button's `aria-label` in the source first - it overrides visible text as the accessible name (see Gotchas). If there's no `aria-label`, the visible text must match exactly (case-sensitive); inspect `bodyTextSample` from a run with no `--click` to confirm what's actually rendered. |
