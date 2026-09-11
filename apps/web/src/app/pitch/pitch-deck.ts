@@ -531,7 +531,7 @@ export const DECK_HTML = `
         <img class="avatar" src="/pitch-giovanny.jpg" alt="Giovanny Amador" width="56" height="56" />
         <div class="founder-info">
           <h3>Giovanny Amador - Technical lead</h3>
-          <p>Contracts, L1, SDK, infrastructure. ETH Uruguay 2025 winner, 1st place at ETH Mexico Monterrey (Creator Economies track). Avalanche Team1 Collaborator.
+          <p>Contracts, L1, SDK, infrastructure. ETH Uruguay 2025 winner, 1st place at ETH Mexico Monterrey (Creator Economies track). Avalanche Team1 Collaborator (T1-040-127).
             <a href="https://github.com/Eras256">github.com/Eras256</a> · <a href="https://x.com/vaiossx">@vaiossx</a></p>
         </div>
       </div>
@@ -539,7 +539,7 @@ export const DECK_HTML = `
         <img class="avatar" src="/pitch-monserrat.jpg" alt="Monserrat Mendoza" width="56" height="56" />
         <div class="founder-info">
           <h3>Monserrat Mendoza - Design lead</h3>
-          <p>Frontend UX/UI and Backend developer. ETH Uruguay 2025 winner. Avalanche Team1 Collaborator.
+          <p>Frontend UX/UI and Backend developer. ETH Uruguay 2025 winner. Avalanche Team1 Collaborator (T1-040-314).
             <a href="https://github.com/M0nsxx">github.com/M0nsxx</a> · <a href="https://x.com/smithserrat">@smithserrat</a></p>
         </div>
       </div>
@@ -1035,7 +1035,7 @@ export const DECK_HTML_ES = `
         <img class="avatar" src="/pitch-giovanny.jpg" alt="Giovanny Amador" width="56" height="56" />
         <div class="founder-info">
           <h3>Giovanny Amador - Líder técnico</h3>
-          <p>Contratos, L1, SDK, infraestructura. Ganador de ETH Uruguay 2025, 1er lugar en ETH Mexico Monterrey (track Economías de Creadores). Avalanche Team1 Collaborator.
+          <p>Contratos, L1, SDK, infraestructura. Ganador de ETH Uruguay 2025, 1er lugar en ETH Mexico Monterrey (track Economías de Creadores). Avalanche Team1 Collaborator (T1-040-127).
             <a href="https://github.com/Eras256">github.com/Eras256</a> · <a href="https://x.com/vaiossx">@vaiossx</a></p>
         </div>
       </div>
@@ -1043,7 +1043,7 @@ export const DECK_HTML_ES = `
         <img class="avatar" src="/pitch-monserrat.jpg" alt="Monserrat Mendoza" width="56" height="56" />
         <div class="founder-info">
           <h3>Monserrat Mendoza - Líder de diseño</h3>
-          <p>Frontend UX/UI and Backend developer. Ganadora de ETH Uruguay 2025. Avalanche Team1 Collaborator.
+          <p>Frontend UX/UI and Backend developer. Ganadora de ETH Uruguay 2025. Avalanche Team1 Collaborator (T1-040-314).
             <a href="https://github.com/M0nsxx">github.com/M0nsxx</a> · <a href="https://x.com/smithserrat">@smithserrat</a></p>
         </div>
       </div>
