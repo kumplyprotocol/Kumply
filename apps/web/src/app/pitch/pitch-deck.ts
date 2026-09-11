@@ -550,11 +550,11 @@ export const DECK_HTML = `
       traceability demo), shared with the community. Now running a Team1-approved technical workshop on KYA, scheduled
       for September 24, 2026. <strong>Building on Avalanche is what we do, grant or no grant.</strong>
     </p>
-    <p class="note" style="margin-top: 1rem;"><strong>Bus factor, addressed:</strong> all shipped code runs through
-      one founder (Giovanny) today; partnerships, product, and design run through both. M0-M3 are scoped to stay
-      deliverable with one technical contributor. M4 is the funded trigger to bring on a third - not a second -
-      technical contributor: pilot integrations and validator operations are exactly the load that pulls a founder's
-      time toward meetings and away from shipping, so that is where we add hands rather than before it is needed.</p>
+    <p class="note" style="margin-top: 1rem;"><strong>Bus factor, addressed:</strong> all shipped code on this
+      specific repo runs through one founder (Giovanny) today - 162 commits, verifiable in the public repo.
+      Monserrat is the team's Dev Lead: she ships code elsewhere in the broader portfolio, and leads product,
+      design, and business development here. No second engineer on this repo specifically today - flagged plainly
+      rather than implied otherwise.</p>
   </section>
 
   <!-- 11 · Roadmap & funds -->
@@ -1054,12 +1054,11 @@ export const DECK_HTML_ES = `
       trazabilidad agrícola), compartidos con la comunidad. Ahora corriendo un workshop técnico sobre KYA aprobado por
       Team1, programado para el 24 de septiembre de 2026. <strong>Construir en Avalanche es lo que hacemos, con o sin grant.</strong>
     </p>
-    <p class="note" style="margin-top: 1rem;"><strong>Bus factor, resuelto:</strong> todo el código enviado pasa hoy
-      por un solo founder (Giovanny); las partnerships, el producto y el diseño pasan por los dos. M0-M3 están
-      acotados para seguir siendo entregables con un solo contribuidor técnico. M4 es el disparador financiado para
-      sumar a un tercer contribuidor técnico, no un segundo: las integraciones piloto y las operaciones de
-      validadores son exactamente la carga que jala el tiempo de un founder hacia reuniones y lejos de construir,
-      así que ahí es donde sumamos manos, no antes de que haga falta.</p>
+    <p class="note" style="margin-top: 1rem;"><strong>Bus factor, resuelto:</strong> todo el código de este repo
+      específico pasa hoy por un solo founder (Giovanny) - 162 commits, verificable en el repo público. Monserrat es
+      la Dev Lead del equipo: sí escribe código en otros proyectos del portafolio más amplio, y aquí lidera
+      producto, diseño y desarrollo de negocio. Ningún segundo ingeniero en este repo específicamente hoy - señalado
+      con claridad en vez de dar a entender lo contrario.</p>
   </section>
 
   <!-- 11 · Roadmap y fondos -->
