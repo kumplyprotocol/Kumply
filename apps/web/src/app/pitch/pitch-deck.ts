@@ -550,11 +550,11 @@ export const DECK_HTML = `
       traceability demo), shared with the community. Now running a Team1-approved technical workshop on KYA, scheduled
       for September 24, 2026. <strong>Building on Avalanche is what we do, grant or no grant.</strong>
     </p>
-    <p class="note" style="margin-top: 1rem;"><strong>Bus factor, addressed:</strong> today both code and
-      partnerships run through two people, and M0-M3 are scoped to stay deliverable that way. M4 is the funded
-      trigger to bring on a third technical contributor - pilot integrations and validator operations are exactly
-      the load that pulls a founder's time toward meetings and away from shipping, so that is where we add hands
-      rather than before it is needed.</p>
+    <p class="note" style="margin-top: 1rem;"><strong>Bus factor, addressed:</strong> all shipped code runs through
+      one founder (Giovanny) today; partnerships, product, and design run through both. M0-M3 are scoped to stay
+      deliverable with one technical contributor. M4 is the funded trigger to bring on a third - not a second -
+      technical contributor: pilot integrations and validator operations are exactly the load that pulls a founder's
+      time toward meetings and away from shipping, so that is where we add hands rather than before it is needed.</p>
   </section>
 
   <!-- 11 · Roadmap & funds -->
@@ -1054,11 +1054,12 @@ export const DECK_HTML_ES = `
       trazabilidad agrícola), compartidos con la comunidad. Ahora corriendo un workshop técnico sobre KYA aprobado por
       Team1, programado para el 24 de septiembre de 2026. <strong>Construir en Avalanche es lo que hacemos, con o sin grant.</strong>
     </p>
-    <p class="note" style="margin-top: 1rem;"><strong>Bus factor, resuelto:</strong> hoy tanto el código como las
-      partnerships pasan por dos personas, y M0-M3 están acotados para seguir siendo entregables así. M4 es el
-      disparador financiado para sumar a un tercer contribuidor técnico - las integraciones piloto y las operaciones de
-      validadores son exactamente la carga que jala el tiempo de un founder hacia reuniones y lejos de construir, así que
-      ahí es donde sumamos manos, no antes de que haga falta.</p>
+    <p class="note" style="margin-top: 1rem;"><strong>Bus factor, resuelto:</strong> todo el código enviado pasa hoy
+      por un solo founder (Giovanny); las partnerships, el producto y el diseño pasan por los dos. M0-M3 están
+      acotados para seguir siendo entregables con un solo contribuidor técnico. M4 es el disparador financiado para
+      sumar a un tercer contribuidor técnico, no un segundo: las integraciones piloto y las operaciones de
+      validadores son exactamente la carga que jala el tiempo de un founder hacia reuniones y lejos de construir,
+      así que ahí es donde sumamos manos, no antes de que haga falta.</p>
   </section>
 
   <!-- 11 · Roadmap y fondos -->

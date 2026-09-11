@@ -206,7 +206,7 @@ The weakest part of this project is unproven demand (§1.1), so closing it is th
 ## 8. Team & Traction
 
 - **Two co-founders.** Giovanny Amador — technical lead: smart contracts, L1, SDK and infrastructure (authorship visible in the public commit history). Monserrat Mendoza — product, design and content lead; ETH Uruguay 2025 hackathon winner. Both are Team1 Network Collaborators (accepted July 2026).
-- **Bus factor.** Code and partnerships both run through two people today, and M0–M3 (§7) are scoped to stay deliverable at that size. M4 — validator operations plus 2 pilot integrations — is the point where that load stops being absorbable by two founders, and is the funded trigger to bring on a third technical contributor rather than stretching thin before it's needed.
+- **Bus factor.** All shipped code runs through one founder today (Giovanny); partnerships, product, and design run through both. M0–M3 (§7) are scoped to stay deliverable with one technical contributor. M4 is the funded trigger to bring on a third - not a second - because pilot integrations and validator ops pull founder time toward meetings, away from shipping.
 - **Code:** monorepo with pnpm workspaces — contracts, SDK, API, web — 164 tests, CI on every push (GitHub Actions, 4 parallel jobs).
 - **Go-to-market:** targeting Mexican digital banks, venture funds and LatAm enterprises. No commercial agreements are signed to date; any partner will be named only once a relationship is formalized.
 - **Open source:** Apache 2.0 licensed (express patent grant, no trademark license), public GitHub, no proprietary lock-in.
