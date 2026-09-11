@@ -92,3 +92,37 @@ earlier "looks fine" pass: pulled OpenZeppelin's own published GitHub Security A
 total) and confirmed none affect `AccessControl`, `Pausable`, or `ReentrancyGuard`, the only
 modules KUMPLY imports, unmodified. Full detail in
 `docs/audits/avalanche-ecosystem-audit-2026-08-17.md`, "Round 6" section.
+
+## 11 Sep 2026 - reopened, bounded: Reown/AppKit docs, and four remaining checks
+
+The campaign above was declared closed on 17 Aug 2026 after Round 6/7 confirmed the dependency
+tree was exhausted, with an explicit rule not to reopen it without genuinely new surface. Two
+bounded reopenings happened the same day, 11 Sep 2026, each against surface not covered before:
+
+**Round 8** checked Reown/AppKit (`@reown/appkit`/`@reown/appkit-adapter-wagmi`, KUMPLY's actual
+wallet connector, confirmed installed at `1.8.19`) against its own live documentation -- the one
+piece of that SDK never audited proactively, only reactively fixed in Round 6. `createAppKit()`,
+`useAppKit()`, `useAppKitNetwork()`, `useAppKitAccount()`, and `WagmiAdapter`'s constructor all
+matched the real installed `.d.ts` source exactly. No finding.
+
+**Round 9** covered four more checks: AVAXSKILLS has shipped no new releases since 17 Aug (repo
+dormant since 23 May); the `CONTRIBUTING.md` typo found in archived `icm-contracts` (finding #15)
+turns out to already be fixed in its live successor `icm-services`, so no action is needed there;
+`ava-labs/teleporter-token-bridge` is archived and points to `icm-contracts`, itself now also
+archived -- a stale redirect chain, not actionable; and `avalanchego`'s README build instructions
+checked clean against its actual `go.mod`/scripts. The Avalanche Bug Bounty program (Immunefi) was
+verified live -- its 28-asset scope covers only bridged C-Chain tokens, not `avalanchego`,
+`subnet-evm`, `icm-contracts`/`icm-services`, `platform-cli`, `avalanche-cli`, or any
+ValidatorManager contract, confirming none of this campaign's findings (nor KUMPLY's own
+contracts) were ever eligible for it.
+
+One real, new finding: `build.avax.network`'s own `avalanche-cli` page now carries a deprecation
+notice pointing to a separate tool, Platform CLI, for the exact operations AVAXSKILLS'
+`subnet-deployment` skill described back in the original issue #2 -- meaning the tool AVAXSKILLS
+predicted turned out to be real. Checked the actual `ava-labs/platform-cli` source: the skill's
+subcommand names are half right (`subnet create`, `chain create`, `l1 register-validator`, `l1
+disable-validator` all exist as named) but the root binary is `platform-cli`, not `platform`, and
+two subcommands don't match (`convert-l1` should be `convert-to-l1`; `add-balance` doesn't exist,
+the real command is `increase-validator-balance`). Posted as a correcting follow-up on the
+existing issue: https://github.com/Ayomisco/avaxskills/issues/2#issuecomment-5639265335. Full
+detail in `docs/audits/avalanche-ecosystem-audit-2026-08-17.md`, "Round 8" and "Round 9" sections.

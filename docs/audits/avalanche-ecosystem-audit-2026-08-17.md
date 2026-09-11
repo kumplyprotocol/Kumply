@@ -1,4 +1,4 @@
-# KUMPLY vs Avalanche Official Tooling - Audit (17 Aug 2026)
+# KUMPLY vs Avalanche Official Tooling - Audit (17 Aug 2026, reopened 11 Sep 2026)
 
 Audit of KUMPLY's contracts and Sumsub integration against AVAXSKILLS (Ayomisco/avaxskills,
 Apache-2.0) and three Ava Labs reference repositories (avalanche-cli, avalanche-starter-kit,
@@ -6,6 +6,11 @@ icm-contracts). Setup steps are in SETUP.md. This is not a rewrite: findings are
 first, with only low-risk tooling additions applied directly. Anything touching identity
 verification logic, custody, or an already-verified deployed contract is proposed, not applied,
 per repo policy.
+
+Closed after Round 7 (17 Aug 2026) once the dependency tree was confirmed exhausted; reopened
+11 Sep 2026 only against genuinely new or previously-unchecked surface (Rounds 8-9): the wallet
+connector SDK's own docs, and the official Ava Labs tooling/docs/bug-bounty surface not yet
+audited directly.
 
 Tooling versions used: AVAXSKILLS as installed via `npx openskills install Ayomisco/avaxskills`
 on 17 Aug 2026; avalanche-cli, avalanche-starter-kit, icm-contracts as shallow clones (depth 1)
@@ -467,3 +472,106 @@ whether to create one. No PR was opened to `ava-labs/icm-contracts` -- an unsign
 fail their stated CI gate. The fork and branch are left as-is for the project owner to sign and
 push from their own machine, or edit directly through GitHub's web UI (which does auto-sign),
 before opening the PR themselves.
+
+## Round 8 (11 Sep 2026) - reopening check: Reown/AppKit SDK vs its own docs
+
+The campaign was closed after Round 6/7. Reopened for one bounded check: whether Reown/AppKit
+(KUMPLY's actual wallet connector, `@reown/appkit`/`@reown/appkit-adapter-wagmi`) has the same
+class of docs-vs-real-package mismatch already found across AVAXSKILLS, on the one piece of that
+SDK never audited proactively (`Web3Provider.tsx`'s `as any` fix in Round 6 was reactive, not a
+docs check).
+
+Confirmed the exact installed version live first -- `1.8.19` for both packages, matching
+`package.json`, the lockfile, and `node_modules/@reown/appkit/package.json` -- rather than
+assuming from the semver range. npm's current `latest` is `1.8.23`, four patches ahead, not a
+breaking gap. Compared docs.reown.com's installation and hooks pages (fetched live) against the
+real `.d.ts` source under `node_modules/.pnpm/@reown+appkit-controllers@1.8.19.../`:
+`createAppKit()`'s options shape, `useAppKit()`, `useAppKitNetwork()`, `useAppKitAccount()`, and
+the `WagmiAdapter` constructor all matched the documentation exactly. `@reown/appkit/networks`
+turned out to be a re-export of `viem/chains` (`export * from 'viem/chains'` in the real `.d.ts`)
+plus AppKit's own non-EVM chains -- which confirms Round 6's fix (importing
+`avalanche`/`avalancheFuji` from `@reown/appkit/networks` instead of `wagmi/chains`) was correct
+for the `AppKitNetwork` type specifically, not because the underlying chain data differs (both
+ultimately come from `viem/chains`).
+
+**No finding.** Reported honestly as a clean check, same standard as `skills/viem` and
+`kyc-aml-integration` -- no issue, no PR.
+
+## Round 9 (11 Sep 2026) - remaining reopening checks: AVAXSKILLS releases, icm-services, untouched Ava Labs repos, Bug Bounty scope
+
+Four more bounded checks, same day, same "doc/README vs real source" method.
+
+### 16. AVAXSKILLS releases since 17 Aug -- repo is dormant, no new surface
+
+`Ayomisco/avaxskills` has had zero pushes, tags, or releases since 23 May 2026 -- before the
+original 17 Aug audit even started. No new surface to check.
+
+### 17. `icm-contracts` CONTRIBUTING.md typo -- already fixed independently in `icm-services`, its live successor
+
+Finding #15 above targeted `ava-labs/icm-contracts`, archived (read-only) since 3 Dec 2025 -- the
+fork+branch left there in Round 7 can never be merged. The actual live, actively maintained
+successor is `ava-labs/icm-services` (pushed today, 11 Sep 2026), which folds together the
+Relayer, Signature Aggregator, and ICM contracts that used to be split across repos including
+`icm-contracts`. Its `CONTRIBUTING.md` is not at the same content as the archived repo's --
+the whole file was rewritten during the migration (new title, bumped Solidity version, added a
+`SECURITY.md` link, Go+Solidity linting instead of Solidity-only) -- and the specific sentence
+that had the "modfiication" typo in `icm-contracts` now reads "the modification of an existing
+one" correctly in `icm-services`. **No action needed**: the typo does not exist in the repo that
+actually matters going forward. The stale fork+branch on `Eras256/icm-contracts` stays exactly as
+Round 7 left it, targeting a dead end on purpose.
+
+### 18. `avalanche-cli`'s deprecation notice on official docs surfaces Platform CLI as real -- corrects issue #2
+
+Checking `build.avax.network`'s own `avalanche-cli` page (not a third-party skill this time)
+turned up a deprecation notice that did not exist, or was not yet indexed, on 17 Aug: *"Avalanche-
+CLI is no longer actively maintained. For P-Chain operations (staking, transfers, subnets, L1
+validators), use Platform CLI instead."* Platform CLI is a real, separate, actively developed
+repository (`ava-labs/platform-cli`, last pushed 8 Aug 2026) -- which means the original issue #2
+finding ("none of these platform commands exist... anywhere") is now out of date in an important
+way: the *tool* AVAXSKILLS predicted turned out to be real, just not yet public when the skill was
+written or when the issue was filed.
+
+Checked the actual command surface (`cmd/root.go`, `cmd/subnet.go`, `cmd/l1.go`, `cmd/chain.go`,
+grepped for `Use:`) against AVAXSKILLS' six claimed commands:
+
+| AVAXSKILLS claims | Real `platform-cli` command | Match? |
+|---|---|---|
+| `platform subnet create` | `platform-cli subnet create` | Subcommand right, binary name wrong |
+| `platform chain create` | `platform-cli chain create` | Subcommand right, binary name wrong |
+| `platform subnet convert-l1` | `platform-cli subnet convert-to-l1` | Wrong |
+| `platform l1 register-validator` | `platform-cli l1 register-validator` | Subcommand right, binary name wrong |
+| `platform l1 add-balance` | (no such command; real one is `l1 increase-validator-balance`) | Wrong |
+| `platform l1 disable-validator` | `platform-cli l1 disable-validator` | Subcommand right, binary name wrong |
+
+Posted as a correcting follow-up on the existing issue rather than a new one:
+https://github.com/Ayomisco/avaxskills/issues/2#issuecomment-5639265335.
+
+### 19. `teleporter-token-bridge` -- archived, points to another now-archived repo, no live doc surface
+
+`ava-labs/teleporter-token-bridge` has been archived since 3 Dec 2024. Its own README says it was
+"merged into Interchain Messaging Contracts repository at ICM Contracts" -- but `icm-contracts` is
+now *also* archived (see #17), with its own successor being `icm-services`. This is a stale
+redirect chain (archived repo pointing to another archived repo) rather than an exploitable bug,
+and not actionable: archived repos accept no PRs, and this one explicitly states it "will not be
+updated." Noted, not filed anywhere.
+
+### 20. `avalanchego` README build instructions -- checked, clean
+
+`./scripts/run_task.sh build` exists in the repo as documented, and the README's stated minimum Go
+version (`>= 1.25.10`) matches `go.mod`'s `go 1.25.10` exactly. No finding.
+
+### Avalanche Bug Bounty program (Immunefi) -- scope and rules verified live, not from memory
+
+`https://immunefi.com/bug-bounty/avalanche/information/`, last updated 18 Aug 2026 per the page
+itself. Key terms as published today: Critical rewards $10,000-$100,000 (10% of funds directly
+affected, capped), High $5,000-$10,000, Medium $5,000 flat, Low $1,000 flat (blockchain/DLT only).
+KYC is required for payout. A working proof of concept is required for every severity. Testing is
+restricted to local forks -- testing against live mainnet or public testnet is explicitly
+disallowed. Disclosure is Category 3 (project approval required before publication).
+
+The in-scope asset list (28 assets total) is bridged ERC-20 tokens on C-Chain (DAI.e, USDC.e,
+WBTC.e, and similar) -- it does not include `avalanchego`, `subnet-evm`, `icm-contracts`,
+`icm-services`, `platform-cli`, `avalanche-cli`, or any ValidatorManager/ACP-99 reference
+contract. **None of the findings from this campaign, nor KUMPLY's own contracts, fall inside this
+program's scope** -- they were correctly routed as GitHub issues/PRs all along, not bug bounty
+submissions, and that stays the right channel going forward.
