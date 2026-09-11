@@ -82,6 +82,13 @@ used).
 - Findings or fixes that touch identity-verification logic, custody, or an
   already-deployed and verified contract get reported and confirmed by a
   human before being applied — not applied automatically.
+- Two real committer identities exist on this machine - Eras256 (default)
+  and M0nsxx (Monserrat), each with its own real SSH signing key
+  registered on GitHub. Default to Eras256 always; only commit as M0nsxx
+  when explicitly told to for that specific commit, activated per-commit
+  via `GIT_CONFIG_GLOBAL=~/.gitconfig-monse git commit ...` so it never
+  touches the default global config. The `Co-Authored-By: Claude` trailer
+  is required regardless of which identity authors the commit.
 
 ## Session resumption and hallucination discipline
 
