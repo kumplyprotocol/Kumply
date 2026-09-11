@@ -530,7 +530,7 @@ export const DECK_HTML = `
       <div class="cell founder-cell">
         <img class="avatar" src="/pitch-giovanny.jpg" alt="Giovanny Amador" width="56" height="56" />
         <div class="founder-info">
-          <h3>Giovanny Amador - Technical lead</h3>
+          <h3>Giovanny Amador - Engineering Lead</h3>
           <p>Contracts, L1, SDK, infrastructure. ETH Uruguay 2025 winner, 1st place at ETH Mexico Monterrey (Creator Economies track). Avalanche Team1 Collaborator (T1-040-127).
             <a href="https://github.com/Eras256">github.com/Eras256</a> · <a href="https://x.com/vaiossx">@vaiossx</a></p>
         </div>
@@ -538,7 +538,7 @@ export const DECK_HTML = `
       <div class="cell founder-cell">
         <img class="avatar" src="/pitch-monserrat.jpg" alt="Monserrat Mendoza" width="56" height="56" />
         <div class="founder-info">
-          <h3>Monserrat Mendoza - Design lead</h3>
+          <h3>Monserrat Mendoza - Dev Lead</h3>
           <p>Frontend UX/UI and Backend developer. ETH Uruguay 2025 winner. Avalanche Team1 Collaborator (T1-040-314).
             <a href="https://github.com/M0nsxx">github.com/M0nsxx</a> · <a href="https://x.com/smithserrat">@smithserrat</a></p>
         </div>
@@ -662,11 +662,11 @@ export const DECK_HTML = `
     </p>
     <div class="grid cols-2">
       <div class="cell">
-        <h3>Giovanny Amador - Technical lead</h3>
+        <h3>Giovanny Amador - Engineering Lead</h3>
         <p>Discord <code>Vaiosx</code> · Telegram <a href="https://t.me/Vaiosx">@Vaiosx</a> · X <a href="https://x.com/vaiossx">@vaiossx</a></p>
       </div>
       <div class="cell">
-        <h3>Monserrat Mendoza - Design lead</h3>
+        <h3>Monserrat Mendoza - Dev Lead</h3>
         <p>Discord <code>smithserrat</code> · Telegram <a href="https://t.me/M0nsxx">@M0nsxx</a> · X <a href="https://x.com/smithserrat">@smithserrat</a></p>
       </div>
     </div>
@@ -1034,7 +1034,7 @@ export const DECK_HTML_ES = `
       <div class="cell founder-cell">
         <img class="avatar" src="/pitch-giovanny.jpg" alt="Giovanny Amador" width="56" height="56" />
         <div class="founder-info">
-          <h3>Giovanny Amador - Líder técnico</h3>
+          <h3>Giovanny Amador - Engineering Lead</h3>
           <p>Contratos, L1, SDK, infraestructura. Ganador de ETH Uruguay 2025, 1er lugar en ETH Mexico Monterrey (track Economías de Creadores). Avalanche Team1 Collaborator (T1-040-127).
             <a href="https://github.com/Eras256">github.com/Eras256</a> · <a href="https://x.com/vaiossx">@vaiossx</a></p>
         </div>
@@ -1042,7 +1042,7 @@ export const DECK_HTML_ES = `
       <div class="cell founder-cell">
         <img class="avatar" src="/pitch-monserrat.jpg" alt="Monserrat Mendoza" width="56" height="56" />
         <div class="founder-info">
-          <h3>Monserrat Mendoza - Líder de diseño</h3>
+          <h3>Monserrat Mendoza - Dev Lead</h3>
           <p>Frontend UX/UI and Backend developer. Ganadora de ETH Uruguay 2025. Avalanche Team1 Collaborator (T1-040-314).
             <a href="https://github.com/M0nsxx">github.com/M0nsxx</a> · <a href="https://x.com/smithserrat">@smithserrat</a></p>
         </div>
@@ -1166,11 +1166,11 @@ export const DECK_HTML_ES = `
     </p>
     <div class="grid cols-2">
       <div class="cell">
-        <h3>Giovanny Amador - Líder técnico</h3>
+        <h3>Giovanny Amador - Engineering Lead</h3>
         <p>Discord <code>Vaiosx</code> · Telegram <a href="https://t.me/Vaiosx">@Vaiosx</a> · X <a href="https://x.com/vaiossx">@vaiossx</a></p>
       </div>
       <div class="cell">
-        <h3>Monserrat Mendoza - Líder de diseño</h3>
+        <h3>Monserrat Mendoza - Dev Lead</h3>
         <p>Discord <code>smithserrat</code> · Telegram <a href="https://t.me/M0nsxx">@M0nsxx</a> · X <a href="https://x.com/smithserrat">@smithserrat</a></p>
       </div>
     </div>
