@@ -531,7 +531,7 @@ export const DECK_HTML = `
         <img class="avatar" src="/pitch-giovanny.jpg" alt="Giovanny Amador" width="56" height="56" />
         <div class="founder-info">
           <h3>Giovanny Amador - Engineering Lead</h3>
-          <p>Contracts, L1, SDK, infrastructure. ETH Uruguay 2025 winner, 1st place at ETH Mexico Monterrey (Creator Economies track). Avalanche Team1 Collaborator (T1-040-127).
+          <p>Contracts, L1, SDK, infrastructure. Avalanche Team1 Collaborator (T1-040-127). Also a hackathon winner outside Avalanche - ETH Uruguay 2025, 1st place at ETH Mexico Monterrey (Creator Economies track), 3rd place Arbitrum Innovation track.
             <a href="https://github.com/Eras256">github.com/Eras256</a> · <a href="https://x.com/vaiossx">@vaiossx</a></p>
         </div>
       </div>
@@ -1035,7 +1035,7 @@ export const DECK_HTML_ES = `
         <img class="avatar" src="/pitch-giovanny.jpg" alt="Giovanny Amador" width="56" height="56" />
         <div class="founder-info">
           <h3>Giovanny Amador - Engineering Lead</h3>
-          <p>Contratos, L1, SDK, infraestructura. Ganador de ETH Uruguay 2025, 1er lugar en ETH Mexico Monterrey (track Economías de Creadores). Avalanche Team1 Collaborator (T1-040-127).
+          <p>Contratos, L1, SDK, infraestructura. Avalanche Team1 Collaborator (T1-040-127). Also a hackathon winner outside Avalanche - ETH Uruguay 2025, 1st place at ETH Mexico Monterrey (Creator Economies track), 3rd place Arbitrum Innovation track.
             <a href="https://github.com/Eras256">github.com/Eras256</a> · <a href="https://x.com/vaiossx">@vaiossx</a></p>
         </div>
       </div>
