@@ -538,8 +538,8 @@ export const DECK_HTML = `
       <div class="cell founder-cell">
         <img class="avatar" src="/pitch-monserrat.jpg" alt="Monserrat Mendoza" width="56" height="56" />
         <div class="founder-info">
-          <h3>Monserrat Mendoza - Product &amp; design lead</h3>
-          <p>Product, design, content. ETH Uruguay 2025 winner. Avalanche Team1 Collaborator.
+          <h3>Monserrat Mendoza - Design lead</h3>
+          <p>Backend dev, UX/UI. ETH Uruguay 2025 winner. Avalanche Team1 Collaborator.
             <a href="https://github.com/M0nsxx">github.com/M0nsxx</a> · <a href="https://x.com/smithserrat">@smithserrat</a></p>
         </div>
       </div>
@@ -660,7 +660,7 @@ export const DECK_HTML = `
         <p>Discord <code>Vaiosx</code> · Telegram <a href="https://t.me/Vaiosx">@Vaiosx</a> · X <a href="https://x.com/vaiossx">@vaiossx</a></p>
       </div>
       <div class="cell">
-        <h3>Monserrat Mendoza - Product &amp; design lead</h3>
+        <h3>Monserrat Mendoza - Design lead</h3>
         <p>Discord <code>smithserrat</code> · Telegram <a href="https://t.me/M0nsxx">@M0nsxx</a> · X <a href="https://x.com/smithserrat">@smithserrat</a></p>
       </div>
     </div>
@@ -1036,8 +1036,8 @@ export const DECK_HTML_ES = `
       <div class="cell founder-cell">
         <img class="avatar" src="/pitch-monserrat.jpg" alt="Monserrat Mendoza" width="56" height="56" />
         <div class="founder-info">
-          <h3>Monserrat Mendoza - Líder de producto y diseño</h3>
-          <p>Producto, diseño, contenido. Ganadora de ETH Uruguay 2025. Avalanche Team1 Collaborator.
+          <h3>Monserrat Mendoza - Líder de diseño</h3>
+          <p>Backend dev, UX/UI. Ganadora de ETH Uruguay 2025. Avalanche Team1 Collaborator.
             <a href="https://github.com/M0nsxx">github.com/M0nsxx</a> · <a href="https://x.com/smithserrat">@smithserrat</a></p>
         </div>
       </div>
@@ -1158,7 +1158,7 @@ export const DECK_HTML_ES = `
         <p>Discord <code>Vaiosx</code> · Telegram <a href="https://t.me/Vaiosx">@Vaiosx</a> · X <a href="https://x.com/vaiossx">@vaiossx</a></p>
       </div>
       <div class="cell">
-        <h3>Monserrat Mendoza - Líder de producto y diseño</h3>
+        <h3>Monserrat Mendoza - Líder de diseño</h3>
         <p>Discord <code>smithserrat</code> · Telegram <a href="https://t.me/M0nsxx">@M0nsxx</a> · X <a href="https://x.com/smithserrat">@smithserrat</a></p>
       </div>
     </div>
