@@ -542,7 +542,8 @@ export const DECK_HTML = `
     <p class="lede" style="margin-top: 1.5rem;">
       Active in the Team1 LatAm community - introduced KUMPLY at a Team1 weekly call, and shipped two additional
       Avalanche builds in a single weekend (an invisible-blockchain museum ticketing app and an agricultural
-      traceability demo), shared with the community. <strong>Building on Avalanche is what we do, grant or no grant.</strong>
+      traceability demo), shared with the community. Now running a Team1-approved technical workshop on KYA, scheduled
+      for September 24, 2026. <strong>Building on Avalanche is what we do, grant or no grant.</strong>
     </p>
     <p class="note" style="margin-top: 1rem;"><strong>Bus factor, addressed:</strong> today both code and
       partnerships run through two people, and M0-M3 are scoped to stay deliverable that way. M4 is the funded
@@ -1034,7 +1035,8 @@ export const DECK_HTML_ES = `
     <p class="lede" style="margin-top: 1.5rem;">
       Activos en la comunidad LatAm de Team1 - presentaron KUMPLY en una llamada semanal de Team1, y enviaron dos builds
       adicionales de Avalanche en un solo fin de semana (una app de boletos de museo con blockchain invisible y una demo de
-      trazabilidad agrícola), compartidos con la comunidad. <strong>Construir en Avalanche es lo que hacemos, con o sin grant.</strong>
+      trazabilidad agrícola), compartidos con la comunidad. Ahora corriendo un workshop técnico sobre KYA aprobado por
+      Team1, programado para el 24 de septiembre de 2026. <strong>Construir en Avalanche es lo que hacemos, con o sin grant.</strong>
     </p>
     <p class="note" style="margin-top: 1rem;"><strong>Bus factor, resuelto:</strong> hoy tanto el código como las
       partnerships pasan por dos personas, y M0-M3 están acotados para seguir siendo entregables así. M4 es el
