@@ -6,7 +6,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { useAccount, useDisconnect } from "wagmi";
 import { useAppKit } from "@reown/appkit/react";
 import Image from "next/image";
-import KumplyLogo from "@/app/images/KumplyLogo.png";
+import KumplyLogo from "@/app/images/KumplyLogoIcon.png";
 import { useKumplyNetwork } from "@/providers/KumplyNetworkProvider";
 
 export function Navbar() {
