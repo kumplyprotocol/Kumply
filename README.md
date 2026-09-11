@@ -125,11 +125,11 @@ The same audit, over three passes, also verified and filed real gaps upstream in
 
 | Where | What | Status |
 |---|---|---|
-| [avaxskills#2](https://github.com/Ayomisco/avaxskills/issues/2) | `subnet-deployment` skill documents CLI commands (`platform subnet create`, and others) that don't exist in the real `ava-labs/avalanche-cli` | Open |
-| [avaxskills#2 (comment)](https://github.com/Ayomisco/avaxskills/issues/2#issuecomment-5320383561) | `validator-management` skill: same issue, `avalanche primaryNetwork addValidator` / `avalanche subnet addValidator` don't exist | Open |
-| [avaxskills#2 (comment)](https://github.com/Ayomisco/avaxskills/issues/2#issuecomment-5321360572) | `custom-vm` skill: same issue again, `avalanche subnet create/deploy` | Open |
-| [avaxskills#3](https://github.com/Ayomisco/avaxskills/issues/3) | `precompiles` skill: wrong genesis key for TxAllowList (`transactionAllowListConfig` vs. the real `txAllowListConfig`), confirmed against `ava-labs/subnet-evm` source | Open |
-| [avaxskills#4](https://github.com/Ayomisco/avaxskills/issues/4) | `wagmi` skill: claims v2 is latest (v3 has shipped) and its example uses `useAccount`, deprecated in wagmi's own types in favor of `useConnection` | Open |
+| [avaxskills#2](https://github.com/Ayomisco/avaxskills/issues/2) | `subnet-deployment` skill documents CLI commands (`platform subnet create`, and others) that don't exist in the real `ava-labs/avalanche-cli` | [PR #5 open](https://github.com/Ayomisco/avaxskills/pull/5) |
+| [avaxskills#2 (comment)](https://github.com/Ayomisco/avaxskills/issues/2#issuecomment-5320383561) | `validator-management` skill: same issue, `avalanche primaryNetwork addValidator` / `avalanche subnet addValidator` don't exist | [PR #5 open](https://github.com/Ayomisco/avaxskills/pull/5) |
+| [avaxskills#2 (comment)](https://github.com/Ayomisco/avaxskills/issues/2#issuecomment-5321360572) | `custom-vm` skill: same issue again, `avalanche subnet create/deploy` | [PR #5 open](https://github.com/Ayomisco/avaxskills/pull/5) |
+| [avaxskills#3](https://github.com/Ayomisco/avaxskills/issues/3) | `precompiles` skill: wrong genesis key for TxAllowList (`transactionAllowListConfig` vs. the real `txAllowListConfig`), confirmed against `ava-labs/subnet-evm` source | [PR #6 open](https://github.com/Ayomisco/avaxskills/pull/6) |
+| [avaxskills#4](https://github.com/Ayomisco/avaxskills/issues/4) | `wagmi` skill: claims v2 is latest (v3 has shipped) and its example uses `useAccount`, deprecated in wagmi's own types in favor of `useConnection` | [PR #7 open](https://github.com/Ayomisco/avaxskills/pull/7) |
 
 Also checked, with nothing genuine to report: `kyc-aml-integration`, `subnet-governance`, `security`, `audit`, `contract-verification`, `viem`, OpenZeppelin `contracts`, and `ava-labs/precompile-evm`. "Nothing found" was treated as a valid, honest result throughout, not a gap to force-fill.
 

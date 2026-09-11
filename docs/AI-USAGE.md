@@ -126,3 +126,36 @@ two subcommands don't match (`convert-l1` should be `convert-to-l1`; `add-balanc
 the real command is `increase-validator-balance`). Posted as a correcting follow-up on the
 existing issue: https://github.com/Ayomisco/avaxskills/issues/2#issuecomment-5639265335. Full
 detail in `docs/audits/avalanche-ecosystem-audit-2026-08-17.md`, "Round 8" and "Round 9" sections.
+
+## 11 Sep 2026 - escalated from issues to real PRs against AVAXSKILLS
+
+All three upstream issues (#2, #3, #4) had gone unanswered for weeks despite follow-up nudges
+earlier the same day. Forked [Ayomisco/avaxskills](https://github.com/Ayomisco/avaxskills) to
+`Eras256/avaxskills` and opened three real pull requests, each fixing exactly the commands its
+issue thread had flagged - re-verified line-by-line against the real, live source of
+`ava-labs/platform-cli` and `ava-labs/avalanche-cli` before writing any diff, not against memory
+of the original findings:
+
+- [PR #5](https://github.com/Ayomisco/avaxskills/pull/5) (closes #2) - `subnet-deployment.md`,
+  `validator-management.md`, `custom-vm.md`. Beyond the two specific fixes named in the issue
+  (`convert-l1` -> `convert-to-l1`, `add-balance` -> `increase-validator-balance`), re-reading the
+  real `platform-cli`/`avalanche-cli` source surfaced more of the same class of bug that hadn't
+  been named yet: the binary is `platform-cli`, not bare `platform`, everywhere it's invoked; the
+  root command `primaryNetwork` doesn't exist, the real one is `primary` (with several flag names
+  also wrong - `--weight` not `--stakeAmount`, etc.); `validator add` doesn't exist, the real
+  subcommand is `add-permissionless`; and two leftover `avalanche subnet configure`/`describe`
+  references pointed at a command group that no longer exists at all. Fixed all of it, not just the
+  two originally-named items - each one confirmed against the real cobra command definitions before
+  being changed.
+- [PR #6](https://github.com/Ayomisco/avaxskills/pull/6) (closes #3) - `precompiles.md`, the single
+  `transactionAllowListConfig` -> `txAllowListConfig` genesis-key fix.
+- [PR #7](https://github.com/Ayomisco/avaxskills/pull/7) (closes #4) - `wagmi.md`, updated "v2
+  (latest)" to v3 and replaced the deprecated `useAccount` call with `useConnection` (confirmed as
+  a same-shape drop-in rename against wagmi's own type declarations, not just the deprecation
+  notice).
+
+All three commits carry `Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>` and each PR
+description discloses AI assistance explicitly, same as every finding in this document. `npm run
+validate` (the repo's own CI check) passes locally for all edited files before each PR was opened.
+None of these PRs are merged yet - the README's finding table links directly to each PR's live
+status rather than asserting it's accepted.
