@@ -257,6 +257,13 @@ The architecture and implementation of KUMPLY were built strictly following the 
   - [ACP-77: Reinventing Subnets](https://build.avax.network/docs/acps/77-reinventing-subnets)
   - [ACP-30: Avalanche Warp X EVM](https://build.avax.network/docs/acps/30-avalanche-warp-x-evm)
 
+## 🤝 Program Participation
+
+KUMPLY's application to Avalanche's **Team1 Mini Grants** program went in
+through a real channel: the founding team includes an official Team1 LatAm
+collaborator. Applied, decision still pending — not claimed as an award
+here.
+
 ## 📄 License
 
 This project is licensed under the **Apache License 2.0** — see [LICENSE](LICENSE) and [NOTICE](NOTICE).
