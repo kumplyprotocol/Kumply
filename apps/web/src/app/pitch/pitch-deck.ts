@@ -229,6 +229,9 @@ export const DECK_HTML = `
       holding them. So the workarounds below don't just add friction - each one duplicates a legal exposure that
       nobody wants. What's missing is a <strong>compliant counterparty-resolution layer</strong>: a way to prove who
       is on the other side without every participant holding the underlying documents.
+      Team1's own analysis of institutional RWA adoption reaches a similar conclusion: rules "must travel with the
+      token and be automatically enforced at the protocol or smart contract level" - exactly what ComplianceGate
+      does today.
     </p>
     <div class="grid cols-3">
       <div class="cell">
@@ -721,7 +724,9 @@ export const DECK_HTML_ES = `
       carga con la responsabilidad de conservarlos. Así que los parches de abajo no solo agregan fricción - cada uno
       duplica una exposición legal que nadie quiere. Lo que falta es una <strong>capa de resolución de contraparte
       conforme a la ley</strong>: una forma de probar quién está del otro lado sin que cada participante conserve
-      los documentos subyacentes.
+      los documentos subyacentes. El propio análisis de Team1 sobre adopción institucional de RWA llega a una
+      conclusión similar: las reglas "deben viajar con el token y aplicarse automáticamente a nivel de protocolo
+      o smart contract" - exactamente lo que hace ComplianceGate hoy.
     </p>
     <div class="grid cols-3">
       <div class="cell">
