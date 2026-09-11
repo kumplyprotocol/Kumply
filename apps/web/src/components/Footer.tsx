@@ -1,7 +1,7 @@
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import KumplyLogo from "@/app/images/KumplyLogoIcon.png";
+import KumplyLogo from "@/app/images/KumplyIcon.png";
 
 export function Footer() {
   const tFooter = useTranslations('Footer');
