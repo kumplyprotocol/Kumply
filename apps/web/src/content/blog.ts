@@ -16,6 +16,76 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "nec-avalanche-biometrics-different-bet",
+    date: "2026-09-10",
+    author: {
+      name: "Monserrat Mendoza",
+      role: { en: "Co-founder, Product & Design", es: "Co-founder, Producto y Diseño" },
+    },
+    readMinutes: 5,
+    category: "DEEP DIVE",
+    title: {
+      en: "Everyone Is Racing to Put Biometrics On-Chain. We Made a Different Bet.",
+      es: "Todo el mundo corre a meter biometría on-chain. Nosotros apostamos distinto.",
+    },
+    excerpt: {
+      en: "NEC just signed an MOU with Ava Labs to bring face-verified payments to an Avalanche chain. Here's what that architecture actually does, why we're not building the same thing, and why saying we don't use biometrics would be a lie.",
+      es: "NEC acaba de firmar un MOU con Ava Labs para llevar pagos verificados por rostro a una cadena de Avalanche. Así funciona esa arquitectura, por qué no estamos construyendo lo mismo, y por qué decir que no usamos biometría sería mentira.",
+    },
+    bodyHtml: {
+      en: `
+<p>On July 10, 2026, Ava Labs announced an MOU with NEC, the company that has ranked #1 in NIST's global face-recognition benchmark since 2009, to jointly explore "FaceVC": biometric identity verification built directly into an Avalanche chain. It's the biggest institutional signal an identity project on Avalanche has gotten this year, and it's not us. Worth being honest about what that means, and what it doesn't.</p>
+
+<h2>What NEC and Ava Labs are actually proposing</h2>
+
+<p>The whitepaper behind the MOU describes three purpose-built chains working together over Interchain Messaging: a permissioned Avalanche L1 that stores identity registries and credential-revocation status, a dedicated payment chain called SETTL for stablecoin settlement, and the public C-Chain for rewards and promotional tokens. The first use case is concrete: a traveler gets a FaceVC before landing in Japan, then approves a stablecoin payment with their face at the point of sale.</p>
+
+<p>To their credit, the design keeps a principle we also hold: biometric data never touches the chain. NEC's own language for it is direct: "biometric data never goes on-chain. A user's face and purchase history stay inside their own wallet." Only proof that verification happened, plus the minimum transaction data, gets recorded.</p>
+
+<h2>The honest part: we're not biometrics-free either</h2>
+
+<p>It would be easy to draw a clean line here, NEC does biometrics, KUMPLY does documents, and it wouldn't be true. Sumsub, the KYC vendor behind our own Tier 1-3 attestations, already runs real facial biometrics as part of a normal verification: 3D face mapping and liveness detection to catch a photo of a photo, and face matching between a selfie and an ID document at around 99% confidence. If we said we don't use biometrics, that would be false, and we'd rather lose an argument than tell you something untrue about our own stack.</p>
+
+<h2>So where's the real difference</h2>
+
+<p>Not in whether biometrics are involved. It's in what kind of company is behind them, and how narrow the thing being built actually is. NEC is a biometrics company first, holding the top spot in NIST's 1:N identification benchmark with a 0.07% error rate against a 12-million-person database, and it built its own recognition technology directly into a three-chain payment architecture, for one specific flow: face-verified stablecoin payments for travelers. It's vertical, specialized, and purpose-built for that use case.</p>
+
+<p>KUMPLY is the opposite bet. We're a general-purpose compliance layer: Tier 1-3 for individual KYC, Tier 4 for business KYB, Tier 5 for the accountable owner behind an AI agent. We don't build our own verification technology, and that's deliberate. Sumsub is a vendor we chose, not a company we are, and we could swap it for another provider without touching <code>AttestationStore</code> or <code>ComplianceGate</code>. Any dApp on Avalanche can call <code>verify(address)</code> against our system for any of those three tiers. NEC built one door for one room. We built the hallway.</p>
+
+<h2>The part we'll say plainly</h2>
+
+<p>Ava Labs partnering directly with the world's top-ranked face-recognition company is a bigger institutional signal than anything we've gotten so far, and it deserves to be treated that way, not minimized. What we can say with no hedging is the stage each of us is at: NEC and Ava Labs are still at "jointly explore," a memorandum signed in July 2026 with a whitepaper and no shipped product yet. KUMPLY's contracts are live today, tested, deployed on mainnet and Fuji. We're ahead on execution. They're ahead on institutional weight. Both things are true at once.</p>
+
+<p>If your protocol needed to let in an AI agent, or a KYB'd business, or a verified individual tomorrow, whose infrastructure would you actually be able to call?</p>
+`,
+      es: `
+<p>El 10 de julio de 2026, Ava Labs anunció un MOU con NEC, la empresa número uno en el benchmark global de reconocimiento facial del NIST desde 2009, para explorar juntos "FaceVC": verificación de identidad biométrica construida directo dentro de una cadena de Avalanche. Es la señal institucional más grande que ha recibido un proyecto de identidad en Avalanche este año, y no somos nosotros. Vale la pena ser honestos sobre qué significa eso, y qué no.</p>
+
+<h2>Qué proponen NEC y Ava Labs en realidad</h2>
+
+<p>El whitepaper detrás del MOU describe tres cadenas separadas trabajando juntas vía Interchain Messaging: una L1 permisionada de Avalanche que guarda registros de identidad y estado de revocación de credenciales, una cadena dedicada a pagos llamada SETTL para settlement de stablecoins, y la C-Chain pública para recompensas y tokens promocionales. El primer caso de uso es concreto: un viajero obtiene su FaceVC antes de aterrizar en Japón, y luego aprueba un pago en stablecoin con su rostro en el punto de venta.</p>
+
+<p>Hay que reconocerles esto: el diseño mantiene un principio que nosotros también sostenemos, el dato biométrico nunca toca la cadena. La frase propia de NEC lo dice directo: "el dato biométrico nunca va on-chain. El rostro y el historial de compra del usuario se quedan dentro de su propia wallet." Solo se registra la prueba de que la verificación ocurrió, más el dato mínimo de la transacción.</p>
+
+<h2>La parte honesta: nosotros tampoco estamos libres de biometría</h2>
+
+<p>Sería fácil trazar una línea limpia aquí, NEC usa biometría, KUMPLY usa documentos, y sería falso. Sumsub, el proveedor de KYC detrás de nuestras propias attestations Tier 1-3, ya corre reconocimiento facial real como parte de una verificación normal: face-mapping 3D y detección de liveness para atrapar la foto de una foto, y matching entre una selfie y un documento de identidad con cerca de 99% de confianza. Si dijéramos que no usamos biometría, sería falso, y preferimos perder un argumento antes que decirte algo que no es cierto sobre nuestra propia arquitectura.</p>
+
+<h2>Entonces dónde está la diferencia real</h2>
+
+<p>No está en si hay biometría involucrada o no. Está en qué tipo de empresa hay detrás, y qué tan angosto es lo que de verdad se está construyendo. NEC es primero una empresa de biometría, con el primer lugar en el benchmark de identificación 1:N del NIST con una tasa de error de 0.07% contra una base de 12 millones de imágenes, y construyó su propia tecnología de reconocimiento directo dentro de una arquitectura de pagos de tres cadenas, para un flujo específico: pagos en stablecoin verificados por rostro para viajeros. Es vertical, especializada, y construida a la medida de ese caso de uso.</p>
+
+<p>KUMPLY es la apuesta opuesta. Somos una capa de compliance de propósito general: Tier 1-3 para KYC de individuos, Tier 4 para KYB de empresas, Tier 5 para el dueño responsable detrás de un agente de IA. No construimos nuestra propia tecnología de verificación, y eso es deliberado. Sumsub es un proveedor que elegimos, no una empresa que somos, y podríamos cambiarlo por otro proveedor sin tocar <code>AttestationStore</code> ni <code>ComplianceGate</code>. Cualquier dApp en Avalanche puede llamar a <code>verify(address)</code> contra nuestro sistema para cualquiera de esos tres tiers. NEC construyó una puerta para un cuarto. Nosotros construimos el pasillo.</p>
+
+<h2>La parte que decimos sin rodeos</h2>
+
+<p>Que Ava Labs se asocie directo con la empresa de reconocimiento facial mejor rankeada del mundo es una señal institucional más grande que cualquier cosa que hayamos tenido hasta ahora, y merece tratarse así, no minimizarse. Lo que sí podemos decir sin matices es en qué etapa está cada quien: NEC y Ava Labs siguen en "explorar juntos," un memorando firmado en julio de 2026 con un whitepaper y sin producto enviado todavía. Los contratos de KUMPLY están en vivo hoy, probados, desplegados en mainnet y en Fuji. Nosotros vamos adelante en ejecución. Ellos van adelante en peso institucional. Las dos cosas son ciertas al mismo tiempo.</p>
+
+<p>Si tu protocolo necesitara dejar entrar mañana a un agente de IA, a una empresa con KYB, o a un individuo verificado, ¿a la infraestructura de quién podrías llamar de verdad?</p>
+`,
+    },
+  },
+  {
     slug: "acp99-kyb-gated-consensus-validator-bug",
     date: "2026-09-07",
     author: {
