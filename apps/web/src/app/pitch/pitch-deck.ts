@@ -383,7 +383,9 @@ export const DECK_HTML = `
         <h3>ACP-99 ValidatorSetManager, KYB-gated</h3>
         <p>Our <code>KumplyValidatorSetManager</code> implements the full two-phase validator lifecycle with
         Avalanche-codec Warp payloads - and adds a requirement we have not seen on another L1: validators must hold a live
-        Tier-4 attestation. 50 dedicated tests.</p>
+        Tier-4 attestation. 50 dedicated tests. <a href="https://build.avax.network/docs/avalanche-l1s/when-to-build-avalanche-l1" target="_blank" rel="noopener noreferrer">Avalanche's own Builder Hub docs</a> name
+        this exact pattern - "for regulatory reasons, some applications may need a consistent access control
+        mechanism for all on-chain transactions" - as one of the core reasons to build an L1.</p>
       </div>
       <div class="cell">
         <h3>ACP-77 sovereign L1</h3>
@@ -878,7 +880,10 @@ export const DECK_HTML_ES = `
         <h3>ACP-99 ValidatorSetManager, con gating KYB</h3>
         <p>Nuestro <code>KumplyValidatorSetManager</code> implementa el ciclo de vida completo de dos fases para validadores con
         payloads Warp en el codec de Avalanche - y agrega un requisito que no hemos visto en otra L1: los validadores deben mantener
-        una attestation Tier-4 vigente. 50 tests dedicados.</p>
+        una attestation Tier-4 vigente. 50 tests dedicados. <a href="https://build.avax.network/docs/avalanche-l1s/when-to-build-avalanche-l1" target="_blank" rel="noopener noreferrer">La propia documentación del Builder Hub de Avalanche</a> nombra
+        este mismo patrón - "por razones regulatorias, algunas aplicaciones pueden necesitar un mecanismo de control
+        de acceso consistente para todas las transacciones on-chain" - como una de las razones centrales para
+        construir una L1.</p>
       </div>
       <div class="cell">
         <h3>L1 soberana ACP-77</h3>
