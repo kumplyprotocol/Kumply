@@ -636,7 +636,13 @@ export const DECK_HTML = `
       (<a href="https://github.com/Ayomisco/avaxskills/issues/2" target="_blank" rel="noopener noreferrer">#2</a>,
       <a href="https://github.com/Ayomisco/avaxskills/issues/3" target="_blank" rel="noopener noreferrer">#3</a>,
       <a href="https://github.com/Ayomisco/avaxskills/issues/4" target="_blank" rel="noopener noreferrer">#4</a>,
-      all open), plus 2 more comments on the same class of bug. Full writeup:
+      plus 2 more comments on the same class of bug), then went further: 3 pull requests are now open against
+      AVAXSKILLS, correcting the wrong CLI commands and a wrong genesis key those issues flagged, with a real
+      diff, not just the report
+      (<a href="https://github.com/Ayomisco/avaxskills/pull/5" target="_blank" rel="noopener noreferrer">#5</a>,
+      <a href="https://github.com/Ayomisco/avaxskills/pull/6" target="_blank" rel="noopener noreferrer">#6</a>,
+      <a href="https://github.com/Ayomisco/avaxskills/pull/7" target="_blank" rel="noopener noreferrer">#7</a>,
+      none merged yet). Full writeup:
       <a href="https://github.com/kumplyprotocol/Kumply/blob/main/docs/audits/avalanche-ecosystem-audit-2026-08-17.md" target="_blank" rel="noopener noreferrer">docs/audits</a>.</p>
   </section>
 
@@ -1134,7 +1140,13 @@ export const DECK_HTML_ES = `
       (<a href="https://github.com/Ayomisco/avaxskills/issues/2" target="_blank" rel="noopener noreferrer">#2</a>,
       <a href="https://github.com/Ayomisco/avaxskills/issues/3" target="_blank" rel="noopener noreferrer">#3</a>,
       <a href="https://github.com/Ayomisco/avaxskills/issues/4" target="_blank" rel="noopener noreferrer">#4</a>,
-      todos abiertos), más 2 comentarios adicionales sobre el mismo tipo de bug. Reporte completo:
+      más 2 comentarios adicionales sobre el mismo tipo de bug), y fue más allá: ahora hay 3 pull requests abiertos
+      contra AVAXSKILLS, corrigiendo los comandos de CLI y la clave de genesis incorrectos que esas issues marcaron,
+      con un diff real, no solo el reporte
+      (<a href="https://github.com/Ayomisco/avaxskills/pull/5" target="_blank" rel="noopener noreferrer">#5</a>,
+      <a href="https://github.com/Ayomisco/avaxskills/pull/6" target="_blank" rel="noopener noreferrer">#6</a>,
+      <a href="https://github.com/Ayomisco/avaxskills/pull/7" target="_blank" rel="noopener noreferrer">#7</a>,
+      ninguno mergeado todavía). Reporte completo:
       <a href="https://github.com/kumplyprotocol/Kumply/blob/main/docs/audits/avalanche-ecosystem-audit-2026-08-17.md" target="_blank" rel="noopener noreferrer">docs/audits</a>.</p>
   </section>
 

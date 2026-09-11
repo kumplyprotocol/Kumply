@@ -575,3 +575,30 @@ WBTC.e, and similar) -- it does not include `avalanchego`, `subnet-evm`, `icm-co
 contract. **None of the findings from this campaign, nor KUMPLY's own contracts, fall inside this
 program's scope** -- they were correctly routed as GitHub issues/PRs all along, not bug bounty
 submissions, and that stays the right channel going forward.
+
+## Round 10 (11 Sep 2026) - issues #2/#3/#4 escalated to real pull requests
+
+All three upstream issues had gone unanswered for weeks, including same-day follow-up nudges.
+Forked `Ayomisco/avaxskills` to `Eras256/avaxskills` and opened three pull requests, each fixing
+exactly what its issue thread flagged, re-verified against the live source of
+`ava-labs/platform-cli` and `ava-labs/avalanche-cli` before writing any diff rather than trusting
+the original findings from memory:
+
+- [PR #5](https://github.com/Ayomisco/avaxskills/pull/5) (closes #2) -- `subnet-deployment.md`,
+  `validator-management.md`, `custom-vm.md`. Re-reading the real source surfaced more of the same
+  bug class than the issue originally named: the installed binary is `platform-cli`, not bare
+  `platform`; the real primary-network command group is `primary`, not `primaryNetwork` (with
+  several flag names also wrong); `validator add` doesn't exist, the real subcommand is
+  `add-permissionless`; and two leftover `avalanche subnet configure`/`describe` references
+  pointed at a command group that no longer exists in avalanche-cli at all.
+- [PR #6](https://github.com/Ayomisco/avaxskills/pull/6) (closes #3) -- `precompiles.md`, the
+  `transactionAllowListConfig` -> `txAllowListConfig` genesis-key fix.
+- [PR #7](https://github.com/Ayomisco/avaxskills/pull/7) (closes #4) -- `wagmi.md`, updated "v2
+  (latest)" to v3 and replaced the deprecated `useAccount` call with `useConnection` (confirmed as
+  a same-shape drop-in rename against wagmi's own type declarations, not just the deprecation
+  notice).
+
+All three commits carry `Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>`, and `npm run
+validate` (the repo's own CI check) passed locally for every edited file before each PR was
+opened. **None of the three are merged yet** -- README and the pitch deck link to each PR's live
+status rather than asserting it's accepted.
