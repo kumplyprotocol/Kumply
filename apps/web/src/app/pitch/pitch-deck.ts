@@ -551,10 +551,10 @@ export const DECK_HTML = `
       for September 24, 2026. <strong>Building on Avalanche is what we do, grant or no grant.</strong>
     </p>
     <p class="note" style="margin-top: 1rem;"><strong>Bus factor, addressed:</strong> all shipped code on this
-      specific repo runs through one founder (Giovanny) today - 162 commits, verifiable in the public repo.
-      Monserrat is the team's Dev Lead: she ships code elsewhere in the broader portfolio, and leads product,
-      design, and business development here. No second engineer on this repo specifically today - flagged plainly
-      rather than implied otherwise.</p>
+      specific repo runs through one founder today (Giovanny - every commit attributable to him, verifiable in the
+      repo's public history). Monserrat is the team's Dev Lead: she ships code elsewhere in the broader portfolio,
+      and leads product, design, and business development here. No second engineer on this repo specifically today
+      - flagged plainly rather than implied otherwise.</p>
   </section>
 
   <!-- 11 · Roadmap & funds -->
@@ -1055,10 +1055,10 @@ export const DECK_HTML_ES = `
       Team1, programado para el 24 de septiembre de 2026. <strong>Construir en Avalanche es lo que hacemos, con o sin grant.</strong>
     </p>
     <p class="note" style="margin-top: 1rem;"><strong>Bus factor, resuelto:</strong> todo el código de este repo
-      específico pasa hoy por un solo founder (Giovanny) - 162 commits, verificable en el repo público. Monserrat es
-      la Dev Lead del equipo: sí escribe código en otros proyectos del portafolio más amplio, y aquí lidera
-      producto, diseño y desarrollo de negocio. Ningún segundo ingeniero en este repo específicamente hoy - señalado
-      con claridad en vez de dar a entender lo contrario.</p>
+      específico pasa hoy por un solo founder (Giovanny - cada commit atribuible a él, verificable en el historial
+      público del repo). Monserrat es la Dev Lead del equipo: sí escribe código en otros proyectos del portafolio
+      más amplio, y aquí lidera producto, diseño y desarrollo de negocio. Ningún segundo ingeniero en este repo
+      específicamente hoy - señalado con claridad en vez de dar a entender lo contrario.</p>
   </section>
 
   <!-- 11 · Roadmap y fondos -->
