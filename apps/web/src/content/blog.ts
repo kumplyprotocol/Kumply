@@ -42,6 +42,31 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <p>To their credit, the design keeps a principle we also hold: biometric data never touches the chain. NEC's own language for it is direct: "biometric data never goes on-chain. A user's face and purchase history stay inside their own wallet." Only proof that verification happened, plus the minimum transaction data, gets recorded.</p>
 
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 190" width="100%" role="img" aria-label="Diagram: NEC and Ava Labs' proposed three-chain design - a permissioned identity chain holding FaceVC registries and revocation status, connected via ICM to SETTL for stablecoin settlement, and separately to the public C-Chain for rewards">
+<rect x="8" y="45" width="200" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PERMISSIONED L1</text>
+<text x="26" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">FaceVC registry</text>
+<text x="26" y="118" font-size="11" fill="var(--text-tertiary)">identity + revocation</text>
+<rect x="255" y="45" width="190" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="273" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">SETTL</text>
+<text x="273" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Payment chain</text>
+<text x="273" y="118" font-size="11" fill="var(--text-tertiary)">stablecoin settlement</text>
+<rect x="492" y="45" width="200" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="510" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">C-CHAIN</text>
+<text x="510" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Public chain</text>
+<text x="510" y="118" font-size="11" fill="var(--text-tertiary)">rewards, promo tokens</text>
+<text x="330" y="25" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="10" letter-spacing="0.5" fill="var(--text-secondary)">ICM</text>
+<path d="M210 90 L253 90" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nec-arrow1)"/>
+<text x="568" y="25" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="10" letter-spacing="0.5" fill="var(--text-secondary)">ICM</text>
+<path d="M447 90 L490 90" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nec-arrow2)"/>
+<defs>
+<marker id="nec-arrow1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="nec-arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
+
 <h2>The honest part: we're not biometrics-free either</h2>
 
 <p>It would be easy to draw a clean line here, NEC does biometrics, KUMPLY does documents, and it wouldn't be true. Sumsub, the KYC vendor behind our own Tier 1-3 attestations, already runs real facial biometrics as part of a normal verification: 3D face mapping and liveness detection to catch a photo of a photo, and face matching between a selfie and an ID document at around 99% confidence. If we said we don't use biometrics, that would be false, and we'd rather lose an argument than tell you something untrue about our own stack.</p>
@@ -51,6 +76,42 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Not in whether biometrics are involved. It's in what kind of company is behind them, and how narrow the thing being built actually is. NEC is a biometrics company first, holding the top spot in NIST's 1:N identification benchmark with a 0.07% error rate against a 12-million-person database, and it built its own recognition technology directly into a three-chain payment architecture, for one specific flow: face-verified stablecoin payments for travelers. It's vertical, specialized, and purpose-built for that use case.</p>
 
 <p>KUMPLY is the opposite bet. We're a general-purpose compliance layer: Tier 1-3 for individual KYC, Tier 4 for business KYB, Tier 5 for the accountable owner behind an AI agent. We don't build our own verification technology, and that's deliberate. Sumsub is a vendor we chose, not a company we are, and we could swap it for another provider without touching <code>AttestationStore</code> or <code>ComplianceGate</code>. Any dApp on Avalanche can call <code>verify(address)</code> against our system for any of those three tiers. NEC built one door for one room. We built the hallway.</p>
+
+<h2>Three doors off that hallway, live today</h2>
+
+<p>Not a hypothetical. <a href="https://kumply.xyz/demo" target="_blank" rel="noopener noreferrer">kumply.xyz/demo</a> runs the same <code>AttestationStore</code>/<code>ComplianceGate</code> pair against three different real scenarios, no login required: a lending protocol gating deposits behind Tier 2 (Standard KYC), a tokenized real-estate fund requiring Tier 4 (Business/KYB) so only corporate entities can invest, and an AI agent marketplace requiring Tier 5 (KYA) before an agent can list itself for trading. Same two contracts, three unrelated use cases, one <code>verify(address)</code> call each.</p>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 260" width="100%" role="img" aria-label="Diagram: one AttestationStore and ComplianceGate pair, verified via verify(address), serving three unrelated real use cases live at kumply.xyz/demo - DeFi protocol access at Tier 2, a tokenized real-estate fund at Tier 4, and an AI agent marketplace at Tier 5">
+<rect x="8" y="80" width="200" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="107" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">ONE PAIR</text>
+<text x="26" y="133" font-size="14" font-weight="800" fill="var(--text-primary)">AttestationStore +</text>
+<text x="26" y="151" font-size="14" font-weight="800" fill="var(--text-primary)">ComplianceGate</text>
+<text x="26" y="169" font-family="'Fira Code', Consolas, monospace" font-size="10" fill="var(--text-tertiary)">verify(address)</text>
+<rect x="460" y="8" width="232" height="64" rx="10" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="478" y="30" font-size="13" font-weight="800" fill="var(--text-primary)">DeFi Protocol Access</text>
+<text x="478" y="48" font-family="'Fira Code', Consolas, monospace" font-size="10" fill="var(--accent)">TIER 2 &#183; Standard KYC</text>
+<text x="478" y="63" font-size="10" fill="var(--text-tertiary)">kumply.xyz/demo</text>
+<rect x="460" y="98" width="232" height="64" rx="10" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="478" y="120" font-size="13" font-weight="800" fill="var(--text-primary)">RWA Tokenized Asset</text>
+<text x="478" y="138" font-family="'Fira Code', Consolas, monospace" font-size="10" fill="var(--accent)">TIER 4 &#183; Business KYB</text>
+<text x="478" y="153" font-size="10" fill="var(--text-tertiary)">kumply.xyz/demo</text>
+<rect x="460" y="188" width="232" height="64" rx="10" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="478" y="210" font-size="13" font-weight="800" fill="var(--text-primary)">AI Agent Marketplace</text>
+<text x="478" y="228" font-family="'Fira Code', Consolas, monospace" font-size="10" fill="var(--accent)">TIER 5 &#183; KYA</text>
+<text x="478" y="243" font-size="10" fill="var(--text-tertiary)">kumply.xyz/demo</text>
+<path d="M210 100 L458 40" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nec-hallway1)"/>
+<path d="M210 130 L458 130" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nec-hallway2)"/>
+<path d="M210 160 L458 220" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nec-hallway3)"/>
+<defs>
+<marker id="nec-hallway1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="nec-hallway2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="nec-hallway3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
+
+<p>Zoom out further and the market case matches the product one: Franklin Templeton already runs its BENJI money market fund on Avalanche, and KKR tokenized a slice of its Health Care Strategic Growth Fund II here too. Institutional money is already showing up expecting exactly the kind of gate a general compliance layer provides, not a single vertical flow.</p>
 
 <h2>The part we'll say plainly</h2>
 
@@ -67,6 +128,31 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <p>Hay que reconocerles esto: el diseño mantiene un principio que nosotros también sostenemos, el dato biométrico nunca toca la cadena. La frase propia de NEC lo dice directo: "el dato biométrico nunca va on-chain. El rostro y el historial de compra del usuario se quedan dentro de su propia wallet." Solo se registra la prueba de que la verificación ocurrió, más el dato mínimo de la transacción.</p>
 
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 190" width="100%" role="img" aria-label="Diagrama: el diseno de tres cadenas propuesto por NEC y Ava Labs - una cadena de identidad permisionada con el registro de FaceVC y el estado de revocacion, conectada via ICM a SETTL para el settlement de stablecoins, y por separado a la C-Chain publica para recompensas">
+<rect x="8" y="45" width="200" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">L1 PERMISIONADA</text>
+<text x="26" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Registro FaceVC</text>
+<text x="26" y="118" font-size="11" fill="var(--text-tertiary)">identidad + revocación</text>
+<rect x="255" y="45" width="190" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="273" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">SETTL</text>
+<text x="273" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Cadena de pagos</text>
+<text x="273" y="118" font-size="11" fill="var(--text-tertiary)">settlement de stablecoins</text>
+<rect x="492" y="45" width="200" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="510" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">C-CHAIN</text>
+<text x="510" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Cadena pública</text>
+<text x="510" y="118" font-size="11" fill="var(--text-tertiary)">recompensas, tokens promo</text>
+<text x="330" y="25" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="10" letter-spacing="0.5" fill="var(--text-secondary)">ICM</text>
+<path d="M210 90 L253 90" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nec-arrow1-es)"/>
+<text x="568" y="25" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="10" letter-spacing="0.5" fill="var(--text-secondary)">ICM</text>
+<path d="M447 90 L490 90" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nec-arrow2-es)"/>
+<defs>
+<marker id="nec-arrow1-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="nec-arrow2-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
+
 <h2>La parte honesta: nosotros tampoco estamos libres de biometría</h2>
 
 <p>Sería fácil trazar una línea limpia aquí, NEC usa biometría, KUMPLY usa documentos, y sería falso. Sumsub, el proveedor de KYC detrás de nuestras propias attestations Tier 1-3, ya corre reconocimiento facial real como parte de una verificación normal: face-mapping 3D y detección de liveness para atrapar la foto de una foto, y matching entre una selfie y un documento de identidad con cerca de 99% de confianza. Si dijéramos que no usamos biometría, sería falso, y preferimos perder un argumento antes que decirte algo que no es cierto sobre nuestra propia arquitectura.</p>
@@ -76,6 +162,42 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>No está en si hay biometría involucrada o no. Está en qué tipo de empresa hay detrás, y qué tan angosto es lo que de verdad se está construyendo. NEC es primero una empresa de biometría, con el primer lugar en el benchmark de identificación 1:N del NIST con una tasa de error de 0.07% contra una base de 12 millones de imágenes, y construyó su propia tecnología de reconocimiento directo dentro de una arquitectura de pagos de tres cadenas, para un flujo específico: pagos en stablecoin verificados por rostro para viajeros. Es vertical, especializada, y construida a la medida de ese caso de uso.</p>
 
 <p>KUMPLY es la apuesta opuesta. Somos una capa de compliance de propósito general: Tier 1-3 para KYC de individuos, Tier 4 para KYB de empresas, Tier 5 para el dueño responsable detrás de un agente de IA. No construimos nuestra propia tecnología de verificación, y eso es deliberado. Sumsub es un proveedor que elegimos, no una empresa que somos, y podríamos cambiarlo por otro proveedor sin tocar <code>AttestationStore</code> ni <code>ComplianceGate</code>. Cualquier dApp en Avalanche puede llamar a <code>verify(address)</code> contra nuestro sistema para cualquiera de esos tres tiers. NEC construyó una puerta para un cuarto. Nosotros construimos el pasillo.</p>
+
+<h2>Tres puertas de ese pasillo, en vivo hoy</h2>
+
+<p>No es hipotético. <a href="https://kumply.xyz/demo" target="_blank" rel="noopener noreferrer">kumply.xyz/demo</a> corre el mismo par <code>AttestationStore</code>/<code>ComplianceGate</code> contra tres escenarios reales distintos, sin login: un protocolo de préstamos que exige Tier 2 (KYC Estándar) para depositar, un fondo tokenizado de bienes raíces que exige Tier 4 (Empresarial/KYB) para que solo entidades corporativas inviertan, y un marketplace de agentes de IA que exige Tier 5 (KYA) antes de que un agente pueda listarse para operar. Los mismos dos contratos, tres casos de uso sin relación entre sí, una sola llamada a <code>verify(address)</code> cada uno.</p>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 260" width="100%" role="img" aria-label="Diagrama: un solo par AttestationStore y ComplianceGate, verificado via verify(address), sirviendo tres casos de uso reales sin relacion entre si, en vivo en kumply.xyz/demo - acceso a protocolo DeFi en Tier 2, un fondo tokenizado de bienes raices en Tier 4, y un marketplace de agentes de IA en Tier 5">
+<rect x="8" y="80" width="200" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="107" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">UN SOLO PAR</text>
+<text x="26" y="133" font-size="14" font-weight="800" fill="var(--text-primary)">AttestationStore +</text>
+<text x="26" y="151" font-size="14" font-weight="800" fill="var(--text-primary)">ComplianceGate</text>
+<text x="26" y="169" font-family="'Fira Code', Consolas, monospace" font-size="10" fill="var(--text-tertiary)">verify(address)</text>
+<rect x="460" y="8" width="232" height="64" rx="10" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="478" y="30" font-size="13" font-weight="800" fill="var(--text-primary)">Acceso a Protocolo DeFi</text>
+<text x="478" y="48" font-family="'Fira Code', Consolas, monospace" font-size="10" fill="var(--accent)">TIER 2 &#183; KYC Estándar</text>
+<text x="478" y="63" font-size="10" fill="var(--text-tertiary)">kumply.xyz/demo</text>
+<rect x="460" y="98" width="232" height="64" rx="10" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="478" y="120" font-size="13" font-weight="800" fill="var(--text-primary)">Activo Tokenizado RWA</text>
+<text x="478" y="138" font-family="'Fira Code', Consolas, monospace" font-size="10" fill="var(--accent)">TIER 4 &#183; KYB Empresarial</text>
+<text x="478" y="153" font-size="10" fill="var(--text-tertiary)">kumply.xyz/demo</text>
+<rect x="460" y="188" width="232" height="64" rx="10" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="478" y="210" font-size="13" font-weight="800" fill="var(--text-primary)">Marketplace de Agentes IA</text>
+<text x="478" y="228" font-family="'Fira Code', Consolas, monospace" font-size="10" fill="var(--accent)">TIER 5 &#183; KYA</text>
+<text x="478" y="243" font-size="10" fill="var(--text-tertiary)">kumply.xyz/demo</text>
+<path d="M210 100 L458 40" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nec-hallway1-es)"/>
+<path d="M210 130 L458 130" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nec-hallway2-es)"/>
+<path d="M210 160 L458 220" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nec-hallway3-es)"/>
+<defs>
+<marker id="nec-hallway1-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="nec-hallway2-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="nec-hallway3-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
+
+<p>Si alejás la mirada, el caso de mercado coincide con el de producto: Franklin Templeton ya corre su fondo del mercado de dinero BENJI en Avalanche, y KKR tokenizó una parte de su Health Care Strategic Growth Fund II acá también. El dinero institucional ya está llegando esperando exactamente el tipo de gate que da una capa de compliance general, no un solo flujo vertical.</p>
 
 <h2>La parte que decimos sin rodeos</h2>
 
