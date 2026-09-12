@@ -550,11 +550,10 @@ export const DECK_HTML = `
       traceability demo), shared with the community. Now running a Team1-approved technical workshop on KYA, scheduled
       for September 24, 2026. <strong>Building on Avalanche is what we do, grant or no grant.</strong>
     </p>
-    <p class="note" style="margin-top: 1rem;"><strong>Bus factor, addressed:</strong> all shipped code on this
-      specific repo runs through one founder today (Giovanny - every commit attributable to him, verifiable in the
-      repo's public history). Monserrat is the team's Dev Lead: she ships code elsewhere in the broader portfolio,
-      and leads product, design, and business development here. No second engineer on this repo specifically today
-      - flagged plainly rather than implied otherwise.</p>
+    <p class="note" style="margin-top: 1rem;"><strong>Bus factor, addressed:</strong> most shipped code still runs
+      through one founder today (Giovanny - every commit attributable to him, verifiable in the repo's public
+      history). Monserrat has now shipped a real fix here too (commit <code>49177e0</code>, address validation
+      before <code>readContract</code>) - a second contributor is real, just not yet at parity.</p>
   </section>
 
   <!-- 11 · Roadmap & funds -->
@@ -1054,11 +1053,11 @@ export const DECK_HTML_ES = `
       trazabilidad agrícola), compartidos con la comunidad. Ahora corriendo un workshop técnico sobre KYA aprobado por
       Team1, programado para el 24 de septiembre de 2026. <strong>Construir en Avalanche es lo que hacemos, con o sin grant.</strong>
     </p>
-    <p class="note" style="margin-top: 1rem;"><strong>Bus factor, resuelto:</strong> todo el código de este repo
-      específico pasa hoy por un solo founder (Giovanny - cada commit atribuible a él, verificable en el historial
-      público del repo). Monserrat es la Dev Lead del equipo: sí escribe código en otros proyectos del portafolio
-      más amplio, y aquí lidera producto, diseño y desarrollo de negocio. Ningún segundo ingeniero en este repo
-      específicamente hoy - señalado con claridad en vez de dar a entender lo contrario.</p>
+    <p class="note" style="margin-top: 1rem;"><strong>Bus factor, resuelto:</strong> la mayoría del código enviado
+      sigue pasando hoy por un solo founder (Giovanny - cada commit atribuible a él, verificable en el historial
+      público del repo). Monserrat ya envió un fix real acá también (commit <code>49177e0</code>, validación de
+      dirección antes de <code>readContract</code>) - un segundo contribuidor es real, solo que todavía no está a
+      la par.</p>
   </section>
 
   <!-- 11 · Roadmap y fondos -->
