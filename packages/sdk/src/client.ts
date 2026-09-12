@@ -1,4 +1,4 @@
-import { createPublicClient, http, defineChain, type PublicClient, type Chain } from "viem";
+import { createPublicClient, http, defineChain, isAddress, type PublicClient, type Chain } from "viem";
 import { avalancheFuji, avalanche } from "viem/chains";
 import type {
   AttestationResult,
@@ -86,16 +86,30 @@ export class KumplyClient {
   }
 
   /**
+   * Validate that a string is a well-formed EVM address before it's used in
+   * a contract call. Throws a clear `@kumply/sdk` error naming the bad input
+   * instead of letting an unvalidated string reach `readContract`, where
+   * viem or the RPC would otherwise throw an opaque low-level error.
+   */
+  private assertAddress(address: string): asserts address is `0x${string}` {
+    if (!isAddress(address)) {
+      throw new Error(`@kumply/sdk: "${address}" is not a valid address.`);
+    }
+  }
+
+  /**
    * Verify the attestation status for a given address.
    * @param address - The wallet address to verify
    * @returns The attestation result with verified status, tier, and timestamps
    */
   async verify(address: string): Promise<AttestationResult> {
+    this.assertAddress(address);
+
     const result = await this.publicClient.readContract({
       address: this.contractAddress,
       abi: ATTESTATION_STORE_ABI,
       functionName: "verify",
-      args: [address as `0x${string}`],
+      args: [address],
     });
 
     const [verified, tier, timestamp, expiry] = result as [boolean, number, bigint, bigint];
@@ -114,11 +128,13 @@ export class KumplyClient {
    * @returns Full attestation data or null if not found
    */
   async getAttestation(address: string): Promise<Attestation | null> {
+    this.assertAddress(address);
+
     const result = await this.publicClient.readContract({
       address: this.contractAddress,
       abi: ATTESTATION_STORE_ABI,
       functionName: "attestations",
-      args: [address as `0x${string}`],
+      args: [address],
     });
 
     const [verified, tier, timestamp, expiry, verifier] = result as [

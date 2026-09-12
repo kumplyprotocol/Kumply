@@ -229,6 +229,43 @@ describe('@kumply/sdk', () => {
     });
   });
 
+  describe('Address validation', () => {
+    const client = new KumplyClient({
+      network: 'fuji',
+      contractAddress: DEPLOYMENTS.fuji.attestationStore,
+    });
+
+    // Malformed inputs never reach readContract - each of these should
+    // reject synchronously with a clear SDK error, not an opaque
+    // low-level viem/RPC failure.
+    const badAddresses = [
+      ['wrong length (too short)', '0x1234'],
+      ['missing 0x prefix', 'a3Bc5564A18e107807aF41fF2a5215Db050b22dD'],
+      ['non-hex characters', '0xzzzz5564A18e107807aF41fF2a5215Db050b22dD'],
+      ['empty string', ''],
+    ] as const;
+
+    it.each(badAddresses)('verify() should reject a malformed address: %s', async (_label, bad) => {
+      await expect(client.verify(bad)).rejects.toThrow('@kumply/sdk');
+    });
+
+    it.each(badAddresses)('getAttestation() should reject a malformed address: %s', async (_label, bad) => {
+      await expect(client.getAttestation(bad)).rejects.toThrow('@kumply/sdk');
+    });
+
+    it('should name the bad input in the error message', async () => {
+      await expect(client.verify('not-an-address')).rejects.toThrow('not-an-address');
+    });
+
+    it('isVerified() should reject a malformed address (inherits verify()\'s validation)', async () => {
+      await expect(client.isVerified('not-an-address')).rejects.toThrow('@kumply/sdk');
+    });
+
+    it('hasTier() should reject a malformed address (inherits verify()\'s validation)', async () => {
+      await expect(client.hasTier('not-an-address', 1)).rejects.toThrow('@kumply/sdk');
+    });
+  });
+
   describe('TIER constants', () => {
     it('should map the five tiers to contract values', () => {
       expect(TIER.BASIC).toBe(1);
