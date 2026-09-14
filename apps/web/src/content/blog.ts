@@ -20,7 +20,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "2026-09-14",
     author: {
       name: "Giovanny Amador",
-      role: { en: "Co-founder, Technical Lead", es: "Co-founder, Líder Técnico" },
+      role: { en: "Co-founder, Engineering Lead", es: "Co-founder, Líder de Ingeniería" },
     },
     readMinutes: 5,
     category: "DEEP DIVE",
@@ -186,7 +186,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "2026-09-10",
     author: {
       name: "Monserrat Mendoza",
-      role: { en: "Co-founder, Product & Design", es: "Co-founder, Producto y Diseño" },
+      role: { en: "Co-founder, Dev Lead", es: "Co-founder, Líder de Desarrollo" },
     },
     readMinutes: 5,
     category: "DEEP DIVE",
@@ -378,7 +378,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "2026-09-07",
     author: {
       name: "Giovanny Amador",
-      role: { en: "Co-founder, Technical Lead", es: "Co-founder, Líder Técnico" },
+      role: { en: "Co-founder, Engineering Lead", es: "Co-founder, Líder de Ingeniería" },
     },
     readMinutes: 6,
     category: "DEEP DIVE",
@@ -536,7 +536,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "2026-08-31",
     author: {
       name: "Monserrat Mendoza",
-      role: { en: "Co-founder, Product & Design", es: "Co-founder, Producto y Diseño" },
+      role: { en: "Co-founder, Dev Lead", es: "Co-founder, Líder de Desarrollo" },
     },
     readMinutes: 4,
     category: "DEEP DIVE",
@@ -646,7 +646,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "2026-08-18",
     author: {
       name: "Monserrat Mendoza",
-      role: { en: "Co-founder, Product & Design", es: "Co-founder, Producto y Diseño" },
+      role: { en: "Co-founder, Dev Lead", es: "Co-founder, Líder de Desarrollo" },
     },
     readMinutes: 4,
     title: {
@@ -731,7 +731,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "2026-08-24",
     author: {
       name: "Giovanny Amador",
-      role: { en: "Co-founder, Technical Lead", es: "Co-founder, Líder Técnico" },
+      role: { en: "Co-founder, Engineering Lead", es: "Co-founder, Líder de Ingeniería" },
     },
     readMinutes: 3,
     category: "AVALANCHE NEWS",
