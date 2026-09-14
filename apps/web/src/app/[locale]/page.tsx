@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
-import Hero3DWrapper from "@/components/Hero3DWrapper";
+import { HeroMark } from "@/components/HeroMark";
 import { KumplyClient } from "@kumply/sdk";
 
 async function getTotalAttestations(): Promise<number> {
@@ -67,9 +67,9 @@ export default async function Home() {
             </div>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} className="hero-3d-container">
-            <div style={{ width: '100%', maxWidth: '600px' }}>
-              <Hero3DWrapper />
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} className="hero-visual-container">
+            <div style={{ width: '100%', maxWidth: '460px' }}>
+              <HeroMark />
             </div>
           </div>
         </div>
@@ -357,7 +357,7 @@ export default async function Home() {
           .hero-grid .page-title { text-align: center !important; font-size: 2.4rem !important; }
           .hero-grid .page-description { text-align: center !important; margin: 0 auto 2.5rem auto !important; }
           .hero-grid > div:first-child > div:last-child { flex-direction: column; width: 100%; max-width: 320px; margin: 0 auto; }
-          .hero-3d-container { grid-row: 1; }
+          .hero-visual-container { grid-row: 1; }
         }
         @media (max-width: 480px) {
           .hero-grid .page-title { font-size: 1.9rem !important; }
