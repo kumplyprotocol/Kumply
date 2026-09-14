@@ -560,6 +560,15 @@ a:hover {
   letter-spacing: 0.06em;
 }
 
+/* Footer logo mark: Navbar picks its variant in JS (already has theme
+   state for the sun/moon toggle); Footer is a server component, so it
+   renders both variants and lets the same [data-theme="light"] CSS
+   switch used for .code-block above pick the visible one. */
+.footer__logo-img--light { display: none; }
+.footer__logo-img--dark { display: inline-block; }
+[data-theme="light"] .footer__logo-img--light { display: inline-block; }
+[data-theme="light"] .footer__logo-img--dark { display: none; }
+
 /* — Desktop Navigation — */
 .navbar__desktop {
   display: flex;

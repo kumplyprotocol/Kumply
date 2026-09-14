@@ -1,7 +1,5 @@
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
-import KumplyLogo from "@/app/images/KumplyIcon.png";
 
 export function Footer() {
   const tFooter = useTranslations('Footer');
@@ -36,7 +34,8 @@ export function Footer() {
           {/* Column 1: Brand */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <Link href="/" aria-label="KUMPLY home" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}>
-              <Image src={KumplyLogo} alt="Kumply Logo" width={28} height={28} className="footer__logo-img" style={{ borderRadius: '6px' }} />
+              <img src="/branding-kumply/svg/kumply-icon.svg" alt="" aria-hidden="true" width={28} height={28} className="footer__logo-img footer__logo-img--light" />
+              <img src="/branding-kumply/svg/kumply-icon-on-dark.svg" alt="" aria-hidden="true" width={28} height={28} className="footer__logo-img footer__logo-img--dark" />
               <span style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '0.05em' }}>KUMPLY</span>
             </Link>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.6 }}>

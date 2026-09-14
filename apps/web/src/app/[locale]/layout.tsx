@@ -32,8 +32,13 @@ export const metadata: Metadata = {
   keywords: ["KYC", "KYB", "KYA", "compliance", "Avalanche", "DeFi", "blockchain", "identity", "LatAm", "eERC", "Interchain Messaging", "ICM", "Fuji", "non-custodial", "on-chain", "Avalanche L1", "AI agent compliance"],
   metadataBase: new URL("https://kumply.xyz"),
   icons: {
-    icon: "/favicon.png",
-    apple: "/favicon.png",
+    icon: [
+      { url: "/branding-kumply/png/favicon-16.png", sizes: "16x16", type: "image/png" },
+      { url: "/branding-kumply/png/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/branding-kumply/png/favicon-48.png", sizes: "48x48", type: "image/png" },
+      { url: "/branding-kumply/png/favicon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: "/branding-kumply/png/favicon-180.png",
   },
   alternates: {
     canonical: "/",
@@ -51,7 +56,7 @@ export const metadata: Metadata = {
     siteName: "KUMPLY",
     images: [
       {
-        url: "/og-image.png",
+        url: "/branding-kumply/png/social-banner-1200x630.png",
         width: 1200,
         height: 630,
         alt: "KUMPLY — Compliance Infrastructure for the Avalanche® Public Blockchain",
@@ -62,7 +67,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "On-Chain Compliance for the Avalanche® Blockchain",
     description: "Verify once, access everywhere. KYC, KYB, and KYA compliance credentials via encrypted tokens and Interchain Messaging (ICM) on the Avalanche® blockchain. Non-custodial, software-only, no PII stored.",
-    images: ["/og-image.png"],
+    images: ["/branding-kumply/png/social-banner-1200x630.png"],
   },
   robots: {
     index: true,

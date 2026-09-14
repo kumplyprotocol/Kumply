@@ -12,8 +12,13 @@ export const metadata: Metadata = {
   description:
     "Compliance infrastructure for the Avalanche ecosystem: on-chain KYC/KYB/KYA attestations live on Fuji, a KYB-gated L1, and a milestone-scoped roadmap to mainnet.",
   icons: {
-    icon: "/favicon.png",
-    apple: "/favicon.png",
+    icon: [
+      { url: "/branding-kumply/png/favicon-16.png", sizes: "16x16", type: "image/png" },
+      { url: "/branding-kumply/png/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/branding-kumply/png/favicon-48.png", sizes: "48x48", type: "image/png" },
+      { url: "/branding-kumply/png/favicon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: "/branding-kumply/png/favicon-180.png",
   },
   openGraph: {
     title: "KUMPLY - Grant Pitch Deck",
@@ -23,7 +28,7 @@ export const metadata: Metadata = {
     siteName: "KUMPLY",
     images: [
       {
-        url: "/og-image.png",
+        url: "/branding-kumply/png/social-banner-1200x630.png",
         width: 1200,
         height: 630,
         alt: "KUMPLY - Grant Pitch Deck",
@@ -33,7 +38,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "KUMPLY - Grant Pitch Deck",
-    images: ["/og-image.png"],
+    images: ["/branding-kumply/png/social-banner-1200x630.png"],
   },
   robots: {
     index: true,

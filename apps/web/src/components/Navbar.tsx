@@ -5,8 +5,6 @@ import { usePathname, useRouter, Link } from "@/i18n/routing";
 import { useTranslations, useLocale } from "next-intl";
 import { useAccount, useDisconnect } from "wagmi";
 import { useAppKit } from "@reown/appkit/react";
-import Image from "next/image";
-import KumplyLogo from "@/app/images/KumplyIcon.png";
 import { useKumplyNetwork } from "@/providers/KumplyNetworkProvider";
 
 export function Navbar() {
@@ -119,7 +117,11 @@ export function Navbar() {
         <div className="navbar__inner">
           {/* LOGO */}
           <Link href="/" className="navbar__logo">
-            <Image src={KumplyLogo} alt="Kumply Logo" width={32} height={32} className="navbar__logo-img" style={{ borderRadius: '8px' }} />
+            {theme === "dark" ? (
+              <img src="/branding-kumply/svg/kumply-icon-on-dark.svg" alt="Kumply Logo" width={32} height={32} className="navbar__logo-img" />
+            ) : (
+              <img src="/branding-kumply/svg/kumply-icon.svg" alt="Kumply Logo" width={32} height={32} className="navbar__logo-img" />
+            )}
             <span className="navbar__brand">KUMPLY</span>
           </Link>
 
