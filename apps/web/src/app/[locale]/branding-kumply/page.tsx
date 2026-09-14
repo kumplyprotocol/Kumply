@@ -1,10 +1,39 @@
-import { useTranslations } from "next-intl";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { BrandAssetCard } from "@/components/BrandAssetCard";
 
 const ASSET_BASE = "/branding-kumply";
+const OG_IMAGE = `${ASSET_BASE}/png/social-banner-1200x630.png`;
 
-export default function BrandingKumplyPage() {
-  const t = useTranslations("Branding");
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("Branding");
+  return {
+    title: t("title"),
+    description: t("subtitle"),
+    openGraph: {
+      title: t("title"),
+      description: t("subtitle"),
+      type: "website",
+      images: [
+        {
+          url: OG_IMAGE,
+          width: 1200,
+          height: 630,
+          alt: t("title"),
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("subtitle"),
+      images: [OG_IMAGE],
+    },
+  };
+}
+
+export default async function BrandingKumplyPage() {
+  const t = await getTranslations("Branding");
 
   return (
     <div className="container branding-container">
