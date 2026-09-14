@@ -16,6 +16,172 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "avaxskills-from-bug-report-to-pull-request",
+    date: "2026-09-14",
+    author: {
+      name: "Giovanny Amador",
+      role: { en: "Co-founder, Technical Lead", es: "Co-founder, Líder Técnico" },
+    },
+    readMinutes: 5,
+    category: "DEEP DIVE",
+    title: {
+      en: "AVAXSKILLS Had Three Real Bugs. When No One Answered, We Fixed Them Ourselves.",
+      es: "AVAXSKILLS Tenía Tres Bugs Reales. Cuando Nadie Respondió, Los Arreglamos Nosotros.",
+    },
+    excerpt: {
+      en: "While auditing our own contracts against real Avalanche source, we found three real documentation bugs in AVAXSKILLS, the community skills package other agents build from. Weeks of silence later, we forked it and sent the fix ourselves, and rereading the real source turned up more bugs than the original reports had.",
+      es: "Mientras auditábamos nuestros propios contratos contra el código real de Avalanche, encontramos tres bugs reales de documentación en AVAXSKILLS, el paquete de skills community-maintained del que parten otros agentes. Semanas de silencio después, hicimos fork y enviamos el fix nosotros mismos, y releer el código real destapó más bugs de los que tenían los reportes originales.",
+    },
+    bodyHtml: {
+      en: `
+<p>On August 17, 2026, the same day KUMPLY audited its own <code>KumplyValidatorSetManager</code> contract against Avalanche's real reference implementation and found a bug that would have permanently blocked the L1 from activating, the same method turned up something else: three real, reproducible bugs in AVAXSKILLS itself, the community-maintained package of AI agent skills for building on Avalanche that we'd been using as one of our audit inputs.</p>
+
+<h2>What AVAXSKILLS is, and isn't</h2>
+
+<p>Worth being precise about this up front. AVAXSKILLS (<code>Ayomisco/avaxskills</code>, Apache-2.0) is a 66-skill index meant to teach AI coding agents how to build on Avalanche: Subnets, precompiles, wallet integration, and more. It's community-maintained, not an Ava Labs product, and nothing here should read as a knock on official Avalanche tooling. The bugs we found were in the skill package's own documentation of that tooling, not in the tooling itself.</p>
+
+<h2>Three bugs, filed the same day</h2>
+
+<p>The method was simple: instead of trusting a skill file's prose, check what it claims against the actual source it's describing. That turned up three real mismatches, all filed August 17.</p>
+
+<p><a href="https://github.com/Ayomisco/avaxskills/issues/2" target="_blank" rel="noopener noreferrer">Issue #2</a>: the <code>subnet-deployment</code> skill documents CLI commands like <code>platform subnet create</code> that don't exist anywhere in <code>ava-labs/avalanche-cli</code>'s real source. Two follow-up comments on the same issue found the identical problem repeated in two more skill files: <code>validator-management</code> tells an agent to run <code>avalanche primaryNetwork addValidator</code>, when the real command group is <code>primary</code>, not <code>primaryNetwork</code>; and <code>custom-vm</code> tells an agent to run <code>avalanche subnet create/deploy</code>, when the current CLI has no <code>subnet</code> command group left at all.</p>
+
+<p><a href="https://github.com/Ayomisco/avaxskills/issues/3" target="_blank" rel="noopener noreferrer">Issue #3</a>: the <code>precompiles</code> skill's genesis example uses the key <code>transactionAllowListConfig</code>. The real key, confirmed against <code>ava-labs/subnet-evm</code> source, is <code>txAllowListConfig</code>. This one is quietly worse than a command that errors out: Subnet-EVM ignores genesis keys it doesn't recognize instead of rejecting them, so copy-pasting this exact block silently does nothing at all.</p>
+
+<p><a href="https://github.com/Ayomisco/avaxskills/issues/4" target="_blank" rel="noopener noreferrer">Issue #4</a>: the <code>wagmi</code> skill states v2 is the latest version. v3 has since shipped, and the skill's own example imports <code>useAccount</code>, a hook wagmi's own type declarations mark <code>@deprecated</code> in favor of <code>useConnection</code>.</p>
+
+<h2>Weeks of silence</h2>
+
+<p>All three sat open with no maintainer response. Not unusual for a volunteer-maintained package, and not itself damning, just a fact.</p>
+
+<h2>From report to pull request</h2>
+
+<p>On September 11, 2026, we forked the repo to <code>Eras256/avaxskills</code> and opened three pull requests, each pointed at the issue it closes: <a href="https://github.com/Ayomisco/avaxskills/pull/5" target="_blank" rel="noopener noreferrer">PR #5</a> (subnet-deployment, plus the two follow-up findings), <a href="https://github.com/Ayomisco/avaxskills/pull/6" target="_blank" rel="noopener noreferrer">PR #6</a> (precompiles), and <a href="https://github.com/Ayomisco/avaxskills/pull/7" target="_blank" rel="noopener noreferrer">PR #7</a> (wagmi).</p>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 240" width="100%" role="img" aria-label="Diagram: three bugs reported as issues on 17 August (subnet-deployment, precompiles, wagmi) sat open with no maintainer response for weeks, then were escalated on 11 September into three pull requests, each closing its own issue">
+<rect x="8" y="20" width="200" height="90" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="46" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">ISSUE #2 &#183; 17 AUG</text>
+<text x="26" y="72" font-size="14" font-weight="800" fill="var(--text-primary)">subnet-deployment</text>
+<text x="26" y="92" font-size="11" fill="var(--text-tertiary)">+ 2 follow-up comments</text>
+<rect x="255" y="20" width="190" height="90" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="273" y="46" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">ISSUE #3 &#183; 17 AUG</text>
+<text x="273" y="72" font-size="14" font-weight="800" fill="var(--text-primary)">precompiles</text>
+<text x="273" y="92" font-size="11" fill="var(--text-tertiary)">wrong genesis key</text>
+<rect x="492" y="20" width="200" height="90" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="510" y="46" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">ISSUE #4 &#183; 17 AUG</text>
+<text x="510" y="72" font-size="14" font-weight="800" fill="var(--text-primary)">wagmi</text>
+<text x="510" y="92" font-size="11" fill="var(--text-tertiary)">v2 claimed, v3 shipped</text>
+<text x="350" y="140" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="11" letter-spacing="0.5" fill="var(--text-secondary)">weeks, no maintainer response</text>
+<path d="M108 110 L108 150" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#avx-arrow1)"/>
+<path d="M350 110 L350 150" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#avx-arrow2)"/>
+<path d="M592 110 L592 150" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#avx-arrow3)"/>
+<rect x="8" y="150" width="200" height="82" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="176" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PR #5 &#183; 11 SEP</text>
+<text x="26" y="202" font-size="14" font-weight="800" fill="var(--text-primary)">subnet-deployment fix</text>
+<text x="26" y="222" font-family="'Fira Code', Consolas, monospace" font-size="10" fill="var(--text-tertiary)">Closes #2</text>
+<rect x="255" y="150" width="190" height="82" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="273" y="176" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PR #6 &#183; 11 SEP</text>
+<text x="273" y="202" font-size="14" font-weight="800" fill="var(--text-primary)">precompiles fix</text>
+<text x="273" y="222" font-family="'Fira Code', Consolas, monospace" font-size="10" fill="var(--text-tertiary)">Closes #3</text>
+<rect x="492" y="150" width="200" height="82" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="510" y="176" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PR #7 &#183; 11 SEP</text>
+<text x="510" y="202" font-size="14" font-weight="800" fill="var(--text-primary)">wagmi fix</text>
+<text x="510" y="222" font-family="'Fira Code', Consolas, monospace" font-size="10" fill="var(--text-tertiary)">Closes #4</text>
+<defs>
+<marker id="avx-arrow1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="avx-arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="avx-arrow3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
+
+<h2>Writing the actual diff found more bugs than the original report</h2>
+
+<p>Re-reading the real <code>avalanche-cli</code> and <code>platform-cli</code> source line by line, this time to write a working fix rather than just flag a mismatch, surfaced more than the original issue had: <code>subnet convert-l1</code> should be <code>convert-to-l1</code>; <code>l1 add-balance</code> doesn't exist, the real command is <code>l1 increase-validator-balance</code>; and the validator-registration example's flags were wrong too, <code>--stakeAmount</code> should be <code>--weight</code>, <code>--startTime</code>/<code>--endTime</code> should be <code>--start-time</code>/<code>--staking-period</code>. Platform CLI itself turned out to be a genuinely separate binary from <code>avalanche-cli</code>, one Ava Labs' own docs only started pointing to with a deprecation notice sometime between the original issue and the PR, weeks apart. We corrected that detail publicly on the issue thread before opening the PR, rather than let the two accounts quietly disagree.</p>
+
+<h2>Where it actually stands</h2>
+
+<p>As of this post, three PRs, three issues, all still open. None merged. AVAXSKILLS is maintained by one person in their spare time, and that's a completely normal reason for a few weeks of silence, not a strike against the project. We're not going to round "PR opened" up to "accepted," and we'd rather this post age into "still waiting" than into an overclaim someone can check and find wrong.</p>
+
+<p>The habit underneath all of this is the same one that caught the P-Chain conversion bug in our own <code>KumplyValidatorSetManager</code> two days earlier: check the thing against the real, running source, not against what the documentation says about it. It found a critical bug in our own contract, and a quieter but still real one in a tool we use to help write that contract. Full audit trail: <a href="https://github.com/kumplyprotocol/Kumply/blob/main/docs/audits/avalanche-ecosystem-audit-2026-08-17.md" target="_blank" rel="noopener noreferrer">docs/audits</a> and <a href="https://github.com/kumplyprotocol/Kumply/blob/main/docs/AI-USAGE.md" target="_blank" rel="noopener noreferrer">docs/AI-USAGE.md</a>.</p>
+`,
+      es: `
+<p>El 17 de agosto de 2026, el mismo día que KUMPLY auditó su propio contrato <code>KumplyValidatorSetManager</code> contra la implementación de referencia real de Avalanche y encontró un bug que hubiera bloqueado la activación de la L1 para siempre, el mismo método destapó algo más: tres bugs reales y reproducibles en AVAXSKILLS mismo, el paquete de skills de IA community-maintained para construir en Avalanche que veníamos usando como uno de los insumos de esa auditoría.</p>
+
+<h2>Qué es AVAXSKILLS, y qué no es</h2>
+
+<p>Vale la pena ser precisos con esto desde el inicio. AVAXSKILLS (<code>Ayomisco/avaxskills</code>, Apache-2.0) es un índice de 66 skills pensado para enseñarle a agentes de IA a construir en Avalanche: Subnets, precompiles, integración de wallets, y más. Es community-maintained, no un producto de Ava Labs, y nada de esto debería leerse como una crítica al tooling oficial de Avalanche. Los bugs que encontramos estaban en cómo el paquete de skills documenta ese tooling, no en el tooling en sí.</p>
+
+<h2>Tres bugs, reportados el mismo día</h2>
+
+<p>El método fue simple: en vez de confiar en la prosa de un archivo de skill, revisar lo que afirma contra el código fuente real que dice describir. Eso destapó tres desajustes reales, todos reportados el 17 de agosto.</p>
+
+<p><a href="https://github.com/Ayomisco/avaxskills/issues/2" target="_blank" rel="noopener noreferrer">Issue #2</a>: el skill de <code>subnet-deployment</code> documenta comandos de CLI como <code>platform subnet create</code> que no existen en ninguna parte del código real de <code>ava-labs/avalanche-cli</code>. Dos comentarios de seguimiento en ese mismo issue encontraron el mismo problema repetido en dos skills más: <code>validator-management</code> le dice a un agente que corra <code>avalanche primaryNetwork addValidator</code>, cuando el grupo de comando real es <code>primary</code>, no <code>primaryNetwork</code>; y <code>custom-vm</code> le dice que corra <code>avalanche subnet create/deploy</code>, cuando el CLI actual ya no tiene ningún grupo de comando <code>subnet</code>.</p>
+
+<p><a href="https://github.com/Ayomisco/avaxskills/issues/3" target="_blank" rel="noopener noreferrer">Issue #3</a>: el ejemplo de genesis del skill de <code>precompiles</code> usa la clave <code>transactionAllowListConfig</code>. La clave real, confirmada contra el código de <code>ava-labs/subnet-evm</code>, es <code>txAllowListConfig</code>. Este es más traicionero que un comando que falla con un error: Subnet-EVM ignora las claves de genesis que no reconoce en vez de rechazarlas, así que copiar y pegar ese bloque exacto simplemente no hace nada, en silencio.</p>
+
+<p><a href="https://github.com/Ayomisco/avaxskills/issues/4" target="_blank" rel="noopener noreferrer">Issue #4</a>: el skill de <code>wagmi</code> afirma que v2 es la versión más reciente. Desde entonces salió v3, y el ejemplo del propio skill importa <code>useAccount</code>, un hook que los propios tipos de wagmi marcan como <code>@deprecated</code> a favor de <code>useConnection</code>.</p>
+
+<h2>Semanas de silencio</h2>
+
+<p>Los tres quedaron abiertos sin respuesta del mantenedor. No es raro en un paquete mantenido por voluntarios, y no es en sí mismo condenable, es solo un hecho.</p>
+
+<h2>De reporte a pull request</h2>
+
+<p>El 11 de septiembre de 2026 hicimos fork del repo a <code>Eras256/avaxskills</code> y abrimos tres pull requests, cada uno apuntando al issue que cierra: <a href="https://github.com/Ayomisco/avaxskills/pull/5" target="_blank" rel="noopener noreferrer">PR #5</a> (subnet-deployment, más los dos hallazgos de seguimiento), <a href="https://github.com/Ayomisco/avaxskills/pull/6" target="_blank" rel="noopener noreferrer">PR #6</a> (precompiles), y <a href="https://github.com/Ayomisco/avaxskills/pull/7" target="_blank" rel="noopener noreferrer">PR #7</a> (wagmi).</p>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 240" width="100%" role="img" aria-label="Diagrama: tres bugs reportados como issues el 17 de agosto (subnet-deployment, precompiles, wagmi) quedaron abiertos sin respuesta del mantenedor durante semanas, y luego se escalaron el 11 de septiembre a tres pull requests, cada uno cerrando su propio issue">
+<rect x="8" y="20" width="200" height="90" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="46" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">ISSUE #2 &#183; 17 AGO</text>
+<text x="26" y="72" font-size="14" font-weight="800" fill="var(--text-primary)">subnet-deployment</text>
+<text x="26" y="92" font-size="11" fill="var(--text-tertiary)">+ 2 comentarios de seguimiento</text>
+<rect x="255" y="20" width="190" height="90" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="273" y="46" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">ISSUE #3 &#183; 17 AGO</text>
+<text x="273" y="72" font-size="14" font-weight="800" fill="var(--text-primary)">precompiles</text>
+<text x="273" y="92" font-size="11" fill="var(--text-tertiary)">clave de genesis mal</text>
+<rect x="492" y="20" width="200" height="90" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="510" y="46" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">ISSUE #4 &#183; 17 AGO</text>
+<text x="510" y="72" font-size="14" font-weight="800" fill="var(--text-primary)">wagmi</text>
+<text x="510" y="92" font-size="11" fill="var(--text-tertiary)">dice v2, ya salió v3</text>
+<text x="350" y="140" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="11" letter-spacing="0.5" fill="var(--text-secondary)">semanas, sin respuesta del mantenedor</text>
+<path d="M108 110 L108 150" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#avx-arrow1-es)"/>
+<path d="M350 110 L350 150" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#avx-arrow2-es)"/>
+<path d="M592 110 L592 150" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#avx-arrow3-es)"/>
+<rect x="8" y="150" width="200" height="82" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="176" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PR #5 &#183; 11 SEP</text>
+<text x="26" y="202" font-size="14" font-weight="800" fill="var(--text-primary)">fix subnet-deployment</text>
+<text x="26" y="222" font-family="'Fira Code', Consolas, monospace" font-size="10" fill="var(--text-tertiary)">Closes #2</text>
+<rect x="255" y="150" width="190" height="82" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="273" y="176" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PR #6 &#183; 11 SEP</text>
+<text x="273" y="202" font-size="14" font-weight="800" fill="var(--text-primary)">fix precompiles</text>
+<text x="273" y="222" font-family="'Fira Code', Consolas, monospace" font-size="10" fill="var(--text-tertiary)">Closes #3</text>
+<rect x="492" y="150" width="200" height="82" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="510" y="176" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PR #7 &#183; 11 SEP</text>
+<text x="510" y="202" font-size="14" font-weight="800" fill="var(--text-primary)">fix wagmi</text>
+<text x="510" y="222" font-family="'Fira Code', Consolas, monospace" font-size="10" fill="var(--text-tertiary)">Closes #4</text>
+<defs>
+<marker id="avx-arrow1-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="avx-arrow2-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="avx-arrow3-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
+
+<h2>Escribir el diff real encontró más bugs de los que tenía el reporte original</h2>
+
+<p>Releer el código real de <code>avalanche-cli</code> y <code>platform-cli</code> línea por línea, esta vez para escribir un fix que funcionara y no solo para señalar un desajuste, destapó más de lo que tenía el issue original: <code>subnet convert-l1</code> debería ser <code>convert-to-l1</code>; <code>l1 add-balance</code> no existe, el comando real es <code>l1 increase-validator-balance</code>; y las flags del ejemplo de registro de validador también estaban mal, <code>--stakeAmount</code> debería ser <code>--weight</code>, <code>--startTime</code>/<code>--endTime</code> deberían ser <code>--start-time</code>/<code>--staking-period</code>. Platform CLI resultó ser un binario genuinamente separado de <code>avalanche-cli</code>, uno al que la propia documentación de Ava Labs empezó a apuntar con un aviso de deprecación en algún momento entre el issue original y el PR, semanas después. Corregimos ese detalle públicamente en el hilo del issue antes de abrir el PR, en vez de dejar que las dos versiones se contradijeran en silencio.</p>
+
+<h2>Dónde queda esto en realidad</h2>
+
+<p>A la fecha de este post: tres PRs, tres issues, todos siguen abiertos. Ninguno mergeado. AVAXSKILLS lo mantiene una sola persona en su tiempo libre, y esa es una razón completamente normal para unas semanas de silencio, no un punto en contra del proyecto. No vamos a redondear "PR abierto" hacia "aceptado", y preferimos que este post envejezca hacia "seguimos esperando" antes que hacia un overclaim que cualquiera pueda revisar y encontrar falso.</p>
+
+<p>El hábito detrás de todo esto es el mismo que atrapó el bug de conversión de la P-Chain en nuestro propio <code>KumplyValidatorSetManager</code> dos días antes: revisar la cosa contra el código real que corre, no contra lo que la documentación dice de él. Encontró un bug crítico en nuestro propio contrato, y uno más discreto pero igual de real en una herramienta que usamos para ayudarnos a escribirlo. Registro completo de la auditoría: <a href="https://github.com/kumplyprotocol/Kumply/blob/main/docs/audits/avalanche-ecosystem-audit-2026-08-17.md" target="_blank" rel="noopener noreferrer">docs/audits</a> y <a href="https://github.com/kumplyprotocol/Kumply/blob/main/docs/AI-USAGE.md" target="_blank" rel="noopener noreferrer">docs/AI-USAGE.md</a>.</p>
+`,
+    },
+  },
+  {
     slug: "nec-avalanche-biometrics-different-bet",
     date: "2026-09-10",
     author: {
