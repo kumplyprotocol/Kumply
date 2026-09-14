@@ -49,6 +49,7 @@ function formatDate(iso: string, locale: string) {
     year: "numeric",
     month: "long",
     day: "numeric",
+    timeZone: "UTC",
   }).format(new Date(iso));
 }
 
