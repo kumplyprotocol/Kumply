@@ -133,6 +133,8 @@ KUMPLY closes the critical institutional adoption gap **and** opens a new primit
 
 ### 4.1 KYA - Know Your Agent (Tier 5) - the unique differentiator
 
+> **Terminology note:** "KYA" is KUMPLY's own tier name. It's unrelated to [KYA-OS](https://github.com/decentralized-identity/kya-os-mcp) (Know Your Agent Operating System), the DIF-governed identity protocol for MCP agents that donated its spec to DIF TAAWG in 2026 — same acronym, different standard, no shared code or governance.
+
 Autonomous agents present a verification problem that **classic KYC cannot solve**. An AI agent doesn't have a passport. A bot doesn't have a tax ID. But protocols still need to know: *"Can this address transact $50K of stablecoin in my pool? Is the entity behind it accountable? Does this agent have permission to do what it's trying to do?"*
 
 KUMPLY Tier 5 (KYA) is a structured attestation specifically for autonomous actors:

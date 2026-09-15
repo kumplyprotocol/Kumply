@@ -86,7 +86,7 @@
     "tier4Name": "Empresarial",
     "tier4Desc": "Verificación corporativa (KYB). Valida registro de empresa, directivos y beneficiarios reales para uso institucional.",
     "tier5Name": "Agente IA",
-    "tier5Desc": "Verifica los agentes de IA y software autónomo que operan en nombre de tu empresa. El primer estándar de compliance para sistemas agénticos.",
+    "tier5Desc": "Verifica los agentes de IA y software autónomo que operan en nombre de tu empresa. El primer estándar de compliance para sistemas agénticos. (Término propio de KUMPLY — no el estándar KYA-OS gobernado por la DIF.)",
     "mainnetTitle": "Beta en Mainnet C-Chain",
     "mainnetSubtitle": "KUMPLY está desplegado en la Avalanche Mainnet C-Chain en fase de beta de solo lectura con tarifa de verificación de $0 USD.",
     "mainnetStatus": "Estado de Verificación",
@@ -208,7 +208,8 @@
       "f2Title": "Credenciales Basadas en Comportamiento",
       "f2Desc": "Los agentes pueden ganar reputación con el tiempo. ¿Buen historial? Mayor nivel de confianza. ¿Actividad sospechosa? Acceso restringido.",
       "f3Title": "Protege tu Protocolo",
-      "f3Desc": "Establece reglas: solo permitir agentes verificados. Bloquear los no registrados. Limitar actividad sospechosa. Todo se ejecuta automáticamente en la blockchain."
+      "f3Desc": "Establece reglas: solo permitir agentes verificados. Bloquear los no registrados. Limitar actividad sospechosa. Todo se ejecuta automáticamente en la blockchain.",
+      "standardNote": "Nota de terminología: el \"KYA\" acá es el nombre de tier propio de KUMPLY, sin relación con KYA-OS, el protocolo de identidad gobernado por la DIF para agentes MCP (github.com/decentralized-identity/kya-os-mcp) — mismo acrónimo, estándar distinto."
     },
     "cross-l1": {
       "title": "Verificación Entre Redes",
@@ -485,7 +486,8 @@
         "value": "Heartbeat desde el runtime del agente — prueba que sigue operando y alcanzable."
       },
       "roadmapLabel": "Estado",
-      "roadmap": "El Tier 5 ya vive en AttestationStore.sol; el AgentRegistry.sol completo con los 5 campos de arriba ships Q3 2026 junto al primer DApp piloto de agentic DeFi."
+      "roadmap": "El Tier 5 ya vive en AttestationStore.sol; el AgentRegistry.sol completo con los 5 campos de arriba ships Q3 2026 junto al primer DApp piloto de agentic DeFi.",
+      "standardNote": "Nota de terminología: \"KYA\" es el nombre de tier propio de KUMPLY, sin relación con KYA-OS, el protocolo de identidad gobernado por la DIF para agentes MCP (github.com/decentralized-identity/kya-os-mcp) — mismo acrónimo, estándar distinto."
     },
     "tiers": {
       "title": "Espectro de 5 niveles de compliance",
@@ -574,7 +576,7 @@
     "sectionFavicon": "Favicon / icono de app (PNG, fondo transparente)",
     "sectionLockup": "Logo completo y banner social (PNG, fondo sólido)",
     "sectionNotes": "Notas",
-    "notes": "El README.txt dentro del ZIP explica qué archivo usar en cada caso, pensado para que cualquiera del equipo lo entienda sin contexto técnico. Pendiente antes de versión final de imprenta: el wordmark usa Arial de sistema como placeholder tipográfico.",
+    "notes": "El README.txt dentro del ZIP explica qué archivo usar en cada caso, pensado para que cualquiera del equipo lo entienda sin contexto técnico. Pendiente antes de versión final de imprenta: el wordmark usa Arial de sistema como placeholder tipográfico. Nota de terminología: el \"KYA\" del badge de arriba es el nombre de tier propio de KUMPLY, sin relación con KYA-OS, el protocolo de identidad gobernado por la DIF para agentes MCP (github.com/decentralized-identity/kya-os-mcp).",
     "downloadSvg": "Descargar .svg",
     "downloadPng": "Descargar .png",
     "download": "Descargar",

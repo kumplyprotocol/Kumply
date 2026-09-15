@@ -431,6 +431,9 @@ export const DECK_HTML = `
         <p>AgentRegistry.sol extension: model fingerprint, behavior bounds, liveness - planned for Q3 2026.</p>
       </div>
     </div>
+    <p class="note"><strong>Terminology note:</strong> "KYA" here is KUMPLY's own tier name, unrelated to
+    <a href="https://github.com/decentralized-identity/kya-os-mcp" target="_blank" rel="noopener noreferrer">KYA-OS</a>,
+    the DIF-governed identity protocol for MCP agents - same acronym, different standard, no shared code or governance.</p>
   </section>
 
   <!-- 08 · Business model -->
@@ -934,6 +937,9 @@ export const DECK_HTML_ES = `
         <p>Extensión AgentRegistry.sol: huella del modelo, límites de comportamiento, liveness - planeado para Q3 2026.</p>
       </div>
     </div>
+    <p class="note"><strong>Nota de terminología:</strong> el "KYA" acá es el nombre de tier propio de KUMPLY, sin relación con
+    <a href="https://github.com/decentralized-identity/kya-os-mcp" target="_blank" rel="noopener noreferrer">KYA-OS</a>,
+    el protocolo de identidad gobernado por la DIF para agentes MCP - mismo acrónimo, estándar distinto, sin código ni gobernanza compartida.</p>
   </section>
 
   <!-- 08 · Modelo de negocio -->

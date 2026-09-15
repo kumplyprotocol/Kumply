@@ -135,6 +135,8 @@ import {
 | 4    | Business | KYB — Company registration + UBO disclosure |
 | 5    | Agent    | KYA — Know Your Agent bot verification      |
 
+> **Note:** "KYA" above is KUMPLY's own tier name, not the DIF-governed [KYA-OS](https://github.com/decentralized-identity/kya-os-mcp) protocol for MCP agents — same acronym, unrelated standard.
+
 ## Networks
 
 | Network                  | Network ID    | Chain ID | Status                              | Explorer                     |

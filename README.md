@@ -54,6 +54,8 @@ KUMPLY is a "Verify Once, Use Everywhere" protocol.
 - **Tier 4 (Business)**: Corporate Verification (KYB) + UBO Disclosure
 - **Tier 5 (Agentic)**: AI Agent Verification (KYA) - Linking autonomous software to verified owners.
 
+> **Note:** "KYA" here is KUMPLY's own tier name (Know Your Agent). It's a different, unrelated thing from [KYA-OS](https://github.com/decentralized-identity/kya-os-mcp), the DIF-governed identity protocol for MCP agents — same acronym, different standard, no relationship between the two.
+
 ## 🏗️ Architecture
 
 KUMPLY is built entirely around the Avalanche technical stack.

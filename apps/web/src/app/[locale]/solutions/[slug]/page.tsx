@@ -47,6 +47,11 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
         <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', lineHeight: 1.8 }}>
           {t(`${slug}.p2`)}
         </p>
+        {slug === 'kya' && (
+          <p style={{ color: 'var(--text-tertiary)', fontSize: '0.85rem', lineHeight: 1.6, marginTop: '1.25rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border)' }}>
+            {t('kya.standardNote')}
+          </p>
+        )}
       </div>
 
       <div className="solution-grid">

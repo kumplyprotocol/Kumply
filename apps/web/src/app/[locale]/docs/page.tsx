@@ -358,6 +358,9 @@ client.publicClient;                     // viem PublicClient (advanced use)`}</
             <div style={{ marginTop: "1rem", padding: "0.75rem 1rem", background: "rgba(99, 102, 241, 0.08)", border: "1px solid var(--accent-light)", borderRadius: "var(--radius-sm)", fontSize: "0.82rem", color: "var(--text-primary)" }}>
               <strong>{t("kya.roadmapLabel")}:</strong> {t("kya.roadmap")}
             </div>
+            <p style={{ marginTop: "0.75rem", fontSize: "0.78rem", color: "var(--text-tertiary)", lineHeight: 1.5 }}>
+              {t("kya.standardNote")}
+            </p>
           </section>
 
           {/* 08 TIERS */}

@@ -593,6 +593,8 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>KUMPLY isn't the first project building agent identity on Avalanche. Kite AI's Agent Passport, live on its own Avalanche L1, also gives agents a persistent cryptographic identity - by design pseudonymous, with no KYB behind it. What we believe is actually new: tying that on-chain identity to a KYB-verified, legally accountable owner. To our knowledge, KUMPLY is the first Avalanche L1, and the first EVM compliance layer, built specifically for that link - not for agent identity in general.</p>
 
 <p>That distinction matters more than the "first" itself. An agent with a pseudonymous passport can prove it's consistently the same agent. A Tier 5 agent can prove that, and prove who's legally on the hook if it isn't.</p>
+
+<p>One more disambiguation, since the acronym is shared: KUMPLY's KYA is not KYA-OS (<a href="https://github.com/decentralized-identity/kya-os-mcp" target="_blank" rel="noopener noreferrer">github.com/decentralized-identity/kya-os-mcp</a>), a separate identity protocol for MCP agents donated to the Decentralized Identity Foundation. Different standard, different governance, no relationship between the two beyond the name.</p>
 `,
       es: `
 <p>Las DeFi agénticas están llegando: market makers autónomos, gestores de portafolio con IA, agentes on-chain manejando presupuestos reales. Todo protocolo que deje a un agente tocar capital real va a necesitar responder la misma pregunta: ¿es un agente confiable y acotado, o un script anónimo? Hoy no existe ningún riel de compliance componible on-chain para esa distinción.</p>
@@ -638,6 +640,8 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>KUMPLY no es el primer proyecto construyendo identidad de agentes en Avalanche. El Agent Passport de Kite AI, en vivo en su propia L1 de Avalanche, también le da a los agentes una identidad criptográfica persistente - por diseño pseudónima, sin KYB detrás. Lo que creemos que sí es nuevo: atar esa identidad on-chain a un dueño verificado con KYB, legalmente responsable. Hasta donde sabemos, KUMPLY es la primera L1 de Avalanche, y la primera capa de compliance EVM, construida específicamente para ese vínculo - no para identidad de agentes en general.</p>
 
 <p>Esa distinción importa más que el "primero" en sí. Un agente con un passport pseudónimo puede probar que es consistentemente el mismo agente. Un agente Tier 5 puede probar eso, y probar quién responde legalmente si no lo es.</p>
+
+<p>Una aclaración más, ya que el acrónimo se comparte: el KYA de KUMPLY no es KYA-OS (<a href="https://github.com/decentralized-identity/kya-os-mcp" target="_blank" rel="noopener noreferrer">github.com/decentralized-identity/kya-os-mcp</a>), un protocolo de identidad separado para agentes MCP donado a la Decentralized Identity Foundation. Estándar distinto, gobernanza distinta, sin relación entre los dos más allá del nombre.</p>
 `,
     },
   },

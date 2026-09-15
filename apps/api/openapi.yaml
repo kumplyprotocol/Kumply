@@ -13,6 +13,11 @@ info:
 
     The AVALANCHE® trademark is owned by Ava Labs, Inc.
     KUMPLY is an independent project — not endorsed by Ava Labs, Inc.
+
+    Note: "KYA" (tier 5, below) is KUMPLY's own tier name (Know Your Agent),
+    unrelated to KYA-OS, the DIF-governed identity protocol for MCP agents
+    (github.com/decentralized-identity/kya-os-mcp) — same acronym, different
+    standard.
   contact:
     name: KUMPLY Team
     url: https://kumply.xyz

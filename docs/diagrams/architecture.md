@@ -119,6 +119,8 @@ flowchart LR
 
 ## 4. KYA — Know Your Agent (Tier 5)
 
+> **Terminology note:** "KYA" is KUMPLY's own tier name, unrelated to [KYA-OS](https://github.com/decentralized-identity/kya-os-mcp), the DIF-governed identity protocol for MCP agents — same acronym, different standard.
+
 ```mermaid
 flowchart TB
     OWNER[👔 Tier-4 KYB Owner<br/>Digital Bank / Hedge Fund / VC]
