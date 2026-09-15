@@ -122,8 +122,31 @@ here) - use the driver above instead.
   running."** If you see `Another next dev server is already running`
   with a PID, that's a *different* Next.js instance than whatever
   answers on port 3000 - `lsof -ti:3000 -sTCP:LISTEN | xargs -r kill`
-  doesn't always stop it. If curl to `localhost:3000` already returns
-  200, you likely don't need to start a new one at all.
+  doesn't always stop it.
+- **A 200 on `localhost:3000` does not mean it's serving your latest
+  edit - check what's actually listening before trusting the content.**
+  Hit this three times in one session: a leftover `next start`
+  (production) process from an earlier `pnpm build && pnpm start`
+  verification step (e.g. after a dependency change) stayed bound to
+  :3000 and kept answering 200 with the *pre-edit* build - no hot
+  reload, because it's not `next dev`. Every symptom looked like the
+  edit itself was wrong (clean `tsc`, correct-looking JSON, zero
+  `pageErrors`) until the actual page content was diffed against what
+  should have changed. Before trusting a running server on :3000,
+  check what's actually bound to it:
+  ```bash
+  ss -ltnp | grep :3000          # or: lsof -i :3000
+  ps -p <pid> -o pid,cmd         # "next-server (v...)" doesn't tell you
+                                  # dev vs prod - check the cwd instead:
+  pwdx <pid>                      # confirms which repo/checkout it's serving
+  ```
+  When in doubt (anytime a previous task in the same session ran
+  `pnpm build`/`pnpm start`, or the server's uptime looks older than
+  your last edit), just kill it and start a fresh `pnpm dev` rather
+  than assuming a 200 means it's current:
+  ```bash
+  kill -9 <pid>; cd apps/web && nohup pnpm dev > /tmp/nextdev.log 2>&1 &
+  ```
 - **Locale is a cookie, not a URL prefix.** `apps/web/src/i18n/routing.ts`
   uses `localePrefix: 'never'` - there is no `/es/...` URL. To load a
   page pre-set to Spanish, use `--cookie "NEXT_LOCALE=es"`, not a URL
@@ -152,3 +175,4 @@ here) - use the driver above instead.
 | `No Playwright Chromium cache at ~/.cache/ms-playwright` | Run `npx --yes playwright install chromium` (Prerequisites). |
 | `Cannot find package 'playwright'` when running `node driver.mjs` from elsewhere | Playwright is installed local to `.claude/skills/run-web/`, and Node resolves relative to the *script's* location - this should already work regardless of your cwd. If it doesn't, re-run the `npm install` from the Prerequisites step inside that exact directory. |
 | Click times out / `getByRole('button', {name: ...})` not found | Check the button's `aria-label` in the source first - it overrides visible text as the accessible name (see Gotchas). If there's no `aria-label`, the visible text must match exactly (case-sensitive); inspect `bodyTextSample` from a run with no `--click` to confirm what's actually rendered. |
+| Edit doesn't show up in a screenshot/curl, but `tsc`/`eslint` are clean | Don't assume the edit is wrong - check what's actually serving :3000 first (see the "200 does not mean current" Gotcha above). A leftover `next start` from an earlier verification step in the same session serves a frozen pre-edit build with no hot reload. |
