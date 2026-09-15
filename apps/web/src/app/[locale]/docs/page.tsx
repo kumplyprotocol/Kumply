@@ -169,7 +169,7 @@ export default function DocsPage() {
           {/* 01 OVERVIEW */}
           <section className="glass-card" style={SECTION_PADDING}>
             <SectionHead id="overview" num="01" title={t("overview.title")} subtitle={t("overview.subtitle")} />
-            <div className="grid-3" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "0.75rem" }}>
+            <div className="grid-3" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(180px, 100%), 1fr))", gap: "0.75rem" }}>
               <div style={{ padding: "0.85rem", background: "var(--bg-secondary)", border: "1px solid var(--border)", borderRadius: "var(--radius-sm)" }}>
                 <div style={{ fontSize: "0.7rem", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "0.25rem" }}>{t("overview.cardA.label")}</div>
                 <div style={{ fontSize: "0.92rem", color: "var(--text-primary)" }}>{t("overview.cardA.value")}</div>
@@ -290,7 +290,7 @@ client.publicClient;                     // viem PublicClient (advanced use)`}</
           {/* 05 API */}
           <section className="glass-card" style={SECTION_PADDING}>
             <SectionHead id="api" num="05" title={t("api.title")} subtitle={t("api.subtitle")} />
-            <div style={{ display: "grid", gap: "0.75rem", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}>
+            <div style={{ display: "grid", gap: "0.75rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))" }}>
               <div style={{ padding: "0.85rem", background: "var(--bg-secondary)", border: "1px solid var(--border)", borderRadius: "var(--radius-sm)" }}>
                 <code style={{ fontSize: "0.78rem", color: "var(--accent-light)", fontFamily: "monospace" }}>GET /health</code>
                 <p style={{ margin: "0.35rem 0 0 0", fontSize: "0.78rem", color: "var(--text-secondary)" }}>{t("api.health")}</p>
@@ -341,7 +341,7 @@ client.publicClient;                     // viem PublicClient (advanced use)`}</
           {/* 07 KYA — destacado */}
           <section className="glass-card" style={{ ...SECTION_PADDING, border: "1px solid var(--accent-light)" }}>
             <SectionHead id="kya" num="07" title={t("kya.title")} subtitle={t("kya.subtitle")} />
-            <div style={{ display: "grid", gap: "0.75rem", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
+            <div style={{ display: "grid", gap: "0.75rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))" }}>
               {[
                 { l: t("kya.f1.label"), v: t("kya.f1.value") },
                 { l: t("kya.f2.label"), v: t("kya.f2.value") },
@@ -405,7 +405,7 @@ client.publicClient;                     // viem PublicClient (advanced use)`}</
           {/* 10 RESOURCES */}
           <section className="glass-card" style={SECTION_PADDING}>
             <SectionHead id="resources" num="10" title={t("resources.title")} subtitle={t("resources.subtitle")} />
-            <div style={{ display: "grid", gap: "0.6rem", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
+            <div style={{ display: "grid", gap: "0.6rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))" }}>
               <a href={REPO} target="_blank" rel="noopener noreferrer" className="docs-resource">
                 <span style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--text-primary)" }}>GitHub</span>
                 <span style={{ fontSize: "0.75rem", color: "var(--text-secondary)" }}>{t("resources.github")}</span>
@@ -438,13 +438,17 @@ client.publicClient;                     // viem PublicClient (advanced use)`}</
       <style dangerouslySetInnerHTML={{ __html: `
         .docs-grid {
           display: grid;
-          grid-template-columns: 260px 1fr;
+          grid-template-columns: 260px minmax(0, 1fr);
           gap: 1.5rem;
           align-items: start;
         }
         .docs-toc {
           position: sticky;
           top: 5rem;
+          min-width: 0;
+        }
+        .docs-main {
+          min-width: 0;
         }
         .docs-toc-inner {
           padding: 1rem;
@@ -470,20 +474,20 @@ client.publicClient;                     // viem PublicClient (advanced use)`}</
         }
         @media (max-width: 900px) {
           .docs-grid {
-            grid-template-columns: 1fr;
+            grid-template-columns: minmax(0, 1fr);
           }
           .docs-toc {
             position: static;
           }
           .docs-toc-inner nav {
             display: grid !important;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 0.25rem !important;
           }
         }
         @media (max-width: 500px) {
           .docs-toc-inner nav {
-            grid-template-columns: 1fr !important;
+            grid-template-columns: minmax(0, 1fr) !important;
           }
         }
       `}} />
