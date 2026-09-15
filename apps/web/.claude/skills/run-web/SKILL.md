@@ -109,6 +109,46 @@ here) - use the driver above instead.
   files into `dir` without installing anything system-wide or needing
   root either. Nothing here touches the actual system package
   database - it's pure download-and-unzip.
+- **`driver.mjs` emulates a desktop browser at a narrow viewport, not a real
+  phone - that distinction hides real mobile-only bugs.** A resized
+  desktop Chromium context (`newContext({ viewport: {width: 375} })`,
+  what `driver.mjs` does) reported a mobile navbar drawer as
+  overflow-free at every width 320-1800px, both languages, open and
+  closed - completely clean. A user's real Android Chrome screenshots
+  showed a genuine overflow. Root cause: with real mobile emulation
+  (`isMobile: true, hasTouch: true`, a real mobile UA), a `position:
+  fixed` element with `overflow-y` but no `overflow-x` caused mobile
+  Chrome to silently widen its own layout viewport
+  (`window.innerWidth` != `document.documentElement.clientWidth`) to
+  fit the overflowing content - even though it was transformed
+  off-screen and `body{overflow-x:hidden}` was already in place.
+  Desktop Chrome does not renegotiate the viewport that way, so a
+  narrow-desktop-viewport test cannot see this class of bug at all.
+  **For any mobile-specific bug report (especially anything the user
+  saw on a real phone), don't trust a clean `driver.mjs` run as
+  proof it's fine - retest with genuine device emulation.** `driver.mjs`
+  has no flag for this yet; do it with a one-off script reusing the
+  same chromium-cache/lib-path setup, swapping the plain `newContext`
+  for a real device profile:
+  ```js
+  import { chromium, devices } from "playwright";
+  // ...same ensureLibs()/LD_LIBRARY_PATH/findChromiumBinary() as driver.mjs...
+  const context = await browser.newContext({ ...devices['Pixel 5'] });
+  // or manually: { viewport: {width: 393, height: 851}, isMobile: true,
+  //   hasTouch: true, userAgent: devices['Pixel 5'].userAgent, deviceScaleFactor: 3 }
+  const page = await context.newPage();
+  await page.goto(url, { waitUntil: "networkidle" });
+  const bug = await page.evaluate(() => ({
+    docWidth: document.documentElement.scrollWidth,
+    winWidth: window.innerWidth,                      // compare this
+    clientWidth: document.documentElement.clientWidth, // to this
+  }));
+  ```
+  A mismatch between `winWidth` and `clientWidth` (not just
+  `docWidth` vs `winWidth`) is the actual mobile-viewport-widening
+  signal - checking only `scrollWidth` vs `innerWidth` on a desktop
+  context, like the rest of this skill's own examples do, misses it
+  entirely.
 - **RSC prefetch aborts are normal, not bugs.** Next.js prefetches
   linked routes; a locale switch supersedes any in-flight prefetch,
   which Chrome reports as `net::ERR_ABORTED` in `failedRequests`. This
