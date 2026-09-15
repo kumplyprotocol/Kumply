@@ -200,7 +200,7 @@
     },
     "kya": {
       "title": "KYA — Verificar Agentes de IA",
-      "subtitle": "El primer estándar de compliance del mundo para agentes de IA que operan en blockchain",
+      "subtitle": "Credenciales de compliance para agentes de IA autónomos, ligadas a un dueño humano o empresarial verificado",
       "p1": "Los agentes de IA ya están haciendo trading, prestando dinero y gestionando fondos en la blockchain. Pero hasta ahora, no había forma de saber: ¿quién construyó este agente? ¿Está autorizado? ¿Cumple con las normas? KYA responde todas esas preguntas.",
       "p2": "KUMPLY vincula cada agente de IA a su desarrollador humano verificado o a su empresa dueña. Los protocolos pueden entonces decidir: ¿dejo que este agente interactúe con mis contratos? Basándose en datos de compliance reales y verificables — no solo en confianza.",
       "f1Title": "Cada Agente Tiene un Dueño",

@@ -200,7 +200,7 @@
     },
     "kya": {
       "title": "KYA — Verify AI Agents",
-      "subtitle": "The world’s first compliance standard for AI agents operating on-chain",
+      "subtitle": "Compliance credentials for autonomous AI agents, tied to a verified human or business owner",
       "p1": "AI agents are already trading, lending, and managing funds on-chain. But until now, there’s been no way to know: who built this agent? Is it authorized? Is it compliant? KYA answers all of that.",
       "p2": "KUMPLY links every AI agent to its verified human developer or corporate owner. Protocols can then decide: do I let this agent interact with my contracts? Based on real, verifiable compliance data — not just trust.",
       "f1Title": "Every Agent Has an Owner",
