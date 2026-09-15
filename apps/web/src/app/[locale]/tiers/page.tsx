@@ -85,7 +85,7 @@ export default function TiersPage() {
         .mainnet-info__contracts-list { display: flex; flex-direction: column; gap: 0.75rem; }
         .mainnet-info__contract-item { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; background: var(--bg-secondary); padding: 0.75rem 1rem; border-radius: var(--radius-md); border: 1px solid var(--border); }
         .contract-label { font-size: 0.88rem; font-weight: 600; color: var(--text-secondary); }
-        .contract-address { font-family: monospace; font-size: 0.88rem; color: var(--accent-light); text-decoration: none; }
+        .contract-address { font-family: monospace; font-size: 0.88rem; color: var(--accent-light); text-decoration: none; word-break: break-all; }
         .contract-address:hover { color: var(--accent); }
 
         @media (max-width: 768px) {
