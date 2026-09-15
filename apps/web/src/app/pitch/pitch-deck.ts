@@ -157,6 +157,12 @@ export const DECK_CSS = `
   .legal { margin-top: 2rem; font-size: 0.72rem; color: var(--ink-3); max-width: 72ch; line-height: 1.6; }
 
   .title-slide { padding: 4.5rem 3.25rem; }
+  .brandmark { display: flex; align-items: center; gap: 0.65rem; margin-bottom: 2.2rem; }
+  .brandmark .wordmark { margin-bottom: 0; }
+  .brandmark__icon { width: 26px; height: 26px; }
+  .brandmark__icon--dark { display: none; }
+  [data-theme="dark"] .brandmark__icon--dark { display: block; }
+  [data-theme="dark"] .brandmark__icon--light { display: none; }
   .wordmark { font-size: 1rem; font-weight: 800; letter-spacing: 0.22em; margin-bottom: 2.2rem; }
   .wordmark .dot { color: var(--crimson); }
   .title-badges { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.8rem; }
@@ -198,11 +204,15 @@ export const DECK_HTML = `
       <span class="eyebrow">Grant Application Deck · August 2026</span>
       <span class="slide-num">01 / 12</span>
     </div>
-    <p class="wordmark">KUMPLY<span class="dot">.</span></p>
+    <div class="brandmark">
+      <img class="brandmark__icon brandmark__icon--light" src="/branding-kumply/svg/kumply-icon.svg" alt="" aria-hidden="true" />
+      <img class="brandmark__icon brandmark__icon--dark" src="/branding-kumply/svg/kumply-icon-on-dark.svg" alt="" aria-hidden="true" />
+      <p class="wordmark">KUMPLY<span class="dot">.</span></p>
+    </div>
     <h1>The compliance layer for the Avalanche ecosystem.</h1>
     <p class="lede" style="margin-top: 1.4rem;">
       On-chain KYC, KYB, and KYA attestations that any dApp or sovereign L1 can verify in under a second -
-      plus the first Avalanche L1 designed so that every validator must pass business verification (KYB) to join consensus.
+      plus, to our knowledge, the first Avalanche L1 designed so that every validator must pass business verification (KYB) to join consensus.
     </p>
     <div class="title-badges">
       <span class="badge live">Live on Mainnet C-Chain · Beta</span>
@@ -703,11 +713,15 @@ export const DECK_HTML_ES = `
       <span class="eyebrow">Presentación para Grant · Agosto 2026</span>
       <span class="slide-num">01 / 12</span>
     </div>
-    <p class="wordmark">KUMPLY<span class="dot">.</span></p>
+    <div class="brandmark">
+      <img class="brandmark__icon brandmark__icon--light" src="/branding-kumply/svg/kumply-icon.svg" alt="" aria-hidden="true" />
+      <img class="brandmark__icon brandmark__icon--dark" src="/branding-kumply/svg/kumply-icon-on-dark.svg" alt="" aria-hidden="true" />
+      <p class="wordmark">KUMPLY<span class="dot">.</span></p>
+    </div>
     <h1>La capa de cumplimiento para el ecosistema Avalanche.</h1>
     <p class="lede" style="margin-top: 1.4rem;">
       Attestations on-chain de KYC, KYB y KYA que cualquier dApp o L1 soberana puede verificar en menos de un segundo -
-      además de la primera L1 de Avalanche diseñada para que cada validador deba pasar verificación empresarial (KYB) para unirse al consenso.
+      además, hasta donde sabemos, de la primera L1 de Avalanche diseñada para que cada validador deba pasar verificación empresarial (KYB) para unirse al consenso.
     </p>
     <div class="title-badges">
       <span class="badge live">En vivo en Mainnet C-Chain · Beta</span>
