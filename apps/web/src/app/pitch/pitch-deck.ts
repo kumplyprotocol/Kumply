@@ -66,6 +66,22 @@ export const DECK_CSS = `
     padding: 3rem 3.25rem;
     position: relative;
   }
+  .slide:not(.title-slide)::after {
+    content: '';
+    position: absolute;
+    bottom: 1.1rem;
+    right: 1.1rem;
+    width: 15px;
+    height: 15px;
+    background-image: url('/branding-kumply/svg/kumply-icon.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  [data-theme="dark"] .slide:not(.title-slide)::after {
+    background-image: url('/branding-kumply/svg/kumply-icon-on-dark.svg');
+  }
   .slide-head {
     display: flex; justify-content: space-between; align-items: baseline;
     margin-bottom: 1.75rem;
