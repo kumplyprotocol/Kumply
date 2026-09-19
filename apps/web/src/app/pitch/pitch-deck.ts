@@ -577,7 +577,8 @@ export const DECK_HTML = `
       Active in the Team1 LatAm community - introduced KUMPLY at a Team1 weekly call, and shipped two additional
       Avalanche builds in a single weekend (an invisible-blockchain museum ticketing app and an agricultural
       traceability demo), shared with the community. Now running a Team1-approved technical workshop on KYA, scheduled
-      for September 24, 2026. <strong>Building on Avalanche is what we do, grant or no grant.</strong>
+      for September 24, 2026 (<a href="https://luma.com/2wnmcoag">RSVP on Luma</a>).
+      <strong>Building on Avalanche is what we do, grant or no grant.</strong>
     </p>
     <p class="note" style="margin-top: 1rem;"><strong>Bus factor, addressed:</strong> most shipped code still runs
       through one founder today (Giovanny - every commit attributable to him, verifiable in the repo's public
@@ -1087,7 +1088,8 @@ export const DECK_HTML_ES = `
       Activos en la comunidad LatAm de Team1 - presentaron KUMPLY en una llamada semanal de Team1, y enviaron dos builds
       adicionales de Avalanche en un solo fin de semana (una app de boletos de museo con blockchain invisible y una demo de
       trazabilidad agrícola), compartidos con la comunidad. Ahora corriendo un workshop técnico sobre KYA aprobado por
-      Team1, programado para el 24 de septiembre de 2026. <strong>Construir en Avalanche es lo que hacemos, con o sin grant.</strong>
+      Team1, programado para el 24 de septiembre de 2026 (<a href="https://luma.com/2wnmcoag">Regístrate en Luma</a>).
+      <strong>Construir en Avalanche es lo que hacemos, con o sin grant.</strong>
     </p>
     <p class="note" style="margin-top: 1rem;"><strong>Bus factor, resuelto:</strong> la mayoría del código enviado
       sigue pasando hoy por un solo founder (Giovanny - cada commit atribuible a él, verificable en el historial
