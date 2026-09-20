@@ -862,7 +862,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Who's presenting</h2>
 
-<p><strong>Monserrat Mendoza</strong> and <strong>Giovanny Amador</strong>, KUMPLY's co-founders and Avalanche Team1 LatAm Collaborators, are running the session together. Giovanny ships most of what's in the repository today - every commit attributable to him, verifiable in the public history. Monserrat has shipped real code here too (commit <code>49177e0</code>, address validation before a contract read) and leads the session's product side - a second technical contributor, genuinely real, just not yet shipping at the same pace.</p>
+<p><strong>Monserrat Mendoza</strong> and <strong>Giovanny Amador</strong>, KUMPLY's co-founders and Avalanche Team1 LatAm Collaborators, are running the session together. Giovanny ships most of what's in the repository today - every commit attributable to him, verifiable in the public history. Monserrat has led KUMPLY's product and UX/UI direction, and has shipped real code here too (commit <code>49177e0</code>, address validation before a contract read) - a second technical contributor, genuinely real, just not yet shipping at the same pace.</p>
 
 <h2>What you'll build - and leave with</h2>
 
@@ -953,7 +953,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Quién presenta</h2>
 
-<p><strong>Monserrat Mendoza</strong> y <strong>Giovanny Amador</strong>, co-founders de KUMPLY y Avalanche Team1 LatAm Collaborators, dan la sesión juntos. Giovanny envía la mayoría de lo que hoy está en el repositorio - cada commit atribuible a él, verificable en el historial público. Monserrat ya envió código real aquí también (commit <code>49177e0</code>, validación de dirección antes de una lectura de contrato) y lidera el lado de producto de la sesión - un segundo contribuidor técnico, genuinamente real, aunque todavía no al mismo ritmo.</p>
+<p><strong>Monserrat Mendoza</strong> y <strong>Giovanny Amador</strong>, co-founders de KUMPLY y Avalanche Team1 LatAm Collaborators, dan la sesión juntos. Giovanny envía la mayoría de lo que hoy está en el repositorio - cada commit atribuible a él, verificable en el historial público. Monserrat ha liderado el producto y la colaboración de UX/UI de KUMPLY, y ya envió código real aquí también (commit <code>49177e0</code>, validación de dirección antes de una lectura de contrato) - un segundo contribuidor técnico, genuinamente real, aunque todavía no al mismo ritmo.</p>
 
 <h2>Qué vas a construir - y qué te llevas</h2>
 
