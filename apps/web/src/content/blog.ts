@@ -821,7 +821,7 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     bodyHtml: {
       en: `
-<p>Two protocols shipped this year that quietly changed what an autonomous AI agent can do on its own. A2A (Agent2Agent), originally contributed by Google and now hosted by the Linux Foundation, lets agents from different vendors discover, authenticate, and delegate tasks to each other over a standard open protocol. x402, Coinbase's HTTP-native payment standard now co-governed with the Linux Foundation, lets an agent hit an HTTP 402 "Payment Required" response, sign a stablecoin payment, and complete the transaction - no account, no human in the loop. By late April 2026, Coinbase reported roughly 69,000 active agents and $50M+ in cumulative volume moving through it.</p>
+<p>Two protocols shipped this year that quietly changed what an autonomous AI agent can do on its own. A2A (Agent2Agent), originally contributed by Google and now hosted by the Linux Foundation, lets agents from different vendors discover, authenticate, and delegate tasks to each other over a standard open protocol. x402, Coinbase's HTTP-native payment standard now co-governed with the Linux Foundation, lets an agent hit an HTTP 402 "Payment Required" response, sign a stablecoin payment, and complete the transaction - no account, no human in the loop. This isn't a paper protocol: x402's own live dashboard shows 75.41M transactions and $24.24M in volume in just the last 30 days (checked September 20, 2026).</p>
 
 <p>Neither protocol answers a simple question: when one of those agents moves real money, who's accountable if it goes wrong? A2A authenticates that an agent is who it claims to be. x402 moves the payment. Neither one verifies who stands behind the agent.</p>
 
@@ -838,14 +838,16 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Who's presenting</h2>
 
-<p><strong>Monserrat Mendoza</strong> and <strong>Giovanny Amador</strong>, KUMPLY's co-founders and Avalanche Team1 LatAm Collaborators, are running the session together - the same two people who write every commit in KUMPLY's public repository, not a marketing team standing in for the engineers.</p>
+<p><strong>Monserrat Mendoza</strong> and <strong>Giovanny Amador</strong>, KUMPLY's co-founders and Avalanche Team1 LatAm Collaborators, are running the session together. Giovanny ships most of what's in the repository today - every commit attributable to him, verifiable in the public history. Monserrat has shipped real code here too (commit <code>49177e0</code>, address validation before a contract read) and leads the session's product side - a second technical contributor, genuinely real, just not yet shipping at the same pace.</p>
 
 <h2>What you'll build - and leave with</h2>
 
-<p>This isn't a slide deck about compliance theory. You'll see an AI agent try to execute a transaction against KUMPLY's real <code>AttestationStore</code> and <code>ComplianceGate</code> contracts, live on Fuji Testnet, and watch the check pass or fail depending on whether the agent's wallet actually carries a valid Tier 5 credential. Then every attendee gets one issued to their own wallet: a real Tier 5 attestation, on Fuji, address-only, no personal data ever requested. It's the same contract call our KYC flow uses in production, run manually against the same verifier the API uses - not a mock, not a testnet toy contract nobody else can check.</p>
+<p>This isn't a slide deck about compliance theory. You'll deploy your own attestation contract live, in Remix, no local setup: <code>WorkshopKYA.sol</code>, a stripped-down practice version built for the session (open <code>issueTier()</code>, no roles or expiry logic) that mirrors the same attest -&gt; tier -&gt; verify() pattern KUMPLY actually runs in production, without the production complexity - fast enough to deploy live in one sitting. It's a teaching tool, not KUMPLY's real code, and it says so in the contract itself.</p>
+
+<p>Then every attendee leaves with something that isn't a teaching tool: a real Tier 5 attestation, issued by KUMPLY to your own wallet, on Fuji, address-only, no personal data ever requested - the same batch-issuance path we already tested end-to-end ahead of the session. And KUMPLY's actual production contracts are real and live too, not a claim you have to take on faith: <code>AttestationStore</code> and <code>ComplianceGate</code> are deployed and verified on both Fuji and Mainnet C-Chain today - see the addresses below and check them yourself.</p>
 
 <figure class="blog-diagram">
-<svg viewBox="0 0 700 200" width="100%" role="img" aria-label="Diagram: three steps of the workshop - register on Luma, build live against KUMPLY's real contracts with Team1 LatAm, and leave with a real Tier 5 KYA attestation issued to your own wallet on Fuji">
+<svg viewBox="0 0 700 200" width="100%" role="img" aria-label="Diagram: three steps of the workshop - register on Luma, deploy your own WorkshopKYA.sol practice contract live in Remix with Team1 LatAm, and leave with a real Tier 5 KYA attestation issued by KUMPLY to your own wallet on Fuji">
 <rect x="8" y="45" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
 <text x="26" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">STEP 1</text>
 <text x="26" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Register on Luma</text>
@@ -853,13 +855,13 @@ export const BLOG_POSTS: BlogPost[] = [
 <text x="26" y="138" font-size="11" fill="var(--text-tertiary)">with Team1 LatAm</text>
 <rect x="250" y="45" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
 <text x="268" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">STEP 2</text>
-<text x="268" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Build live</text>
-<text x="268" y="120" font-size="11" fill="var(--text-tertiary)">against real Fuji contracts</text>
+<text x="268" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Deploy WorkshopKYA.sol</text>
+<text x="268" y="120" font-size="11" fill="var(--text-tertiary)">live, in Remix, no setup</text>
 <text x="268" y="138" font-size="11" fill="var(--text-tertiary)">with Monserrat &amp; Giovanny</text>
 <rect x="492" y="45" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
 <text x="510" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">STEP 3</text>
 <text x="510" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Leave with a real Tier 5</text>
-<text x="510" y="120" font-size="11" fill="var(--text-tertiary)">issued to your own wallet</text>
+<text x="510" y="120" font-size="11" fill="var(--text-tertiary)">issued by KUMPLY to your wallet</text>
 <text x="510" y="138" font-size="11" fill="var(--text-tertiary)">address only, no personal data</text>
 <path d="M212 100 L246 100" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#kyaw-arrow1-en)"/>
 <path d="M454 100 L488 100" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#kyaw-arrow2-en)"/>
@@ -883,10 +885,10 @@ export const BLOG_POSTS: BlogPost[] = [
 >Reserve your spot</a>
 </div>
 
-<p>Sources: <a href="https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/" target="_blank" rel="noopener noreferrer">Google Developers Blog, A2A announcement</a>, <a href="https://github.com/a2aproject/A2A" target="_blank" rel="noopener noreferrer">A2A Project, Linux Foundation</a>, <a href="https://www.coinbase.com/developer-platform/discover/launches/x402" target="_blank" rel="noopener noreferrer">Coinbase, introducing x402</a>.</p>
+<p>Sources: <a href="https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/" target="_blank" rel="noopener noreferrer">Google Developers Blog, A2A announcement</a>, <a href="https://github.com/a2aproject/A2A" target="_blank" rel="noopener noreferrer">A2A Project, Linux Foundation</a>, <a href="https://www.coinbase.com/developer-platform/discover/launches/x402" target="_blank" rel="noopener noreferrer">Coinbase, introducing x402</a>, <a href="https://x402.org" target="_blank" rel="noopener noreferrer">x402.org, live protocol stats (checked 20-Sep-2026)</a>.</p>
 `,
       es: `
-<p>Dos protocolos salieron este año que cambiaron, sin hacer mucho ruido, lo que un agente de IA autónomo puede hacer por sí solo. A2A (Agent2Agent), contribuido originalmente por Google y ahora alojado por la Linux Foundation, deja que agentes de distintos proveedores se descubran, se autentiquen y se deleguen tareas entre sí sobre un protocolo abierto estándar. x402, el estándar de pagos HTTP-nativo de Coinbase, ahora co-gobernado con la Linux Foundation, deja que un agente reciba una respuesta HTTP 402 "Payment Required", firme un pago en stablecoin, y complete la transacción - sin cuenta, sin humano en el medio. Para finales de abril de 2026, Coinbase reportó cerca de 69,000 agentes activos y más de $50M en volumen acumulado moviéndose a través de él.</p>
+<p>Dos protocolos salieron este año que cambiaron, sin hacer mucho ruido, lo que un agente de IA autónomo puede hacer por sí solo. A2A (Agent2Agent), contribuido originalmente por Google y ahora alojado por la Linux Foundation, deja que agentes de distintos proveedores se descubran, se autentiquen y se deleguen tareas entre sí sobre un protocolo abierto estándar. x402, el estándar de pagos HTTP-nativo de Coinbase, ahora co-gobernado con la Linux Foundation, deja que un agente reciba una respuesta HTTP 402 "Payment Required", firme un pago en stablecoin, y complete la transacción - sin cuenta, sin humano en el medio. Esto no es un protocolo de papel: el propio dashboard en vivo de x402 muestra 75.41M transacciones y $24.24M en volumen solo en los últimos 30 días (revisado el 20 de septiembre de 2026).</p>
 
 <p>Ninguno de los dos protocolos responde una pregunta simple: cuando uno de esos agentes mueve dinero real, ¿quién es responsable si algo sale mal? A2A autentica que un agente es quien dice ser. x402 mueve el pago. Ninguno de los dos verifica quién responde por el agente.</p>
 
@@ -903,14 +905,16 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Quién presenta</h2>
 
-<p><strong>Monserrat Mendoza</strong> y <strong>Giovanny Amador</strong>, co-founders de KUMPLY y Avalanche Team1 LatAm Collaborators, dan la sesión juntos - las mismas dos personas que escriben cada commit en el repositorio público de KUMPLY, no un equipo de marketing hablando por los ingenieros.</p>
+<p><strong>Monserrat Mendoza</strong> y <strong>Giovanny Amador</strong>, co-founders de KUMPLY y Avalanche Team1 LatAm Collaborators, dan la sesión juntos. Giovanny envía la mayoría de lo que hoy está en el repositorio - cada commit atribuible a él, verificable en el historial público. Monserrat ya envió código real aquí también (commit <code>49177e0</code>, validación de dirección antes de una lectura de contrato) y lidera el lado de producto de la sesión - un segundo contribuidor técnico, genuinamente real, aunque todavía no al mismo ritmo.</p>
 
 <h2>Qué vas a construir - y qué te llevas</h2>
 
-<p>Esto no es un deck de slides sobre teoría de compliance. Vas a ver a un agente de IA intentar ejecutar una transacción contra los contratos reales <code>AttestationStore</code> y <code>ComplianceGate</code> de KUMPLY, en vivo en Fuji Testnet, y vas a ver el check pasar o fallar dependiendo de si la wallet del agente realmente carga una credencial Tier 5 válida. Después, cada asistente recibe una emitida a su propia wallet: una atestación Tier 5 real, en Fuji, solo con la dirección, sin pedir jamás datos personales. Es la misma llamada de contrato que usa nuestro flujo de KYC en producción, corrida manualmente contra el mismo verificador que usa la API - no un mock, no un contrato de juguete de testnet que nadie más puede revisar.</p>
+<p>Esto no es un deck de slides sobre teoría de compliance. Vas a desplegar tu propio contrato de atestación en vivo, en Remix, sin setup local: <code>WorkshopKYA.sol</code>, una versión de práctica simplificada construida para la sesión (<code>issueTier()</code> abierto, sin roles ni lógica de expiración) que replica el mismo patrón attest -&gt; tier -&gt; verify() que KUMPLY corre de verdad en producción, sin la complejidad de producción - suficientemente rápido para desplegarse en vivo en una sola sesión. Es una herramienta educativa, no el código real de KUMPLY, y lo dice el propio contrato.</p>
+
+<p>Después, cada asistente se lleva algo que no es una herramienta educativa: una atestación Tier 5 real, emitida por KUMPLY a tu propia wallet, en Fuji, solo con la dirección, sin pedir jamás datos personales - el mismo camino de emisión por lote que ya probamos de punta a punta antes de la sesión. Y los contratos reales de producción de KUMPLY también son reales y están en vivo, no es una afirmación que tengas que creer sin más: <code>AttestationStore</code> y <code>ComplianceGate</code> están desplegados y verificados tanto en Fuji como en Mainnet C-Chain hoy - mira las direcciones abajo y revísalas tú mismo.</p>
 
 <figure class="blog-diagram">
-<svg viewBox="0 0 700 200" width="100%" role="img" aria-label="Diagrama: tres pasos del workshop - regístrate en Luma, construye en vivo contra los contratos reales de KUMPLY con Team1 LatAm, y llévate una atestación Tier 5 KYA real emitida a tu propia wallet en Fuji">
+<svg viewBox="0 0 700 200" width="100%" role="img" aria-label="Diagrama: tres pasos del workshop - regístrate en Luma, despliega tu propio contrato de práctica WorkshopKYA.sol en vivo en Remix con Team1 LatAm, y llévate una atestación Tier 5 KYA real emitida por KUMPLY a tu propia wallet en Fuji">
 <rect x="8" y="45" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
 <text x="26" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PASO 1</text>
 <text x="26" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Regístrate en Luma</text>
@@ -918,13 +922,13 @@ export const BLOG_POSTS: BlogPost[] = [
 <text x="26" y="138" font-size="11" fill="var(--text-tertiary)">con Team1 LatAm</text>
 <rect x="250" y="45" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
 <text x="268" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PASO 2</text>
-<text x="268" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Construye en vivo</text>
-<text x="268" y="120" font-size="11" fill="var(--text-tertiary)">contra contratos reales en Fuji</text>
+<text x="268" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Despliega WorkshopKYA.sol</text>
+<text x="268" y="120" font-size="11" fill="var(--text-tertiary)">en vivo, en Remix, sin setup</text>
 <text x="268" y="138" font-size="11" fill="var(--text-tertiary)">con Monserrat y Giovanny</text>
 <rect x="492" y="45" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
 <text x="510" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PASO 3</text>
 <text x="510" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Llévate un Tier 5 real</text>
-<text x="510" y="120" font-size="11" fill="var(--text-tertiary)">emitido a tu propia wallet</text>
+<text x="510" y="120" font-size="11" fill="var(--text-tertiary)">emitido por KUMPLY a tu wallet</text>
 <text x="510" y="138" font-size="11" fill="var(--text-tertiary)">solo dirección, sin datos personales</text>
 <path d="M212 100 L246 100" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#kyaw-arrow1-es)"/>
 <path d="M454 100 L488 100" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#kyaw-arrow2-es)"/>
@@ -948,7 +952,7 @@ export const BLOG_POSTS: BlogPost[] = [
 >Reserva tu lugar</a>
 </div>
 
-<p>Fuentes: <a href="https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/" target="_blank" rel="noopener noreferrer">Google Developers Blog, anuncio de A2A</a>, <a href="https://github.com/a2aproject/A2A" target="_blank" rel="noopener noreferrer">A2A Project, Linux Foundation</a>, <a href="https://www.coinbase.com/developer-platform/discover/launches/x402" target="_blank" rel="noopener noreferrer">Coinbase, introduciendo x402</a>.</p>
+<p>Fuentes: <a href="https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/" target="_blank" rel="noopener noreferrer">Google Developers Blog, anuncio de A2A</a>, <a href="https://github.com/a2aproject/A2A" target="_blank" rel="noopener noreferrer">A2A Project, Linux Foundation</a>, <a href="https://www.coinbase.com/developer-platform/discover/launches/x402" target="_blank" rel="noopener noreferrer">Coinbase, introduciendo x402</a>, <a href="https://x402.org" target="_blank" rel="noopener noreferrer">x402.org, estadísticas en vivo del protocolo (revisado 20-sep-2026)</a>.</p>
 `,
     },
     hasLumaCheckout: true,
