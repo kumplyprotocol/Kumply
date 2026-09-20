@@ -23,6 +23,14 @@ pragma solidity ^0.8.20;
 ///      Hardhat config compiles everything against "cancun" - confirmed by
 ///      scripts/test-workshop-kya.ts's real Fuji deployment). Deploying with the wrong EVM
 ///      version selected is the most likely way this exercise breaks live for an attendee.
+///      Do NOT change the compiler version to fix this - leave it on Remix's actual current
+///      default (0.8.34 as of 20-Sep-2026), which already supports "cancun" fine. Manually
+///      lowering it to something below 0.8.24 breaks the combination outright: solc only
+///      added "cancun" as a valid EVM Version target in 0.8.24 (Solidity 0.8.24 release,
+///      26-Jan-2024) - an older compiler simply doesn't recognize "cancun" as an option.
+///      Confirmed live the hard way: dropping to exactly 0.8.20 (this file's own pragma
+///      floor) and selecting "cancun" fails. The only setting that needs to change from
+///      Remix's defaults is EVM Version; the compiler dropdown can stay untouched.
 contract WorkshopKYA {
     /// @notice Tier currently assigned to each address. 0 means "no tier issued."
     mapping(address => uint32) public tierOf;
