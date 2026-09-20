@@ -16,6 +16,13 @@ pragma solidity ^0.8.20;
 ///      control, expiry, or revocation logic that makes an attestation contract safe to
 ///      rely on. Use AttestationStore.sol (contracts/AttestationStore.sol in this repo) for
 ///      anything real.
+/// @dev REMIX SETUP: in the Solidity Compiler panel, open "Advanced Configurations" and set
+///      "EVM Version" to "cancun" explicitly - do NOT leave it on "default". Checked live on
+///      20-Sep-2026: Remix's "default" with the compiler it ships today resolves to "osaka",
+///      a newer EVM target than what Avalanche C-Chain/Fuji currently run (this repo's own
+///      Hardhat config compiles everything against "cancun" - confirmed by
+///      scripts/test-workshop-kya.ts's real Fuji deployment). Deploying with the wrong EVM
+///      version selected is the most likely way this exercise breaks live for an attendee.
 contract WorkshopKYA {
     /// @notice Tier currently assigned to each address. 0 means "no tier issued."
     mapping(address => uint32) public tierOf;
