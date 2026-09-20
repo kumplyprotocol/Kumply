@@ -809,7 +809,7 @@ export const BLOG_POSTS: BlogPost[] = [
       name: "Monserrat Mendoza",
       role: { en: "Co-founder, Dev Lead", es: "Co-founder, Líder de Desarrollo" },
     },
-    readMinutes: 4,
+    readMinutes: 6,
     category: "WORKSHOP",
     title: {
       en: "KYA: Verifying AI Agents On-Chain - Live Workshop with Team1 LatAm, Sept 24",
@@ -835,6 +835,30 @@ export const BLOG_POSTS: BlogPost[] = [
   data-luma-event-id="evt-W7ORN6FSwIPEO2B"
 >Reserve your spot</a>
 </div>
+
+<h2>Where this actually bites</h2>
+
+<p>Three scenarios, illustrative mechanism examples, not documented incidents - the point is the shape of the gap, not that any specific one already happened:</p>
+
+<blockquote class="blog-scenario">
+<p><strong>An autonomous trading agent requests a large fill from a lending protocol.</strong> Today, the protocol has no way to tell a vetted institutional bot from an anonymous exploit script probing for a bad price - both look like a wallet calling a function. With a Tier 5 check in front of the fill, the protocol either sees a valid, unexpired credential tied to a KYB'd owner and proceeds knowing who's accountable, or it doesn't, and falls back to a human signer or rejects the trade outright - before any capital moves.</p>
+</blockquote>
+
+<blockquote class="blog-scenario">
+<p><strong>An agent pays another agent's service for compute via x402.</strong> The payment itself settles in seconds, no account needed - that part already works, at the real scale cited above. But the seller has no standard way to know who's actually behind the paying agent if the request turns out to be abusive, fraudulent, or simply needs a dispute resolved. A Tier 5 credential gives the seller something to check before fulfilling a high-value request: not just "this wallet paid," but "this wallet is accountable to a real, KYB-verified entity."</p>
+</blockquote>
+
+<blockquote class="blog-scenario">
+<p><strong>Two agents from different companies negotiate a multi-step task over A2A.</strong> A2A's Agent Cards handle "who are you and what can you do" - real interoperability, genuinely useful. What they don't answer is "should I delegate something with real stakes to you, and who's on the hook if you don't deliver." Requiring a Tier 5 credential before accepting a delegation with real value attached adds exactly that missing check, on top of A2A's own discovery layer rather than instead of it.</p>
+</blockquote>
+
+<h2>Why this matters now, not in two years</h2>
+
+<p>This isn't a future-proofing exercise. x402's own live numbers, cited above and checked the same day this post went up, are already real: <strong>75.41M transactions and $24.24M in volume in the last 30 days alone</strong>. That volume is moving today, through a protocol that's barely a year past its foundational governance moving to the Linux Foundation. The payment and discovery rails already carry real value; the accountability layer riding alongside them doesn't exist yet as a standard. That's not a two-years-out problem - it's a today problem with real money already flowing through the gap.</p>
+
+<h2>What KYA doesn't solve</h2>
+
+<p>Worth being precise about the limits, the same way we're precise about what's shipped versus roadmap in the <a href="/blog/kya-know-your-agent-tier-5">deep dive</a>. A Tier 5 credential is not a legal-personhood determination - agents aren't legal persons, and KYA doesn't pretend otherwise; it verifies the accountable owner behind the agent, not the agent's own standing. It's not a substitute for a real regulatory or legal opinion in any specific jurisdiction - it's a technical verification layer, not legal advice. It doesn't prove the agent's own model or behavior is safe, bounded, or bug-free - deeper agent-specific verification (model fingerprinting, behavior bounds, liveness checks) is planned, scoped for a future <code>AgentRegistry.sol</code> extension, and doesn't exist in the contracts today. And it doesn't force a bad-faith owner to make things right - it ties accountability to a real, KYB-verified entity so there's someone to hold accountable, but enforcing that accountability in the real world is still a legal and regulatory question, not something a smart contract can do on its own.</p>
 
 <h2>Who's presenting</h2>
 
@@ -902,6 +926,30 @@ export const BLOG_POSTS: BlogPost[] = [
   data-luma-event-id="evt-W7ORN6FSwIPEO2B"
 >Reserva tu lugar</a>
 </div>
+
+<h2>Dónde muerde esto de verdad</h2>
+
+<p>Tres escenarios, ejemplos ilustrativos de mecanismo, no incidentes documentados - lo que importa es la forma del hueco, no que alguno de estos ya haya pasado tal cual:</p>
+
+<blockquote class="blog-scenario">
+<p><strong>Un agente de trading autónomo pide una operación grande a un protocolo de préstamos.</strong> Hoy, el protocolo no tiene forma de distinguir un bot institucional verificado de un script de exploit anónimo probando un mal precio - los dos se ven igual, una wallet llamando a una función. Con un check Tier 5 delante de la operación, el protocolo ve una credencial válida y sin expirar ligada a un dueño verificado con KYB y avanza sabiendo quién responde, o no la ve, y recurre a un firmante humano o rechaza la operación directamente - antes de que se mueva cualquier capital.</p>
+</blockquote>
+
+<blockquote class="blog-scenario">
+<p><strong>Un agente le paga el cómputo a otro agente vía x402.</strong> El pago en sí se resuelve en segundos, sin necesidad de cuenta - esa parte ya funciona, a la escala real citada arriba. Pero el vendedor no tiene ninguna forma estándar de saber quién está realmente detrás del agente que paga si la solicitud resulta ser abusiva, fraudulenta, o simplemente necesita resolverse una disputa. Una credencial Tier 5 le da al vendedor algo que revisar antes de cumplir una solicitud de alto valor: no solo "esta wallet pagó", sino "esta wallet responde ante una entidad real, verificada con KYB".</p>
+</blockquote>
+
+<blockquote class="blog-scenario">
+<p><strong>Dos agentes de empresas distintas negocian una tarea de varios pasos vía A2A.</strong> Las Agent Cards de A2A resuelven "quién eres y qué puedes hacer" - interoperabilidad real, genuinamente útil. Lo que no responden es "¿debería delegarte algo con valor real en juego, y quién responde si no entregas?". Exigir una credencial Tier 5 antes de aceptar una delegación con valor real en juego agrega exactamente ese check que falta, encima de la propia capa de descubrimiento de A2A, no en lugar de ella.</p>
+</blockquote>
+
+<h2>Por qué esto importa ahora, no en dos años</h2>
+
+<p>Esto no es un ejercicio de prepararse para el futuro. Las cifras en vivo del propio x402, citadas arriba y revisadas el mismo día que se publicó este post, ya son reales: <strong>75.41M transacciones y $24.24M en volumen solo en los últimos 30 días</strong>. Ese volumen se mueve hoy, a través de un protocolo que apenas lleva un año desde su momento fundacional de gobernanza pasando a la Linux Foundation. Los rieles de pago y descubrimiento ya cargan valor real; la capa de responsabilidad que debería acompañarlos todavía no existe como estándar. Ese no es un problema de dentro de dos años - es un problema de hoy, con dinero real ya fluyendo por el hueco.</p>
+
+<h2>Qué NO resuelve KYA</h2>
+
+<p>Vale la pena ser precisos sobre los límites, de la misma forma en que somos precisos sobre qué está en vivo y qué es roadmap en el <a href="/blog/kya-know-your-agent-tier-5">deep dive</a>. Una credencial Tier 5 no es una determinación de personalidad jurídica - los agentes no son personas legales, y KYA no pretende lo contrario; verifica al dueño responsable detrás del agente, no la condición legal del agente en sí. No sustituye una opinión legal o regulatoria real en ninguna jurisdicción específica - es una capa de verificación técnica, no asesoría legal. No prueba que el modelo o el comportamiento del agente en sí sea seguro, acotado, o esté libre de bugs - la verificación específica de agentes más profunda (huella del modelo, límites de comportamiento, checks de liveness) está planeada, programada para una futura extensión <code>AgentRegistry.sol</code>, y todavía no existe en los contratos hoy. Y no obliga a un dueño de mala fe a resolver las cosas - ata la responsabilidad a una entidad real, verificada con KYB, para que haya alguien a quien responsabilizar, pero hacer cumplir esa responsabilidad en el mundo real sigue siendo una cuestión legal y regulatoria, no algo que un smart contract pueda hacer por sí solo.</p>
 
 <h2>Quién presenta</h2>
 
