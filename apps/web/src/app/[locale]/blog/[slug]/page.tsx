@@ -112,7 +112,13 @@ export default async function BlogPostPage({
       />
 
       {post.hasLumaCheckout && (
-        <Script src="https://embed.lu.ma/checkout-button.js" strategy="afterInteractive" />
+        // Luma's own script does document.getElementById("luma-checkout") to
+        // find its own <script> tag and resolve its origin for its self-injected
+        // stylesheet (checkout-button.css) - without this exact id, that lookup
+        // fails silently, the stylesheet URL resolves wrong (404, not a CSP
+        // block), and the checkout modal renders in the DOM completely unstyled
+        // and invisible. Confirmed by curl'ing the real script source.
+        <Script id="luma-checkout" src="https://embed.lu.ma/checkout-button.js" strategy="afterInteractive" />
       )}
 
       <footer className="blog-post__footer">
