@@ -12,6 +12,12 @@ export interface BlogPost {
   title: { en: string; es: string };
   excerpt: { en: string; es: string };
   bodyHtml: { en: string; es: string };
+  // True when bodyHtml embeds a Luma checkout button (a[data-luma-action="checkout"]).
+  // The widget's own <script> tag can't just be pasted into bodyHtml — a <script>
+  // inside dangerouslySetInnerHTML never executes (standard innerHTML behavior,
+  // not a React bug) - the [slug]/page.tsx loads it via next/script instead, only
+  // when this flag is set, so other posts never pay for the third-party script.
+  hasLumaCheckout?: boolean;
 }
 
 export const BLOG_POSTS: BlogPost[] = [
@@ -795,6 +801,157 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Fuentes: <a href="https://www.avax.network/about/blog/leadership-announcement-from-ava-labs" target="_blank" rel="noopener noreferrer">anuncio de liderazgo de Ava Labs</a>, <a href="https://www.avax.network/about/blog/from-gross-chain-product-to-gross-chain-income-where-the-value-goes" target="_blank" rel="noopener noreferrer">Avalanche Foundation, Gross Chain Income</a>, <a href="https://www.avax.network/about/blog/securing-a-nations-credentials-kenya-anchors-academic-records-on-avalanche" target="_blank" rel="noopener noreferrer">Ava Labs, registros académicos de Kenia</a>.</p>
 `,
     },
+  },
+  {
+    slug: "kya-workshop-team1-24-sep",
+    date: "2026-09-20",
+    author: {
+      name: "Monserrat Mendoza",
+      role: { en: "Co-founder, Dev Lead", es: "Co-founder, Líder de Desarrollo" },
+    },
+    readMinutes: 4,
+    category: "WORKSHOP",
+    title: {
+      en: "KYA: Verifying AI Agents On-Chain - Live Workshop with Team1 LatAm, Sept 24",
+      es: "KYA: Verificando Agentes de IA On-Chain - Workshop en vivo con Team1 LatAm, 24 de septiembre",
+    },
+    excerpt: {
+      en: "AI agents can now discover each other (A2A) and pay each other (x402) at real, growing scale. Neither protocol answers who's accountable when one of them moves real money. Join us live with Team1 LatAm on September 24 to build against KUMPLY's Tier 5 (KYA) layer - and leave with a real attestation issued to your own wallet.",
+      es: "Los agentes de IA ya pueden descubrirse entre sí (A2A) y pagarse entre sí (x402), a una escala real y creciente. Ninguno de los dos protocolos responde quién es responsable cuando uno de ellos mueve dinero real. Únete en vivo con Team1 LatAm el 24 de septiembre para construir contra la capa Tier 5 (KYA) de KUMPLY - y llévate una atestación real emitida a tu propia wallet.",
+    },
+    bodyHtml: {
+      en: `
+<p>Two protocols shipped this year that quietly changed what an autonomous AI agent can do on its own. A2A (Agent2Agent), originally contributed by Google and now hosted by the Linux Foundation, lets agents from different vendors discover, authenticate, and delegate tasks to each other over a standard open protocol. x402, Coinbase's HTTP-native payment standard now co-governed with the Linux Foundation, lets an agent hit an HTTP 402 "Payment Required" response, sign a stablecoin payment, and complete the transaction - no account, no human in the loop. By late April 2026, Coinbase reported roughly 69,000 active agents and $50M+ in cumulative volume moving through it.</p>
+
+<p>Neither protocol answers a simple question: when one of those agents moves real money, who's accountable if it goes wrong? A2A authenticates that an agent is who it claims to be. x402 moves the payment. Neither one verifies who stands behind the agent.</p>
+
+<p>That's the gap KUMPLY's Tier 5 (KYA) attestation is built to close - see our <a href="/blog/kya-know-your-agent-tier-5">deep dive on the mechanism</a> if you want the full technical breakdown. On <strong>September 24, 2026, 7:00 PM Mexico City time (CDMX)</strong>, we're running a live, hands-on workshop with <strong>Team1 LatAm</strong> to show it working end-to-end, not slides.</p>
+
+<div class="blog-cta">
+<a
+  href="https://luma.com/event/evt-W7ORN6FSwIPEO2B"
+  class="luma-checkout--button btn btn-primary"
+  data-luma-action="checkout"
+  data-luma-event-id="evt-W7ORN6FSwIPEO2B"
+>Reserve your spot</a>
+</div>
+
+<h2>Who's presenting</h2>
+
+<p><strong>Monserrat Mendoza</strong> and <strong>Giovanny Amador</strong>, KUMPLY's co-founders and Avalanche Team1 LatAm Collaborators, are running the session together - the same two people who write every commit in KUMPLY's public repository, not a marketing team standing in for the engineers.</p>
+
+<h2>What you'll build - and leave with</h2>
+
+<p>This isn't a slide deck about compliance theory. You'll see an AI agent try to execute a transaction against KUMPLY's real <code>AttestationStore</code> and <code>ComplianceGate</code> contracts, live on Fuji Testnet, and watch the check pass or fail depending on whether the agent's wallet actually carries a valid Tier 5 credential. Then every attendee gets one issued to their own wallet: a real Tier 5 attestation, on Fuji, address-only, no personal data ever requested. It's the same contract call our KYC flow uses in production, run manually against the same verifier the API uses - not a mock, not a testnet toy contract nobody else can check.</p>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 200" width="100%" role="img" aria-label="Diagram: three steps of the workshop - register on Luma, build live against KUMPLY's real contracts with Team1 LatAm, and leave with a real Tier 5 KYA attestation issued to your own wallet on Fuji">
+<rect x="8" y="45" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">STEP 1</text>
+<text x="26" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Register on Luma</text>
+<text x="26" y="120" font-size="11" fill="var(--text-tertiary)">Sept 24, 7PM CDMX</text>
+<text x="26" y="138" font-size="11" fill="var(--text-tertiary)">with Team1 LatAm</text>
+<rect x="250" y="45" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="268" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">STEP 2</text>
+<text x="268" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Build live</text>
+<text x="268" y="120" font-size="11" fill="var(--text-tertiary)">against real Fuji contracts</text>
+<text x="268" y="138" font-size="11" fill="var(--text-tertiary)">with Monserrat &amp; Giovanny</text>
+<rect x="492" y="45" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="510" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">STEP 3</text>
+<text x="510" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Leave with a real Tier 5</text>
+<text x="510" y="120" font-size="11" fill="var(--text-tertiary)">issued to your own wallet</text>
+<text x="510" y="138" font-size="11" fill="var(--text-tertiary)">address only, no personal data</text>
+<path d="M212 100 L246 100" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#kyaw-arrow1-en)"/>
+<path d="M454 100 L488 100" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#kyaw-arrow2-en)"/>
+<defs>
+<marker id="kyaw-arrow1-en" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="kyaw-arrow2-en" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
+
+<h2>The contracts are real, and you can check them yourself</h2>
+
+<p>Nothing shown live is staged. <code>AttestationStore</code> is deployed and verified at <code>0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD</code> on Fuji and at <code>0xa116261Ed3a848A9E1cd34923D5A0442D1455F71</code> on Mainnet C-Chain (read-only beta, fee at zero) - both confirmed live on-chain the same week this post went up. Bring a browser and check <code>totalAttestations()</code> yourself on <a href="https://testnet.snowtrace.io/address/0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD" target="_blank" rel="noopener noreferrer">Snowtrace</a> before, during, or after the session.</p>
+
+<div class="blog-cta">
+<a
+  href="https://luma.com/event/evt-W7ORN6FSwIPEO2B"
+  class="luma-checkout--button btn btn-primary"
+  data-luma-action="checkout"
+  data-luma-event-id="evt-W7ORN6FSwIPEO2B"
+>Reserve your spot</a>
+</div>
+
+<p>Sources: <a href="https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/" target="_blank" rel="noopener noreferrer">Google Developers Blog, A2A announcement</a>, <a href="https://github.com/a2aproject/A2A" target="_blank" rel="noopener noreferrer">A2A Project, Linux Foundation</a>, <a href="https://www.coinbase.com/developer-platform/discover/launches/x402" target="_blank" rel="noopener noreferrer">Coinbase, introducing x402</a>.</p>
+`,
+      es: `
+<p>Dos protocolos salieron este año que cambiaron, sin hacer mucho ruido, lo que un agente de IA autónomo puede hacer por sí solo. A2A (Agent2Agent), contribuido originalmente por Google y ahora alojado por la Linux Foundation, deja que agentes de distintos proveedores se descubran, se autentiquen y se deleguen tareas entre sí sobre un protocolo abierto estándar. x402, el estándar de pagos HTTP-nativo de Coinbase, ahora co-gobernado con la Linux Foundation, deja que un agente reciba una respuesta HTTP 402 "Payment Required", firme un pago en stablecoin, y complete la transacción - sin cuenta, sin humano en el medio. Para finales de abril de 2026, Coinbase reportó cerca de 69,000 agentes activos y más de $50M en volumen acumulado moviéndose a través de él.</p>
+
+<p>Ninguno de los dos protocolos responde una pregunta simple: cuando uno de esos agentes mueve dinero real, ¿quién es responsable si algo sale mal? A2A autentica que un agente es quien dice ser. x402 mueve el pago. Ninguno de los dos verifica quién responde por el agente.</p>
+
+<p>Ese es el hueco que la attestation Tier 5 (KYA) de KUMPLY está construida para cerrar - mira nuestro <a href="/blog/kya-know-your-agent-tier-5">deep dive del mecanismo completo</a> si quieres el desglose técnico entero. El <strong>24 de septiembre de 2026, 7:00 p.m., hora de Ciudad de México (CDMX)</strong>, corremos un workshop en vivo y práctico con <strong>Team1 LatAm</strong> para mostrarlo funcionando de punta a punta, no slides.</p>
+
+<div class="blog-cta">
+<a
+  href="https://luma.com/event/evt-W7ORN6FSwIPEO2B"
+  class="luma-checkout--button btn btn-primary"
+  data-luma-action="checkout"
+  data-luma-event-id="evt-W7ORN6FSwIPEO2B"
+>Reserva tu lugar</a>
+</div>
+
+<h2>Quién presenta</h2>
+
+<p><strong>Monserrat Mendoza</strong> y <strong>Giovanny Amador</strong>, co-founders de KUMPLY y Avalanche Team1 LatAm Collaborators, dan la sesión juntos - las mismas dos personas que escriben cada commit en el repositorio público de KUMPLY, no un equipo de marketing hablando por los ingenieros.</p>
+
+<h2>Qué vas a construir - y qué te llevas</h2>
+
+<p>Esto no es un deck de slides sobre teoría de compliance. Vas a ver a un agente de IA intentar ejecutar una transacción contra los contratos reales <code>AttestationStore</code> y <code>ComplianceGate</code> de KUMPLY, en vivo en Fuji Testnet, y vas a ver el check pasar o fallar dependiendo de si la wallet del agente realmente carga una credencial Tier 5 válida. Después, cada asistente recibe una emitida a su propia wallet: una atestación Tier 5 real, en Fuji, solo con la dirección, sin pedir jamás datos personales. Es la misma llamada de contrato que usa nuestro flujo de KYC en producción, corrida manualmente contra el mismo verificador que usa la API - no un mock, no un contrato de juguete de testnet que nadie más puede revisar.</p>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 200" width="100%" role="img" aria-label="Diagrama: tres pasos del workshop - regístrate en Luma, construye en vivo contra los contratos reales de KUMPLY con Team1 LatAm, y llévate una atestación Tier 5 KYA real emitida a tu propia wallet en Fuji">
+<rect x="8" y="45" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PASO 1</text>
+<text x="26" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Regístrate en Luma</text>
+<text x="26" y="120" font-size="11" fill="var(--text-tertiary)">24 sep, 7PM CDMX</text>
+<text x="26" y="138" font-size="11" fill="var(--text-tertiary)">con Team1 LatAm</text>
+<rect x="250" y="45" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="268" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PASO 2</text>
+<text x="268" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Construye en vivo</text>
+<text x="268" y="120" font-size="11" fill="var(--text-tertiary)">contra contratos reales en Fuji</text>
+<text x="268" y="138" font-size="11" fill="var(--text-tertiary)">con Monserrat y Giovanny</text>
+<rect x="492" y="45" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="510" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PASO 3</text>
+<text x="510" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Llévate un Tier 5 real</text>
+<text x="510" y="120" font-size="11" fill="var(--text-tertiary)">emitido a tu propia wallet</text>
+<text x="510" y="138" font-size="11" fill="var(--text-tertiary)">solo dirección, sin datos personales</text>
+<path d="M212 100 L246 100" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#kyaw-arrow1-es)"/>
+<path d="M454 100 L488 100" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#kyaw-arrow2-es)"/>
+<defs>
+<marker id="kyaw-arrow1-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="kyaw-arrow2-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
+
+<h2>Los contratos son reales, y puedes revisarlos tú mismo</h2>
+
+<p>Nada de lo que se muestra en vivo está armado. <code>AttestationStore</code> está desplegado y verificado en <code>0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD</code> en Fuji y en <code>0xa116261Ed3a848A9E1cd34923D5A0442D1455F71</code> en Mainnet C-Chain (beta de solo lectura, fee en cero) - ambos confirmados en vivo on-chain la misma semana que se publicó este post. Trae un navegador y revisa <code>totalAttestations()</code> tú mismo en <a href="https://testnet.snowtrace.io/address/0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD" target="_blank" rel="noopener noreferrer">Snowtrace</a> antes, durante, o después de la sesión.</p>
+
+<div class="blog-cta">
+<a
+  href="https://luma.com/event/evt-W7ORN6FSwIPEO2B"
+  class="luma-checkout--button btn btn-primary"
+  data-luma-action="checkout"
+  data-luma-event-id="evt-W7ORN6FSwIPEO2B"
+>Reserva tu lugar</a>
+</div>
+
+<p>Fuentes: <a href="https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/" target="_blank" rel="noopener noreferrer">Google Developers Blog, anuncio de A2A</a>, <a href="https://github.com/a2aproject/A2A" target="_blank" rel="noopener noreferrer">A2A Project, Linux Foundation</a>, <a href="https://www.coinbase.com/developer-platform/discover/launches/x402" target="_blank" rel="noopener noreferrer">Coinbase, introduciendo x402</a>.</p>
+`,
+    },
+    hasLumaCheckout: true,
   },
 ];
 

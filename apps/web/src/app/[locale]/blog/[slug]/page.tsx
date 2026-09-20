@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Link } from "@/i18n/routing";
 import { getTranslations, getLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -110,6 +111,10 @@ export default async function BlogPostPage({
         dangerouslySetInnerHTML={{ __html: post.bodyHtml[lang] }}
       />
 
+      {post.hasLumaCheckout && (
+        <Script src="https://embed.lu.ma/checkout-button.js" strategy="afterInteractive" />
+      )}
+
       <footer className="blog-post__footer">
         <Link href="/blog" className="btn btn-secondary">
           ← {t("backToBlog")}
@@ -162,6 +167,8 @@ export default async function BlogPostPage({
         .blog-post__body .blog-scenario p:last-child { margin-bottom: 0; }
         .blog-post__body .blog-diagram { margin: 1.75rem 0; }
         .blog-post__body .blog-diagram svg { display: block; max-width: 100%; height: auto; }
+        .blog-post__body .blog-cta { margin: 2rem 0; text-align: center; }
+        .blog-post__body .blog-cta .btn { display: inline-flex; }
 
         .blog-post__footer {
           display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 3rem;
