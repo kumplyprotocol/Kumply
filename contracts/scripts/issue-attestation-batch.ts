@@ -4,9 +4,11 @@ import { ethers, network } from "hardhat";
  * KUMPLY — Batch-issue an attestation to many wallets (verifier-only).
  *
  * Live-workshop path: issue the same tier to a list of attendee addresses
- * in one run, e.g. Tier 5 (Agent/KYA) demo attestations. Same mechanism as
- * issue-attestation.ts, looped over a list instead of one subject. No
- * personal data is ever required or stored — only the address.
+ * in one run — any tier (1-5), whatever the session is actually teaching.
+ * Live-tested for Tier 5 (Agent/KYA, 24-Sep KYA workshop) and Tier 4
+ * (Business/KYB, ACP-99 workshop). Same mechanism as issue-attestation.ts,
+ * looped over a list instead of one subject. No personal data is ever
+ * required or stored — only the address.
  *
  * The signer must hold VERIFIER_ROLE on the target AttestationStore.
  *
