@@ -35,6 +35,7 @@ export default function VerifyPage() {
   const [attestation, setAttestation] = useState<{ tier: number; expiry: number } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [sdkLaunched, setSdkLaunched] = useState(false);
+  const [consentGiven, setConsentGiven] = useState(false);
   const sumsubContainerRef = useRef<HTMLDivElement>(null);
   const sdkLaunchedRef = useRef(false);
 
@@ -74,6 +75,13 @@ export default function VerifyPage() {
     // writes to the Fuji AttestationStore. Mainnet attestations are manual.
     if (network === "mainnet") {
       setError(t("mainnetKycNotice"));
+      setStep("tierSelect");
+      return;
+    }
+    // KUMPLY's own consent, separate from whatever Sumsub's own SDK shows -
+    // gated here too (not just the tierSelect button) since the kyc step's
+    // fallback button also calls launchSumsub directly.
+    if (!consentGiven) {
       setStep("tierSelect");
       return;
     }
@@ -254,9 +262,19 @@ export default function VerifyPage() {
             </div>
           ) : (
             <div style={{ textAlign: "center" }}>
+              <label style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem", maxWidth: "480px", margin: "0 auto 1.25rem", textAlign: "left", fontSize: "0.82rem", color: "var(--text-secondary)", lineHeight: 1.5, cursor: "pointer" }}>
+                <input
+                  type="checkbox"
+                  checked={consentGiven}
+                  onChange={(e) => setConsentGiven(e.target.checked)}
+                  style={{ marginTop: "0.2rem", flexShrink: 0 }}
+                />
+                <span>{t("consentLabel")}</span>
+              </label>
               <button
                 className="btn btn-primary"
-                style={{ fontSize: "1rem", padding: "0.85rem 2.5rem" }}
+                style={{ fontSize: "1rem", padding: "0.85rem 2.5rem", opacity: consentGiven ? 1 : 0.5, cursor: consentGiven ? "pointer" : "not-allowed" }}
+                disabled={!consentGiven}
                 onClick={() => { setStep("kyc"); launchSumsub(); }}
               >
                 {t("tierSelectBtn")}
