@@ -503,6 +503,13 @@ export const DECK_HTML = `
       and costed at zero on slide 11. The same 2 confirmed pilot integrators M0 is scoped to produce are the
       candidates for M4's pilot integrations - one proof-of-concept pipeline, not two separate asks.
       We would rather show you the gap than have you find it.</p>
+    <p class="note"><strong>Update, September 24, 2026:</strong> the gap above just narrowed by a real data point, not
+      a projection. A live KYA technical workshop with Team1 LatAm issued <strong>13 real Tier 5 attestations on
+      Fuji</strong> during the session - the first genuine usage since the product was built, not seeded ahead of the
+      event, not simulated. Each carries its own transaction hash, independently verifiable on
+      <a href="https://kumply.xyz/dashboard">kumply.xyz/dashboard</a> or directly on Snowtrace. This is usage
+      evidence, not committed demand - workshop attendees, not paying integrators - and Mainnet still sits at zero
+      attestations, deliberately, until Sumsub production activates under M2.</p>
     <div class="grid cols-3">
       <div class="cell">
         <h3>Regulatory pressure</h3>
@@ -576,8 +583,8 @@ export const DECK_HTML = `
     <p class="lede" style="margin-top: 1.5rem;">
       Active in the Team1 LatAm community - introduced KUMPLY at a Team1 weekly call, and shipped two additional
       Avalanche builds in a single weekend (an invisible-blockchain museum ticketing app and an agricultural
-      traceability demo), shared with the community. Now running a Team1-approved technical workshop on KYA, scheduled
-      for September 24, 2026 (<a href="https://luma.com/2wnmcoag">RSVP on Luma</a>).
+      traceability demo), shared with the community. Ran a Team1-approved live technical workshop on KYA on
+      September 24, 2026 - 13 real Tier 5 attestations issued on-chain on Fuji during the session (detail on slide 9).
       <strong>Building on Avalanche is what we do, grant or no grant.</strong>
     </p>
     <p class="note" style="margin-top: 1rem;"><strong>Bus factor, addressed:</strong> most shipped code still runs
@@ -1014,6 +1021,14 @@ export const DECK_HTML_ES = `
       y con costo cero en la diapositiva 11. Los mismos 2 integradores piloto confirmados que M0 está diseñado para producir son los
       candidatos para las integraciones piloto de M4 - un solo pipeline de proof-of-concept, no dos pedidos separados.
       Preferimos mostrarte el hueco antes de que lo encuentres tú.</p>
+    <p class="note"><strong>Actualización, 24 de septiembre de 2026:</strong> el hueco de arriba se acaba de reducir con
+      un dato real, no una proyección. Un workshop técnico en vivo sobre KYA con Team1 LatAm emitió
+      <strong>13 attestations Tier 5 reales en Fuji</strong> durante la sesión - el primer uso genuino desde que se
+      construyó el producto, no sembrado antes del evento, no simulado. Cada una tiene su propio hash de transacción,
+      verificable de forma independiente en <a href="https://kumply.xyz/dashboard">kumply.xyz/dashboard</a> o
+      directamente en Snowtrace. Esto es evidencia de uso, no demanda comprometida - asistentes de un workshop, no
+      integradores pagando - y Mainnet sigue en cero attestations, deliberadamente, hasta que Sumsub producción se
+      active bajo M2.</p>
     <div class="grid cols-3">
       <div class="cell">
         <h3>Presión regulatoria</h3>
@@ -1087,8 +1102,9 @@ export const DECK_HTML_ES = `
     <p class="lede" style="margin-top: 1.5rem;">
       Activos en la comunidad LatAm de Team1 - presentaron KUMPLY en una llamada semanal de Team1, y enviaron dos builds
       adicionales de Avalanche en un solo fin de semana (una app de boletos de museo con blockchain invisible y una demo de
-      trazabilidad agrícola), compartidos con la comunidad. Ahora corriendo un workshop técnico sobre KYA aprobado por
-      Team1, programado para el 24 de septiembre de 2026 (<a href="https://luma.com/2wnmcoag">Regístrate en Luma</a>).
+      trazabilidad agrícola), compartidos con la comunidad. Corrieron un workshop técnico en vivo sobre KYA aprobado
+      por Team1 el 24 de septiembre de 2026 - 13 attestations Tier 5 reales emitidas on-chain en Fuji durante la
+      sesión (detalle en la diapositiva 9).
       <strong>Construir en Avalanche es lo que hacemos, con o sin grant.</strong>
     </p>
     <p class="note" style="margin-top: 1rem;"><strong>Bus factor, resuelto:</strong> la mayoría del código enviado
