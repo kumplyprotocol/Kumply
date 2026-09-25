@@ -205,6 +205,39 @@ here) - use the driver above instead.
   `.first()` match, which is the desktop one at the default 1280x900
   viewport this driver uses. If you resize the viewport, check which
   one is actually visible.
+- **A page can have three elements sharing one accessible name, not
+  just two.** On `/verify`, "Connect Wallet" exists in the mobile nav,
+  the desktop nav, *and* the page's own central CTA - `.first()`
+  resolved to the mobile nav button, which Playwright's `isVisible()`
+  reports `true` for even though it's transformed off-canvas (same
+  root cause as the mobile-viewport-widening Gotcha above: visible in
+  the accessibility tree ≠ actually in the viewport). Excluding the
+  mobile button by class then resolved to the *desktop nav's* button,
+  which really was `display`-hidden and timed out on click. Only
+  scoping the locator to the page's own content region (e.g.
+  `.container button:has-text(...)`, not `page.getByRole(...)`
+  unscoped) reliably hit the real target. When a click on a
+  seemingly-unique label times out or behaves inconsistently, count
+  how many elements actually match before assuming the first one is
+  right.
+- **Wallet-gated content (anything past a `useAccount().isConnected`
+  check, e.g. `/verify`'s `tierSelect` step) is not reachable through
+  `driver.mjs` as-is.** This app uses Reown AppKit + wagmi. A plain
+  legacy `window.ethereum` mock injected via `addInitScript` was not
+  enough to get AppKit's connect modal to offer a clickable wallet
+  option in testing - AppKit likely needs a real EIP-6963
+  `announceProvider` event, and even a correct mock isn't guaranteed
+  to produce a real `isConnected` state cleanly. One focused attempt
+  (custom script reusing `driver.mjs`'s chromium/lib setup, not a
+  `driver.mjs` flag) did not get past the connect screen. Budget this
+  like the Remix-automation problem documented elsewhere in this
+  project (see memory: `kumply-workshop-kya-contract`) - a fragile
+  third-party widget not worth forcing blindly. For a wallet-gated
+  page, prefer: (a) verify the change statically (`tsc`, code review,
+  confirm zero `pageErrors` on the reachable part of the page), and
+  (b) ask the user to do the one real click-through with a real wallet
+  once deployed, rather than sinking more turns into mocking a wallet
+  connection headless.
 
 ## Troubleshooting
 
