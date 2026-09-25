@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "avalanche": {
+      "source": "bytesagain/ai-skills",
+      "sourceType": "github",
+      "skillPath": "avalanche/SKILL.md",
+      "computedHash": "5d6b718782d4967012bf8fa8424e7f90bd36729a244bd28f4cd862ffd995c08d"
+    }
+  }
+}
