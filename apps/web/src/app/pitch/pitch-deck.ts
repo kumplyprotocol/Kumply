@@ -507,9 +507,11 @@ export const DECK_HTML = `
       a projection. A live KYA technical workshop with Team1 LatAm issued <strong>13 real Tier 5 attestations on
       Fuji</strong> during the session - the first genuine usage since the product was built, not seeded ahead of the
       event, not simulated. Each carries its own transaction hash, independently verifiable on
-      <a href="https://kumply.xyz/dashboard">kumply.xyz/dashboard</a> or directly on Snowtrace. This is usage
-      evidence, not committed demand - workshop attendees, not paying integrators - and Mainnet still sits at zero
-      attestations, deliberately, until Sumsub production activates under M2.</p>
+      <a href="https://kumply.xyz/dashboard">kumply.xyz/dashboard</a> or directly in the
+      <a href="https://testnet.snowtrace.io/address/0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD#events">contract's
+      event log on Snowtrace</a>. This is usage evidence, not committed demand - workshop attendees, not paying
+      integrators - and Mainnet still sits at zero attestations, deliberately, until Sumsub production activates
+      under M2.</p>
     <div class="grid cols-3">
       <div class="cell">
         <h3>Regulatory pressure</h3>
@@ -708,6 +710,9 @@ export const DECK_HTML = `
     </div>
     <div class="footer-links">
       <a href="https://kumply.xyz">kumply.xyz</a>
+      <a href="https://discord.gg/8yykwtweX">Discord</a>
+      <a href="https://t.me/+1X7jBa3Avb84NWU5">Telegram</a>
+      <a href="https://x.com/kumplyavax">X</a>
       <a href="https://kumply.xyz/demo">Live demo</a>
       <a href="https://kumply.xyz/verify">Verification flow</a>
       <a href="https://github.com/kumplyprotocol/Kumply">GitHub</a>
@@ -1026,9 +1031,10 @@ export const DECK_HTML_ES = `
       <strong>13 attestations Tier 5 reales en Fuji</strong> durante la sesión - el primer uso genuino desde que se
       construyó el producto, no sembrado antes del evento, no simulado. Cada una tiene su propio hash de transacción,
       verificable de forma independiente en <a href="https://kumply.xyz/dashboard">kumply.xyz/dashboard</a> o
-      directamente en Snowtrace. Esto es evidencia de uso, no demanda comprometida - asistentes de un workshop, no
-      integradores pagando - y Mainnet sigue en cero attestations, deliberadamente, hasta que Sumsub producción se
-      active bajo M2.</p>
+      directamente en el <a href="https://testnet.snowtrace.io/address/0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD#events">registro
+      de eventos del contrato en Snowtrace</a>. Esto es evidencia de uso, no demanda comprometida - asistentes de un
+      workshop, no integradores pagando - y Mainnet sigue en cero attestations, deliberadamente, hasta que Sumsub
+      producción se active bajo M2.</p>
     <div class="grid cols-3">
       <div class="cell">
         <h3>Presión regulatoria</h3>
@@ -1229,6 +1235,9 @@ export const DECK_HTML_ES = `
     </div>
     <div class="footer-links">
       <a href="https://kumply.xyz">kumply.xyz</a>
+      <a href="https://discord.gg/8yykwtweX">Discord</a>
+      <a href="https://t.me/+1X7jBa3Avb84NWU5">Telegram</a>
+      <a href="https://x.com/kumplyavax">X</a>
       <a href="https://kumply.xyz/demo">Demo en vivo</a>
       <a href="https://kumply.xyz/verify">Flujo de verificación</a>
       <a href="https://github.com/kumplyprotocol/Kumply">GitHub</a>
