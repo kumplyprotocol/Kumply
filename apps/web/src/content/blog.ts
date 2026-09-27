@@ -22,6 +22,88 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "kya-workshop-behind-the-scenes-live-bugs",
+    date: "2026-09-27",
+    author: {
+      name: "Monserrat Mendoza",
+      role: { en: "Co-founder, Dev Lead", es: "Co-founder, Líder de Desarrollo" },
+    },
+    readMinutes: 5,
+    category: "WORKSHOP",
+    title: {
+      en: "What Actually Broke During Our Live KYA Workshop",
+      es: "Lo Que Realmente Falló en Nuestro Workshop de KYA en Vivo",
+    },
+    excerpt: {
+      en: "The recap says 13 real Tier 5 attestations went out clean on Fuji. It doesn't say what it took to get there: a Remix label that changed under us, a wallet option that traps you if you click the wrong one, a network mismatch that could have pointed a deploy at the wrong chain, and a scary error that wasn't real. This isn't the highlight reel, it's the honest version, so it doesn't happen to whoever runs the next one.",
+      es: "El resumen dice que salieron 13 attestations Tier 5 reales en Fuji, sin drama. No dice lo que costó llegar ahí: una etiqueta de Remix que cambió sin avisar, una opción de wallet que te atrapa si le das clic por error, un desajuste de red que pudo haber mandado un deploy a la cadena equivocada, y un error que asustaba pero no era real. Este no es el highlight reel, es la versión honesta, para que no le pase a quien corra el próximo.",
+    },
+    bodyHtml: {
+      en: `
+<p>On September 24, KUMPLY ran a live, hands-on KYA workshop with Team1 LatAm, the one we <a href="/blog/kya-workshop-team1-24-sep">announced here</a> a few days before. The clean version of what happened is already public: 13 real Tier 5 (Agent/KYA) attestations issued on Fuji, to real attendee wallets, every one with a confirmed transaction hash. That part is true, and it's real traction, not a projection.</p>
+
+<p>It's also not the whole story. A 75-minute session with attendees deploying a contract live, through Remix, through their own MetaMask, on a testnet most of them had never touched, hits real friction. None of it is in the recap. It should be, because a workshop write-up that only says "it went great" doesn't help whoever runs the next one. Here's what actually went wrong, in the order it happened.</p>
+
+<h2>Remix renamed the exact button we told everyone to click</h2>
+
+<p>Our own instructions, written days earlier, told attendees to connect their wallet in Remix's Deploy &amp; Run panel via the option labeled "Injected Provider - MetaMask." By the night of the workshop, that label was gone. Remix now calls it "Browser Extension." Nobody changed our instructions between writing them and the session, Remix changed its own UI underneath us, with no version note or deprecation warning we'd seen. More than one attendee sat looking at a dropdown for an option that no longer existed by that name, and paused instead of clicking through.</p>
+
+<p>The lesson isn't "check Remix more often." It's that a live workshop shouldn't tell people to look for a specific label at all, it should tell them what the option does ("the one that connects to your already-installed wallet extension, not a QR code") so a rename doesn't strand anyone mid-session.</p>
+
+<h2>The WalletConnect trap, sitting right next to it</h2>
+
+<p>That same dropdown has a second entry: WalletConnect. It looks like a reasonable click if you're used to a generic "Connect Wallet" button and MetaMask isn't the first word you're scanning for. It isn't the same thing. WalletConnect doesn't grab the MetaMask extension already open in the same browser tab, it opens a QR code and waits for a phone to scan it. More than one attendee clicked it by accident, then sat looking at a QR code with no phone out, wondering why their wallet wasn't connecting. It took someone flagging it out loud, mid-session, before the room understood the two options do genuinely different things and only one of them was the one we meant.</p>
+
+<h2>"Main (1)" is not Fuji</h2>
+
+<p>Once Browser Extension was picked correctly, Remix's environment selector shows whatever network the connected MetaMask is actually pointed at, labeled by chain ID, not by name. For at least one attendee that read "Main (1)": chain ID 1, Ethereum mainnet, not Avalanche Fuji. MetaMask simply hadn't been switched over to Fuji before opening Remix, and Remix doesn't stop you or warn you, it just shows the number and assumes you noticed. Nothing catastrophic happened here (a deploy attempt against mainnet with no mainnet AVAX just fails), but it's the kind of mismatch that, in a different session with different balances, silently sends a real transaction to the wrong chain instead of failing loudly. The fix has to happen in MetaMask itself, not in Remix: switch the network first, then connect.</p>
+
+<h2>The error that looked like a broken deploy, and wasn't</h2>
+
+<p>Right after one attendee's deploy transaction went out, Remix's own console threw an error mentioning "reading result," the kind of message that reads exactly like a failed deploy to someone watching it happen in real time. It wasn't one. Pulling up the contract address on Snowtrace, live, in the same minute, showed the transaction already confirmed and the contract already deployed. The error was Remix's UI failing to parse or render the receipt it got back, not the chain rejecting anything. That's a genuinely bad moment to sit through in a room full of people who'd just spent real testnet gas and are watching a red error appear the second they click deploy. The actual fix wasn't in Remix at all, it was checking the block explorer before trusting the IDE's own error message.</p>
+
+<h2>Why the real source of truth ended up being a commit, not a Gist</h2>
+
+<p>The workshop contract, <code>WorkshopKYA.sol</code>, was first published as a public Gist so attendees could copy-paste it into Remix with nothing to install. That's convenient, and also the wrong thing to depend on for something time-sensitive: a Gist can be edited at any point after the link goes out, and nothing about the URL itself guarantees the content behind it stays the same between the day you send it and the day of the event. Days before the 24th, the workshop script and the deck were switched to a raw GitHub link pinned to an exact commit, <a href="https://raw.githubusercontent.com/kumplyprotocol/Kumply/f86eeb6/contracts/contracts/workshop/WorkshopKYA.sol" target="_blank" rel="noopener noreferrer"><code>github.com/kumplyprotocol/Kumply</code> at commit <code>f86eeb6</code></a>, not <code>main</code>, so nothing served would change even if the repo kept moving before the event. The original Gist stayed up as a same-day fallback in case the GitHub link had any problem, and only that: a backup, not the primary link.</p>
+
+<h2>Why this is the post, not just the recap</h2>
+
+<p>Every one of these is small on its own, a renamed button, a wrong click, a network dropdown, a scary-looking console line, a link swapped for a safer one. None of them stopped the workshop, and 13 real attestations still went out on real wallets by the end of the session. But none of them show up in an announcement post either, and a guide that only says a live crypto workshop "went well" leaves out exactly the friction the next person running one will hit first. If you're planning something similar: check what your tooling's UI actually says the night before, not the week before; call out the wrong-click traps by name before someone finds them; and never trust a link you don't control the content of for anything that has to still be correct on the day.</p>
+`,
+      es: `
+<p>El 24 de septiembre, KUMPLY corrió un workshop de KYA en vivo y práctico con Team1 LatAm, el mismo que <a href="/blog/kya-workshop-team1-24-sep">anunciamos aquí</a> unos días antes. La versión limpia de lo que pasó ya es pública: 13 attestations Tier 5 (Agent/KYA) reales, emitidas en Fuji, a wallets reales de asistentes, cada una con un hash de transacción confirmado. Esa parte es cierta, y es tracción real, no una proyección.</p>
+
+<p>También no es toda la historia. Una sesión de 75 minutos con asistentes desplegando un contrato en vivo, a través de Remix, a través de su propio MetaMask, en una testnet que la mayoría nunca había tocado, se topa con fricción real. Nada de eso está en el resumen. Debería estarlo, porque un recuento de workshop que solo dice "salió increíble" no le sirve a quien corra el siguiente. Aquí está lo que realmente falló, en el orden en que pasó.</p>
+
+<h2>Remix le cambió el nombre al botón exacto que le dijimos a todos que apretaran</h2>
+
+<p>Nuestras propias instrucciones, escritas días antes, le decían a los asistentes que conectaran su wallet en el panel Deploy &amp; Run de Remix usando la opción llamada "Injected Provider - MetaMask." La noche del workshop, esa etiqueta ya no existía. Remix ahora la llama "Browser Extension." Nadie cambió nuestras instrucciones entre escribirlas y la sesión, Remix cambió su propia interfaz debajo de nosotros, sin nota de versión ni aviso de deprecación que hubiéramos visto. Más de un asistente se quedó viendo un dropdown buscando una opción que ya no existía con ese nombre, y se detuvo en vez de seguir.</p>
+
+<p>La lección no es "revisar Remix más seguido." Es que un workshop en vivo no debería decirle a la gente que busque una etiqueta específica, debería decirle qué hace esa opción ("la que conecta con la extensión de wallet que ya tienes instalada, no un código QR") para que un cambio de nombre no deje a nadie varado a mitad de la sesión.</p>
+
+<h2>La trampa de WalletConnect, justo al lado</h2>
+
+<p>Ese mismo dropdown tiene una segunda entrada: WalletConnect. Parece un clic razonable si estás acostumbrado a un botón genérico de "Conectar Wallet" y MetaMask no es la primera palabra que buscas. No es lo mismo. WalletConnect no toma el MetaMask que ya está abierto en la misma pestaña del navegador, abre un código QR y espera a que un teléfono lo escanee. Más de un asistente le dio clic por error, y se quedó viendo un código QR sin teléfono en mano, preguntándose por qué su wallet no se conectaba. Hizo falta que alguien lo señalara en voz alta, a mitad de la sesión, para que el grupo entendiera que las dos opciones hacen cosas genuinamente distintas y solo una era la que queríamos.</p>
+
+<h2>"Main (1)" no es Fuji</h2>
+
+<p>Una vez elegido correctamente Browser Extension, el selector de entorno de Remix muestra la red a la que en realidad apunta el MetaMask conectado, etiquetada por chain ID, no por nombre. Para al menos un asistente eso decía "Main (1)": chain ID 1, Ethereum mainnet, no Avalanche Fuji. Simplemente no había cambiado su MetaMask a Fuji antes de abrir Remix, y Remix no te detiene ni te avisa, solo muestra el número y asume que lo notaste. Aquí no pasó nada catastrófico (un intento de deploy contra mainnet sin AVAX de mainnet simplemente falla), pero es el tipo de desajuste que, en otra sesión con otros saldos, en silencio manda una transacción real a la cadena equivocada en vez de fallar de forma ruidosa. El arreglo tiene que pasar en el propio MetaMask, no en Remix: cambiar la red primero, conectar después.</p>
+
+<h2>El error que parecía un deploy roto, y no lo era</h2>
+
+<p>Justo después de que la transacción de deploy de un asistente salió, la propia consola de Remix lanzó un error que mencionaba "reading result," el tipo de mensaje que se lee exactamente como un deploy fallido para quien lo está viendo pasar en tiempo real. No lo era. Buscar la dirección del contrato en Snowtrace, en vivo, en el mismo minuto, mostró la transacción ya confirmada y el contrato ya desplegado. El error era la interfaz de Remix fallando al parsear o mostrar el recibo que recibió, no la cadena rechazando nada. Es un momento genuinamente incómodo de vivir en un salón lleno de gente que acaba de gastar gas real de testnet y ve aparecer un error en rojo justo al darle a deploy. El arreglo real no estuvo en Remix en absoluto, estuvo en revisar el explorador de bloques antes de confiarle a la interfaz su propio mensaje de error.</p>
+
+<h2>Por qué la fuente de verdad real terminó siendo un commit, no un Gist</h2>
+
+<p>El contrato del workshop, <code>WorkshopKYA.sol</code>, se publicó primero como un Gist público para que los asistentes pudieran copiarlo y pegarlo en Remix sin instalar nada. Eso es cómodo, y también lo incorrecto de qué depender cuando algo es sensible al tiempo: un Gist se puede editar en cualquier momento después de mandar el link, y nada en la URL misma garantiza que el contenido detrás siga siendo el mismo entre el día que lo mandas y el día del evento. Días antes del 24, el script del workshop y el deck se cambiaron a un link raw de GitHub fijado a un commit exacto, <a href="https://raw.githubusercontent.com/kumplyprotocol/Kumply/f86eeb6/contracts/contracts/workshop/WorkshopKYA.sol" target="_blank" rel="noopener noreferrer"><code>github.com/kumplyprotocol/Kumply</code> en el commit <code>f86eeb6</code></a>, no <code>main</code>, para que nada de lo servido cambiara aunque el repo siguiera moviéndose antes del evento. El Gist original se quedó arriba como respaldo del mismo día por si el link de GitHub tenía algún problema, y solo eso: un respaldo, no el link principal.</p>
+
+<h2>Por qué esto es el post, y no solo el resumen</h2>
+
+<p>Cada una de estas cosas es pequeña por separado: un botón que cambió de nombre, un clic equivocado, un dropdown de red, una línea de consola que asustaba, un link cambiado por uno más seguro. Ninguna detuvo el workshop, y al final de la sesión igual salieron 13 attestations reales a wallets reales. Pero tampoco ninguna aparece en un post de anuncio, y una guía que solo dice que un workshop cripto en vivo "salió bien" se salta exactamente la fricción con la que se va a topar primero quien corra el siguiente. Si estás planeando algo parecido: revisa qué dice de verdad la interfaz de tu herramienta la noche antes, no la semana antes; señala las trampas de clic equivocado por su nombre antes de que alguien las encuentre solo; y nunca confíes, para algo que tiene que seguir siendo correcto el día del evento, en un link cuyo contenido no controlas.</p>
+`,
+    },
+  },
+  {
     slug: "avaxskills-from-bug-report-to-pull-request",
     date: "2026-09-14",
     author: {
