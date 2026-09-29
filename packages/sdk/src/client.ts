@@ -98,9 +98,19 @@ export class KumplyClient {
   }
 
   /**
-   * Verify the attestation status for a given address.
+   * Verify the attestation status for a given address (free `view` read; works while the
+   * contract is paused).
+   *
+   * `verified` is already `false` when the attestation is expired, revoked, or never issued,
+   * and in that case `tier`, `timestamp` and `expiry` are all `0` — there is no need to compare
+   * `expiry` against the current time yourself. The three cases are indistinguishable here.
+   *
+   * For smart accounts (ERC-4337), pass the exact address that signs or is sponsored — the
+   * smart account itself, not its owner EOA.
+   *
    * @param address - The wallet address to verify
-   * @returns The attestation result with verified status, tier, and timestamps
+   * @returns `{ verified, tier, timestamp, expiry }` — `timestamp` is the issuance time and
+   *          `expiry` the expiration time, both in UNIX seconds
    */
   async verify(address: string): Promise<AttestationResult> {
     this.assertAddress(address);
@@ -123,9 +133,10 @@ export class KumplyClient {
   }
 
   /**
-   * Get full attestation details for an address.
+   * Get full attestation details for an address, including the issuing `verifier`.
    * @param address - The wallet address to query
-   * @returns Full attestation data or null if not found
+   * @returns Full attestation data, or `null` if none exists, it was revoked, or it has expired
+   *          (same validity rule as {@link verify}). `timestamp`/`expiry` are UNIX seconds.
    */
   async getAttestation(address: string): Promise<Attestation | null> {
     this.assertAddress(address);
@@ -145,7 +156,9 @@ export class KumplyClient {
       `0x${string}`,
     ];
 
-    if (!verified) {
+    // The raw `attestations` mapping keeps `verified = true` after expiry, so apply the same
+    // validity rule the contract's verify() uses: unexpired only.
+    if (!verified || Number(expiry) <= Math.floor(Date.now() / 1000)) {
       return null;
     }
 

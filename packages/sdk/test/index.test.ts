@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import {
   KumplyClient,
   ATTESTATION_STORE_ABI,
@@ -263,6 +263,44 @@ describe('@kumply/sdk', () => {
 
     it('hasTier() should reject a malformed address (inherits verify()\'s validation)', async () => {
       await expect(client.hasTier('not-an-address', 1)).rejects.toThrow('@kumply/sdk');
+    });
+  });
+
+  describe('getAttestation() expiry handling', () => {
+    const subject = '0x2B39541935F547f0b6Ee9424C1e09d868239DbA7';
+    const verifier = '0xD65042534CE80fcb641fd6Eb99a16eBF6C0cd076';
+    const now = () => Math.floor(Date.now() / 1000);
+
+    function clientReturning(row: [boolean, number, bigint, bigint, string]) {
+      const client = new KumplyClient({
+        network: 'fuji',
+        contractAddress: DEPLOYMENTS.fuji.attestationStore,
+      });
+      vi.spyOn(client.publicClient, 'readContract').mockResolvedValue(row as never);
+      return client;
+    }
+
+    it('returns the record for a valid, unexpired attestation', async () => {
+      const expiry = BigInt(now() + 3600);
+      const client = clientReturning([true, 5, 1790311201n, expiry, verifier]);
+      await expect(client.getAttestation(subject)).resolves.toEqual({
+        subject,
+        verified: true,
+        tier: 5,
+        timestamp: 1790311201,
+        expiry: Number(expiry),
+        verifier,
+      });
+    });
+
+    it('returns null for an expired attestation even though the raw mapping still says verified', async () => {
+      const client = clientReturning([true, 5, 1790311201n, BigInt(now() - 1), verifier]);
+      await expect(client.getAttestation(subject)).resolves.toBeNull();
+    });
+
+    it('returns null for a never-issued or revoked address', async () => {
+      const client = clientReturning([false, 0, 0n, 0n, '0x0000000000000000000000000000000000000000']);
+      await expect(client.getAttestation(subject)).resolves.toBeNull();
     });
   });
 

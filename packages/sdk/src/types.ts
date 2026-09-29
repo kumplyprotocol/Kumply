@@ -1,17 +1,27 @@
-/** Result of an attestation verification query */
+/**
+ * Result of an attestation verification query (mirrors the contract's
+ * `verify()` return order: verified, tier, timestamp, expiry).
+ *
+ * `verified` is `false` if the attestation is expired, revoked, or never issued; in that
+ * case every other field is `0`.
+ */
 export interface AttestationResult {
   verified: boolean;
   tier: number;
+  /** When the attestation was issued, in UNIX seconds. */
   timestamp: number;
+  /** When the attestation expires, in UNIX seconds. */
   expiry: number;
 }
 
-/** Full attestation record */
+/** Full attestation record (only returned for valid, unexpired attestations) */
 export interface Attestation {
   subject: string;
   verified: boolean;
   tier: number;
+  /** When the attestation was issued, in UNIX seconds. */
   timestamp: number;
+  /** When the attestation expires, in UNIX seconds. */
   expiry: number;
   verifier: string;
 }

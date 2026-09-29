@@ -49,6 +49,7 @@ if (result.verified && result.tier >= TIER.STANDARD) {
 | ComplianceGate | Mainnet C-Chain | [`0x01BEEA13A485c7bAD58f926E345325e9e3773bEe`](https://snowtrace.io/address/0x01BEEA13A485c7bAD58f926E345325e9e3773bEe) |
 | AttestationStore | Fuji Testnet | [`0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD`](https://testnet.snowtrace.io/address/0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD) |
 | ComplianceGate | Fuji Testnet | [`0xcFDdeA5482baE9A6733B58F6a39FC36BCe6164cF`](https://testnet.snowtrace.io/address/0xcFDdeA5482baE9A6733B58F6a39FC36BCe6164cF) |
+| KumplyValidatorSetManager | Fuji Testnet | [`0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64`](https://testnet.snowtrace.io/address/0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64) |
 
 All addresses ship in the SDK as the `DEPLOYMENTS` constant — no copy-pasting needed.
 Mainnet currently runs as a **read-only beta with `verificationFee = 0`**; the automated
@@ -71,11 +72,21 @@ Instances also expose `client.network`, `client.chainId` (43113 · 43114 · 4321
 
 #### `verify(address: string): Promise<AttestationResult>`
 
-Full attestation lookup (free read). Returns `verified`, `tier`, `timestamp`, and `expiry`.
+Full attestation lookup (free read). Returns `verified`, `tier`, `timestamp`, and `expiry` — in that order, matching the contract.
+
+- `timestamp` is when the attestation was **issued**; `expiry` is when it **expires**. Both are UNIX time in **seconds**.
+- `verified` is `false` if the attestation is **expired, revoked, or was never issued**. In that case `tier`, `timestamp` and `expiry` are all `0`. You do not need to compare `expiry` against the current time yourself, and the three cases are indistinguishable from this call.
+- It is a free `view` call and keeps working while the contract is **paused** (pausing only blocks issuing new attestations).
 
 ```typescript
-const { verified, tier, expiry } = await client.verify("0x...");
+const { verified, tier, timestamp, expiry } = await client.verify("0x...");
 ```
+
+**Smart accounts (ERC-4337).** Attestations are issued to, and looked up by, the exact address that signs or is sponsored. For a smart account (for example behind a paymaster) that is the smart account's own address, not its owner EOA. Verify the same address you attested.
+
+#### `getAttestation(address: string): Promise<Attestation | null>`
+
+Like `verify()`, plus the issuing `verifier` address. Returns `null` if there is no valid attestation (never issued, revoked, or expired).
 
 #### `isVerified(address: string): Promise<boolean>`
 
@@ -180,8 +191,9 @@ contract MyProtocol {
     IAttestationStore public kumply;
 
     modifier onlyCompliant(uint32 requiredTier) {
-        (bool ok, uint32 tier, , uint64 exp) = kumply.verify(msg.sender);
-        require(ok && tier >= requiredTier && exp > block.timestamp, "insufficient compliance");
+        // verify() already returns ok == false for expired, revoked, or unknown addresses
+        (bool ok, uint32 tier, , ) = kumply.verify(msg.sender);
+        require(ok && tier >= requiredTier, "insufficient compliance");
         _;
     }
 
