@@ -60,8 +60,36 @@ used).
 - Don't state a legal/regulatory classification, license-exemption, or
   "no risk" claim as settled fact until a real legal opinion confirms
   it. Hedge with what's actually true today (e.g. "designed to operate
-  as X — formal legal opinion in process, scheduled for Q3 2026")
-  instead of declaring the conclusion.
+  as X. A formal legal opinion is planned before any fee is activated on
+  mainnet.") instead of declaring the conclusion. Don't say an opinion is
+  "in process" unless counsel is actually engaged.
+- No "first", "only", "unique", "no other" or "to our knowledge, the
+  first" claims. Adjacent work exists (for example Kite AI's Agent
+  Passport on Avalanche, DIF's KYA-OS, Avalanche's Evergreen Subnets for
+  validator permissioning). Say what KUMPLY actually does differently
+  instead.
+- On-chain attestations are public (address, tier, timestamp, expiry,
+  verifier). Never describe them as encrypted, private, or a token.
+- Describe planned features as planned, not in the present tense. That
+  covers AgentRegistry fields, ICM propagation, the L1 (registered on Fuji,
+  not activated) and automatic validator removal (it isn't automatic:
+  someone must call `disableExpiredValidator()`).
+- Don't name a partner or pilot in public copy without their written
+  permission.
+- Spanish copy uses Mexican Spanish (tú), never voseo ("describes", not
+  "describís").
+
+## Tier semantics
+
+- Tiers 1-3 are a ladder for people. Tier 4 (business, KYB) and Tier 5
+  (agent, KYA) are separate categories, not higher levels.
+- Never gate with a bare `tier >= X`. Check "a person at level N or
+  higher" (`tier >= N && tier <= 3`), "a business" (`tier == 4`) or
+  "an agent" (`tier == 5`). In the SDK, use `isPersonAtLeast` /
+  `isBusiness` / `isAgent`; `hasTier()` is deprecated.
+- The deployed `ComplianceGate` contracts (Fuji and Mainnet C-Chain,
+  `requiredTier = 2`) still use the old ladder and are immutable. Keep
+  that documented wherever they are mentioned.
 - A certification (SOC 2, ISO 27001, PCI DSS) or a KYB check is not a
   financial/regulatory license — don't call a certified or
   KYB-verified party "licensed."
@@ -72,6 +100,17 @@ used).
   green before committing.
 - Contracts: Hardhat + Chai. SDK/API: Vitest, with Supertest for the API's
   HTTP assertions.
+
+## Releases and merges
+
+- Merging to `main` deploys the site (Vercel), so a human approves every
+  merge. Merge only after CI is green on the exact head commit, then
+  verify the change live.
+- `npm publish` for `@kumply/sdk` runs only from `packages/sdk` (the root
+  package is private), and only after a human has reviewed the diff and
+  the `npm pack --dry-run` output. A human runs the publish. After
+  publishing, confirm the registry tarball's shasum matches the dry-run.
+- Never `git add -A`. Stage files by name.
 
 ## Commits
 

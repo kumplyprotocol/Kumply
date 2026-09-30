@@ -191,6 +191,23 @@ here) - use the driver above instead.
   uses `localePrefix: 'never'` - there is no `/es/...` URL. To load a
   page pre-set to Spanish, use `--cookie "NEXT_LOCALE=es"`, not a URL
   segment.
+- **`/pitch` ignores that cookie.** Its language lives in localStorage
+  (`kumply-pitch-lang`, `en`/`es`), and the Spanish deck is swapped in
+  client-side, so it is not in the server HTML. `curl | grep` can't
+  check Spanish pitch text. In a one-off Playwright script, set it before
+  load with `context.addInitScript(v => localStorage.setItem("kumply-pitch-lang", v), "es")`.
+  Both decks exist in the DOM, so pick visible nodes with
+  `page.getByText(text).locator("visible=true")`, or a screenshot or
+  scroll can target the hidden copy and time out.
+- **`innerText` applies CSS `text-transform`.** An uppercase badge reads as
+  "ACTIVATION PENDING", so an exact-case `includes()` check reports it
+  missing even though the text is correct. Check a non-transformed
+  element, or compare case-insensitively.
+- **For multi-page text checks after a deploy, prefer one script over many
+  driver runs.** Loop over `[path, lang, viewport, expectedStrings]`,
+  record missing and still-present old strings plus the
+  `scrollWidth`/`innerWidth`/`clientWidth` overflow check per page, and
+  add `?v=<timestamp>` to live URLs to avoid a cached response.
 - **`--click` matches the accessible name, not necessarily the visible
   text** - if a button has an `aria-label`, that overrides the visible
   text as its accessible name and `--click` has to use the label, not
