@@ -95,7 +95,10 @@
     "mainnetFeeDesc": "$0 USD (normal Avalanche C-Chain transaction fees apply)",
     "mainnetContracts": "Deployed Contracts (Mainnet)",
     "mainnetStore": "Attestation Store",
-    "mainnetGate": "Compliance Gate"
+    "mainnetGate": "Compliance Gate",
+    "ruleTitle": "How tiers compare",
+    "ruleDesc": "Tiers 1 to 3 are a ladder for people: Standard (2) also covers Enhanced (3). Tier 4 (Business, KYB) and Tier 5 (AI Agent, KYA) are separate categories, not higher levels. A business is not a person with extra checks, and an agent is not a business. So a protocol should ask for \"a person at level 2 or higher\", \"a business\" or \"an agent\", never for \"tier 2 or higher\".",
+    "ruleGateNote": "The ComplianceGate contracts already deployed on Fuji and Mainnet C-Chain still use the old single ladder (tier >= 2). They are immutable; a category-aware gate is planned for mainnet hardening."
   },
   "Verify": {
     "pageTitle": "Get Your Credential",
@@ -169,7 +172,8 @@
     "pmCounterTitle": "totalAttestations() counts issuances",
     "pmCounterDesc": "It is a historical counter of every issuance, including re-issues. It does not go down on revocation or expiry, so it is not the number of currently valid attestations.",
     "pmSnippetTitle": "Example: validation helper without TIMESTAMP",
-    "pmSnippetNote": "Example code, not audited. It compiles and is tested in the KUMPLY repo (contracts/examples/KumplyPaymasterCheck.sol), including a trace check that it never executes TIMESTAMP. Adapt minTier and the rest of your paymaster logic to your own policy."
+    "pmSnippetNote": "Example code, not audited. It compiles and is tested in the KUMPLY repo (contracts/examples/KumplyPaymasterCheck.sol), including a trace check that it never executes TIMESTAMP. It requires an exact tier (5 for agents), because tiers 4 and 5 are categories, not higher levels. Adapt requiredTier and the rest of your paymaster logic to your own policy.",
+    "gateLadderNote": "The deployed ComplianceGate contracts (Fuji and Mainnet C-Chain) check tier >= 2, the old single-ladder rule, so businesses (Tier 4) and agents (Tier 5) pass them. They are immutable; a category-aware gate is planned for mainnet hardening."
   },
   "Network": {
     "title": "Fuji Testnet",
@@ -246,7 +250,7 @@
       "title": "Smart Contract Integration",
       "subtitle": "Add compliance checks directly into your protocol — 3 lines of Solidity",
       "p1": "Our AttestationStore contract is the central registry where all verified credentials live. It’s deployed on Avalanche Mainnet C-Chain and Fuji Testnet, ready for you to query. Think of it as a compliance database that lives on-chain.",
-      "p2": "Want to block unverified users from depositing funds? Add a check: (bool ok, uint32 tier, , ) = kumply.verify(user); require(ok && tier >= 2);. Your smart contract now enforces the tier requirement on every call.",
+      "p2": "Want to block unverified users from depositing funds? Add a check: (bool ok, uint32 tier, , ) = kumply.verify(user); require(ok && tier >= 2 && tier <= 3);. Tiers 1-3 are a ladder for people, so this lets in Standard and Enhanced KYC; businesses (Tier 4) and agents (Tier 5) are separate categories and need their own checks.",
       "f1Title": "Copy, Paste, Done",
       "f1Desc": "Simple Solidity interfaces that drop right into your existing contracts. No architectural changes needed.",
       "f2Title": "Fast & Cheap Lookups",
@@ -452,7 +456,8 @@
     "contracts": {
       "title": "Smart Contracts",
       "subtitle": "All KUMPLY contracts are deployed and verified on Avalanche Mainnet C-Chain and Fuji. Each is open-source, audited internally, and documented with NatSpec.",
-      "methodsLabel": "Key methods"
+      "methodsLabel": "Key methods",
+      "gateLadderNote": "Note: both deployed ComplianceGate contracts check tier >= requiredTier with requiredTier = 2, the old single-ladder rule, so a Tier 4 business or a Tier 5 agent passes them. They are immutable; a category-aware gate is planned for mainnet hardening. For new integrations, call verify() and compare by category (see the tier rule)."
     },
     "sdk": {
       "title": "SDK Reference",

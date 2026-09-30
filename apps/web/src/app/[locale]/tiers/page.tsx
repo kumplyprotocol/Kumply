@@ -19,6 +19,13 @@ export default function TiersPage() {
         <TierCard tier={5} name={t('tier5Name')} description={t('tier5Desc')} features={["Bot Registry Check","Developer Identity","Smart Contract Audit"]} ctaLabel={t('ctaLabel')} levelName="agent-kya" />
       </div>
 
+      {/* ── How tiers compare ── */}
+      <div className="glass-card" style={{ padding: '2rem', margin: '0 0 2.5rem 0' }}>
+        <h2 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', marginBottom: '0.75rem' }}>{t('ruleTitle')}</h2>
+        <p style={{ color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: '0.75rem' }}>{t('ruleDesc')}</p>
+        <p style={{ color: 'var(--text-tertiary)', fontSize: '0.85rem', lineHeight: 1.6 }}>{t('ruleGateNote')}</p>
+      </div>
+
       {/* ── Mainnet Info Section ── */}
       <div className="mainnet-info glass-card">
         <div className="mainnet-info__header">

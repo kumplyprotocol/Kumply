@@ -95,7 +95,10 @@
     "mainnetFeeDesc": "$0 USD (aplica costo ordinario de gas de Avalanche C-Chain)",
     "mainnetContracts": "Contratos Desplegados (Mainnet)",
     "mainnetStore": "Attestation Store",
-    "mainnetGate": "Compliance Gate"
+    "mainnetGate": "Compliance Gate",
+    "ruleTitle": "Cómo se comparan los tiers",
+    "ruleDesc": "Los tiers 1 a 3 son una escalera para personas: Estándar (2) también cubre Mejorado (3). El Tier 4 (Empresa, KYB) y el Tier 5 (Agente IA, KYA) son categorías aparte, no niveles superiores. Una empresa no es una persona con más verificaciones, y un agente no es una empresa. Por eso un protocolo debe pedir \"una persona de nivel 2 o superior\", \"una empresa\" o \"un agente\", nunca \"tier 2 o superior\".",
+    "ruleGateNote": "Los ComplianceGate ya desplegados en Fuji y Mainnet C-Chain todavía usan la escalera vieja (tier >= 2). Son inmutables; un gate que respete las categorías está planeado para el hardening de mainnet."
   },
   "Verify": {
     "pageTitle": "Obtén tu Credencial",
@@ -169,7 +172,8 @@
     "pmCounterTitle": "totalAttestations() cuenta emisiones",
     "pmCounterDesc": "Es un contador histórico de todas las emisiones, incluidas las reemisiones. No baja al revocar ni al vencer, así que no es el número de attestations vigentes.",
     "pmSnippetTitle": "Ejemplo: helper de validación sin TIMESTAMP",
-    "pmSnippetNote": "Código de ejemplo, no auditado. Compila y tiene tests en el repo de KUMPLY (contracts/examples/KumplyPaymasterCheck.sol), incluida una verificación por trace de que nunca ejecuta TIMESTAMP. Adapta minTier y el resto de la lógica de tu paymaster a tu propia política."
+    "pmSnippetNote": "Código de ejemplo, no auditado. Compila y tiene tests en el repo de KUMPLY (contracts/examples/KumplyPaymasterCheck.sol), incluida una verificación por trace de que nunca ejecuta TIMESTAMP. Exige un tier exacto (5 para agentes), porque los tiers 4 y 5 son categorías, no niveles superiores. Adapta requiredTier y el resto de la lógica de tu paymaster a tu propia política.",
+    "gateLadderNote": "Los ComplianceGate desplegados (Fuji y Mainnet C-Chain) verifican tier >= 2, la regla vieja de una sola escalera, así que las empresas (Tier 4) y los agentes (Tier 5) los pasan. Son inmutables; un gate que respete las categorías está planeado para el hardening de mainnet."
   },
   "Network": {
     "title": "Testnet Fuji",
@@ -246,7 +250,7 @@
       "title": "Integración de Contratos Inteligentes",
       "subtitle": "Agrega verificación de compliance directamente a tu protocolo — 3 líneas de Solidity",
       "p1": "Nuestro contrato AttestationStore es el registro central donde viven todas las credenciales verificadas. Está desplegado en Avalanche Mainnet C-Chain y en Fuji Testnet, listo para que lo consultes. Piensa en él como una base de datos de compliance que vive en la blockchain.",
-      "p2": "¿Quieres bloquear a usuarios no verificados para que no depositen fondos? Agrega una verificación: (bool ok, uint32 tier, , ) = kumply.verify(user); require(ok && tier >= 2);. Tu contrato inteligente ahora exige el tier en cada llamada.",
+      "p2": "¿Quieres bloquear a usuarios no verificados para que no depositen fondos? Agrega una verificación: (bool ok, uint32 tier, , ) = kumply.verify(user); require(ok && tier >= 2 && tier <= 3);. Los tiers 1 a 3 son una escalera para personas, así que esto deja pasar KYC Estándar y Mejorado; las empresas (Tier 4) y los agentes (Tier 5) son categorías aparte y necesitan su propia verificación.",
       "f1Title": "Copiar, Pegar, Listo",
       "f1Desc": "Interfaces de Solidity simples que se integran directamente en tus contratos existentes. Sin cambios de arquitectura.",
       "f2Title": "Consultas Rápidas y Baratas",
@@ -452,7 +456,8 @@
     "contracts": {
       "title": "Smart Contracts",
       "subtitle": "Todos los contratos KUMPLY están desplegados y verificados en Avalanche Mainnet C-Chain y Fuji. Cada uno es open-source, con revisión interna, y documentado con NatSpec.",
-      "methodsLabel": "Métodos clave"
+      "methodsLabel": "Métodos clave",
+      "gateLadderNote": "Nota: los dos ComplianceGate desplegados verifican tier >= requiredTier con requiredTier = 2, la regla vieja de una sola escalera, así que una empresa (Tier 4) o un agente (Tier 5) los pasan. Son inmutables; un gate que respete las categorías está planeado para el hardening de mainnet. Para integraciones nuevas, llama a verify() y compara por categoría (ver la regla de tiers)."
     },
     "sdk": {
       "title": "Referencia del SDK",

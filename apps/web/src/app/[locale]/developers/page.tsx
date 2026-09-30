@@ -118,6 +118,7 @@ export default function DevelopersPage() {
           <ContractRow label={t('attestationStore')} address={ATTESTATION_STORE} />
           <ContractRow label={t('complianceGate')} address={COMPLIANCE_GATE} />
         </div>
+        <p style={{ color: 'var(--text-tertiary)', fontSize: '0.8rem', lineHeight: 1.6, marginTop: '1rem' }}>{t('gateLadderNote')}</p>
       </div>
 
       {/* Solidity Integration */}

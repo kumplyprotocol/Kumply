@@ -205,22 +205,28 @@ const { verified, tier, expiry } = await client.verify(
   "0xUserAddress…"
 );
 
-if (verified && tier >= 4) {
-  // user is KYB-verified — proceed
+// Tiers 1-3: people (a ladder). 4: business (KYB). 5: agent (KYA).
+if (verified && tier === 4) {
+  // the counterparty is a KYB-verified business: proceed
 }`}</code>
             </div>
             <div>
               <h4 style={{ fontSize: "0.92rem", margin: "0 0 0.5rem 0", color: "var(--text-primary)" }}>{t("quickstart.gateTitle")}</h4>
-              <code style={CODE_BLOCK}>{`// Solidity — 3-line dependency
-import { ComplianceGate } from "@kumply/contracts";
+              <code style={CODE_BLOCK}>{`// Solidity: gate your own functions with verify()
+interface IAttestationStore {
+  function verify(address) external view
+    returns (bool, uint32, uint64, uint64);
+}
 
 contract MyDApp {
-  ComplianceGate immutable gate;
-  constructor() { gate = ComplianceGate(${COMPLIANCE_GATE_MAINNET}); }
+  IAttestationStore constant kumply =
+    IAttestationStore(${ATTESTATION_STORE_MAINNET});
 
-  function protectedAction() external payable {
-    gate.protectedAction{value: msg.value}();
-    // your logic — only Tier 3+ users reach here
+  function deposit() external {
+    (bool ok, uint32 tier, , ) = kumply.verify(msg.sender);
+    // people with Standard (2) or Enhanced (3) KYC only
+    require(ok && tier >= 2 && tier <= 3, "person KYC required");
+    // your logic
   }
 }`}</code>
             </div>
@@ -233,6 +239,7 @@ contract MyDApp {
             <AddressRow label="ComplianceGate · Mainnet C-Chain" value={COMPLIANCE_GATE_MAINNET} href={`https://snowtrace.io/address/${COMPLIANCE_GATE_MAINNET}`} />
             <AddressRow label="AttestationStore · Fuji Testnet" value={ATTESTATION_STORE} href={`https://testnet.snowtrace.io/address/${ATTESTATION_STORE}`} />
             <AddressRow label="ComplianceGate · Fuji Testnet" value={COMPLIANCE_GATE} href={`https://testnet.snowtrace.io/address/${COMPLIANCE_GATE}`} />
+            <p style={{ color: "var(--text-tertiary)", fontSize: "0.8rem", lineHeight: 1.6, margin: "0.75rem 0" }}>{t("contracts.gateLadderNote")}</p>
             <AddressRow label="KumplyValidatorSetManager (ACP-99) · Fuji" value={VALIDATOR_SET_MANAGER} href={`https://testnet.snowtrace.io/address/${VALIDATOR_SET_MANAGER}`} />
             <div style={{ marginTop: "1rem", padding: "0.85rem", background: "var(--bg-secondary)", border: "1px solid var(--border)", borderRadius: "var(--radius-sm)" }}>
               <div style={{ fontSize: "0.78rem", color: "var(--text-secondary)", marginBottom: "0.5rem" }}>{t("contracts.methodsLabel")}</div>
@@ -272,9 +279,11 @@ const client = new KumplyClient({
 });
 
 // Read methods (free, no gas)
-await client.verify(address);            // → { verified, tier, expiry, issuedAt }
+await client.verify(address);            // → { verified, tier, timestamp, expiry }
 await client.isVerified(address);        // → boolean
-await client.hasTier(address, TIER.KYB); // → boolean (≥ tier 4)
+await client.isPersonAtLeast(address, TIER.STANDARD); // → boolean (person, tier 2-3)
+await client.isBusiness(address);        // → boolean (exactly tier 4)
+await client.isAgent(address);           // → boolean (exactly tier 5)
 await client.getTotalAttestations();     // → bigint
 await client.getVerificationFee();       // → wei (current pay-per-use price)
 

@@ -198,11 +198,9 @@ const client = new KumplyClient({
   contractAddress: DEPLOYMENTS.mainnet.attestationStore,
 });
 
-// Check if a user has passed KYC Tier 2
-const result = await client.verify('0xUserAddress');
-
-if (result.verified && result.tier >= TIER.STANDARD) {
-    // Allow deposit
+// Tiers 1-3 are a ladder for people; 4 (business) and 5 (agent) are separate categories.
+if (await client.isPersonAtLeast('0xUserAddress', TIER.STANDARD)) {
+    // A person with Standard (2) or Enhanced (3) KYC: allow deposit
 } else {
     // Block action
 }
@@ -213,23 +211,30 @@ Reads are free while `verificationFee` is 0. Swap `network: 'fuji'` with `DEPLOY
 Or enforce it directly in your Solidity contracts:
 
 ```solidity
-import {ComplianceGate} from "@kumply/contracts/ComplianceGate.sol";
+interface IAttestationStore {
+    function verify(address subject) external view returns (
+        bool verified, uint32 tier, uint64 timestamp, uint64 expiry
+    );
+}
 
-contract MyDeFiVault is ComplianceGate {
-    // Require Tier 2 (Standard KYC) to interact.
-    constructor(address _attestationStore) ComplianceGate(_attestationStore, 2) {}
+contract MyDeFiVault {
+    IAttestationStore public immutable kumply;
 
-    // `payable` matters: when a read fee is active and this gate is not
-    // subscribed, `_requireVerified` forwards msg.value to checkCompliance.
-    // While verificationFee is 0, calling with no value works fine.
-    function deposit() external payable {
-        _requireVerified(msg.sender); // reverts NotVerified / InsufficientTier
+    constructor(address _attestationStore) {
+        kumply = IAttestationStore(_attestationStore);
+    }
+
+    // verify() is free and returns verified == false once expired or revoked.
+    // Tiers 1-3: a ladder for people. 4: business (KYB). 5: agent (KYA).
+    function deposit() external {
+        (bool ok, uint32 tier, , ) = kumply.verify(msg.sender);
+        require(ok && tier >= 2 && tier <= 3, "person KYC required");
         // ... execute deposit
     }
 }
 ```
 
-Call `getVerificationFee()` on the gate to show users the current cost before they transact.
+**About the deployed `ComplianceGate`.** The `ComplianceGate` contracts in the tables above (Fuji and Mainnet C-Chain) check `tier >= requiredTier` with `requiredTier = 2`. That is the old single-ladder rule, so a Tier 4 business or a Tier 5 agent passes them. They are immutable. A category-aware gate is planned for mainnet hardening.
 
 ## 📜 Compliance & Brand Alignment
 
