@@ -68,7 +68,7 @@ A dedicated Avalanche L1 (Subnet-EVM, chainId 43210) that is **open to all 5 tie
 
 The validator set is governed by `KumplyValidatorSetManager.sol`, our ACP-99-compliant ValidatorSetManager that requires an attestation of Tier 4 (KYB) or higher on validator registration and lets anyone permissionlessly purge a validator whose attestation expired or was revoked (not automatic: someone has to call it). A fix that restricts registration to exactly Tier 4 is already in the code and ships with the manager's redeploy before the L1 is activated. The L1 is not activated yet. DApps deployed on the L1 would use tier-aware `ComplianceGate` contracts to admit Tier-1 retail users into peer-to-peer flows, Tier-3 enhanced-KYC users into lending markets, Tier-4 institutional accounts into qualified pools, and Tier-5 autonomous agents into agentic DeFi.
 
-This is unique in the Avalanche ecosystem: it's the first L1 whose **security** is gated by on-chain compliance proofs *and* whose **applications** can tier-gate user actions without forcing the network into a permissioned walled garden. Banks, regulated enterprises, and licensed money transmitters can run validators with cryptographic assurance that every counterparty in the consensus set is verified - while individual users at every tier transact freely.
+That combination is the design goal: an L1 whose **security** is gated by on-chain compliance attestations *and* whose **applications** can tier-gate user actions without forcing the network into a permissioned walled garden. Avalanche's Evergreen Subnets already permission validators at the chain level; KUMPLY does it with attestations checked in contract code. Once activated, banks, regulated enterprises, and licensed money transmitters could run validators with cryptographic assurance that every counterparty in the consensus set is verified - while individual users at every tier transact freely.
 
 ## 3. Architecture
 
@@ -124,14 +124,14 @@ This is unique in the Avalanche ecosystem: it's the first L1 whose **security** 
 
 KUMPLY closes the critical institutional adoption gap **and** opens a new primitive - verified autonomous agents - that doesn't exist anywhere else in the L1 ecosystem.
 
-1. **🤖 KYA - Know Your Agent (unique in the Avalanche ecosystem)** - Tier 5 verifies autonomous AI agents and bots before they touch capital on-chain. As agentic DeFi grows (LangChain-style on-chain agents, autonomous market makers, AI portfolio managers), protocols need a way to distinguish trusted, bounded agents from anonymous scripts. To our knowledge, no other Avalanche L1 - and no other major EVM L1 - ships a purpose-built primitive for this today. Section 4.1 below details the mechanism.
+1. **🤖 KYA - Know Your Agent** - Tier 5 is designed to verify autonomous AI agents and bots before they touch capital on-chain. As agentic DeFi grows (LangChain-style on-chain agents, autonomous market makers, AI portfolio managers), protocols need a way to distinguish trusted, bounded agents from anonymous scripts. KUMPLY's focus is agent verification tied to a KYB-verified owner, inside the same attestation system as KYC and KYB. Section 4.1 below details the design.
 2. **A deployment vehicle regulated entities can actually operate** - a KYB-gated L1 lets a bank or licensed enterprise run infrastructure with cryptographic assurance about every counterparty in the consensus set, without straddling an unclear regulatory perimeter. This is designed against the regulatory constraints described in §1, not against requirements gathered from named institutions - we have not yet run that discovery, and M0 (§7.1) is where we do.
 3. **Open to retail users, not just institutions** - The L1 is a full home for the 5-tier compliance spectrum. Retail KYC users (Tiers 1–3) can transact freely; institutional accounts (Tier 4) can deploy contracts and validate; agents (Tier 5) can operate within bounded budgets. Compliance composes at the application layer via `ComplianceGate`, not by walling off the chain.
 4. **Composable with existing Avalanche DeFi** - `ComplianceGate` integrates as a 3-line dependency for any C-Chain DApp wanting tiered users (Trader Joe institutional pools, GMX accredited markets, Benqi qualified lending).
 5. **Cross-L1 attestation propagation via ICM** - Tier proofs issued on C-Chain propagate to any other Avalanche L1 via Interchain Messaging, making KUMPLY a network-wide identity primitive, not a single-chain product.
 6. **First production use case for ACP-99** - Our open-source implementation is one of the earliest live integrations of the ValidatorSetManager standard, useful as reference for other institutional L1 builders.
 
-### 4.1 KYA - Know Your Agent (Tier 5) - the unique differentiator
+### 4.1 KYA - Know Your Agent (Tier 5)
 
 > **Terminology note:** "KYA" is KUMPLY's own tier name. It's unrelated to [KYA-OS](https://github.com/decentralized-identity/kya-os-mcp) (Know Your Agent Operating System), the DIF-governed identity protocol for MCP agents that donated its spec to DIF TAAWG in 2026 — same acronym, different standard, no shared code or governance.
 

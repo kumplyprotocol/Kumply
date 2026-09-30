@@ -650,7 +650,7 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     bodyHtml: {
       en: `
-<p><em>Updated September 30, 2026: the AgentRegistry.sol extension no longer has a Q3 2026 date; no date is committed yet.</em></p>
+<p><em>Updated September 30, 2026: the AgentRegistry.sol extension no longer has a Q3 2026 date; no date is committed yet. Also removed an unsupported "first" claim.</em></p>
 
 <p>Agentic DeFi is arriving: autonomous market makers, AI portfolio managers, on-chain agents holding real budgets. Every protocol that lets an agent touch real capital will need to answer the same question: is this a trusted, bounded agent, or an anonymous script? Today, there's no composable on-chain compliance rail for that distinction.</p>
 
@@ -692,14 +692,14 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Why "first" needs a qualifier</h2>
 
-<p>KUMPLY isn't the first project building agent identity on Avalanche. Kite AI's Agent Passport, live on its own Avalanche L1, also gives agents a persistent cryptographic identity - by design pseudonymous, with no KYB behind it. What we believe is actually new: tying that on-chain identity to a KYB-verified, legally accountable owner. To our knowledge, KUMPLY is the first Avalanche L1, and the first EVM compliance layer, built specifically for that link - not for agent identity in general.</p>
+<p>KUMPLY isn't the first project building agent identity on Avalanche. Kite AI's Agent Passport, live on its own Avalanche L1, also gives agents a persistent cryptographic identity - by design pseudonymous, with no KYB behind it. What KUMPLY focuses on instead: tying that on-chain identity to a KYB-verified, legally accountable owner, inside the same attestation system that already handles KYC and KYB - not agent identity in general.</p>
 
-<p>That distinction matters more than the "first" itself. An agent with a pseudonymous passport can prove it's consistently the same agent. A Tier 5 agent can prove that, and prove who's legally on the hook if it isn't.</p>
+<p>That distinction is the point. An agent with a pseudonymous passport can prove it's consistently the same agent. A Tier 5 agent can prove that, and prove who's legally on the hook if it isn't.</p>
 
 <p>One more disambiguation, since the acronym is shared: KUMPLY's KYA is not KYA-OS (<a href="https://github.com/decentralized-identity/kya-os-mcp" target="_blank" rel="noopener noreferrer">github.com/decentralized-identity/kya-os-mcp</a>), a separate identity protocol for MCP agents donated to the Decentralized Identity Foundation. Different standard, different governance, no relationship between the two beyond the name.</p>
 `,
       es: `
-<p><em>Actualizado el 30 de septiembre de 2026: la extensión AgentRegistry.sol ya no tiene fecha de Q3 2026; todavía no hay fecha comprometida.</em></p>
+<p><em>Actualizado el 30 de septiembre de 2026: la extensión AgentRegistry.sol ya no tiene fecha de Q3 2026; todavía no hay fecha comprometida. También quitamos una afirmación de "primero" sin sustento.</em></p>
 
 <p>Las DeFi agénticas están llegando: market makers autónomos, gestores de portafolio con IA, agentes on-chain manejando presupuestos reales. Todo protocolo que deje a un agente tocar capital real va a necesitar responder la misma pregunta: ¿es un agente confiable y acotado, o un script anónimo? Hoy no existe ningún riel de compliance componible on-chain para esa distinción.</p>
 
@@ -741,9 +741,9 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Por qué "primero" necesita un matiz</h2>
 
-<p>KUMPLY no es el primer proyecto construyendo identidad de agentes en Avalanche. El Agent Passport de Kite AI, en vivo en su propia L1 de Avalanche, también le da a los agentes una identidad criptográfica persistente - por diseño pseudónima, sin KYB detrás. Lo que creemos que sí es nuevo: atar esa identidad on-chain a un dueño verificado con KYB, legalmente responsable. Hasta donde sabemos, KUMPLY es la primera L1 de Avalanche, y la primera capa de compliance EVM, construida específicamente para ese vínculo - no para identidad de agentes en general.</p>
+<p>KUMPLY no es el primer proyecto construyendo identidad de agentes en Avalanche. El Agent Passport de Kite AI, en vivo en su propia L1 de Avalanche, también le da a los agentes una identidad criptográfica persistente - por diseño pseudónima, sin KYB detrás. En lo que KUMPLY se enfoca en cambio: atar esa identidad on-chain a un dueño verificado con KYB, legalmente responsable, dentro del mismo sistema de atestaciones que ya maneja KYC y KYB - no identidad de agentes en general.</p>
 
-<p>Esa distinción importa más que el "primero" en sí. Un agente con un passport pseudónimo puede probar que es consistentemente el mismo agente. Un agente Tier 5 puede probar eso, y probar quién responde legalmente si no lo es.</p>
+<p>Esa distinción es el punto. Un agente con un passport pseudónimo puede probar que es consistentemente el mismo agente. Un agente Tier 5 puede probar eso, y probar quién responde legalmente si no lo es.</p>
 
 <p>Una aclaración más, ya que el acrónimo se comparte: el KYA de KUMPLY no es KYA-OS (<a href="https://github.com/decentralized-identity/kya-os-mcp" target="_blank" rel="noopener noreferrer">github.com/decentralized-identity/kya-os-mcp</a>), un protocolo de identidad separado para agentes MCP donado a la Decentralized Identity Foundation. Estándar distinto, gobernanza distinta, sin relación entre los dos más allá del nombre.</p>
 `,
@@ -767,6 +767,8 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     bodyHtml: {
       en: `
+<p><em>Updated September 30, 2026: removed an unsupported "first layer on Avalanche" claim and a "legal risk disappears" claim.</em></p>
+
 <p>Everyone in the ecosystem is talking about bringing the great wave of institutional capital on-chain. But while the industry spends its time debating how to onboard banks, the real paradigm shift has already arrived: autonomous AI agents operating real capital.</p>
 
 <p>Not too far out, a huge share of on-chain volume will have no direct human involvement at all. It will be agents executing complex strategies at machine speed. But here's a problem nobody wants to look at: most protocols can't tell the difference between an audited autonomous agent and an anonymous, malicious script.</p>
@@ -779,9 +781,9 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <p>Your identity in DeFi shouldn't require handing your documents to every dApp you touch. It should be a mathematical proof, not an attachment. At KUMPLY, we decided the only way to scale this on Avalanche is through cryptographic proofs, not personal data.</p>
 
-<p>Our <code>AttestationStore</code> doesn't know your name. It only knows that a specific wallet holds a verification level (Tier) and an expiry date. Any contract on the network can check your status in under a second with one <code>verify(address)</code> call. Legal risk disappears, and DeFi's global composability stays intact.</p>
+<p>Our <code>AttestationStore</code> doesn't know your name. It only knows that a specific wallet holds a verification level (Tier) and an expiry date. Any contract on the network can check your status in under a second with one <code>verify(address)</code> call. The protocol never handles the underlying documents, and DeFi's global composability stays intact.</p>
 
-<p>That's why we built KUMPLY. We're the first layer on Avalanche that ties an AI agent's identity to a human or business owner, verified through KYB, in a legally accountable way.</p>
+<p>That's why we built KUMPLY: an attestation layer on Avalanche designed to tie an AI agent's identity to a human or business owner verified through KYB, in the same system that handles KYC and KYB for people and companies.</p>
 
 <p>What does this look like in practice? Picture this scenario:</p>
 
@@ -800,6 +802,8 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>So — do you think your protocol is ready to survive the arrival of AI agents operating real capital, or will you keep trusting centralized databases?</p>
 `,
       es: `
+<p><em>Actualizado el 30 de septiembre de 2026: quitamos una afirmación de "primera capa en Avalanche" sin sustento y otra de que "el riesgo legal desaparece".</em></p>
+
 <p>Todos en el ecosistema hablan de traer la gran ola de capital institucional a la blockchain. Pero mientras la industria pierde el tiempo discutiendo cómo incorporar a los bancos, el verdadero cambio de paradigma ya llegó: agentes de IA autónomos operando capital real.</p>
 
 <p>Se proyecta que, en un futuro no muy lejano, una inmensa parte del volumen on-chain no tendrá intervención humana directa. Serán agentes ejecutando estrategias complejas a la velocidad de la luz. Pero aquí hay un problema enorme que nadie quiere mirar: la mayoría de los protocolos no puede distinguir entre un agente autónomo auditado y un script anónimo malicioso.</p>
@@ -812,9 +816,9 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <p>Tu identidad en DeFi no debería requerir que entregues tus documentos a cada dApp que utilizas. Debería ser una prueba matemática, no un archivo adjunto. En KUMPLY decidimos que la única forma de escalar esto en Avalanche es mediante pruebas criptográficas, no datos personales.</p>
 
-<p>Nuestro <code>AttestationStore</code> no sabe tu nombre. Solo sabe que una wallet específica tiene un nivel de verificación (Tier) y una fecha de expiración. Cualquier contrato en la red puede consultar tu estado en menos de un segundo con una llamada <code>verify(address)</code>. El riesgo legal desaparece, y la componibilidad global de DeFi se mantiene intacta.</p>
+<p>Nuestro <code>AttestationStore</code> no sabe tu nombre. Solo sabe que una wallet específica tiene un nivel de verificación (Tier) y una fecha de expiración. Cualquier contrato en la red puede consultar tu estado en menos de un segundo con una llamada <code>verify(address)</code>. El protocolo nunca maneja los documentos de fondo, y la componibilidad global de DeFi se mantiene intacta.</p>
 
-<p>Por eso construimos KUMPLY. Somos la primera capa en Avalanche que ata la identidad de un agente de IA a un dueño humano o empresarial verificado con KYB, de forma legalmente responsable.</p>
+<p>Por eso construimos KUMPLY: una capa de atestaciones en Avalanche diseñada para atar la identidad de un agente de IA a un dueño humano o empresarial verificado con KYB, en el mismo sistema que maneja KYC y KYB para personas y empresas.</p>
 
 <p>¿Cómo se ve esto en la práctica? Imagina este escenario:</p>
 
