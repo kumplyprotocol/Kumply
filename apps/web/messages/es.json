@@ -271,7 +271,7 @@
     "privacy": {
       "title": "Política de Privacidad",
       "subtitle": "Cómo manejamos tus datos (versión corta: no los guardamos)",
-      "p1": "KUMPLY está diseñado para alinearse con la ley de protección de datos de México (LFPDPPP) y los principios del GDPR — opinión legal formal en proceso, programada para Q3 2026. Pero aquí va la versión simple: somos una herramienta de software. Procesamos tu verificación a través de un socio certificado, creamos una prueba cifrada, y listo. No guardamos tus documentos.",
+      "p1": "KUMPLY está diseñado para alinearse con la ley de protección de datos de México (LFPDPPP) y los principios del GDPR — una opinión legal formal está planeada antes de activar cualquier comisión en mainnet. Pero aquí va la versión simple: somos una herramienta de software. Procesamos tu verificación a través de un socio certificado, creamos una prueba cifrada, y listo. No guardamos tus documentos.",
       "p2": "Tus datos personales los maneja Sumsub (nuestro proveedor de KYC certificado SOC 2 Type II). KUMPLY solo recibe un resultado aprobado/rechazado y escribe una credencial cifrada en la blockchain. Sin nombres, sin fotos, sin direcciones en nuestros servidores. Nunca.",
       "f1Title": "Cero Datos Almacenados",
       "f1Desc": "Literalmente no tenemos tus datos personales. Los procesa nuestro socio certificado y nunca tocan nuestros servidores.",
@@ -288,7 +288,7 @@
       "f1Title": "Nunca Tocamos tus Fondos",
       "f1Desc": "KUMPLY es non-custodial. Tenemos cero acceso a tu wallet, tus llaves privadas o tus activos digitales.",
       "f2Title": "Software, No Servicios Financieros",
-      "f2Desc": "Diseñado para operar como proveedor de tecnología, no como servicio financiero regulado — opinión legal formal en proceso, programada para Q3 2026.",
+      "f2Desc": "Diseñado para operar como proveedor de tecnología, no como servicio financiero regulado — una opinión legal formal está planeada antes de activar cualquier comisión en mainnet.",
       "f3Title": "Tus Reglas, Tu Responsabilidad",
       "f3Desc": "Tú decides qué nivel de compliance exigir. Tú decides quién puede acceder a tu plataforma. KUMPLY ejecuta lo que tú configures."
     },
@@ -302,7 +302,7 @@
       "f2Title": "Funciona en Cualquier Jurisdicción",
       "f2Desc": "Nuestras reglas de compliance son configurables. ¿Necesitas verificaciones más estrictas para Europa (MiCA)? ¿Reglas diferentes para México (LFPIORPI)? Solo configura los requisitos de tu nivel.",
       "f3Title": "Diseñado para Claridad Regulatoria",
-      "f3Desc": "Diseñado para operar dentro de marcos regulatorios existentes — opinión legal formal en proceso, programada para Q3 2026."
+      "f3Desc": "Diseñado para operar dentro de marcos regulatorios existentes — una opinión legal formal está planeada antes de activar cualquier comisión en mainnet."
     },
     "audit": {
       "title": "Auditoría de Seguridad",
@@ -324,7 +324,7 @@
     "l1": "Compliance L1",
     "docs": "Documentación",
     "legal": "Legal",
-    "trademark": "Aviso de Marca: AVALANCHE® y AVAX® son marcas registradas de Ava Labs, Inc. KUMPLY es un proyecto independiente y no está respaldado, patrocinado ni afiliado con Ava Labs, Inc. KUMPLY está diseñado para operar como infraestructura de software, no como institución financiera, custodio ni transmisor de dinero — opinión legal formal en proceso, programada para Q3 2026.",
+    "trademark": "Aviso de Marca: AVALANCHE® y AVAX® son marcas registradas de Ava Labs, Inc. KUMPLY es un proyecto independiente y no está respaldado, patrocinado ni afiliado con Ava Labs, Inc. KUMPLY está diseñado para operar como infraestructura de software, no como institución financiera, custodio ni transmisor de dinero — una opinión legal formal está planeada antes de activar cualquier comisión en mainnet.",
     "rights": "© 2026 Protocolo KUMPLY. Código abierto bajo Licencia Apache 2.0."
   },
   "Dashboard": {
@@ -503,7 +503,7 @@
         "value": "Heartbeat desde el runtime del agente — prueba que sigue operando y alcanzable."
       },
       "roadmapLabel": "Estado",
-      "roadmap": "El Tier 5 ya vive en AttestationStore.sol; el AgentRegistry.sol completo con los 5 campos de arriba ships Q3 2026 junto al primer DApp piloto de agentic DeFi.",
+      "roadmap": "El Tier 5 ya existe en AttestationStore.sol como tier; el AgentRegistry.sol completo con los 5 campos de arriba está planeado junto al primer DApp piloto de agentic DeFi, sin fecha comprometida todavía.",
       "standardNote": "Nota de terminología: \"KYA\" es el nombre de tier propio de KUMPLY, sin relación con KYA-OS, el protocolo de identidad gobernado por la DIF para agentes MCP (github.com/decentralized-identity/kya-os-mcp) — mismo acrónimo, estándar distinto."
     },
     "tiers": {
@@ -536,7 +536,7 @@
       "linkA": "Diagramas de arquitectura completos en el repo",
       "linkB": "Ciclo de validador en dos fases: initiate → ack de P-Chain → complete (en 23h).",
       "linkC": "Validator set self-healing: cualquiera puede purgar un validador cuyo KYB expiró.",
-      "linkD": "Propagación cross-L1 de atestaciones vía ICM aterriza Q3 2026 (espejo AttestationStoreL1 en la L1)."
+      "linkD": "La propagación cross-L1 de atestaciones vía ICM está planeada, todavía no implementada (espejo AttestationStoreL1 en la L1)."
     },
     "resources": {
       "title": "Recursos",
