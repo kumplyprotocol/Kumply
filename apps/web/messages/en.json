@@ -157,7 +157,7 @@
     "paymasterTitle": "Smart Accounts and Paymasters (ERC-4337)",
     "paymasterSubtitle": "Gating gas sponsorship or smart-account actions on a KUMPLY attestation, from another contract.",
     "pmFreeTitle": "verify() is free by design",
-    "pmFreeDesc": "verify() is a view function with no fee logic, and the deployed AttestationStore is not upgradeable, so reading it never charges, whoever calls it and whether or not the caller is subscribed. The per-call fee (verificationFee, currently 0) and subscribedCallers only apply to checkCompliance() and to ComplianceGate.",
+    "pmFreeDesc": "verify() is a view function with no fee logic, and the deployed AttestationStore is not upgradeable, so it never charges a fee, whoever calls it and whether or not the caller is subscribed (callers only pay normal gas when calling it inside a transaction). The per-call fee (verificationFee, currently 0) and subscribedCallers only apply to checkCompliance() and to ComplianceGate.",
     "pmSemanticsTitle": "What verify() returns",
     "pmSemanticsDesc": "(verified, tier, timestamp, expiry). timestamp is the issuance time and expiry the expiration time, both in UNIX seconds. verified is false if the attestation expired, was revoked, or was never issued, and then every other field is 0, so you never compare expiry yourself. It keeps working while the contract is paused.",
     "pmAddressTitle": "Attest and check the smart account address",
