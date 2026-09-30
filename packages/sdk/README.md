@@ -31,11 +31,9 @@ const client = new KumplyClient({
   contractAddress: DEPLOYMENTS.mainnet.attestationStore,
 });
 
-// Check if a wallet is KYC-verified
-const result = await client.verify("0xUserAddress");
-
-if (result.verified && result.tier >= TIER.STANDARD) {
-  console.log("Standard KYC — allow deposit");
+// Check if a wallet is a verified person with at least Standard KYC (Tier 2 or 3)
+if (await client.isPersonAtLeast("0xUserAddress", TIER.STANDARD)) {
+  console.log("Standard KYC: allow deposit");
 } else {
   console.log("User needs verification");
 }
@@ -94,15 +92,29 @@ Like `verify()`, plus the issuing `verifier` address. Returns `null` if there is
 
 Convenience wrapper — returns `true` if the address has a valid, non-expired attestation.
 
-#### `hasTier(address: string, tier: number): Promise<boolean>`
+#### `isPersonAtLeast(address: string, level: number): Promise<boolean>`
 
-Returns `true` if the address is verified **and** its tier is at or above the requested one.
+`true` if the address is a verified person whose tier is between `level` and 3 (`level` is 1, 2 or 3). Businesses (Tier 4) and agents (Tier 5) never pass. Throws for any other `level`.
+
+#### `isBusiness(address: string): Promise<boolean>`
+
+`true` only for a verified Tier 4 (KYB) address.
+
+#### `isAgent(address: string): Promise<boolean>`
+
+`true` only for a verified Tier 5 (KYA) address.
 
 ```typescript
 import { TIER } from "@kumply/sdk";
 
-const isBusiness = await client.hasTier("0x...", TIER.KYB); // tier >= 4
+await client.isPersonAtLeast("0x...", TIER.STANDARD); // Tier 2 or 3
+await client.isBusiness("0x...");                     // exactly Tier 4
+await client.isAgent("0x...");                        // exactly Tier 5
 ```
+
+#### `hasTier(address: string, tier: number)` *(deprecated)*
+
+Compares tiers as one ladder (`tier >= X`), so a Tier 5 agent passes `hasTier(x, TIER.KYB)` and a Tier 4 business passes a Tier 2 check. Kept with the same behavior for backward compatibility; use the three methods above instead.
 
 #### `getTotalAttestations(): Promise<number>`
 
@@ -147,6 +159,10 @@ import {
 | 3    | Enhanced | Proof of address + source of funds          |
 | 4    | Business | KYB — Company registration + UBO disclosure |
 | 5    | Agent    | KYA — Know Your Agent bot verification      |
+
+**How to compare tiers.** Tiers 1-3 are a ladder for people: Standard (2) also covers Enhanced (3). Tier 4 (business) and Tier 5 (agent) are separate categories, not higher levels: a business is not a person with extra checks, and an agent is not a business. So never gate with a bare `tier >= X`. Ask for "a person at level N or higher", "a business" or "an agent".
+
+> **Deployed ComplianceGate contracts use the old ladder.** The `ComplianceGate` deployments on Fuji and Mainnet C-Chain (`DEPLOYMENTS.<network>.complianceGate`) check `tier >= requiredTier` with `requiredTier = 2`, so a Tier 4 business or a Tier 5 agent passes them. They are immutable. A category-aware gate is planned for mainnet hardening.
 
 > **Note:** "KYA" above is KUMPLY's own tier name, not the DIF-governed [KYA-OS](https://github.com/decentralized-identity/kya-os-mcp) protocol for MCP agents — same acronym, unrelated standard.
 
@@ -194,15 +210,29 @@ interface IAttestationStore {
 contract MyProtocol {
     IAttestationStore public kumply;
 
-    modifier onlyCompliant(uint32 requiredTier) {
-        // verify() already returns ok == false for expired, revoked, or unknown addresses
+    // verify() already returns ok == false for expired, revoked, or unknown addresses.
+    // Tiers 1-3 are a ladder for people; 4 (business) and 5 (agent) are separate categories.
+
+    modifier onlyPersonAtLeast(uint32 level) {
         (bool ok, uint32 tier, , ) = kumply.verify(msg.sender);
-        require(ok && tier >= requiredTier, "insufficient compliance");
+        require(ok && tier >= level && tier <= 3, "person KYC required");
         _;
     }
 
-    function deposit(uint256 amount) external onlyCompliant(2) {
-        // only Standard KYC users reach here
+    modifier onlyBusiness() {
+        (bool ok, uint32 tier, , ) = kumply.verify(msg.sender);
+        require(ok && tier == 4, "business KYB required");
+        _;
+    }
+
+    modifier onlyAgent() {
+        (bool ok, uint32 tier, , ) = kumply.verify(msg.sender);
+        require(ok && tier == 5, "agent KYA required");
+        _;
+    }
+
+    function deposit(uint256 amount) external onlyPersonAtLeast(2) {
+        // only people with Standard (2) or Enhanced (3) KYC reach here
     }
 }
 ```

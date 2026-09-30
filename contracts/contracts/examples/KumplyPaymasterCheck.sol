@@ -26,24 +26,27 @@ contract KumplyPaymasterCheck {
 
     /// @notice KUMPLY AttestationStore this paymaster reads from
     IKumplyAttestations public immutable kumply;
-    /// @notice Minimum tier required for sponsorship
-    uint32 public immutable minTier;
+    /// @notice Exact tier required for sponsorship (5 = agent, KYA)
+    /// @dev Tiers are not a single ladder: 1-3 are levels for people, 4 (business) and
+    ///      5 (agent) are separate categories. An exact match keeps a business from
+    ///      passing an agent check and the other way round.
+    uint32 public immutable requiredTier;
 
     /// @param _kumply AttestationStore address (same address on the network you sponsor on)
-    /// @param _minTier Minimum tier to sponsor (1-5)
-    constructor(IKumplyAttestations _kumply, uint32 _minTier) {
+    /// @param _requiredTier Exact tier to sponsor (use 5 for agents)
+    constructor(IKumplyAttestations _kumply, uint32 _requiredTier) {
         kumply = _kumply;
-        minTier = _minTier;
+        requiredTier = _requiredTier;
     }
 
     /// @notice ERC-4337 validationData for sponsoring sender
     /// @param sender The smart account address (userOp.sender), not its owner EOA
     /// @return validationData SIG_VALIDATION_FAILED if there is no attestation (never issued
-    ///         or revoked) or the tier is below minTier; otherwise validUntil = expiry and
+    ///         or revoked) or the tier is not requiredTier; otherwise validUntil = expiry and
     ///         validAfter = 0, packed as validUntil << 160
     function kumplyValidationData(address sender) public view returns (uint256 validationData) {
         (bool verified, uint32 tier, , uint64 expiry, ) = kumply.attestations(sender);
-        if (!verified || tier < minTier) return SIG_VALIDATION_FAILED;
+        if (!verified || tier != requiredTier) return SIG_VALIDATION_FAILED;
         uint48 validUntil = expiry > type(uint48).max ? type(uint48).max : uint48(expiry);
         return uint256(validUntil) << 160;
     }

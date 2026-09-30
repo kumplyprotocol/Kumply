@@ -21,11 +21,11 @@ describe("KumplyPaymasterCheck (docs example)", function () {
   const ONE_YEAR = 365 * 24 * 60 * 60;
   let store: any;
   let check: any;
-  let admin: any, verifier: any, account: any, lowTier: any, stranger: any, eerc: any;
+  let admin: any, verifier: any, account: any, lowTier: any, stranger: any, eerc: any, business: any;
   let expiry: bigint;
 
   beforeEach(async function () {
-    [admin, verifier, account, lowTier, stranger, eerc] = await ethers.getSigners();
+    [admin, verifier, account, lowTier, stranger, eerc, business] = await ethers.getSigners();
 
     store = await (await ethers.getContractFactory("AttestationStore")).deploy(admin.address, eerc.address);
     await store.waitForDeployment();
@@ -38,6 +38,7 @@ describe("KumplyPaymasterCheck (docs example)", function () {
     expiry = BigInt(block!.timestamp) + BigInt(ONE_YEAR);
     await store.connect(verifier).issueAttestation(account.address, 5, expiry);
     await store.connect(verifier).issueAttestation(lowTier.address, 3, expiry);
+    await store.connect(verifier).issueAttestation(business.address, 4, expiry);
   });
 
   it("returns validUntil = expiry and a zero authorizer for an attested account", async function () {
@@ -51,8 +52,18 @@ describe("KumplyPaymasterCheck (docs example)", function () {
     expect(await check.kumplyValidationData(stranger.address)).to.equal(SIG_VALIDATION_FAILED);
   });
 
-  it("fails validation when the tier is below minTier", async function () {
+  it("fails validation for a person tier (below the required agent tier)", async function () {
     expect(await check.kumplyValidationData(lowTier.address)).to.equal(SIG_VALIDATION_FAILED);
+  });
+
+  it("fails validation for a business (Tier 4): categories, not a ladder", async function () {
+    expect(await check.kumplyValidationData(business.address)).to.equal(SIG_VALIDATION_FAILED);
+  });
+
+  it("with requiredTier = 4, a Tier 5 agent does not pass a business check", async function () {
+    const bizCheck: any = await (await ethers.getContractFactory("KumplyPaymasterCheck")).deploy(await store.getAddress(), 4);
+    expect(await bizCheck.kumplyValidationData(account.address)).to.equal(SIG_VALIDATION_FAILED);
+    expect(unpack(await bizCheck.kumplyValidationData(business.address)).validUntil).to.equal(expiry);
   });
 
   it("fails validation after the attestation is revoked", async function () {
