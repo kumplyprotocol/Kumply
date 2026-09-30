@@ -117,8 +117,8 @@ export const BLOG_POSTS: BlogPost[] = [
     readMinutes: 5,
     category: "DEEP DIVE",
     title: {
-      en: "AVAXSKILLS Had Three Real Bugs. When No One Answered, We Fixed Them Ourselves.",
-      es: "AVAXSKILLS Tenía Tres Bugs Reales. Cuando Nadie Respondió, Los Arreglamos Nosotros.",
+      en: "AVAXSKILLS Had Three Real Bugs. When No One Answered, We Sent the Fixes Ourselves.",
+      es: "AVAXSKILLS Tenía Tres Bugs Reales. Cuando Nadie Respondió, Enviamos Los Arreglos Nosotros.",
     },
     excerpt: {
       en: "While auditing our own contracts against real Avalanche source, we found three real documentation bugs in AVAXSKILLS, the community skills package other agents build from. Weeks of silence later, we forked it and sent the fix ourselves, and rereading the real source turned up more bugs than the original reports had.",
@@ -126,6 +126,8 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     bodyHtml: {
       en: `
+<p><em>Updated September 30, 2026: the title said we "fixed" the bugs; we sent fixes as pull requests, which are still open and unmerged.</em></p>
+
 <p>On August 17, 2026, the same day KUMPLY audited its own <code>KumplyValidatorSetManager</code> contract against Avalanche's real reference implementation and found a bug that would have permanently blocked the L1 from activating, the same method turned up something else: three real, reproducible bugs in AVAXSKILLS itself, the community-maintained package of AI agent skills for building on Avalanche that we'd been using as one of our audit inputs.</p>
 
 <h2>What AVAXSKILLS is, and isn't</h2>
@@ -199,6 +201,8 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>The habit underneath all of this is the same one that caught the P-Chain conversion bug in our own <code>KumplyValidatorSetManager</code> two days earlier: check the thing against the real, running source, not against what the documentation says about it. It found a critical bug in our own contract, and a quieter but still real one in a tool we use to help write that contract. Full audit trail: <a href="https://github.com/kumplyprotocol/Kumply/blob/main/docs/audits/avalanche-ecosystem-audit-2026-08-17.md" target="_blank" rel="noopener noreferrer">docs/audits</a> and <a href="https://github.com/kumplyprotocol/Kumply/blob/main/docs/AI-USAGE.md" target="_blank" rel="noopener noreferrer">docs/AI-USAGE.md</a>.</p>
 `,
       es: `
+<p><em>Actualizado el 30 de septiembre de 2026: el título decía que "arreglamos" los bugs; enviamos los arreglos como pull requests, que siguen abiertos y sin mergear.</em></p>
+
 <p>El 17 de agosto de 2026, el mismo día que KUMPLY auditó su propio contrato <code>KumplyValidatorSetManager</code> contra la implementación de referencia real de Avalanche y encontró un bug que hubiera bloqueado la activación de la L1 para siempre, el mismo método destapó algo más: tres bugs reales y reproducibles en AVAXSKILLS mismo, el paquete de skills de IA community-maintained para construir en Avalanche que veníamos usando como uno de los insumos de esa auditoría.</p>
 
 <h2>Qué es AVAXSKILLS, y qué no es</h2>
@@ -479,16 +483,18 @@ export const BLOG_POSTS: BlogPost[] = [
       es: "Consenso Gateado por KYB: Cómo Funciona KumplyValidatorSetManager, y el Bug Que Casi lo Rompe",
     },
     excerpt: {
-      en: "Every validator on KUMPLY's Compliance L1 needs a live Tier-4 KYB attestation to join consensus, and loses its seat automatically the moment it expires. Here's how that gate actually works, plus a bug in the ACP-99 conversion logic that would have permanently blocked the L1 from ever activating, caught by comparing our code against Ava Labs' own reference implementation.",
-      es: "Todo validador en la L1 de Compliance de KUMPLY necesita una attestation Tier-4 (KYB) vigente para entrar al consenso, y pierde su lugar automáticamente en el momento en que expira. Así funciona ese gate en la práctica, más la historia de un bug en la lógica de conversión de ACP-99 que hubiera bloqueado la activación de la L1 para siempre, encontrado al comparar nuestro código contra la implementación de referencia real de Ava Labs.",
+      en: "Once KUMPLY's Compliance L1 is activated, every validator will need a live attestation of Tier 4 (KYB) or higher to join, and anyone can trigger its removal once that attestation expires. Here's how that gate works, plus a bug in our own implementation of the ACP-99 conversion logic that would have permanently blocked the L1 from ever activating, caught by comparing our code against Ava Labs' own reference implementation.",
+      es: "Cuando se active la L1 de Compliance de KUMPLY, cada validador necesitará una attestation vigente de Tier 4 (KYB) o superior para entrar, y cualquiera podrá disparar su baja cuando esa attestation expire. Así funciona ese gate, más la historia de un bug en nuestra propia implementación de la lógica de conversión de ACP-99 que hubiera bloqueado la activación de la L1 para siempre, encontrado al comparar nuestro código contra la implementación de referencia real de Ava Labs.",
     },
     bodyHtml: {
       en: `
-<p>Avalanche's own pitch for institutional adoption keeps coming back to one idea: a chain where every validator is known and KYC'd. Evergreen Subnets embed that at the chain level through permissioning and allow-lists. KUMPLY's Compliance L1 takes the same idea further and enforces it in contract code, not policy: <code>KumplyValidatorSetManager</code> (ACP-99) requires a live Tier-4 (KYB) attestation to hold a seat in the validator set, checked on registration and re-checked continuously after.</p>
+<p><em>Updated September 30, 2026: clarified that validator removal is permissionless but not automatic, that the deployed manager accepts Tier 4 or higher (a fix restricting it to exactly Tier 4 is in the code and ships with the redeploy), and that the L1 is not activated yet.</em></p>
+
+<p>Avalanche's own pitch for institutional adoption keeps coming back to one idea: a chain where every validator is known and KYC'd. Evergreen Subnets embed that at the chain level through permissioning and allow-lists. KUMPLY's Compliance L1 takes the same idea further and enforces it in contract code, not policy: <code>KumplyValidatorSetManager</code> (ACP-99) requires a live attestation of Tier 4 (KYB) or higher to join the validator set, checked on registration; after that, anyone can trigger removal once it lapses.</p>
 
 <h2>How the gate actually works</h2>
 
-<p>The rule is a single immutable constant, <code>REQUIRED_VALIDATOR_TIER == 4</code>. Registering as a validator means the contract calls into <code>AttestationStore</code> and confirms the candidate address holds a Tier 4 (Business/KYB) credential that hasn't expired. No credential, no seat. The gate isn't just at the door, either: if a validator's KYB attestation expires while it's already active, anyone, not just an admin, can call <code>disableExpiredValidator()</code> and purge it from the set. Self-healing, permissionless, no one has to notice and act.</p>
+<p>The rule hangs on one immutable constant, <code>REQUIRED_VALIDATOR_TIER == 4</code>. Registering as a validator means the contract calls into <code>AttestationStore</code> and confirms the candidate address holds a valid attestation at that tier or higher. No credential, no seat. After that, if a validator's attestation expires or is revoked while it's active, anyone, not just an admin, can call <code>disableExpiredValidator()</code> to start removing it from the set. That's permissionless, but not automatic: someone has to make the call. A fix that restricts registration to exactly Tier 4 is already in the code and ships with the manager's redeploy before the L1 is activated. The same fix lets anyone purge a validator whose attestation was re-issued below Tier 4.</p>
 
 <p>Two more mechanics keep the set stable while that's happening: churn is capped at <code>MAX_CHURN_PER_PERIOD == 20</code> validator changes per rolling <code>CHURN_PERIOD == 1 day</code>, and no single validator can hold more than <code>MAX_VALIDATOR_WEIGHT_BPS == 2000</code> (20%) of total stake weight. And the contract is <code>Pausable</code> in a specific, deliberate way: pausing blocks new <code>initiate</code> operations (registrations, removals starting) but never blocks <code>complete</code> operations, because those are settlement, and settlement should never get stuck mid-flight just because something else triggered a pause.</p>
 
@@ -550,14 +556,16 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Where this actually stands, September 2026</h2>
 
-<p>Honestly: the L1 is registered on Fuji with its ACP-99 validator manager live and verified, and validator activation is still in progress, not a running consensus set with real institutional validators yet. What's real today is the mechanism and the demand pattern behind it, not a live customer list. Avalanche is already positioning Evergreen Subnets around exactly this idea for institutions moving into tokenized funds, and KUMPLY's validator gate is that same idea enforced as code instead of chain-level policy. Founding validator slots are open to any KYB-verified institution; none are confirmed and named publicly yet, and this post won't pretend otherwise.</p>
+<p>Honestly: the chain is registered on Fuji and its ACP-99 validator manager is deployed and verified, but the manager is not initialized and the L1 has not been activated. There are no validators yet, institutional or otherwise. What's real today is the mechanism and the demand pattern behind it, not a live customer list. Avalanche is already positioning Evergreen Subnets around exactly this idea for institutions moving into tokenized funds, and KUMPLY's validator gate is that same idea enforced as code instead of chain-level policy. Founding validator slots are open to any KYB-verified institution; none are confirmed and named publicly yet, and this post won't pretend otherwise.</p>
 `,
       es: `
-<p>El propio argumento de Avalanche para adopción institucional vuelve siempre a la misma idea: una cadena donde cada validador es conocido y pasó KYC. Los Evergreen Subnets meten eso a nivel de cadena con permissioning y allow-lists. La Compliance L1 de KUMPLY lleva la misma idea más lejos y la aplica en código de contrato, no en política: <code>KumplyValidatorSetManager</code> (ACP-99) exige una attestation Tier-4 (KYB) vigente para tener un lugar en el validator set, verificada al registrarse y revisada continuamente después.</p>
+<p><em>Actualizado el 30 de septiembre de 2026: aclaramos que la baja de validadores es permissionless pero no automática, que el manager desplegado acepta Tier 4 o superior (un arreglo que lo restringe a exactamente Tier 4 ya está en el código y sale con el redespliegue), y que la L1 todavía no está activada.</em></p>
+
+<p>El propio argumento de Avalanche para adopción institucional vuelve siempre a la misma idea: una cadena donde cada validador es conocido y pasó KYC. Los Evergreen Subnets meten eso a nivel de cadena con permissioning y allow-lists. La Compliance L1 de KUMPLY lleva la misma idea más lejos y la aplica en código de contrato, no en política: <code>KumplyValidatorSetManager</code> (ACP-99) exige una attestation vigente de Tier 4 (KYB) o superior para entrar al validator set, verificada al registrarse; después, cualquiera puede disparar la baja cuando vence.</p>
 
 <h2>Cómo funciona el gate en la práctica</h2>
 
-<p>La regla es una sola constante inmutable, <code>REQUIRED_VALIDATOR_TIER == 4</code>. Registrarse como validador significa que el contrato llama a <code>AttestationStore</code> y confirma que la dirección candidata tiene una credencial Tier 4 (Empresarial/KYB) vigente, sin expirar. Sin credencial, no hay lugar. Y el gate no es solo en la entrada: si la attestation KYB de un validador ya activo expira, cualquiera, no solo un admin, puede llamar a <code>disableExpiredValidator()</code> y purgarlo del set. Self-healing, permissionless, nadie tiene que notarlo y actuar.</p>
+<p>La regla depende de una constante inmutable, <code>REQUIRED_VALIDATOR_TIER == 4</code>. Registrarse como validador significa que el contrato llama a <code>AttestationStore</code> y confirma que la dirección candidata tiene una attestation vigente de ese tier o superior. Sin credencial, no hay lugar. Después, si la attestation de un validador activo expira o se revoca, cualquiera, no solo un admin, puede llamar a <code>disableExpiredValidator()</code> para iniciar su baja del set. Es permissionless, pero no automático: alguien tiene que hacer la llamada. Un arreglo que restringe el registro a exactamente Tier 4 ya está en el código y sale con el redespliegue del manager antes de activar la L1. El mismo arreglo permite que cualquiera purgue a un validador cuya attestation se reemitió por debajo de Tier 4.</p>
 
 <p>Dos mecanismos más mantienen el set estable mientras eso pasa: el churn está limitado a <code>MAX_CHURN_PER_PERIOD == 20</code> cambios de validador por <code>CHURN_PERIOD == 1 día</code> móvil, y ningún validador puede tener más de <code>MAX_VALIDATOR_WEIGHT_BPS == 2000</code> (20%) del peso total de stake. Y el contrato es <code>Pausable</code> de una forma específica y deliberada: pausar bloquea las operaciones <code>initiate</code> nuevas (registros, remociones que arrancan) pero nunca bloquea las operaciones <code>complete</code>, porque esas son settlement, y el settlement no debería quedar colgado a mitad de camino solo porque algo más disparó una pausa.</p>
 
@@ -619,7 +627,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Dónde queda esto realmente, septiembre 2026</h2>
 
-<p>Con honestidad: la L1 está registrada en Fuji con su validator manager ACP-99 en vivo y verificado, y la activación de validadores sigue en progreso, no es todavía un set de consenso corriendo con validadores institucionales reales. Lo que es real hoy es el mecanismo y el patrón de demanda detrás de él, no una lista de clientes en vivo. Avalanche ya está posicionando los Evergreen Subnets alrededor de exactamente esta idea para instituciones moviéndose hacia fondos tokenizados, y el gate de validadores de KUMPLY es esa misma idea aplicada como código en vez de política a nivel de cadena. Los slots de validador fundador están abiertos para cualquier institución verificada con KYB; ninguno está confirmado ni nombrado públicamente todavía, y este post no va a fingir lo contrario.</p>
+<p>Con honestidad: la cadena está registrada en Fuji y su validator manager ACP-99 está desplegado y verificado, pero el manager no está inicializado y la L1 no se ha activado. Todavía no hay validadores, institucionales ni de ningún tipo. Lo que es real hoy es el mecanismo y el patrón de demanda detrás de él, no una lista de clientes en vivo. Avalanche ya está posicionando los Evergreen Subnets alrededor de exactamente esta idea para instituciones moviéndose hacia fondos tokenizados, y el gate de validadores de KUMPLY es esa misma idea aplicada como código en vez de política a nivel de cadena. Los slots de validador fundador están abiertos para cualquier institución verificada con KYB; ninguno está confirmado ni nombrado públicamente todavía, y este post no va a fingir lo contrario.</p>
 `,
     },
   },
@@ -642,6 +650,8 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     bodyHtml: {
       en: `
+<p><em>Updated September 30, 2026: the AgentRegistry.sol extension no longer has a Q3 2026 date; no date is committed yet.</em></p>
+
 <p>Agentic DeFi is arriving: autonomous market makers, AI portfolio managers, on-chain agents holding real budgets. Every protocol that lets an agent touch real capital will need to answer the same question: is this a trusted, bounded agent, or an anonymous script? Today, there's no composable on-chain compliance rail for that distinction.</p>
 
 <h2>What KYA actually verifies</h2>
@@ -678,7 +688,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>What's roadmap, not shipped</h2>
 
-<p>Two things worth being precise about, since it's easy to round "planned" up to "live" when describing your own roadmap. First, deeper agent-specific verification - model fingerprinting, behavior bounds, liveness checks - lives in a planned <code>AgentRegistry.sol</code> extension, scoped for Q3 2026. It doesn't exist in the contracts yet. Second, per-agent payment standards like x402 are part of where this is heading, not something running in production today. Tier 5 attestation and the compliance check are real; automated micropayment rails on top of it are still ahead of us.</p>
+<p>Two things worth being precise about, since it's easy to round "planned" up to "live" when describing your own roadmap. First, deeper agent-specific verification - model fingerprinting, behavior bounds, liveness checks - lives in a planned <code>AgentRegistry.sol</code> extension, with no date committed yet. It doesn't exist in the contracts yet. Second, per-agent payment standards like x402 are part of where this is heading, not something running in production today. Tier 5 attestation and the compliance check are real; automated micropayment rails on top of it are still ahead of us.</p>
 
 <h2>Why "first" needs a qualifier</h2>
 
@@ -689,6 +699,8 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>One more disambiguation, since the acronym is shared: KUMPLY's KYA is not KYA-OS (<a href="https://github.com/decentralized-identity/kya-os-mcp" target="_blank" rel="noopener noreferrer">github.com/decentralized-identity/kya-os-mcp</a>), a separate identity protocol for MCP agents donated to the Decentralized Identity Foundation. Different standard, different governance, no relationship between the two beyond the name.</p>
 `,
       es: `
+<p><em>Actualizado el 30 de septiembre de 2026: la extensión AgentRegistry.sol ya no tiene fecha de Q3 2026; todavía no hay fecha comprometida.</em></p>
+
 <p>Las DeFi agénticas están llegando: market makers autónomos, gestores de portafolio con IA, agentes on-chain manejando presupuestos reales. Todo protocolo que deje a un agente tocar capital real va a necesitar responder la misma pregunta: ¿es un agente confiable y acotado, o un script anónimo? Hoy no existe ningún riel de compliance componible on-chain para esa distinción.</p>
 
 <h2>Qué verifica realmente KYA</h2>
@@ -725,7 +737,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Qué es roadmap, no está enviado</h2>
 
-<p>Dos cosas vale la pena precisar, porque es fácil redondear "planeado" hacia "en vivo" cuando describís tu propio roadmap. Primero, la verificación específica de agentes más profunda - huella del modelo, límites de comportamiento, checks de liveness - vive en una extensión planeada, <code>AgentRegistry.sol</code>, programada para Q3 2026. Todavía no existe en los contratos. Segundo, los estándares de pago por agente como x402 son parte de hacia dónde va esto, no algo corriendo en producción hoy. La attestation Tier 5 y el check de compliance son reales; los rieles de micropago automatizado encima de eso todavía están por delante.</p>
+<p>Dos cosas vale la pena precisar, porque es fácil redondear "planeado" hacia "en vivo" cuando describís tu propio roadmap. Primero, la verificación específica de agentes más profunda - huella del modelo, límites de comportamiento, checks de liveness - vive en una extensión planeada, <code>AgentRegistry.sol</code>, sin fecha comprometida todavía. Todavía no existe en los contratos. Segundo, los estándares de pago por agente como x402 son parte de hacia dónde va esto, no algo corriendo en producción hoy. La attestation Tier 5 y el check de compliance son reales; los rieles de micropago automatizado encima de eso todavía están por delante.</p>
 
 <h2>Por qué "primero" necesita un matiz</h2>
 

@@ -219,19 +219,19 @@
       "title": "KYA — Verify AI Agents",
       "subtitle": "Compliance credentials for autonomous AI agents, tied to a verified human or business owner",
       "p1": "AI agents are already trading, lending, and managing funds on-chain. But until now, there’s been no way to know: who built this agent? Is it authorized? Is it compliant? KYA answers all of that.",
-      "p2": "KUMPLY links every AI agent to its verified human developer or corporate owner. Protocols can then decide: do I let this agent interact with my contracts? Based on real, verifiable compliance data — not just trust.",
+      "p2": "KUMPLY is designed to link every AI agent to its verified human developer or corporate owner. Protocols can then decide: do I let this agent interact with my contracts? Today a Tier 5 attestation records the agent's tier and expiry on-chain; the owner link is planned.",
       "f1Title": "Every Agent Has an Owner",
       "f1Desc": "Each AI agent is linked to a verified person or company. If something goes wrong, there’s always an accountable party.",
       "f2Title": "Behavior-Based Credentials",
-      "f2Desc": "Agents can earn reputation over time. Good track record? Higher trust level. Suspicious activity? Restricted access.",
+      "f2Desc": "Planned: agents earning reputation over time. Good track record, higher trust; suspicious activity, restricted access.",
       "f3Title": "Protect Your Protocol",
-      "f3Desc": "Set rules: only allow verified agents. Block unregistered ones. Rate-limit suspicious activity. All enforced automatically on-chain.",
+      "f3Desc": "Set rules: only allow verified agents on-chain. Block unregistered ones. Rate limits and other policies are up to your own contract.",
       "standardNote": "Terminology note: \"KYA\" here is KUMPLY's own tier name, unrelated to KYA-OS, the DIF-governed identity protocol for MCP agents (github.com/decentralized-identity/kya-os-mcp) — same acronym, different standard."
     },
     "cross-l1": {
       "title": "Cross-Chain Verification",
       "subtitle": "One credential, valid across every AVALANCHE® network",
-      "p1": "Imagine your user verifies their identity on an AVALANCHE® L1. Now they want to use a different app on another AVALANCHE® L1. With KUMPLY, they don’t need to verify again. Their credential travels with them automatically through Avalanche Interchain Messaging (ICM).",
+      "p1": "Imagine your user verifies their identity on an AVALANCHE® L1. Now they want to use a different app on another AVALANCHE® L1. The plan is that they won't need to verify again: their credential would travel with them through Avalanche Interchain Messaging (ICM). Cross-L1 propagation is not shipped yet.",
       "p2": "For developers, this means you can check compliance status on any AVALANCHE® L1 with a single function call. No third-party bridges. No external oracles. No waiting. It just works.",
       "f1Title": "No Third-Party Bridges",
       "f1Desc": "Uses Avalanche Interchain Messaging (ICM) — the AVALANCHE® network’s native cross-chain protocol. No reliance on external bridges that add risk and complexity.",
@@ -246,7 +246,7 @@
       "title": "Smart Contract Integration",
       "subtitle": "Add compliance checks directly into your protocol — 3 lines of Solidity",
       "p1": "Our AttestationStore contract is the central registry where all verified credentials live. It’s deployed on Avalanche Mainnet C-Chain and Fuji Testnet, ready for you to query. Think of it as a compliance database that lives on-chain.",
-      "p2": "Want to block unverified users from depositing funds? Just add one line: require(kumply.getTier(user) >= 2). That’s it. Your smart contract now enforces compliance automatically.",
+      "p2": "Want to block unverified users from depositing funds? Add a check: (bool ok, uint32 tier, , ) = kumply.verify(user); require(ok && tier >= 2);. Your smart contract now enforces the tier requirement on every call.",
       "f1Title": "Copy, Paste, Done",
       "f1Desc": "Simple Solidity interfaces that drop right into your existing contracts. No architectural changes needed.",
       "f2Title": "Fast & Cheap Lookups",
@@ -271,7 +271,7 @@
     "privacy": {
       "title": "Privacy Policy",
       "subtitle": "How we handle your data (short version: we don’t keep it)",
-      "p1": "KUMPLY is designed to align with Mexico’s data protection law (LFPDPPP) and GDPR principles — a formal legal opinion is planned before any fee is activated on mainnet. But here’s the simple version: we are a software tool. We process your verification through a certified partner, create an encrypted proof, and that’s it. We don’t store your documents.",
+      "p1": "KUMPLY is designed to align with Mexico’s data protection law (LFPDPPP) and GDPR principles. A formal legal opinion is planned before any fee is activated on mainnet. But here’s the simple version: we are a software tool. We process your verification through a certified partner, record an on-chain attestation (address, tier and expiry, no personal data), and that’s it. We don’t store your documents.",
       "p2": "Your personal data is handled by Sumsub (our SOC 2 Type II–certified KYC provider). KUMPLY only receives a pass/fail result and writes an encrypted credential to the blockchain. No names, no photos, no addresses on our servers. Ever.",
       "f1Title": "Zero Data Stored",
       "f1Desc": "We literally don’t have your personal data. It’s processed by our certified partner and never touches our servers.",
@@ -350,11 +350,11 @@
     "noEvents": "No attestation events found in the last 10,000 blocks."
   },
   "L1": {
-    "badge": "Chain Registered on Fuji · Activation In Progress",
+    "badge": "Chain Registered on Fuji · Activation Pending",
     "title": "KUMPLY Compliance L1",
-    "subtitle": "The first Avalanche L1 designed so only KYB-verified institutions can validate. Every block signed by a KYB-verified entity — compliance baked into consensus.",
-    "statusTitle": "Chain Registered on Fuji — Validator Activation In Progress",
-    "statusDesc": "The KUMPLY chain (ID 43210, KMP gas token) is registered on the Fuji P-Chain with its genesis committed, and the ACP-99 KumplyValidatorSetManager is deployed and verified on C-Chain with 27 dedicated tests. Next step: ACP-77 conversion and first validator node activation. Founding validator slots are open — any KYB-verified institution can join.",
+    "subtitle": "An Avalanche L1 designed so validators must hold a KUMPLY attestation (Tier 4 or higher today). Not activated yet.",
+    "statusTitle": "Chain Registered on Fuji · Validator Activation Pending",
+    "statusDesc": "The KUMPLY chain (ID 43210, KMP gas token) is registered on the Fuji P-Chain with its genesis committed, and the ACP-99 KumplyValidatorSetManager is deployed and verified on C-Chain with a dedicated test suite. It is not initialized and has no validators yet. Next step: ACP-77 conversion and first validator node activation. A fix that restricts registration to exactly Tier 4 is already in the code and ships with the manager's redeploy before the L1 is activated.",
     "viewOnGitHub": "View Source on GitHub",
     "chainIdentity": "Chain Identity",
     "chainName": "Name",
@@ -367,9 +367,9 @@
     "enabled": "Enabled at genesis",
     "plannedPhase2": "Planned · Phase 2",
     "architectureTitle": "Validator Architecture (ACP-77 + ACP-99)",
-    "architectureDesc": "Validator registration flows through the KumplyValidatorSetManager contract, which enforces a Tier 4 (KYB) attestation as a prerequisite. State changes propagate to the P-Chain via Avalanche Warp Messages.",
+    "architectureDesc": "Validator registration flows through the KumplyValidatorSetManager contract, which requires a valid attestation of Tier 4 (KYB) or higher. A fix that restricts registration to exactly Tier 4 is already in the code and ships with the manager's redeploy before the L1 is activated. State changes propagate to the P-Chain via Avalanche Warp Messages.",
     "foundingValidators": "Founding Validators",
-    "foundingValidatorsDesc": "Each validator must hold a valid Tier 4 (Business / KYB) attestation in the KUMPLY AttestationStore. If the attestation expires, the validator is automatically removed by the contract — anyone can trigger the purge.",
+    "foundingValidatorsDesc": "Each validator must hold a valid attestation of Tier 4 or higher when registering. If it expires or is revoked, anyone can call disableExpiredValidator() to start its removal; removal is not automatic. A still-valid downgrade can only be removed by the admin until the fix ships with the redeploy.",
     "status_committed": "Committed",
     "status_invited": "Invited",
     "status_negotiating": "In Talks",
@@ -377,15 +377,15 @@
     "whyTitle": "Why a Dedicated L1?",
     "whySubtitle": "The C-Chain works for today’s reads. Here is why we are building the Compliance L1 for institutional scale.",
     "why1Title": "Compliant by Construction",
-    "why1Desc": "Only KYB-verified institutions validate. Every block is signed by a KYB-verified entity — compliance is structural, not a policy add-on.",
+    "why1Desc": "Validators must hold a KUMPLY attestation (Tier 4 or higher today) to register. Compliance is designed into the validator set, not added as a policy on top.",
     "why2Title": "Sub-Cent Compliance Reads",
     "why2Desc": "Predictable, near-zero fees for compliance lookups at institutional scale. No more gas spikes blocking enterprise integrations.",
     "why3Title": "Cross-L1 via Warp + ICM",
-    "why3Desc": "Attestations propagate to every Avalanche L1 natively. No bridges, no oracles, no third-party trust assumptions.",
-    "why4Title": "Self-Healing Validator Set",
-    "why4Desc": "When a validator’s KYB expires, anyone can call disableExpiredValidator(). The network removes non-compliant validators without admin intervention.",
+    "why3Desc": "Planned: attestations propagated to other Avalanche L1s via Warp + ICM, with no bridges or third-party oracles. Not shipped yet.",
+    "why4Title": "Permissionless Validator Purge",
+    "why4Desc": "When a validator's attestation expires or is revoked, anyone can call disableExpiredValidator(); no admin needed. Someone has to make that call.",
     "artifactsTitle": "Deployment Artifacts",
-    "artifactsDesc": "Everything required for deployment is committed and audited. One command spins the L1 up on Fuji.",
+    "artifactsDesc": "Deployment artifacts are committed and reviewed against Ava Labs' reference code (not a formal audit). Activation also needs validator nodes and the ACP-77 conversion.",
     "acpTitle": "Avalanche Community Proposals (ACPs)",
     "acpDesc": "KUMPLY L1 implements the latest Avalanche standards for sovereign L1s, dynamic validator management and Warp-based cross-chain messaging."
   },
@@ -407,7 +407,7 @@
     "subtitle": "Everything you need to integrate KUMPLY — smart contracts, SDK, REST API, the Compliance L1, and the KYA Tier-5 primitive.",
     "badges": {
       "network": "Avalanche Fuji",
-      "tests": "164 tests passing"
+      "tests": "Tests passing in CI"
     },
     "toc": {
       "heading": "Contents",
@@ -428,7 +428,7 @@
     },
     "overview": {
       "title": "What KUMPLY is",
-      "subtitle": "Two-layer compliance primitive: on-chain attestations on C-Chain (live) + a dedicated KYB-gated Avalanche L1. All five tiers (KYC, KYB, KYA) compose with any DApp via the ComplianceGate contract.",
+      "subtitle": "Two-layer compliance primitive: on-chain attestations on C-Chain (live) + a dedicated KYB-gated Avalanche L1 (registered on Fuji, not yet activated). All five tiers (KYC, KYB, KYA) compose with any DApp via the ComplianceGate contract.",
       "cardA": {
         "label": "Stack",
         "value": "Solidity 0.8.28 · viem · Next.js 16 · Subnet-EVM v0.8.0"
@@ -541,7 +541,7 @@
     "resources": {
       "title": "Resources",
       "subtitle": "Everything else — repo, paper, explorers, standards, and contact.",
-      "github": "Source code, issues, CI status (164 tests).",
+      "github": "Source code, issues, CI status.",
       "litepaper": "Full product + technical brief (~3K words).",
       "snowtrace": "Verified contracts on Fuji.",
       "acp99": "Avalanche L1 ValidatorSetManager standard.",
