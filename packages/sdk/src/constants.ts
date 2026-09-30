@@ -34,7 +34,8 @@ export const KUMPLY_L1_CONFIG: NetworkConfig = {
   rpcUrl: "https://subnets.avax.network/2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b/rpc",
   name: "KUMPLY Compliance L1",
   explorerUrl: "https://testnet.avascan.info/blockchain/2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b",
-  live: true,
+  // Not converted to an L1 yet: no validators, and the public RPC answers HTTP 405.
+  live: false,
   symbol: "KMP",
 };
 

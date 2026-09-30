@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.2.0
+
+### Changed
+- **`network: "kumply-l1"` now throws a clear `@kumply/sdk` error at construction** while the KUMPLY Compliance L1 is not active, unless you pass your own `rpcUrl` (for example a local devnet). Before, the constructor succeeded and every call failed later with an opaque transport error, because the L1 isn't converted yet and its public RPC answers HTTP 405. If you build a `kumply-l1` client without `rpcUrl`, catch the error or switch to `"fuji"`/`"mainnet"`.
+- **`KUMPLY_L1_CONFIG.live` is now `false`.** It said `true` even though the L1 has no validators.
+
+### Docs
+- **Paymasters and ERC-7562:** don't call `verify()` inside `validatePaymasterUserOp`. It reads `block.timestamp`, which ERC-7562 (rule OP-011) blocks during validation. Read `attestations(sender)` instead and return `expiry` as `validUntil`. See kumply.xyz/developers#paymasters.
+- **KUMPLY Compliance L1 marked not active:** it is registered on Fuji but not converted, has no validators, and its RPC does not serve requests.
+- **Validator gate described as deployed:** Tier 4 (KYB) or higher. A fix that restricts it to exactly Tier 4 is in the code and ships with the manager's redeploy before activation.
+
 ## 1.1.3
 
 ### Fixed
