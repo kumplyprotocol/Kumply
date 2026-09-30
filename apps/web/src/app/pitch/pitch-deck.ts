@@ -227,8 +227,8 @@ export const DECK_HTML = `
     </div>
     <h1>The compliance layer for the Avalanche ecosystem.</h1>
     <p class="lede" style="margin-top: 1.4rem;">
-      On-chain KYC, KYB, and KYA attestations that any dApp or sovereign L1 can verify in under a second -
-      plus, to our knowledge, the first Avalanche L1 designed so that every validator must pass business verification (KYB) to join consensus.
+      On-chain KYC, KYB, and KYA attestations in one shared system that any dApp or sovereign L1 can verify in under a
+      second - plus a dedicated Avalanche L1 (not activated yet) whose validators register with a KUMPLY KYB attestation.
     </p>
     <div class="title-badges">
       <span class="badge live">Live on Mainnet C-Chain · Beta</span>
@@ -438,7 +438,7 @@ export const DECK_HTML = `
       <span class="eyebrow">Differentiator</span>
       <span class="slide-num">07 / 12</span>
     </div>
-    <h2>KYA - Know Your Agent. First of its kind on Avalanche.</h2>
+    <h2>KYA - Know Your Agent. Agents tied to an accountable owner.</h2>
     <p class="lede">
       Agentic DeFi is arriving: autonomous market makers, AI portfolio managers, on-chain agents holding real budgets.
       Every protocol will need to distinguish a <strong>trusted, bounded agent</strong> from an anonymous script -
@@ -447,11 +447,11 @@ export const DECK_HTML = `
     <div class="grid cols-3">
       <div class="cell">
         <h3>Tier 5 attestations</h3>
-        <p>Agents get on-chain credentials tied to a verified owner (Tier 4 KYB) - accountability chains upward.</p>
+        <p>Agents get an on-chain Tier 5 credential, designed to tie back to a verified owner (Tier 4 KYB) - accountability chains upward.</p>
       </div>
       <div class="cell">
-        <h3>First in the ecosystem</h3>
-        <p>To our knowledge, the first Avalanche L1 - and the first EVM compliance layer - that ties an AI agent's on-chain identity to a legally accountable owner verified via KYB.</p>
+        <h3>People, businesses and agents in one system</h3>
+        <p>KYC, KYB and KYA live in the same attestation system, so an agent's Tier 5 credential is designed to point back to its owner's Tier 4 KYB instead of a pseudonymous identity.</p>
       </div>
       <div class="cell">
         <h3>Roadmapped depth</h3>
@@ -759,8 +759,8 @@ export const DECK_HTML_ES = `
     </div>
     <h1>La capa de cumplimiento para el ecosistema Avalanche.</h1>
     <p class="lede" style="margin-top: 1.4rem;">
-      Attestations on-chain de KYC, KYB y KYA que cualquier dApp o L1 soberana puede verificar en menos de un segundo -
-      además, hasta donde sabemos, de la primera L1 de Avalanche diseñada para que cada validador deba pasar verificación empresarial (KYB) para unirse al consenso.
+      Attestations on-chain de KYC, KYB y KYA en un mismo sistema, que cualquier dApp o L1 soberana puede verificar en menos
+      de un segundo - además de una L1 de Avalanche dedicada (todavía sin activar) cuyos validadores se registran con una attestation KYB de KUMPLY.
     </p>
     <div class="title-badges">
       <span class="badge live">En vivo en Mainnet C-Chain · Beta</span>
@@ -971,7 +971,7 @@ export const DECK_HTML_ES = `
       <span class="eyebrow">Diferenciador</span>
       <span class="slide-num">07 / 12</span>
     </div>
-    <h2>KYA - Know Your Agent. Primero en su tipo en Avalanche.</h2>
+    <h2>KYA - Know Your Agent. Agentes ligados a un dueño responsable.</h2>
     <p class="lede">
       Las DeFi agénticas están llegando: market makers autónomos, gestores de portafolio con IA, agentes on-chain
       manejando presupuestos reales. Todo protocolo va a necesitar distinguir un <strong>agente confiable y acotado</strong>
@@ -980,11 +980,11 @@ export const DECK_HTML_ES = `
     <div class="grid cols-3">
       <div class="cell">
         <h3>Attestations Tier 5</h3>
-        <p>Los agentes obtienen credenciales on-chain ligadas a un dueño verificado (Tier 4 KYB) - la responsabilidad encadena hacia arriba.</p>
+        <p>Los agentes obtienen una credencial on-chain Tier 5, diseñada para ligarse a un dueño verificado (Tier 4 KYB) - la responsabilidad encadena hacia arriba.</p>
       </div>
       <div class="cell">
-        <h3>Primero en el ecosistema</h3>
-        <p>Hasta donde sabemos, la primera L1 de Avalanche - y la primera capa de compliance EVM - que ata la identidad on-chain de un agente de IA a un dueño legalmente responsable verificado con KYB.</p>
+        <h3>Personas, empresas y agentes en un solo sistema</h3>
+        <p>KYC, KYB y KYA viven en el mismo sistema de attestations, así que la credencial Tier 5 de un agente está diseñada para apuntar al KYB Tier 4 de su dueño, no a una identidad pseudónima.</p>
       </div>
       <div class="cell">
         <h3>Profundidad planeada</h3>

@@ -58,7 +58,7 @@
     "partner3Name": "KUMPLY Compliance L1",
     "partner3Desc": "L1 soberana con validadores verificados por KYB",
     "whyAvaxTitle": "Por Qué Construimos en la Red AVALANCHE®",
-    "whyAvaxSubtitle": "La única blockchain que nos da velocidad sub-segundo, privacidad integrada vía eERC y mensajería nativa entre redes — todo en uno",
+    "whyAvaxSubtitle": "Finalidad en menos de un segundo, herramientas de privacidad vía eERC y mensajería nativa entre redes, todo en un mismo ecosistema.",
     "whyF1Title": "Verificación en Menos de 1 Segundo",
     "whyF1Desc": "La red AVALANCHE® confirma transacciones casi al instante vía consenso Snowman. Cuando un regulador o contrato verifica una credencial, la respuesta llega en menos de un segundo.",
     "whyF2Title": "Compatible con Cualquier App EVM",
@@ -481,7 +481,7 @@
     },
     "kya": {
       "title": "KYA — Know Your Agent (Tier 5)",
-      "subtitle": "La primitiva única de KUMPLY para agentes IA autónomos. A medida que el agentic DeFi crece en 2026, cada protocolo necesita distinguir agentes confiables y acotados de scripts anónimos. Ninguna otra Avalanche L1 — y que sepamos, ninguna otra EVM L1 — ofrece esto.",
+      "subtitle": "La primitiva de KUMPLY para agentes IA autónomos. A medida que crece el agentic DeFi, los protocolos necesitan distinguir agentes responsables y acotados de scripts anónimos. El enfoque de KUMPLY: verificación de agentes ligada a un dueño verificado con KYB, dentro del mismo sistema de atestaciones que KYC y KYB. Hoy una atestación Tier 5 registra el tier y el vencimiento del agente; los campos de abajo están planeados.",
       "f1": {
         "label": "Huella del modelo",
         "value": "Hash de los pesos del modelo (abierto) o endpoint API pinneado + versión (cerrado)."
@@ -527,7 +527,7 @@
       },
       "tierFive": {
         "name": "Agente / KYA",
-        "use": "Agentes IA autónomos y bots — único en KUMPLY."
+        "use": "Agentes IA autónomos y bots."
       }
     },
     "architecture": {

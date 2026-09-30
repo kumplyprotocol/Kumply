@@ -1,6 +1,6 @@
 # KUMPLY 🛡️
 
-**The first to combine KYC, KYB, and KYA — including AI agent verification — in a single on-chain attestation layer for AVALANCHE®**
+**KYC, KYB, and KYA (AI agent verification) in one on-chain attestation layer for AVALANCHE®**
 
 KUMPLY provides non-custodial, on-chain identity verification (KYC/KYB/KYA) for the AVALANCHE® network. By bridging real-world regulatory compliance with DeFi anonymity, we empower institutions, exchanges, and autonomous AI agents to operate seamlessly across the C-Chain and custom AVALANCHE® L1s without compromising user privacy.
 
@@ -121,7 +121,7 @@ Contract coverage includes roles and access control, pausability, the five tiers
 
 ## 🔍 Security & Engineering Rigor
 
-Before attempting to activate KUMPLY's L1 on Fuji, we audited `KumplyValidatorSetManager` against the real source of [ava-labs/icm-contracts](https://github.com/ava-labs/icm-contracts) — not just its documentation. We found that our port of `ValidatorMessages.computeConversionID` was missing the 4-byte length prefix the real P-Chain wire format requires: the hash it computed would never have matched the conversionID the network actually signs, so `initializeValidatorSet` would have reverted every time. The existing 27 tests didn't catch this because the Warp mock reimplemented the same error as the contract. Fixed, redeployed, and re-verified on Fuji ([`0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64`](https://testnet.snowtrace.io/address/0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64)), with a test that now exercises the real P-Chain format.
+Before attempting to activate KUMPLY's L1 on Fuji, we audited `KumplyValidatorSetManager` against the real source of [ava-labs/icm-contracts](https://github.com/ava-labs/icm-contracts) , not just its documentation. We found that our port of `ValidatorMessages.computeConversionID` was missing the 4-byte length prefix the real P-Chain wire format requires: the hash it computed would never have matched the conversionID the network actually signs, so `initializeValidatorSet` would have reverted every time. The existing 27 tests didn't catch this because the Warp mock reimplemented the same error as the contract. Fixed, redeployed, and re-verified on Fuji ([`0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64`](https://testnet.snowtrace.io/address/0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64)), with a test that now exercises the real P-Chain format.
 
 The same audit, over three passes, also verified and filed real gaps upstream in AVAXSKILLS (a community skills package for Avalanche), none of them KUMPLY's own bugs:
 
