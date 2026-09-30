@@ -505,7 +505,7 @@ export const DECK_HTML = `
       We would rather show you the gap than have you find it.</p>
     <p class="note"><strong>Update, September 24, 2026:</strong> the gap above just narrowed by a real data point, not
       a projection. A live KYA technical workshop with Team1 LatAm ended with <strong>13 on-chain attestations issued live
-      during the workshop</strong> (Fuji testnet, demo flow without identity verification) - the first genuine usage since the product was built, not seeded ahead of the
+      during the workshop</strong> (Fuji testnet, demo flow without identity verification) - the first use by people outside the team since the product was built, not seeded ahead of the
       event, not simulated. Each carries its own transaction hash, independently verifiable on
       <a href="https://kumply.xyz/dashboard">kumply.xyz/dashboard</a> or directly in the
       <a href="https://testnet.snowtrace.io/address/0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD#events">contract's
@@ -1028,8 +1028,8 @@ export const DECK_HTML_ES = `
       Preferimos mostrarte el hueco antes de que lo encuentres tú.</p>
     <p class="note"><strong>Actualización, 24 de septiembre de 2026:</strong> el hueco de arriba se acaba de reducir con
       un dato real, no una proyección. Un workshop técnico en vivo sobre KYA con Team1 LatAm cerró con
-      <strong>13 atestaciones on-chain emitidas en vivo durante el workshop</strong> (testnet Fuji, flujo de demo sin
-      verificación de identidad) - el primer uso genuino desde que se
+      <strong>13 attestations on-chain emitidas en vivo durante el workshop</strong> (testnet Fuji, flujo de demo sin
+      verificación de identidad) - el primer uso por personas fuera del equipo desde que se
       construyó el producto, no sembrado antes del evento, no simulado. Cada una tiene su propio hash de transacción,
       verificable de forma independiente en <a href="https://kumply.xyz/dashboard">kumply.xyz/dashboard</a> o
       directamente en el <a href="https://testnet.snowtrace.io/address/0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD#events">registro
@@ -1110,7 +1110,7 @@ export const DECK_HTML_ES = `
       Activos en la comunidad LatAm de Team1 - presentaron KUMPLY en una llamada semanal de Team1, y enviaron dos builds
       adicionales de Avalanche en un solo fin de semana (una app de boletos de museo con blockchain invisible y una demo de
       trazabilidad agrícola), compartidos con la comunidad. Corrieron un workshop técnico en vivo sobre KYA aprobado
-      por Team1 el 24 de septiembre de 2026 - 13 atestaciones on-chain emitidas en vivo durante el workshop (testnet Fuji, flujo de demo sin verificación de identidad;
+      por Team1 el 24 de septiembre de 2026 - 13 attestations on-chain emitidas en vivo durante el workshop (testnet Fuji, flujo de demo sin verificación de identidad;
       detalle en la diapositiva 9).
       <strong>Construir en Avalanche es lo que hacemos, con o sin grant.</strong>
     </p>
