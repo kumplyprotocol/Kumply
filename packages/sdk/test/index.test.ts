@@ -289,6 +289,60 @@ describe('@kumply/sdk', () => {
     });
   });
 
+  describe('tier categories (isPersonAtLeast / isBusiness / isAgent)', () => {
+    const subject = '0x2B39541935F547f0b6Ee9424C1e09d868239DbA7';
+
+    function clientWithTier(verified: boolean, tier: number) {
+      const client = new KumplyClient({
+        network: 'fuji',
+        contractAddress: DEPLOYMENTS.fuji.attestationStore,
+      });
+      const row = verified ? [true, tier, 1790311201n, 1821847195n] : [false, 0, 0n, 0n];
+      vi.spyOn(client.publicClient, 'readContract').mockResolvedValue(row as never);
+      return client;
+    }
+
+    it.each([
+      [1, 2, false], [2, 2, true], [3, 2, true], [4, 2, false], [5, 2, false],
+      [1, 1, true], [3, 3, true], [2, 3, false],
+    ])('isPersonAtLeast: tier %i at level %i -> %s', async (tier, level, expected) => {
+      await expect(clientWithTier(true, tier).isPersonAtLeast(subject, level)).resolves.toBe(expected);
+    });
+
+    it('isPersonAtLeast: unverified -> false', async () => {
+      await expect(clientWithTier(false, 0).isPersonAtLeast(subject, 1)).resolves.toBe(false);
+    });
+
+    it.each([0, 4, 5, 2.5, -1])('isPersonAtLeast rejects level %s', async (level) => {
+      await expect(clientWithTier(true, 2).isPersonAtLeast(subject, level)).rejects.toThrow('person level must be 1, 2 or 3');
+    });
+
+    it.each([[4, true], [5, false], [3, false], [1, false]])('isBusiness: tier %i -> %s', async (tier, expected) => {
+      await expect(clientWithTier(true, tier).isBusiness(subject)).resolves.toBe(expected);
+    });
+
+    it.each([[5, true], [4, false], [3, false]])('isAgent: tier %i -> %s', async (tier, expected) => {
+      await expect(clientWithTier(true, tier).isAgent(subject)).resolves.toBe(expected);
+    });
+
+    it('isBusiness / isAgent: unverified -> false', async () => {
+      const c = clientWithTier(false, 0);
+      await expect(c.isBusiness(subject)).resolves.toBe(false);
+      await expect(c.isAgent(subject)).resolves.toBe(false);
+    });
+
+    it('deprecated hasTier keeps the ladder behavior (a Tier 5 agent passes TIER.KYB)', async () => {
+      await expect(clientWithTier(true, 5).hasTier(subject, TIER.KYB)).resolves.toBe(true);
+    });
+
+    it('new methods reject a malformed address', async () => {
+      const c = clientWithTier(true, 4);
+      await expect(c.isPersonAtLeast('0x1234', 1)).rejects.toThrow('@kumply/sdk');
+      await expect(c.isBusiness('0x1234')).rejects.toThrow('@kumply/sdk');
+      await expect(c.isAgent('0x1234')).rejects.toThrow('@kumply/sdk');
+    });
+  });
+
   describe('getAttestation() expiry handling', () => {
     const subject = '0x2B39541935F547f0b6Ee9424C1e09d868239DbA7';
     const verifier = '0xD65042534CE80fcb641fd6Eb99a16eBF6C0cd076';

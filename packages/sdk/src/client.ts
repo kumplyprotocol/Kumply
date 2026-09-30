@@ -8,7 +8,7 @@ import type {
   KumplyNetwork,
 } from "./types";
 import { ATTESTATION_STORE_ABI } from "./contracts";
-import { FUJI_CONFIG, MAINNET_CONFIG, KUMPLY_L1_CONFIG, TIER_DEFINITIONS } from "./constants";
+import { FUJI_CONFIG, MAINNET_CONFIG, KUMPLY_L1_CONFIG, TIER_DEFINITIONS, TIER } from "./constants";
 
 /**
  * Viem chain definition for the KUMPLY Compliance L1 (Deploy-Ready).
@@ -188,20 +188,62 @@ export class KumplyClient {
   }
 
   /**
-   * Check if an address holds a valid attestation at or above the given tier.
+   * Check if an address holds a valid attestation at or above the given tier number.
    * @param address - The wallet address to check
-   * @param tier - Minimum tier required (use the {@link TIER} constants)
+   * @param tier - Minimum tier number
    * @returns True if verified and tier >= the requested tier
    *
-   * @example
-   * ```typescript
-   * import { TIER } from "@kumply/sdk";
-   * const isBusiness = await client.hasTier("0x...", TIER.KYB);
-   * ```
+   * @deprecated Compares tiers as a single ladder, so a Tier 5 agent passes
+   * `hasTier(address, TIER.KYB)` and a Tier 4 business passes a Tier 2 person check.
+   * Tiers 1-3 are a ladder for people; Tier 4 (business, KYB) and Tier 5 (agent, KYA)
+   * are separate categories. Use {@link isPersonAtLeast}, {@link isBusiness} or
+   * {@link isAgent} instead. Behavior is unchanged for backward compatibility.
    */
   async hasTier(address: string, tier: number): Promise<boolean> {
     const result = await this.verify(address);
     return result.verified && result.tier >= tier;
+  }
+
+  /**
+   * Check if an address is a verified person at or above a KYC level.
+   * Tiers 1-3 form a ladder for people (Basic < Standard < Enhanced). Businesses
+   * (Tier 4) and agents (Tier 5) are separate categories and never satisfy this check.
+   * @param address - The wallet address to check
+   * @param level - Minimum person level: 1 (Basic), 2 (Standard) or 3 (Enhanced)
+   * @returns True if verified with a tier between `level` and 3
+   *
+   * @example
+   * ```typescript
+   * import { TIER } from "@kumply/sdk";
+   * const canDeposit = await client.isPersonAtLeast("0x...", TIER.STANDARD); // Tier 2 or 3
+   * ```
+   */
+  async isPersonAtLeast(address: string, level: number): Promise<boolean> {
+    if (!Number.isInteger(level) || level < TIER.BASIC || level > TIER.ENHANCED) {
+      throw new Error(
+        `@kumply/sdk: person level must be 1, 2 or 3 (got ${level}). Use isBusiness() for Tier 4 and isAgent() for Tier 5.`
+      );
+    }
+    const result = await this.verify(address);
+    return result.verified && result.tier >= level && result.tier <= TIER.ENHANCED;
+  }
+
+  /**
+   * Check if an address is a verified business (exactly Tier 4, KYB).
+   * @param address - The wallet address to check
+   */
+  async isBusiness(address: string): Promise<boolean> {
+    const result = await this.verify(address);
+    return result.verified && result.tier === TIER.KYB;
+  }
+
+  /**
+   * Check if an address is a verified agent (exactly Tier 5, KYA).
+   * @param address - The wallet address to check
+   */
+  async isAgent(address: string): Promise<boolean> {
+    const result = await this.verify(address);
+    return result.verified && result.tier === TIER.KYA;
   }
 
   /**

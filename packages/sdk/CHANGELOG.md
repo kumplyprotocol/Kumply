@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.3.0
+
+### Added
+- `isPersonAtLeast(address, level)`: a verified person whose tier is between `level` and 3 (`level` is 1, 2 or 3). Tier 4 and 5 never pass. Throws for any other `level`.
+- `isBusiness(address)`: exactly Tier 4 (KYB).
+- `isAgent(address)`: exactly Tier 5 (KYA).
+
+### Deprecated
+- `hasTier(address, tier)`. It compares tiers as one ladder, so a Tier 5 agent passes `hasTier(x, TIER.KYB)`. Its behavior is unchanged; use the three methods above.
+
+### Docs
+- Tier rule: 1-3 are a ladder for people; 4 (business) and 5 (agent) are separate categories. Never gate with a bare `tier >= X`.
+- The Solidity example uses `onlyPersonAtLeast` / `onlyBusiness` / `onlyAgent` instead of `tier >= requiredTier`.
+- The deployed `ComplianceGate` contracts (Fuji and Mainnet C-Chain, `requiredTier = 2`) still use the ladder.
+
 ## 1.2.0
 
 ### Changed
