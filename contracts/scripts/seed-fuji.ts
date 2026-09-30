@@ -6,8 +6,11 @@ dotenv.config({ path: "../.env" });
 // tier distribution and a populated attestations table. Testnet-only fixtures —
 // subjects never sign, so any valid address works. NEVER run this on mainnet.
 //
-// 0xD650… stays at Tier 4 (KYB): kumply.xyz/demo depends on it passing the
-// Tier 2/Tier 4 use cases and being rejected by the Tier 5 (KYA) one.
+// kumply.xyz/demo depends on two of these fixtures:
+//  - 0x1F98… at Tier 2 (person): passes the Tier 2 person use case.
+//  - 0xD650… at Tier 4 (KYB): passes the Tier 4 business use case and is rejected
+//    by the Tier 2 person one and the Tier 5 (KYA) one. Tiers 1-3 are a ladder for
+//    people; 4 (business) and 5 (agent) are separate categories.
 const DEMO_ATTESTATIONS = [
   { address: "0xD65042534CE80fcb641fd6Eb99a16eBF6C0cd076", tier: 4, label: "Demo KYB Business" },
   { address: "0x1F98431c8aD98523631AE4a59f267346ea31F984", tier: 2, label: "Standard KYC — retail trader" },

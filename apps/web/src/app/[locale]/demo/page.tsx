@@ -35,45 +35,64 @@ interface CheckResult {
   accessGranted: boolean;
 }
 
-// Seeded verified example address per network.
-//  - Fuji: seeded by seed-fuji.ts at Tier 4 (KYB)
-//  - Mainnet: the KUMPLY verifier wallet, issued Tier 4 manually in beta
+// Seeded example addresses (Fuji fixtures from seed-fuji.ts; subjects never sign).
+//  - Tier 2 person: 0x1F98... ("Standard KYC - retail trader")
+//  - Tier 4 business: 0xD650... ("Demo KYB Business")
+// Mainnet: 0x55a3... is the KUMPLY verifier wallet. Mainnet has no attestations yet
+// (read-only beta), so every mainnet check is expected to show "no credential".
+const DEMO_PERSON_WALLET_FUJI = "0x1F98431c8aD98523631AE4a59f267346ea31F984";
 const DEMO_VERIFIED_WALLET_FUJI = "0xD65042534CE80fcb641fd6Eb99a16eBF6C0cd076";
 const DEMO_VERIFIED_WALLET_MAINNET = "0x55a3D0a6bF61bFcE5b2526cd6e089545007aFE8D";
 const DEAD_WALLET = "0x000000000000000000000000000000000000dead";
+
+// Tiers 1-3 are a ladder for people; 4 (business) and 5 (agent) are separate
+// categories. A business never satisfies a person requirement, and vice versa.
+function meetsRequirement(tier: number, requiredTier: number): boolean {
+  if (requiredTier <= 3) return tier >= requiredTier && tier <= 3;
+  return tier === requiredTier;
+}
+
+function denialReason(tier: number, requiredTier: number): string {
+  if (requiredTier <= 3) {
+    return tier >= 4
+      ? `Has Tier ${tier} (${TIER_LABELS[tier]}), but this protocol requires a person with Tier ${requiredTier} (${TIER_LABELS[requiredTier]}) or higher. Businesses and agents are separate categories, not higher person levels.`
+      : `Has Tier ${tier}, but this protocol requires a person with Tier ${requiredTier} (${TIER_LABELS[requiredTier]}) or higher.`;
+  }
+  return `Has Tier ${tier} (${TIER_LABELS[tier]}), but this protocol requires exactly Tier ${requiredTier} (${TIER_LABELS[requiredTier]}).`;
+}
 
 const USE_CASES = [
   {
     id: "defi",
     icon: "📈",
     title: "DeFi Protocol Access",
-    description: "A lending protocol requires Tier 2 (Standard KYC) to deposit funds. The seeded demo wallet holds a real on-chain credential; the second wallet has none.",
+    description: "A lending protocol requires a person with Tier 2 (Standard KYC) or higher to deposit funds. The first wallet is a seeded Tier 2 person; the second is a seeded Tier 4 business, which is a different category and gets rejected.",
     requiredTier: 2,
-    walletA: DEMO_VERIFIED_WALLET_FUJI,
-    walletB: DEAD_WALLET,
-    walletALabel: "Demo wallet — seeded credential",
-    walletBLabel: "Unverified wallet",
+    walletA: DEMO_PERSON_WALLET_FUJI,
+    walletB: DEMO_VERIFIED_WALLET_FUJI,
+    walletALabel: "Person wallet (Tier 2)",
+    walletBLabel: "Business wallet (Tier 4)",
   },
   {
     id: "rwa",
     icon: "🏢",
     title: "RWA Tokenized Asset",
-    description: "A tokenized real estate fund requires Tier 4 (Business / KYB). Only corporate entities may invest.",
+    description: "A tokenized real estate fund requires exactly Tier 4 (Business / KYB). Only corporate entities may invest.",
     requiredTier: 4,
     walletA: DEMO_VERIFIED_WALLET_FUJI,
     walletB: DEAD_WALLET,
-    walletALabel: "Demo wallet — seeded credential",
+    walletALabel: "Business wallet (Tier 4)",
     walletBLabel: "Unverified wallet",
   },
   {
     id: "agent",
     icon: "🤖",
     title: "AI Agent Marketplace",
-    description: "An on-chain AI marketplace requires Tier 5 (KYA) to list autonomous agents for trading. The demo wallet is a business (Tier 4), not a registered agent — watch it get rejected.",
+    description: "An on-chain AI marketplace requires exactly Tier 5 (KYA) to list autonomous agents. The demo wallet is a business (Tier 4), not a registered agent, so it gets rejected.",
     requiredTier: 5,
     walletA: DEMO_VERIFIED_WALLET_FUJI,
     walletB: DEAD_WALLET,
-    walletALabel: "Demo wallet — seeded credential",
+    walletALabel: "Business wallet (Tier 4)",
     walletBLabel: "Unverified wallet",
   },
 ];
@@ -116,7 +135,7 @@ export default function DemoPage() {
               tier: result.tier,
               expiry: result.expiry,
               requiredTier,
-              accessGranted: result.verified && result.tier >= requiredTier,
+              accessGranted: result.verified && meetsRequirement(result.tier, requiredTier),
             };
           } catch {
             return { address: addr, verified: false, tier: 0, expiry: 0, requiredTier, accessGranted: false };
@@ -132,9 +151,11 @@ export default function DemoPage() {
   }
 
   function handleUseCaseDemo() {
-    // walletA is network-aware: use the verified example for the active network
+    // On mainnet there are no seeded fixtures, so both slots use the verifier wallet / dead wallet.
+    const walletA = network === "mainnet" ? verifiedExample : selectedUseCase.walletA;
+    const walletB = network === "mainnet" ? DEAD_WALLET : selectedUseCase.walletB;
     runCheck(
-      [verifiedExample, selectedUseCase.walletB],
+      [walletA, walletB],
       selectedUseCase.requiredTier,
       [selectedUseCase.walletALabel, selectedUseCase.walletBLabel]
     );
@@ -327,7 +348,7 @@ export default function DemoPage() {
 
                 {!r.accessGranted && r.verified && (
                   <p style={{ marginTop: "0.75rem", fontSize: "0.8rem", color: "var(--text-tertiary)" }}>
-                    Has Tier {r.tier}, but this protocol requires Tier {r.requiredTier} ({TIER_LABELS[r.requiredTier]}).{" "}
+                    {denialReason(r.tier, r.requiredTier)}{" "}
                     <Link href="/verify" style={{ color: "var(--accent-light)" }}>Upgrade verification →</Link>
                   </p>
                 )}
@@ -438,26 +459,31 @@ interface IAttestationStore {
 
 contract MyProtocol {
     IAttestationStore public immutable kumply;
-    uint32 public immutable requiredTier;
 
-    constructor(address _kumply, uint32 _requiredTier) {
+    constructor(address _kumply) {
         kumply = IAttestationStore(_kumply);
-        requiredTier = _requiredTier;
     }
 
-    modifier onlyCompliant() {
-        (bool verified, uint32 tier, , uint64 expiry) =
-            kumply.verify(msg.sender);
-        require(
-            verified && tier >= requiredTier && expiry > block.timestamp,
-            "KUMPLY: insufficient compliance tier"
-        );
+    // verify() already returns verified == false once expired or revoked.
+    // Tiers 1-3: a ladder for people. 4: business (KYB). 5: agent (KYA).
+    modifier onlyPersonAtLeast(uint32 level) {
+        (bool verified, uint32 tier, , ) = kumply.verify(msg.sender);
+        require(verified && tier >= level && tier <= 3, "KUMPLY: person KYC required");
         _;
     }
 
-    // Add onlyCompliant to any function you want to gate
-    function deposit(uint256 amount) external onlyCompliant {
-        // only verified users reach here
+    modifier onlyBusiness() {
+        (bool verified, uint32 tier, , ) = kumply.verify(msg.sender);
+        require(verified && tier == 4, "KUMPLY: business KYB required");
+        _;
+    }
+
+    function deposit(uint256 amount) external onlyPersonAtLeast(2) {
+        // only people with Standard or Enhanced KYC reach here
+    }
+
+    function investRwa(uint256 amount) external onlyBusiness {
+        // only KYB-verified businesses reach here
     }
 }`}
         </pre>
