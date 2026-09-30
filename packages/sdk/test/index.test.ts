@@ -8,6 +8,7 @@ import {
   TIER_DEFINITIONS,
   TIER,
   DEPLOYMENTS,
+  KUMPLY_L1_CONFIG,
 } from '../src/index';
 import type {
   AttestationResult,
@@ -172,6 +173,28 @@ describe('@kumply/sdk', () => {
         contractAddress: '0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD',
       });
       expect(client).toBeInstanceOf(KumplyClient);
+    });
+
+    it('should throw a clear error for kumply-l1 while the L1 is not active', () => {
+      expect(() => new KumplyClient({
+        network: 'kumply-l1',
+        contractAddress: DEPLOYMENTS.fuji.attestationStore,
+      })).toThrowError('network "kumply-l1" is not active yet');
+    });
+
+    it('should allow kumply-l1 with an explicit rpcUrl (own node / local devnet)', () => {
+      const client = new KumplyClient({
+        network: 'kumply-l1',
+        contractAddress: DEPLOYMENTS.fuji.attestationStore,
+        rpcUrl: 'http://127.0.0.1:9650/ext/bc/kumply/rpc',
+      });
+      expect(client.network).toBe('kumply-l1');
+      expect(client.chainId).toBe(43210);
+    });
+
+    it('should mark KUMPLY_L1_CONFIG as not live', () => {
+      expect(KUMPLY_L1_CONFIG.live).toBe(false);
+      expect(KUMPLY_L1_CONFIG.chainId).toBe(43210);
     });
 
     it('should create an instance with mainnet network', () => {

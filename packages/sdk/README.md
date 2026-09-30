@@ -61,7 +61,7 @@ Sumsub KYC flow issues attestations on Fuji.
 
 | Option            | Type     | Required | Description                                              |
 |-------------------|----------|----------|----------------------------------------------------------|
-| `network`         | `string` | Yes      | `"fuji"`, `"mainnet"`, or `"kumply-l1"`                  |
+| `network`         | `string` | Yes      | `"fuji"` or `"mainnet"`. `"kumply-l1"` exists but is not usable yet (see Networks) |
 | `contractAddress` | `string` | Yes      | `AttestationStore` address — use `DEPLOYMENTS.<network>` |
 | `rpcUrl`          | `string` | No       | Custom RPC URL (defaults to public Fuji/mainnet)         |
 
@@ -83,6 +83,8 @@ const { verified, tier, timestamp, expiry } = await client.verify("0x...");
 ```
 
 **Smart accounts (ERC-4337).** Attestations are issued to, and looked up by, the exact address that signs or is sponsored. For a smart account (for example behind a paymaster) that is the smart account's own address, not its owner EOA. Verify the same address you attested.
+
+**Paymasters: don't call `verify()` inside `validatePaymasterUserOp`.** ERC-7562 (rule OP-011) blocks the `TIMESTAMP` opcode during UserOperation validation, and `verify()` reads `block.timestamp`, so bundlers that enforce ERC-7562 will reject the UserOperation. During validation, read the raw `attestations(sender)` record instead and return its `expiry` as `validUntil`; the EntryPoint then does the time check. Outside validation (`postOp`, your own contracts, or an off-chain sponsorship service), `verify()` is fine. Tested example and details: [kumply.xyz/developers#paymasters](https://kumply.xyz/developers#paymasters).
 
 #### `getAttestation(address: string): Promise<Attestation | null>`
 
@@ -154,9 +156,11 @@ import {
 |--------------------------|---------------|----------|-------------------------------------|------------------------------|
 | Avalanche C-Chain        | `mainnet`     | 43114    | **Live** (read-only beta, fee $0)   | https://snowtrace.io         |
 | Avalanche Fuji           | `fuji`        | 43113    | **Live** (full suite + automated KYC) | https://testnet.snowtrace.io |
-| KUMPLY Compliance L1     | `kumply-l1`   | 43210    | Registered on Fuji · validator activation pending | https://testnet.avascan.info |
+| KUMPLY Compliance L1     | `kumply-l1`   | 43210    | **Not active.** Chain registered on Fuji; not converted to an L1, no validators, public RPC not serving | https://testnet.avascan.info |
 
-The **KUMPLY Compliance L1** is a custom Avalanche L1 (ACP-77 + ACP-99) where only KYB-verified institutions can validate. The chain is registered on the Fuji P-Chain with its genesis committed; the ACP-99 `KumplyValidatorSetManager` is deployed and verified. See [kumply.xyz/l1](https://kumply.xyz/l1) for live status and [`contracts/l1/`](https://github.com/kumplyprotocol/Kumply/tree/main/contracts/l1) for the architecture.
+The **KUMPLY Compliance L1** is a planned custom Avalanche L1 (ACP-77 + ACP-99) whose validator manager gates registration on a KUMPLY attestation: today the deployed `KumplyValidatorSetManager` accepts Tier 4 (KYB) or higher, and a fix that restricts it to exactly Tier 4 is already in the code and ships with the manager's redeploy before the L1 is activated. The chain is registered on the Fuji P-Chain with its genesis committed, and the manager is deployed and verified on Fuji C-Chain, but it is not initialized and the L1 has no validators yet.
+
+> **Don't use `network: "kumply-l1"` until activation.** Its public RPC does not serve requests yet (it answers HTTP 405). Constructing a client with `network: "kumply-l1"` throws a clear error unless you pass your own `rpcUrl` (for example a local devnet). `KUMPLY_L1_CONFIG.live` is `false` until activation. See [kumply.xyz/l1](https://kumply.xyz/l1) for live status and [`contracts/l1/`](https://github.com/kumplyprotocol/Kumply/tree/main/contracts/l1) for the architecture.
 
 ## Using ABIs directly with viem
 

@@ -59,6 +59,11 @@ export class KumplyClient {
       this.chain = avalanche;
       this.network = "mainnet";
     } else if (options.network === "kumply-l1") {
+      if (!KUMPLY_L1_CONFIG.live && !options.rpcUrl) {
+        throw new Error(
+          '@kumply/sdk: network "kumply-l1" is not active yet (the L1 has not been converted and its public RPC does not serve requests). Use "fuji" or "mainnet", or pass rpcUrl to point at your own node.'
+        );
+      }
       config = KUMPLY_L1_CONFIG;
       this.chain = kumplyL1Chain;
       this.network = "kumply-l1";
