@@ -153,7 +153,23 @@
     "apiTitle": "REST API — kumply-api.fly.dev",
     "apiDesc": "Live endpoint · attestation lookup · fee query",
     "solidityTitle": "Solidity Integration",
-    "soliditySubtitle": "Block non-compliant users at the smart contract level — one line of code"
+    "soliditySubtitle": "Block non-compliant users at the smart contract level — one line of code",
+    "paymasterTitle": "Smart Accounts and Paymasters (ERC-4337)",
+    "paymasterSubtitle": "Gating gas sponsorship or smart-account actions on a KUMPLY attestation, from another contract.",
+    "pmFreeTitle": "verify() is free by design",
+    "pmFreeDesc": "verify() is a view function with no fee logic, and the deployed AttestationStore is not upgradeable, so reading it never charges, whoever calls it and whether or not the caller is subscribed. The per-call fee (verificationFee, currently 0) and subscribedCallers only apply to checkCompliance() and to ComplianceGate.",
+    "pmSemanticsTitle": "What verify() returns",
+    "pmSemanticsDesc": "(verified, tier, timestamp, expiry). timestamp is the issuance time and expiry the expiration time, both in UNIX seconds. verified is false if the attestation expired, was revoked, or was never issued, and then every other field is 0, so you never compare expiry yourself. It keeps working while the contract is paused.",
+    "pmAddressTitle": "Attest and check the smart account address",
+    "pmAddressDesc": "Attestations are keyed by the exact address that signs or is sponsored. For a smart account that is userOp.sender, the account contract itself, not the EOA that owns it. Checking the owner EOA when only the smart account was attested (or the other way round) returns not verified.",
+    "pmValidationTitle": "Inside validatePaymasterUserOp: don't call verify()",
+    "pmValidationDesc": "ERC-7562 (rule OP-011) blocks the TIMESTAMP opcode during UserOperation validation for every entity, staked or not, and verify() reads block.timestamp, so bundlers that enforce ERC-7562 will reject it. Read the raw attestations(sender) record instead and return its expiry as validUntil: the EntryPoint enforces the time check for you. The record sits in a mapping keyed by the sender, which ERC-7562 treats as storage associated with the account (STO-021). Outside validation (postOp, your own contracts, off-chain), verify() is fine.",
+    "pmOverwriteTitle": "Re-issuing overwrites",
+    "pmOverwriteDesc": "issueAttestation() on an address that already has a record replaces it (tier, timestamp and expiry) without an error. Read the current record; don't assume the first one you saw still holds.",
+    "pmCounterTitle": "totalAttestations() counts issuances",
+    "pmCounterDesc": "It is a historical counter of every issuance, including re-issues. It does not go down on revocation or expiry, so it is not the number of currently valid attestations.",
+    "pmSnippetTitle": "Example: validation helper without TIMESTAMP",
+    "pmSnippetNote": "Example code, not audited. It compiles and is tested in the KUMPLY repo (contracts/examples/KumplyPaymasterCheck.sol), including a trace check that it never executes TIMESTAMP. Adapt minTier and the rest of your paymaster logic to your own policy."
   },
   "Network": {
     "title": "Fuji Testnet",
@@ -428,7 +444,7 @@
     },
     "quickstart": {
       "title": "Quickstart",
-      "subtitle": "Install the SDK and verify any address’s tier in under a minute. Production-ready against Mainnet C-Chain today.",
+      "subtitle": "Install the SDK and verify any address’s tier in under a minute. Deployed on Mainnet C-Chain as a read-only beta; attestations are issued on Fuji today.",
       "installTitle": "1. Install",
       "verifyTitle": "2. Verify a counterparty",
       "gateTitle": "3. Gate your DApp by tier"
