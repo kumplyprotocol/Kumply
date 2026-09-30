@@ -194,10 +194,10 @@
     "kyc": {
       "title": "KYC — Verificar Personas",
       "subtitle": "Verificación de identidad que protege la privacidad del usuario mientras te mantiene en regla",
-      "p1": "Tus usuarios prueban quiénes son sin entregarte documentos sensibles. KUMPLY realiza la verificación a través de un proveedor certificado (Sumsub) y luego crea una credencial privada y cifrada en la blockchain que solo las partes autorizadas pueden leer.",
-      "p2": "¿El resultado? Tus usuarios están verificados. Tu plataforma cumple con la regulación. Y tú nunca tocas, almacenas ni eres responsable de datos personales. La credencial vive como un token cifrado que no se puede transferir ni falsificar.",
+      "p1": "Tus usuarios prueban quiénes son sin entregarte documentos sensibles. KUMPLY realiza la verificación a través de un proveedor certificado (Sumsub) y luego escribe una atestación on-chain: la dirección de la wallet, su tier y una fecha de vencimiento. Ningún dato personal va a la cadena, y la atestación en sí es pública.",
+      "p2": "¿El resultado? Tus usuarios están verificados, y tú nunca tocas ni almacenas sus documentos. La atestación está ligada a la dirección de la wallet y solo el verificador de KUMPLY puede escribirla o revocarla; no es un token y no se puede transferir.",
       "f1Title": "Tú Nunca Ves los Datos",
-      "f1Desc": "Todos los documentos personales son procesados por nuestro socio de KYC certificado. KUMPLY solo almacena una prueba cifrada — no los datos reales.",
+      "f1Desc": "Todos los documentos personales son procesados por nuestro socio de KYC certificado. On-chain, KUMPLY solo registra la dirección, el tier y el vencimiento, no los documentos ni datos personales.",
       "f2Title": "Una Persona, Una Credencial",
       "f2Desc": "Cada persona verificada obtiene exactamente una credencial. Sin cuentas duplicadas. Sin agentes automatizados haciéndose pasar por personas.",
       "f3Title": "190+ Países Soportados",
@@ -272,7 +272,7 @@
       "title": "Política de Privacidad",
       "subtitle": "Cómo manejamos tus datos (versión corta: no los guardamos)",
       "p1": "KUMPLY está diseñado para alinearse con la ley de protección de datos de México (LFPDPPP) y los principios del GDPR. Una opinión legal formal está planeada antes de activar cualquier comisión en mainnet. Pero aquí va la versión simple: somos una herramienta de software. Procesamos tu verificación a través de un socio certificado, registramos una atestación on-chain (dirección, tier y vencimiento, sin datos personales), y listo. No guardamos tus documentos.",
-      "p2": "Tus datos personales los maneja Sumsub (nuestro proveedor de KYC certificado SOC 2 Type II). KUMPLY solo recibe un resultado aprobado/rechazado y escribe una credencial cifrada en la blockchain. Sin nombres, sin fotos, sin direcciones en nuestros servidores. Nunca.",
+      "p2": "Tus datos personales los maneja Sumsub (nuestro proveedor de KYC certificado SOC 2 Type II). KUMPLY solo recibe un resultado aprobado/rechazado y escribe una atestación pública (dirección, tier, vencimiento) en la blockchain. Sin nombres, sin fotos, sin direcciones en nuestros servidores. Nunca.",
       "f1Title": "Cero Datos Almacenados",
       "f1Desc": "Literalmente no tenemos tus datos personales. Los procesa nuestro socio certificado y nunca tocan nuestros servidores.",
       "f2Title": "Tú Controlas Todo",
@@ -307,12 +307,12 @@
     "audit": {
       "title": "Auditoría de Seguridad",
       "subtitle": "Tomamos la seguridad tan en serio como el compliance — porque son lo mismo",
-      "p1": "Cuando manejas credenciales de identidad, la seguridad no es opcional — es el producto. Por eso estamos realizando auditorías integrales de cada componente: contratos inteligentes, lógica de cifrado y mensajería entre cadenas.",
-      "p2": "Nuestros contratos inteligentes son de código abierto y están completamente probados. Estamos corriendo hardening de seguridad liderado por el propio equipo — análisis estático, fuzz testing, un reporte de threat-model publicado — con auditorías formales de terceros planeadas como siguiente paso. Todos los resultados serán publicados aquí — transparencia total, sin excepciones.",
+      "p1": "Cuando manejas credenciales de identidad, la seguridad no es opcional. Es el producto. Por eso planeamos auditorías de cada componente a medida que se construye: primero los contratos inteligentes, y después las capas de cifrado y mensajería entre cadenas cuando existan.",
+      "p2": "Nuestros contratos inteligentes son open-source y se prueban en CI en cada push. El hardening de seguridad por el propio equipo (análisis estático, fuzz testing, un reporte de threat model publicado) está planeado como nuestro siguiente milestone, y después auditorías formales de terceros. Todos los resultados se publicarán aquí.",
       "f1Title": "Auditoría de Smart Contracts",
-      "f1Desc": "Verificación formal y revisión manual del código de toda la lógica on-chain. Estado: En proceso.",
+      "f1Desc": "Planeado: revisión formal de terceros de toda la lógica on-chain. Hoy: revisión de código del equipo y tests automatizados en CI.",
       "f2Title": "Revisión de Cifrado",
-      "f2Desc": "Análisis independiente de nuestros circuitos de pruebas de conocimiento cero y la implementación de cifrado eERC (Encrypted ERC).",
+      "f2Desc": "Planeado (Fase 2): revisión de la capa de cifrado cuando exista el soporte de eERC (Encrypted ERC). Hoy no existen circuitos de conocimiento cero.",
       "f3Title": "Programa de Bug Bounty",
       "f3Desc": "Después de la auditoría, lanzaremos un programa público de recompensas en Immunefi. Si encuentras una vulnerabilidad, te pagamos."
     }
@@ -535,7 +535,7 @@
       "subtitle": "Diagramas completos del sistema (Mermaid, renderizados en GitHub) más deep dives del ciclo de vida ACP-99 de dos fases sobre Warp.",
       "linkA": "Diagramas de arquitectura completos en el repo",
       "linkB": "Ciclo de validador en dos fases: initiate → ack de P-Chain → complete (en 23h).",
-      "linkC": "Validator set self-healing: cualquiera puede purgar un validador cuyo KYB expiró.",
+      "linkC": "Purga de validadores permissionless: cualquiera puede llamar a disableExpiredValidator() cuando la attestation KYB de un validador expira o se revoca. No es automática: alguien tiene que hacer la llamada.",
       "linkD": "La propagación cross-L1 de atestaciones vía ICM está planeada, todavía no implementada (espejo AttestationStoreL1 en la L1)."
     },
     "resources": {
