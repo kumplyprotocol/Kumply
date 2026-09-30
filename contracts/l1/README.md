@@ -4,6 +4,8 @@ This folder contains everything needed to spin up the **KUMPLY Compliance L1** o
 
 > **Status:** Deploy-Ready · Not Yet Live · Institutional validator slots open (KYB-gated)
 
+> **Deployed Fuji manager predates the KYB-gating fix.** `KumplyValidatorSetManager` at [`0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64`](https://testnet.snowtrace.io/address/0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64) (uninitialized, 0 validators) was deployed from the earlier code. That code accepts any attestation of Tier 4 or higher, can't purge a still-valid downgrade below Tier 4, and doesn't re-check KYB on weight updates. The current source here requires exactly Tier 4 and fixes all three. The fix ships with the manager's redeploy before the L1 is activated; `attestationStore` is immutable, so there is no in-place upgrade.
+
 ---
 
 ## Files
@@ -55,8 +57,8 @@ pnpm hardhat run scripts/deploy-validator-manager.ts --network fuji
 # 3) Subscribe the manager to the P-Chain via Warp
 # (handled automatically by Avalanche CLI when validators register)
 
-# 4) Have institutional validators register via initializeValidatorRegistration()
-#    Each validator MUST hold a Tier-4 (KYB) attestation in AttestationStore
+# 4) Have institutional validators register via initiateValidatorRegistration()
+#    Each validator MUST hold a valid Tier-4 (KYB) attestation in AttestationStore
 ```
 
 ---
