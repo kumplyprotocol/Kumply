@@ -86,7 +86,7 @@ export default function DevelopersPage() {
           <span className="comment">// timestamp = issued at, expiry = expires at (UNIX seconds)</span><br/><br/>
 
           <span className="keyword">if</span> (!result.verified) {'{'}<br/>
-          &nbsp;&nbsp;<span className="comment">// Never issued, revoked, or expired — tier is 0</span><br/>
+          &nbsp;&nbsp;<span className="comment">// Never issued, revoked, or expired: tier is 0</span><br/>
           {'}'} <span className="keyword">else if</span> (result.tier === <span className="number">5</span>) {'{'}<br/>
           &nbsp;&nbsp;<span className="comment">// KYA verified agent — allow AI execution</span><br/>
           {'}'} <span className="keyword">else if</span> (result.tier === <span className="number">4</span>) {'{'}<br/>

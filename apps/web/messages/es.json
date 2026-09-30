@@ -157,7 +157,7 @@
     "paymasterTitle": "Smart Accounts y Paymasters (ERC-4337)",
     "paymasterSubtitle": "Condicionar el patrocinio de gas o acciones de una smart account a una attestation de KUMPLY, desde otro contrato.",
     "pmFreeTitle": "verify() es gratis por diseño",
-    "pmFreeDesc": "verify() es una función view sin lógica de cobro, y el AttestationStore desplegado no es actualizable, así que leerlo nunca cobra, sin importar quién llame ni si el caller está suscrito. La tarifa por llamada (verificationFee, hoy en 0) y subscribedCallers solo aplican a checkCompliance() y a ComplianceGate.",
+    "pmFreeDesc": "verify() es una función view sin lógica de cobro, y el AttestationStore desplegado no es actualizable, así que nunca cobra tarifa, sin importar quién llame ni si el caller está suscrito (solo se paga el gas normal cuando se llama dentro de una transacción). La tarifa por llamada (verificationFee, hoy en 0) y subscribedCallers solo aplican a checkCompliance() y a ComplianceGate.",
     "pmSemanticsTitle": "Qué regresa verify()",
     "pmSemanticsDesc": "(verified, tier, timestamp, expiry). timestamp es la fecha de emisión y expiry la de vencimiento, ambas en segundos UNIX. verified es false si la attestation venció, fue revocada o nunca se emitió, y en ese caso todos los demás campos valen 0, así que nunca tienes que comparar expiry tú mismo. Sigue funcionando con el contrato pausado.",
     "pmAddressTitle": "Atesta y consulta la dirección de la smart account",
