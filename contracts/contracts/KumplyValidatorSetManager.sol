@@ -37,7 +37,9 @@ contract KumplyValidatorSetManager is
     //  Compliance Constants
     // ──────────────────────────────────────────────────────────────────
 
-    /// @notice Minimum AttestationStore tier required to operate a validator (4 = KYB).
+    /// @notice Exact AttestationStore tier required to operate a validator (4 = KYB).
+    /// @dev    Tiers are categories, not a ladder: Tier 5 (KYA, agents) is not KYB and is
+    ///         rejected here, as is anything below 4.
     uint32 public constant REQUIRED_VALIDATOR_TIER = 4;
 
     /// @notice Maximum number of validator-set events (add/remove/weight) per `CHURN_PERIOD`.
@@ -83,7 +85,8 @@ contract KumplyValidatorSetManager is
     /// @notice Reverse: validationID → owner. (Owner is the KYB-attested EVM address.)
     mapping(bytes32 => address) public ownerByValidationID;
 
-    /// @notice Cached attestation expiry, used by `disableExpiredValidator`.
+    /// @notice Owner's attestation expiry as cached at registration, for off-chain monitoring.
+    ///         `disableExpiredValidator` does not rely on it; it re-reads the live attestation.
     mapping(bytes32 => uint64) public attestationExpiryByValidationID;
 
     /// @notice Cumulative weight of all validators in PendingAdded ∪ Active ∪ PendingRemoved.
@@ -106,6 +109,7 @@ contract KumplyValidatorSetManager is
     error InvalidSubnetID();
     error ValidatorNotKYBVerified();
     error InsufficientValidatorTier(uint32 actual, uint32 required);
+    error ValidatorTierNotAllowed(uint32 actual, uint32 required);
     error InvalidNodeID();
     error InvalidBlsPublicKey();
     error InvalidWeight();
@@ -376,12 +380,13 @@ contract KumplyValidatorSetManager is
         _initiateValidatorRemoval(validationID);
     }
 
-    /// @notice Permissionless purge of a validator whose KYB attestation has expired/revoked.
+    /// @notice Permissionless purge of a validator whose owner no longer qualifies: the
+    ///         attestation expired, was revoked, or was re-issued at a tier other than 4 (KYB).
+    /// @param  validationID The validator to purge.
     function disableExpiredValidator(bytes32 validationID) external nonReentrant {
         address owner = ownerByValidationID[validationID];
         if (owner == address(0)) revert UnknownValidator();
-        (bool ok, , , uint64 attExpiry) = attestationStore.verify(owner);
-        if (ok && attExpiry > uint64(block.timestamp)) revert AttestationStillValid();
+        if (_isKybEligible(owner)) revert AttestationStillValid();
         _initiateValidatorRemoval(validationID);
     }
 
@@ -446,6 +451,12 @@ contract KumplyValidatorSetManager is
     //  Weight Update (initiate + complete) — KYB owner only
     // ──────────────────────────────────────────────────────────────────
 
+    /// @notice Owner-initiated weight change. The owner must still hold a valid Tier-4 (KYB)
+    ///         attestation; an owner who no longer qualifies can only be removed.
+    /// @param  validationID The validator to update.
+    /// @param  newWeight    New voting weight (non-zero, subject to the per-validator BPS cap).
+    /// @return nonce        Nonce of the emitted L1ValidatorWeightMessage.
+    /// @return messageID    Warp message ID.
     function initiateValidatorWeightUpdate(bytes32 validationID, uint64 newWeight)
         external
         whenNotPaused
@@ -454,6 +465,7 @@ contract KumplyValidatorSetManager is
     {
         address owner = ownerByValidationID[validationID];
         if (owner != msg.sender) revert UnauthorizedCaller(msg.sender);
+        _requireKyb(msg.sender);
         return _initiateValidatorWeightUpdate(validationID, newWeight);
     }
 
@@ -515,12 +527,23 @@ contract KumplyValidatorSetManager is
     //  Internal helpers
     // ──────────────────────────────────────────────────────────────────
 
+    /// @dev Reverts unless `subject` holds a valid attestation of exactly REQUIRED_VALIDATOR_TIER.
     function _requireKyb(address subject) internal view {
         (bool ok, uint32 tier, , ) = attestationStore.verify(subject);
         if (!ok) revert ValidatorNotKYBVerified();
         if (tier < REQUIRED_VALIDATOR_TIER) {
             revert InsufficientValidatorTier(tier, REQUIRED_VALIDATOR_TIER);
         }
+        if (tier != REQUIRED_VALIDATOR_TIER) {
+            revert ValidatorTierNotAllowed(tier, REQUIRED_VALIDATOR_TIER);
+        }
+    }
+
+    /// @dev True if `subject` holds a valid (unexpired, unrevoked) attestation of exactly
+    ///      REQUIRED_VALIDATOR_TIER. verify() already returns false once expired or revoked.
+    function _isKybEligible(address subject) internal view returns (bool) {
+        (bool ok, uint32 tier, , ) = attestationStore.verify(subject);
+        return ok && tier == REQUIRED_VALIDATOR_TIER;
     }
 
     function _getVerifiedWarpPayload(uint32 messageIndex) internal view returns (bytes memory) {

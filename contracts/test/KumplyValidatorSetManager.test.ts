@@ -394,6 +394,17 @@ describe("KumplyValidatorSetManager (ACP-99)", function () {
       ).to.be.revertedWithCustomError(manager, "InsufficientValidatorTier");
     });
 
+    it("rejects Tier 5 (KYA): tiers are categories, not a ladder", async function () {
+      await issueTier(unverified.address, 5);
+      await expect(
+        manager
+          .connect(unverified)
+          .initiateValidatorRegistration(NODE_ID_1, BLS_KEY_1, pchainOwner(), pchainOwner(), 1000n)
+      )
+        .to.be.revertedWithCustomError(manager, "ValidatorTierNotAllowed")
+        .withArgs(5, 4);
+    });
+
     it("rejects bad nodeID length", async function () {
       const tooShort = "0x" + "aa".repeat(10);
       await expect(
@@ -569,6 +580,30 @@ describe("KumplyValidatorSetManager (ACP-99)", function () {
       ).to.be.revertedWithCustomError(manager, "AttestationStillValid");
     });
 
+    it("disableExpiredValidator purges when KYB expires", async function () {
+      await issueTier(bank.address, 4, 60);
+      await network.provider.send("evm_increaseTime", [61]);
+      await network.provider.send("evm_mine", []);
+      await expect(
+        manager.connect(unverified).disableExpiredValidator(validationID)
+      ).to.emit(manager, "InitiatedValidatorRemoval");
+    });
+
+    it("disableExpiredValidator purges a still-valid downgrade below Tier 4", async function () {
+      await issueTier(bank.address, 2); // re-issue overwrites: valid for a year, but Tier 2
+      await expect(
+        manager.connect(unverified).disableExpiredValidator(validationID)
+      ).to.emit(manager, "InitiatedValidatorRemoval");
+      expect((await manager.getValidator(validationID)).status).to.equal(3); // PendingRemoved
+    });
+
+    it("disableExpiredValidator purges an owner re-issued as Tier 5 (not KYB)", async function () {
+      await issueTier(bank.address, 5);
+      await expect(
+        manager.connect(unverified).disableExpiredValidator(validationID)
+      ).to.emit(manager, "InitiatedValidatorRemoval");
+    });
+
     it("completeValidatorRemoval garbage-collects indices and weight", async function () {
       await manager.connect(bank).initiateValidatorRemoval(validationID);
       const weightBefore = await manager.l1TotalWeight();
@@ -618,6 +653,31 @@ describe("KumplyValidatorSetManager (ACP-99)", function () {
       await manager.connect(bank).initiateValidatorWeightUpdate(validationID, 500n);
       const v = await manager.getValidator(validationID);
       expect(v.weight).to.equal(500n);
+    });
+
+    it("rejects a weight update after the owner's KYB is revoked", async function () {
+      await store.connect(verifier).revoke(bank.address);
+      await expect(
+        manager.connect(bank).initiateValidatorWeightUpdate(validationID, 1500n)
+      ).to.be.revertedWithCustomError(manager, "ValidatorNotKYBVerified");
+    });
+
+    it("rejects a weight update after the owner is downgraded below Tier 4", async function () {
+      await issueTier(bank.address, 3);
+      await expect(
+        manager.connect(bank).initiateValidatorWeightUpdate(validationID, 1500n)
+      )
+        .to.be.revertedWithCustomError(manager, "InsufficientValidatorTier")
+        .withArgs(3, 4);
+    });
+
+    it("rejects a weight update after the owner's KYB expires", async function () {
+      await issueTier(bank.address, 4, 60);
+      await network.provider.send("evm_increaseTime", [61]);
+      await network.provider.send("evm_mine", []);
+      await expect(
+        manager.connect(bank).initiateValidatorWeightUpdate(validationID, 1500n)
+      ).to.be.revertedWithCustomError(manager, "ValidatorNotKYBVerified");
     });
 
     it("rejects unchanged weight", async function () {
