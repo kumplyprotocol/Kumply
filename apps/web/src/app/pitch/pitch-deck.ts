@@ -485,7 +485,7 @@ export const DECK_HTML = `
     <p class="lede" style="margin-top: 1.5rem;">
       <strong>Software-only by design:</strong> non-custodial, no fiat rails, no tradable token sale.
       KMP is the L1 gas token, not an investment product. This posture keeps KUMPLY outside regulated
-      financial classifications - a written Mexican legal opinion is scoped for Q3 2026, before fee activation on mainnet.
+      financial classifications - a written Mexican legal opinion is planned within M3, before any fee is activated on mainnet.
     </p>
   </section>
 
@@ -1016,7 +1016,7 @@ export const DECK_HTML_ES = `
     <p class="lede" style="margin-top: 1.5rem;">
       <strong>Software-only por diseño:</strong> no custodial, sin rieles fiat, sin venta de token negociable.
       KMP es el token de gas de la L1, no un producto de inversión. Esta postura mantiene a KUMPLY fuera de clasificaciones
-      financieras reguladas - una opinión legal mexicana por escrito está planeada para Q3 2026, antes de activar comisiones en mainnet.
+      financieras reguladas - una opinión legal mexicana por escrito está planeada dentro de M3, antes de activar cualquier comisión en mainnet.
     </p>
   </section>
 
