@@ -5,7 +5,7 @@ import { useKumplyNetwork } from "@/providers/KumplyNetworkProvider";
 
 // Founding validator slots (KYB-gated — each must hold a Tier 4 attestation)
 const FOUNDING_VALIDATORS = [
-  { name: "KUMPLY Protocol",       role: "Treasury validator",                     tier: 4, status: "committed", nodeId: "NodeID-EzGaipqomyK9UKx9DBHV6Ky3y68hoknrF" },
+  { name: "KUMPLY Protocol",       role: "Treasury validator · no node running yet",                     tier: 4, status: "committed", nodeId: "NodeID-EzGaipqomyK9UKx9DBHV6Ky3y68hoknrF" },
   { name: "Institutional Slot 2",  role: "Digital bank · onboarding open",         tier: 4, status: "open"      },
   { name: "Institutional Slot 3",  role: "Venture fund · onboarding open",         tier: 4, status: "open"      },
   { name: "Institutional Slot 4",  role: "Regional consortium · onboarding open",  tier: 4, status: "open"      },
@@ -139,9 +139,9 @@ export default function L1Page() {
         <div className="code-block l1-code-diagram">
           <span className="comment">┌─────────────────────────────────────────────────────────────────┐</span><br/>
           <span className="comment">│</span>  <span className="keyword">Validator Set (ACP-77 + ACP-99)</span>                              <span className="comment">│</span><br/>
-          <span className="comment">│</span>  KYB-verified institutions only · 5–21 active validators        <span className="comment">│</span><br/>
+          <span className="comment">│</span>  Target: 5–21 validators · 0 active (not activated)       <span className="comment">│</span><br/>
           <span className="comment">└─────────────────────────────────────────────────────────────────┘</span><br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="keyword">│</span> initializeValidatorRegistration(nodeID, weight)<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="keyword">│</span> initiateValidatorRegistration(nodeID, blsPublicKey, …, weight)<br/>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="keyword">▼</span><br/>
           <span className="comment">┌─────────────────────────────────────────────────────────────────┐</span><br/>
           <span className="comment">│</span>  <span className="function">KumplyValidatorSetManager.sol</span>                                 <span className="comment">│</span><br/>
@@ -240,7 +240,7 @@ export default function L1Page() {
           <StatBlock label="Genesis" value="contracts/l1/genesis.json" />
           <StatBlock label="L1 config" value="contracts/l1/l1-config.json" />
           <StatBlock label="Deploy script" value="contracts/scripts/deploy-l1.sh" />
-          <StatBlock label="Hardhat tests" value="27 passing" accent />
+          <StatBlock label="Hardhat tests" value="Passing in CI" accent />
           <StatBlock label="Network" value="Fuji testnet (initial)" />
         </div>
       </div>

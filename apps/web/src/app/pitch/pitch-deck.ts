@@ -392,8 +392,8 @@ export const DECK_HTML = `
     </div>
     <p class="lede" style="margin-top: 1.5rem;">
       Attestations expire and can be revoked. If a validator's KYB attestation lapses, the ACP-99 contract
-      removes it from the set automatically - <strong>anyone can trigger the purge</strong>. Compliance isn't a
-      policy document; it's enforced by consensus.
+      lets <strong>anyone remove it from the set</strong> - no admin needed, though someone has to make the call.
+      Compliance isn't a policy document; it's designed into the validator set itself.
     </p>
   </section>
 
@@ -409,7 +409,8 @@ export const DECK_HTML = `
         <h3>ACP-99 ValidatorSetManager, KYB-gated</h3>
         <p>Our <code>KumplyValidatorSetManager</code> implements the full two-phase validator lifecycle with
         Avalanche-codec Warp payloads - and adds a requirement we have not seen on another L1: validators must hold a live
-        Tier-4 attestation. 50 dedicated tests. <a href="https://build.avax.network/docs/avalanche-l1s/when-to-build-avalanche-l1" target="_blank" rel="noopener noreferrer">Avalanche's own Builder Hub docs</a> name
+        attestation of Tier 4 or higher (restricting it to exactly Tier 4 is already in the code and ships with the
+        redeploy before activation), with a dedicated test suite. <a href="https://build.avax.network/docs/avalanche-l1s/when-to-build-avalanche-l1" target="_blank" rel="noopener noreferrer">Avalanche's own Builder Hub docs</a> name
         this exact pattern - "for regulatory reasons, some applications may need a consistent access control
         mechanism for all on-chain transactions" - as one of the core reasons to build an L1.</p>
       </div>
@@ -674,10 +675,10 @@ export const DECK_HTML = `
       <strong>not</strong> include: a formal third-party audit of the L1
       validator manager, scoped for Retro9000 / Accelerator funding once mainnet usage proves demand. Nothing this grant
       puts on mainnet custodies user funds. <strong>Already shipped self-funded before this application</strong> - and not
-      billed to it: the mainnet C-Chain launch of the non-custodial core (verified on Snowtrace), the 164-test suite with CI,
+      billed to it: the mainnet C-Chain launch of the non-custodial core (verified on Snowtrace), the full test suite with CI,
       the published SDK on npm, and the live dashboard/demo at kumply.xyz.</p>
     <p class="note"><strong>Also self-funded before this application: an audit against the real Avalanche source, not just docs.</strong>
-      Checking KumplyValidatorSetManager against ava-labs/icm-contracts directly found a critical bug that would have
+      Checking KumplyValidatorSetManager against ava-labs/icm-contracts directly found a critical bug in our own contract that would have
       permanently blocked L1 activation - fixed, redeployed, and re-verified on Fuji. The same pass filed 3 real
       documentation bugs upstream in the community AVAXSKILLS package
       (<a href="https://github.com/Ayomisco/avaxskills/issues/2" target="_blank" rel="noopener noreferrer">#2</a>,
@@ -923,8 +924,8 @@ export const DECK_HTML_ES = `
     </div>
     <p class="lede" style="margin-top: 1.5rem;">
       Las attestations expiran y pueden revocarse. Si la attestation KYB de un validador vence, el contrato ACP-99
-      lo remueve del set automáticamente - <strong>cualquiera puede disparar la purga</strong>. El cumplimiento no es
-      un documento de política; lo hace cumplir el consenso.
+      permite que <strong>cualquiera lo saque del set</strong> - sin admin, aunque alguien tiene que hacer la llamada.
+      El cumplimiento no es un documento de política; está diseñado dentro del propio validator set.
     </p>
   </section>
 
@@ -940,7 +941,8 @@ export const DECK_HTML_ES = `
         <h3>ACP-99 ValidatorSetManager, con gating KYB</h3>
         <p>Nuestro <code>KumplyValidatorSetManager</code> implementa el ciclo de vida completo de dos fases para validadores con
         payloads Warp en el codec de Avalanche - y agrega un requisito que no hemos visto en otra L1: los validadores deben mantener
-        una attestation Tier-4 vigente. 50 tests dedicados. <a href="https://build.avax.network/docs/avalanche-l1s/when-to-build-avalanche-l1" target="_blank" rel="noopener noreferrer">La propia documentación del Builder Hub de Avalanche</a> nombra
+        una attestation vigente de Tier 4 o superior (restringirlo a exactamente Tier 4 ya está en el código y sale con el
+        redespliegue antes de la activación), con una suite de tests dedicada. <a href="https://build.avax.network/docs/avalanche-l1s/when-to-build-avalanche-l1" target="_blank" rel="noopener noreferrer">La propia documentación del Builder Hub de Avalanche</a> nombra
         este mismo patrón - "por razones regulatorias, algunas aplicaciones pueden necesitar un mecanismo de control
         de acceso consistente para todas las transacciones on-chain" - como una de las razones centrales para
         construir una L1.</p>
@@ -1210,10 +1212,10 @@ export const DECK_HTML_ES = `
       <strong>no</strong> incluye: una auditoría formal de terceros del gestor de validadores de la L1,
       acotada para financiamiento de Retro9000 / Accelerator una vez que el uso en mainnet demuestre demanda. Nada de lo que financia este grant
       pone fondos de usuarios bajo custodia en mainnet. <strong>Ya enviado y autofinanciado antes de esta aplicación</strong> - y no
-      facturado a ella: el lanzamiento en Mainnet C-Chain del núcleo no-custodial (verificado en Snowtrace), la suite de 164 tests con CI,
+      facturado a ella: el lanzamiento en Mainnet C-Chain del núcleo no-custodial (verificado en Snowtrace), la suite completa de tests con CI,
       el SDK publicado en npm, y el dashboard/demo en vivo en kumply.xyz.</p>
     <p class="note"><strong>También autofinanciado antes de esta aplicación: una auditoría contra el código fuente real de Avalanche, no solo la documentación.</strong>
-      Revisar KumplyValidatorSetManager directamente contra ava-labs/icm-contracts encontró un bug crítico que hubiera
+      Revisar KumplyValidatorSetManager directamente contra ava-labs/icm-contracts encontró un bug crítico en nuestro propio contrato que hubiera
       bloqueado permanentemente la activación de la L1 - corregido, redesplegado, y re-verificado en Fuji. El mismo proceso reportó 3 bugs
       reales de documentación en el paquete comunitario AVAXSKILLS
       (<a href="https://github.com/Ayomisco/avaxskills/issues/2" target="_blank" rel="noopener noreferrer">#2</a>,

@@ -14,7 +14,7 @@ KUMPLY provides non-custodial, on-chain identity verification (KYC/KYB/KYA) for 
 
 ## 🌐 Live Contracts
 
-All contracts are deployed and verified. **164 tests** run on every push.
+All contracts are deployed and verified. The full test suite (contracts, SDK, API) runs on every push.
 
 ### Mainnet C-Chain (read-only beta)
 
@@ -69,11 +69,11 @@ KUMPLY is built entirely around the Avalanche technical stack.
 
 ## ⛓️ KUMPLY Compliance L1 (Registered on Fuji — Activation Pending)
 
-We are introducing the first Avalanche L1 where only **KYB-verified institutions can validate**. Every block is signed by a licensed entity, baking compliance directly into the consensus layer.
-- **Validator Architecture (ACP-77 + ACP-99)**: Uses `KumplyValidatorSetManager.sol` to enforce Tier 4 (KYB) attestation as a prerequisite for validation.
+We are building an Avalanche L1 where validators must hold a KUMPLY attestation to register: **Tier 4 (KYB) or higher** in the deployed manager. A fix that restricts registration to exactly Tier 4 is already in the code and ships with the manager's redeploy before the L1 is activated. The L1 is not activated yet and has no validators.
+- **Validator Architecture (ACP-77 + ACP-99)**: Uses `KumplyValidatorSetManager.sol` to require a valid attestation of Tier 4 (KYB) or higher as a prerequisite for registering a validator.
 - **Sub-Cent Compliance Reads**: Predictable, near-zero fees for compliance lookups at institutional scale.
-- **Cross-L1 via Warp + ICM**: Attestations propagate natively without bridges or third-party trust assumptions.
-- **Self-Healing Validator Set**: Anyone can call `disableExpiredValidator()` if a validator's KYB expires, removing non-compliant validators automatically without admin intervention.
+- **Cross-L1 via Warp + ICM** *(planned, not shipped)*: Attestations would propagate natively without bridges or third-party trust assumptions.
+- **Permissionless Validator Purge**: If a validator's attestation expires or is revoked, anyone can call `disableExpiredValidator()` to start its removal, no admin needed. It is not automatic: someone has to make the call.
 
 ### L1 Network Details (Fuji — chain registered, validator activation pending)
 - **Network Name:** KUMPLY Compliance L1
@@ -111,7 +111,7 @@ kumply/
 ## 🧪 Tests
 
 ```bash
-pnpm test                              # everything — 164 tests
+pnpm test                              # everything: contracts, SDK, API
 pnpm --filter @kumply/contracts test   # 110 — Hardhat + Chai
 pnpm --filter @kumply/sdk test         # 37  — Vitest
 pnpm --filter @kumply/api test         # 17  — Vitest + Supertest
@@ -121,7 +121,7 @@ Contract coverage includes roles and access control, pausability, the five tiers
 
 ## 🔍 Security & Engineering Rigor
 
-Before attempting to activate KUMPLY's L1 on Fuji, we audited `KumplyValidatorSetManager` against the real source of [ava-labs/icm-contracts](https://github.com/ava-labs/icm-contracts) — not just its documentation. We found that `ValidatorMessages.computeConversionID` was missing the 4-byte length prefix the real P-Chain wire format requires: the hash it computed would never have matched the conversionID the network actually signs, so `initializeValidatorSet` would have reverted every time. The existing 27 tests didn't catch this because the Warp mock reimplemented the same error as the contract. Fixed, redeployed, and re-verified on Fuji ([`0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64`](https://testnet.snowtrace.io/address/0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64)), with a test that now exercises the real P-Chain format.
+Before attempting to activate KUMPLY's L1 on Fuji, we audited `KumplyValidatorSetManager` against the real source of [ava-labs/icm-contracts](https://github.com/ava-labs/icm-contracts) — not just its documentation. We found that our port of `ValidatorMessages.computeConversionID` was missing the 4-byte length prefix the real P-Chain wire format requires: the hash it computed would never have matched the conversionID the network actually signs, so `initializeValidatorSet` would have reverted every time. The existing 27 tests didn't catch this because the Warp mock reimplemented the same error as the contract. Fixed, redeployed, and re-verified on Fuji ([`0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64`](https://testnet.snowtrace.io/address/0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64)), with a test that now exercises the real P-Chain format.
 
 The same audit, over three passes, also verified and filed real gaps upstream in AVAXSKILLS (a community skills package for Avalanche), none of them KUMPLY's own bugs:
 
