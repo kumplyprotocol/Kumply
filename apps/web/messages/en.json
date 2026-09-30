@@ -194,10 +194,10 @@
     "kyc": {
       "title": "KYC — Verify People",
       "subtitle": "Identity verification that protects user privacy while keeping you compliant",
-      "p1": "Your users prove who they are without handing over sensitive documents to you. KUMPLY handles the verification through a certified provider (Sumsub), then creates a private, encrypted credential on the blockchain that only authorized parties can read.",
-      "p2": "The result? Your users are verified. Your platform is compliant. And you never touch, store, or become liable for personal data. The credential lives as an encrypted token that cannot be transferred or forged.",
+      "p1": "Your users prove who they are without handing over sensitive documents to you. KUMPLY handles the verification through a certified provider (Sumsub), then writes an attestation on-chain: the wallet address, its tier and an expiry date. No personal data goes on-chain, and the attestation itself is public.",
+      "p2": "The result? Your users are verified, and you never touch or store their documents. The attestation is bound to the wallet address and only KUMPLY's verifier can write or revoke it; it is not a token and cannot be transferred.",
       "f1Title": "You Never See the Data",
-      "f1Desc": "All personal documents are processed by our certified KYC partner. KUMPLY only stores an encrypted proof — not the actual data.",
+      "f1Desc": "All personal documents are processed by our certified KYC partner. On-chain, KUMPLY only records the address, tier and expiry, not the documents or any personal data.",
       "f2Title": "One Person, One Credential",
       "f2Desc": "Each verified person gets exactly one credential. No duplicate accounts. No automated agents pretending to be people.",
       "f3Title": "190+ Countries Supported",
@@ -272,7 +272,7 @@
       "title": "Privacy Policy",
       "subtitle": "How we handle your data (short version: we don’t keep it)",
       "p1": "KUMPLY is designed to align with Mexico’s data protection law (LFPDPPP) and GDPR principles. A formal legal opinion is planned before any fee is activated on mainnet. But here’s the simple version: we are a software tool. We process your verification through a certified partner, record an on-chain attestation (address, tier and expiry, no personal data), and that’s it. We don’t store your documents.",
-      "p2": "Your personal data is handled by Sumsub (our SOC 2 Type II–certified KYC provider). KUMPLY only receives a pass/fail result and writes an encrypted credential to the blockchain. No names, no photos, no addresses on our servers. Ever.",
+      "p2": "Your personal data is handled by Sumsub (our SOC 2 Type II–certified KYC provider). KUMPLY only receives a pass/fail result and writes a public attestation (address, tier, expiry) to the blockchain. No names, no photos, no addresses on our servers. Ever.",
       "f1Title": "Zero Data Stored",
       "f1Desc": "We literally don’t have your personal data. It’s processed by our certified partner and never touches our servers.",
       "f2Title": "You Control Everything",
@@ -307,12 +307,12 @@
     "audit": {
       "title": "Security Audit",
       "subtitle": "We take security as seriously as compliance — because they’re the same thing",
-      "p1": "When you’re handling identity credentials, security isn’t optional — it’s the product. That’s why we’re pursuing comprehensive audits of every component: smart contracts, encryption logic, and cross-chain messaging.",
-      "p2": "Our smart contracts are open-source and fully tested. We’re running team-led security hardening now — static analysis, fuzz testing, a published threat-model report — with formal third-party audits planned as a next step. All results will be published here — full transparency, no exceptions.",
+      "p1": "When you're handling identity credentials, security isn't optional. It's the product. That's why we plan audits of every component as it's built: smart contracts first, then the encryption and cross-chain layers once they exist.",
+      "p2": "Our smart contracts are open-source and tested in CI on every push. Team-led security hardening (static analysis, fuzz testing, a published threat-model report) is planned as our next milestone, with formal third-party audits after that. All results will be published here.",
       "f1Title": "Smart Contract Audit",
-      "f1Desc": "Formal verification and manual code review of all on-chain logic. Status: In progress.",
+      "f1Desc": "Planned: formal third-party review of all on-chain logic. Today: team-led code review and automated tests in CI.",
       "f2Title": "Encryption Review",
-      "f2Desc": "Independent analysis of our zero-knowledge proof circuits and the eERC (Encrypted ERC) implementation.",
+      "f2Desc": "Planned (Phase 2): review of the encryption layer once eERC (Encrypted ERC) support is built. No zero-knowledge circuits exist today.",
       "f3Title": "Bug Bounty Program",
       "f3Desc": "After the audit, we’ll launch a public bug bounty on Immunefi. If you find a vulnerability, you get paid."
     }
@@ -535,7 +535,7 @@
       "subtitle": "Full system diagrams (Mermaid, GitHub-rendered) plus deep dives into the ACP-99 two-phase Warp lifecycle.",
       "linkA": "Full architecture diagrams in the repo",
       "linkB": "Two-phase validator lifecycle: initiate → P-Chain ack → complete (within 23h).",
-      "linkC": "Self-healing validator set: anyone may purge a validator whose KYB attestation expired.",
+      "linkC": "Permissionless validator purge: anyone may call disableExpiredValidator() once a validator's KYB attestation expires or is revoked. It is not automatic: someone has to make the call.",
       "linkD": "Cross-L1 attestation propagation via ICM is planned, not yet shipped (mirror AttestationStoreL1 on the L1)."
     },
     "resources": {
