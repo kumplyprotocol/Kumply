@@ -454,7 +454,7 @@ export const DECK_HTML = `
       </div>
       <div class="cell">
         <h3>Roadmapped depth</h3>
-        <p>AgentRegistry.sol extension: model fingerprint, behavior bounds, liveness - planned for Q3 2026.</p>
+        <p>AgentRegistry.sol extension: model fingerprint, behavior bounds, liveness - planned, no date committed yet.</p>
       </div>
     </div>
     <p class="note"><strong>Terminology note:</strong> "KYA" here is KUMPLY's own tier name, unrelated to
@@ -465,27 +465,28 @@ export const DECK_HTML = `
   <!-- 08 · Business model -->
   <section class="slide">
     <div class="slide-head">
-      <span class="eyebrow">Business model - already in the contracts</span>
+      <span class="eyebrow">Business model</span>
       <span class="slide-num">08 / 12</span>
     </div>
-    <h2>Two revenue rails, both implemented on-chain.</h2>
+    <h2>Free reads. Verification is the product.</h2>
     <div class="grid cols-2">
       <div class="cell">
-        <h3>Pay-per-check · $0.50</h3>
-        <p><code>checkCompliance(address)</code> is a payable read for dApps that want verified counterparties without
-        a subscription. The fee logic, treasury accounting, and withdrawal are live in AttestationStore today -
-        currently set to zero on both mainnet and testnet.</p>
+        <h3>Per verified business or agent</h3>
+        <p>Integrators call <code>verify()</code> for free, with no subscription, on Fuji and Mainnet C-Chain.
+        Revenue sits on the issuance side: a fee per verified business (Tier 4 KYB) or agent (Tier 5 KYA),
+        paid by the owner, covering the identity-provider check and review.</p>
       </div>
       <div class="cell">
-        <h3>SaaS subscription</h3>
-        <p><code>setSubscription</code> exempts a partner's ComplianceGate from per-call fees - flat monthly billing
-        for high-volume integrators, enforced by the contract, not an invoice.</p>
+        <h3>Service plans for integrators</h3>
+        <p>Optional plans for teams that depend on KUMPLY in production: support and response times, priority
+        issuance for their users, and revocation alerts. Billed off-chain; nothing in the contracts gates
+        access to reads.</p>
       </div>
     </div>
     <p class="lede" style="margin-top: 1.5rem;">
       <strong>Software-only by design:</strong> non-custodial, no fiat rails, no tradable token sale.
-      KMP is the L1 gas token, not an investment product. This posture keeps KUMPLY outside regulated
-      financial classifications - a written Mexican legal opinion is planned within M3, before any fee is activated on mainnet.
+      KMP is the L1 gas token, not an investment product. This posture is designed to keep KUMPLY outside
+      regulated financial classifications - a written Mexican legal opinion is planned within M3, before any fee is activated on mainnet.
     </p>
   </section>
 
@@ -985,7 +986,7 @@ export const DECK_HTML_ES = `
       </div>
       <div class="cell">
         <h3>Profundidad planeada</h3>
-        <p>Extensión AgentRegistry.sol: huella del modelo, límites de comportamiento, liveness - planeado para Q3 2026.</p>
+        <p>Extensión AgentRegistry.sol: huella del modelo, límites de comportamiento, liveness - planeada, sin fecha comprometida todavía.</p>
       </div>
     </div>
     <p class="note"><strong>Nota de terminología:</strong> el "KYA" acá es el nombre de tier propio de KUMPLY, sin relación con
@@ -996,26 +997,27 @@ export const DECK_HTML_ES = `
   <!-- 08 · Modelo de negocio -->
   <section class="slide">
     <div class="slide-head">
-      <span class="eyebrow">Modelo de negocio - ya implementado en los contratos</span>
+      <span class="eyebrow">Modelo de negocio</span>
       <span class="slide-num">08 / 12</span>
     </div>
-    <h2>Dos rieles de ingreso, ambos implementados on-chain.</h2>
+    <h2>Lecturas gratis. La verificación es el producto.</h2>
     <div class="grid cols-2">
       <div class="cell">
-        <h3>Pago por consulta · $0.50</h3>
-        <p><code>checkCompliance(address)</code> es una lectura pagable para dApps que quieren contrapartes verificadas sin
-        suscripción. La lógica de comisiones, la contabilidad del treasury, y el retiro ya están en vivo en AttestationStore hoy -
-        actualmente en cero tanto en mainnet como en testnet.</p>
+        <h3>Por empresa o agente verificado</h3>
+        <p>Los integradores llaman a <code>verify()</code> gratis y sin suscripción, en Fuji y en Mainnet C-Chain.
+        El ingreso está del lado de la emisión: una comisión por empresa verificada (Tier 4 KYB) o agente (Tier 5 KYA),
+        que paga el dueño y cubre la verificación del proveedor de identidad y la revisión.</p>
       </div>
       <div class="cell">
-        <h3>Suscripción SaaS</h3>
-        <p><code>setSubscription</code> exime el ComplianceGate de un partner de las comisiones por llamada - facturación mensual plana
-        para integradores de alto volumen, exigida por el contrato, no por una factura.</p>
+        <h3>Planes de servicio para integradores</h3>
+        <p>Planes opcionales para equipos que dependen de KUMPLY en producción: soporte y tiempos de respuesta, emisión
+        prioritaria para sus usuarios y alertas de revocación. Se facturan fuera de la cadena; nada en los contratos
+        condiciona el acceso a las lecturas.</p>
       </div>
     </div>
     <p class="lede" style="margin-top: 1.5rem;">
       <strong>Software-only por diseño:</strong> no custodial, sin rieles fiat, sin venta de token negociable.
-      KMP es el token de gas de la L1, no un producto de inversión. Esta postura mantiene a KUMPLY fuera de clasificaciones
+      KMP es el token de gas de la L1, no un producto de inversión. Esta postura está diseñada para mantener a KUMPLY fuera de clasificaciones
       financieras reguladas - una opinión legal mexicana por escrito está planeada dentro de M3, antes de activar cualquier comisión en mainnet.
     </p>
   </section>
