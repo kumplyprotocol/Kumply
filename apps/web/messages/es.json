@@ -153,7 +153,23 @@
     "apiTitle": "REST API — kumply-api.fly.dev",
     "apiDesc": "Endpoint en vivo · consulta de attestaciones · fees",
     "solidityTitle": "Integración Solidity",
-    "soliditySubtitle": "Bloquea usuarios sin verificar a nivel de contrato inteligente — con una sola línea de código"
+    "soliditySubtitle": "Bloquea usuarios sin verificar a nivel de contrato inteligente — con una sola línea de código",
+    "paymasterTitle": "Smart Accounts y Paymasters (ERC-4337)",
+    "paymasterSubtitle": "Condicionar el patrocinio de gas o acciones de una smart account a una attestation de KUMPLY, desde otro contrato.",
+    "pmFreeTitle": "verify() es gratis por diseño",
+    "pmFreeDesc": "verify() es una función view sin lógica de cobro, y el AttestationStore desplegado no es actualizable, así que leerlo nunca cobra, sin importar quién llame ni si el caller está suscrito. La tarifa por llamada (verificationFee, hoy en 0) y subscribedCallers solo aplican a checkCompliance() y a ComplianceGate.",
+    "pmSemanticsTitle": "Qué regresa verify()",
+    "pmSemanticsDesc": "(verified, tier, timestamp, expiry). timestamp es la fecha de emisión y expiry la de vencimiento, ambas en segundos UNIX. verified es false si la attestation venció, fue revocada o nunca se emitió, y en ese caso todos los demás campos valen 0, así que nunca tienes que comparar expiry tú mismo. Sigue funcionando con el contrato pausado.",
+    "pmAddressTitle": "Atesta y consulta la dirección de la smart account",
+    "pmAddressDesc": "Las attestations se indexan por la dirección exacta que firma o es patrocinada. En una smart account esa dirección es userOp.sender, el contrato de la cuenta, no la EOA dueña. Consultar la EOA cuando solo se atestó la smart account (o al revés) regresa no verificado.",
+    "pmValidationTitle": "Dentro de validatePaymasterUserOp: no llames verify()",
+    "pmValidationDesc": "ERC-7562 (regla OP-011) bloquea el opcode TIMESTAMP durante la validación de UserOperations para toda entidad, con o sin stake, y verify() lee block.timestamp, así que los bundlers que aplican ERC-7562 lo rechazan. Lee el registro crudo attestations(sender) y regresa su expiry como validUntil: el EntryPoint hace la comparación de tiempo por ti. El registro está en un mapping indexado por el sender, que ERC-7562 considera storage asociado a la cuenta (STO-021). Fuera de la validación (postOp, tus propios contratos, off-chain), verify() funciona bien.",
+    "pmOverwriteTitle": "Reemitir sobrescribe",
+    "pmOverwriteDesc": "issueAttestation() sobre una dirección que ya tiene registro lo reemplaza (tier, timestamp y expiry) sin error. Lee el registro actual; no asumas que el primero que viste sigue vigente.",
+    "pmCounterTitle": "totalAttestations() cuenta emisiones",
+    "pmCounterDesc": "Es un contador histórico de todas las emisiones, incluidas las reemisiones. No baja al revocar ni al vencer, así que no es el número de attestations vigentes.",
+    "pmSnippetTitle": "Ejemplo: helper de validación sin TIMESTAMP",
+    "pmSnippetNote": "Código de ejemplo, no auditado. Compila y tiene tests en el repo de KUMPLY (contracts/examples/KumplyPaymasterCheck.sol), incluida una verificación por trace de que nunca ejecuta TIMESTAMP. Adapta minTier y el resto de la lógica de tu paymaster a tu propia política."
   },
   "Network": {
     "title": "Testnet Fuji",
@@ -428,7 +444,7 @@
     },
     "quickstart": {
       "title": "Inicio rápido",
-      "subtitle": "Instala el SDK y verifica el tier de cualquier address en menos de un minuto. Listo para producción contra Mainnet C-Chain hoy.",
+      "subtitle": "Instala el SDK y verifica el tier de cualquier address en menos de un minuto. Desplegado en Mainnet C-Chain como beta de solo lectura; hoy las attestations se emiten en Fuji.",
       "installTitle": "1. Instalar",
       "verifyTitle": "2. Verificar una contraparte",
       "gateTitle": "3. Gatear tu DApp por tier"

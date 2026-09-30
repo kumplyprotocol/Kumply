@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { PAYMASTER_CHECK_SOLIDITY } from "@/content/paymaster-check-snippet";
 
 const ATTESTATION_STORE_MAINNET = "0xa116261Ed3a848A9E1cd34923D5A0442D1455F71";
 const COMPLIANCE_GATE_MAINNET   = "0x01BEEA13A485c7bAD58f926E345325e9e3773bEe";
@@ -27,6 +28,8 @@ function ContractRow({ label, address, explorerBase = SNOWTRACE_BASE }: { label:
     </div>
   );
 }
+
+const PAYMASTER_POINTS = ['pmFree', 'pmSemantics', 'pmAddress', 'pmValidation', 'pmOverwrite', 'pmCounter'] as const;
 
 export default function DevelopersPage() {
   const t  = useTranslations('Developers');
@@ -79,14 +82,17 @@ export default function DevelopersPage() {
           <span className="comment">// Verify a wallet address</span><br/>
           <span className="keyword">const</span> result = <span className="keyword">await</span> client.<span className="function">verify</span>(<span className="string">'0x…'</span>);<br/>
           console.<span className="function">log</span>(result);<br/>
-          <span className="comment">// {'{'} verified: true, tier: 3, expiry: 1748000000, issuer: '0x…' {'}'}</span><br/><br/>
+          <span className="comment">// {'{'} verified: true, tier: 3, timestamp: 1790311201, expiry: 1821847195 {'}'}</span><br/>
+          <span className="comment">// timestamp = issued at, expiry = expires at (UNIX seconds)</span><br/><br/>
 
-          <span className="keyword">if</span> (result.tier &gt;= <span className="number">2</span>) {'{'}<br/>
-          &nbsp;&nbsp;<span className="comment">// Standard KYC verified — allow trading</span><br/>
-          {'}'} <span className="keyword">else if</span> (result.tier === <span className="number">4</span>) {'{'}<br/>
-          &nbsp;&nbsp;<span className="comment">// KYB verified institution — allow RWA access</span><br/>
+          <span className="keyword">if</span> (!result.verified) {'{'}<br/>
+          &nbsp;&nbsp;<span className="comment">// Never issued, revoked, or expired — tier is 0</span><br/>
           {'}'} <span className="keyword">else if</span> (result.tier === <span className="number">5</span>) {'{'}<br/>
           &nbsp;&nbsp;<span className="comment">// KYA verified agent — allow AI execution</span><br/>
+          {'}'} <span className="keyword">else if</span> (result.tier === <span className="number">4</span>) {'{'}<br/>
+          &nbsp;&nbsp;<span className="comment">// KYB verified institution — allow RWA access</span><br/>
+          {'}'} <span className="keyword">else if</span> (result.tier &gt;= <span className="number">2</span>) {'{'}<br/>
+          &nbsp;&nbsp;<span className="comment">// Standard KYC verified — allow trading</span><br/>
           {'}'}
         </div>
       </div>
@@ -146,6 +152,23 @@ export default function DevelopersPage() {
           &nbsp;&nbsp;{'}'}<br/>
           {'}'}
         </div>
+      </div>
+
+      {/* Smart accounts & paymasters (ERC-4337) */}
+      <div className="glass-card" id="paymasters" style={{ padding: '2.5rem', marginBottom: '1.5rem' }}>
+        <h3 style={{ marginBottom: '0.5rem', color: 'var(--text-primary)', fontSize: '1.05rem' }}>{t('paymasterTitle')}</h3>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginBottom: '1.5rem' }}>{t('paymasterSubtitle')}</p>
+        <div className="dev-pm-grid">
+          {PAYMASTER_POINTS.map((key) => (
+            <div key={key} className="dev-pm-point">
+              <h4 style={{ color: 'var(--text-primary)', fontSize: '0.95rem', fontWeight: 600, marginBottom: '0.4rem' }}>{t(`${key}Title`)}</h4>
+              <p style={{ color: 'var(--text-tertiary)', fontSize: '0.85rem', lineHeight: 1.6 }}>{t(`${key}Desc`)}</p>
+            </div>
+          ))}
+        </div>
+        <h4 style={{ color: 'var(--text-primary)', fontSize: '0.95rem', fontWeight: 600, margin: '2rem 0 0.4rem' }}>{t('pmSnippetTitle')}</h4>
+        <p style={{ color: 'var(--text-tertiary)', fontSize: '0.8rem', marginBottom: '1rem' }}>{t('pmSnippetNote')}</p>
+        <div className="code-block dev-code-block">{PAYMASTER_CHECK_SOLIDITY}</div>
       </div>
 
       {/* Resources */}
@@ -218,6 +241,8 @@ export default function DevelopersPage() {
         .dev-container { padding-top: 2rem; padding-bottom: 5rem; }
         .dev-code-block { overflow-x: auto; white-space: pre; }
         .dev-grid-resources { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .dev-pm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 1.25rem; }
+        .dev-pm-point { padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius-sm); min-width: 0; }
         
         @media (max-width: 768px) {
           .dev-container { padding-top: 1.5rem; padding-bottom: 3.5rem; }
