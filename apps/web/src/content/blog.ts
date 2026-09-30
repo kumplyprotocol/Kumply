@@ -35,12 +35,12 @@ export const BLOG_POSTS: BlogPost[] = [
       es: "Lo Que Realmente Falló en Nuestro Workshop de KYA en Vivo",
     },
     excerpt: {
-      en: "The recap says 13 real Tier 5 attestations went out clean on Fuji. It doesn't say what it took to get there: a Remix label that changed under us, a wallet option that traps you if you click the wrong one, a network mismatch that could have pointed a deploy at the wrong chain, and a scary error that wasn't real. This isn't the highlight reel, it's the honest version, so it doesn't happen to whoever runs the next one.",
-      es: "El resumen dice que salieron 13 attestations Tier 5 reales en Fuji, sin drama. No dice lo que costó llegar ahí: una etiqueta de Remix que cambió sin avisar, una opción de wallet que te atrapa si le das clic por error, un desajuste de red que pudo haber mandado un deploy a la cadena equivocada, y un error que asustaba pero no era real. Este no es el highlight reel, es la versión honesta, para que no le pase a quien corra el próximo.",
+      en: "The recap says 13 on-chain attestations issued live during the workshop (Fuji testnet, demo flow without identity verification) went out clean. It doesn't say what it took to get there: a Remix label that changed under us, a wallet option that traps you if you click the wrong one, a network mismatch that could have pointed a deploy at the wrong chain, and a scary error that wasn't real. This isn't the highlight reel, it's the honest version, so it doesn't happen to whoever runs the next one.",
+      es: "El resumen dice que salieron 13 atestaciones on-chain emitidas en vivo durante el workshop (testnet Fuji, flujo de demo sin verificación de identidad), sin drama. No dice lo que costó llegar ahí: una etiqueta de Remix que cambió sin avisar, una opción de wallet que te atrapa si le das clic por error, un desajuste de red que pudo haber mandado un deploy a la cadena equivocada, y un error que asustaba pero no era real. Este no es el highlight reel, es la versión honesta, para que no le pase a quien corra el próximo.",
     },
     bodyHtml: {
       en: `
-<p>On September 24, KUMPLY ran a live, hands-on KYA workshop with Team1 LatAm, the one we <a href="/blog/kya-workshop-team1-24-sep">announced here</a> a few days before. The clean version of what happened is already public: 13 real Tier 5 (Agent/KYA) attestations issued on Fuji, to real attendee wallets, every one with a confirmed transaction hash. That part is true, and it's real traction, not a projection.</p>
+<p>On September 24, KUMPLY ran a live, hands-on KYA workshop with Team1 LatAm, the one we <a href="/blog/kya-workshop-team1-24-sep">announced here</a> a few days before. The clean version of what happened is already public: 13 on-chain attestations issued live during the workshop (Fuji testnet, demo flow without identity verification), Tier 5 (Agent/KYA), to real attendee wallets, every one with a confirmed transaction hash. That part is true, and it's real traction, not a projection.</p>
 
 <p>It's also not the whole story. A 75-minute session with attendees deploying a contract live, through Remix, through their own MetaMask, on a testnet most of them had never touched, hits real friction. None of it is in the recap. It should be, because a workshop write-up that only says "it went great" doesn't help whoever runs the next one. Here's what actually went wrong, in the order it happened.</p>
 
@@ -68,10 +68,10 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Why this is the post, not just the recap</h2>
 
-<p>Every one of these is small on its own, a renamed button, a wrong click, a network dropdown, a scary-looking console line, a link swapped for a safer one. None of them stopped the workshop, and 13 real attestations still went out on real wallets by the end of the session. But none of them show up in an announcement post either, and a guide that only says a live crypto workshop "went well" leaves out exactly the friction the next person running one will hit first. If you're planning something similar: check what your tooling's UI actually says the night before, not the week before; call out the wrong-click traps by name before someone finds them; and never trust a link you don't control the content of for anything that has to still be correct on the day.</p>
+<p>Every one of these is small on its own, a renamed button, a wrong click, a network dropdown, a scary-looking console line, a link swapped for a safer one. None of them stopped the workshop, and 13 on-chain attestations still went out live to real wallets by the end of the session (Fuji testnet, demo flow without identity verification). But none of them show up in an announcement post either, and a guide that only says a live crypto workshop "went well" leaves out exactly the friction the next person running one will hit first. If you're planning something similar: check what your tooling's UI actually says the night before, not the week before; call out the wrong-click traps by name before someone finds them; and never trust a link you don't control the content of for anything that has to still be correct on the day.</p>
 `,
       es: `
-<p>El 24 de septiembre, KUMPLY corrió un workshop de KYA en vivo y práctico con Team1 LatAm, el mismo que <a href="/blog/kya-workshop-team1-24-sep">anunciamos aquí</a> unos días antes. La versión limpia de lo que pasó ya es pública: 13 attestations Tier 5 (Agent/KYA) reales, emitidas en Fuji, a wallets reales de asistentes, cada una con un hash de transacción confirmado. Esa parte es cierta, y es tracción real, no una proyección.</p>
+<p>El 24 de septiembre, KUMPLY corrió un workshop de KYA en vivo y práctico con Team1 LatAm, el mismo que <a href="/blog/kya-workshop-team1-24-sep">anunciamos aquí</a> unos días antes. La versión limpia de lo que pasó ya es pública: 13 atestaciones on-chain emitidas en vivo durante el workshop (testnet Fuji, flujo de demo sin verificación de identidad), Tier 5 (Agent/KYA), a wallets reales de asistentes, cada una con un hash de transacción confirmado. Esa parte es cierta, y es tracción real, no una proyección.</p>
 
 <p>También no es toda la historia. Una sesión de 75 minutos con asistentes desplegando un contrato en vivo, a través de Remix, a través de su propio MetaMask, en una testnet que la mayoría nunca había tocado, se topa con fricción real. Nada de eso está en el resumen. Debería estarlo, porque un recuento de workshop que solo dice "salió increíble" no le sirve a quien corra el siguiente. Aquí está lo que realmente falló, en el orden en que pasó.</p>
 
@@ -99,7 +99,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Por qué esto es el post, y no solo el resumen</h2>
 
-<p>Cada una de estas cosas es pequeña por separado: un botón que cambió de nombre, un clic equivocado, un dropdown de red, una línea de consola que asustaba, un link cambiado por uno más seguro. Ninguna detuvo el workshop, y al final de la sesión igual salieron 13 attestations reales a wallets reales. Pero tampoco ninguna aparece en un post de anuncio, y una guía que solo dice que un workshop cripto en vivo "salió bien" se salta exactamente la fricción con la que se va a topar primero quien corra el siguiente. Si estás planeando algo parecido: revisa qué dice de verdad la interfaz de tu herramienta la noche antes, no la semana antes; señala las trampas de clic equivocado por su nombre antes de que alguien las encuentre solo; y nunca confíes, para algo que tiene que seguir siendo correcto el día del evento, en un link cuyo contenido no controlas.</p>
+<p>Cada una de estas cosas es pequeña por separado: un botón que cambió de nombre, un clic equivocado, un dropdown de red, una línea de consola que asustaba, un link cambiado por uno más seguro. Ninguna detuvo el workshop, y al final de la sesión igual salieron 13 atestaciones on-chain en vivo a wallets reales (testnet Fuji, flujo de demo sin verificación de identidad). Pero tampoco ninguna aparece en un post de anuncio, y una guía que solo dice que un workshop cripto en vivo "salió bien" se salta exactamente la fricción con la que se va a topar primero quien corra el siguiente. Si estás planeando algo parecido: revisa qué dice de verdad la interfaz de tu herramienta la noche antes, no la semana antes; señala las trampas de clic equivocado por su nombre antes de que alguien las encuentre solo; y nunca confíes, para algo que tiene que seguir siendo correcto el día del evento, en un link cuyo contenido no controlas.</p>
 `,
     },
   },
@@ -898,8 +898,8 @@ export const BLOG_POSTS: BlogPost[] = [
       es: "KYA: Verificando Agentes de IA On-Chain - Workshop en vivo con Team1 LatAm, 24 de septiembre",
     },
     excerpt: {
-      en: "AI agents can now discover each other (A2A) and pay each other (x402) at real, growing scale. Neither protocol answers who's accountable when one of them moves real money. Join us live with Team1 LatAm on September 24 to build against KUMPLY's Tier 5 (KYA) layer - and leave with a real attestation issued to your own wallet.",
-      es: "Los agentes de IA ya pueden descubrirse entre sí (A2A) y pagarse entre sí (x402), a una escala real y creciente. Ninguno de los dos protocolos responde quién es responsable cuando uno de ellos mueve dinero real. Únete en vivo con Team1 LatAm el 24 de septiembre para construir contra la capa Tier 5 (KYA) de KUMPLY - y llévate una atestación real emitida a tu propia wallet.",
+      en: "AI agents can now discover each other (A2A) and pay each other (x402) at real, growing scale. Neither protocol answers who's accountable when one of them moves real money. Join us live with Team1 LatAm on September 24 to build against KUMPLY's Tier 5 (KYA) layer - and leave with an on-chain attestation issued live to your own wallet (Fuji testnet, demo flow without identity verification).",
+      es: "Los agentes de IA ya pueden descubrirse entre sí (A2A) y pagarse entre sí (x402), a una escala real y creciente. Ninguno de los dos protocolos responde quién es responsable cuando uno de ellos mueve dinero real. Únete en vivo con Team1 LatAm el 24 de septiembre para construir contra la capa Tier 5 (KYA) de KUMPLY - y llévate una atestación on-chain emitida en vivo a tu propia wallet (testnet Fuji, flujo de demo sin verificación de identidad).",
     },
     bodyHtml: {
       en: `
@@ -950,10 +950,10 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <p>This isn't a slide deck about compliance theory. You'll deploy your own attestation contract live, in Remix, no local setup: <code>WorkshopKYA.sol</code>, a stripped-down practice version built for the session (open <code>issueTier()</code>, no roles or expiry logic) that mirrors the same attest -&gt; tier -&gt; verify() pattern KUMPLY actually runs in production, without the production complexity - fast enough to deploy live in one sitting. It's a teaching tool, not KUMPLY's real code, and it says so in the contract itself.</p>
 
-<p>Then every attendee leaves with something that isn't a teaching tool: a real Tier 5 attestation, issued by KUMPLY to your own wallet, on Fuji, address-only, no personal data ever requested - the same batch-issuance path we already tested end-to-end ahead of the session. And KUMPLY's actual production contracts are real and live too, not a claim you have to take on faith: <code>AttestationStore</code> and <code>ComplianceGate</code> are deployed and verified on both Fuji and Mainnet C-Chain today - see the addresses below and check them yourself.</p>
+<p>Then every attendee leaves with an on-chain Tier 5 attestation issued live by KUMPLY to your own wallet (Fuji testnet, demo flow without identity verification), address-only, no personal data ever requested - the same batch-issuance path we already tested end-to-end ahead of the session. And KUMPLY's actual production contracts are real and live too, not a claim you have to take on faith: <code>AttestationStore</code> and <code>ComplianceGate</code> are deployed and verified on both Fuji and Mainnet C-Chain today - see the addresses below and check them yourself.</p>
 
 <figure class="blog-diagram">
-<svg viewBox="0 0 700 200" width="100%" role="img" aria-label="Diagram: three steps of the workshop - register on Luma, deploy your own WorkshopKYA.sol practice contract live in Remix with Team1 LatAm, and leave with a real Tier 5 KYA attestation issued by KUMPLY to your own wallet on Fuji">
+<svg viewBox="0 0 700 200" width="100%" role="img" aria-label="Diagram: three steps of the workshop - register on Luma, deploy your own WorkshopKYA.sol practice contract live in Remix with Team1 LatAm, and leave with an on-chain Tier 5 KYA attestation issued live by KUMPLY to your own wallet (Fuji testnet, demo flow without identity verification)">
 <rect x="8" y="45" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
 <text x="26" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">STEP 1</text>
 <text x="26" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Register on Luma</text>
@@ -966,7 +966,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <text x="268" y="138" font-size="11" fill="var(--text-tertiary)">with Monserrat &amp; Giovanny</text>
 <rect x="492" y="45" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
 <text x="510" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">STEP 3</text>
-<text x="510" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Leave with a real Tier 5</text>
+<text x="510" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Leave with a demo Tier 5</text>
 <text x="510" y="120" font-size="11" fill="var(--text-tertiary)">issued by KUMPLY to your wallet</text>
 <text x="510" y="138" font-size="11" fill="var(--text-tertiary)">address only, no personal data</text>
 <path d="M212 100 L246 100" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#kyaw-arrow1-en)"/>
@@ -1041,10 +1041,10 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <p>Esto no es un deck de slides sobre teoría de compliance. Vas a desplegar tu propio contrato de atestación en vivo, en Remix, sin setup local: <code>WorkshopKYA.sol</code>, una versión de práctica simplificada construida para la sesión (<code>issueTier()</code> abierto, sin roles ni lógica de expiración) que replica el mismo patrón attest -&gt; tier -&gt; verify() que KUMPLY corre de verdad en producción, sin la complejidad de producción - suficientemente rápido para desplegarse en vivo en una sola sesión. Es una herramienta educativa, no el código real de KUMPLY, y lo dice el propio contrato.</p>
 
-<p>Después, cada asistente se lleva algo que no es una herramienta educativa: una atestación Tier 5 real, emitida por KUMPLY a tu propia wallet, en Fuji, solo con la dirección, sin pedir jamás datos personales - el mismo camino de emisión por lote que ya probamos de punta a punta antes de la sesión. Y los contratos reales de producción de KUMPLY también son reales y están en vivo, no es una afirmación que tengas que creer sin más: <code>AttestationStore</code> y <code>ComplianceGate</code> están desplegados y verificados tanto en Fuji como en Mainnet C-Chain hoy - mira las direcciones abajo y revísalas tú mismo.</p>
+<p>Después, cada asistente se lleva una atestación Tier 5 on-chain emitida en vivo por KUMPLY a tu propia wallet (testnet Fuji, flujo de demo sin verificación de identidad), solo con la dirección, sin pedir jamás datos personales - el mismo camino de emisión por lote que ya probamos de punta a punta antes de la sesión. Y los contratos reales de producción de KUMPLY también son reales y están en vivo, no es una afirmación que tengas que creer sin más: <code>AttestationStore</code> y <code>ComplianceGate</code> están desplegados y verificados tanto en Fuji como en Mainnet C-Chain hoy - mira las direcciones abajo y revísalas tú mismo.</p>
 
 <figure class="blog-diagram">
-<svg viewBox="0 0 700 200" width="100%" role="img" aria-label="Diagrama: tres pasos del workshop - regístrate en Luma, despliega tu propio contrato de práctica WorkshopKYA.sol en vivo en Remix con Team1 LatAm, y llévate una atestación Tier 5 KYA real emitida por KUMPLY a tu propia wallet en Fuji">
+<svg viewBox="0 0 700 200" width="100%" role="img" aria-label="Diagrama: tres pasos del workshop - regístrate en Luma, despliega tu propio contrato de práctica WorkshopKYA.sol en vivo en Remix con Team1 LatAm, y llévate una atestación Tier 5 KYA on-chain emitida en vivo por KUMPLY a tu propia wallet (testnet Fuji, flujo de demo sin verificación de identidad)">
 <rect x="8" y="45" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
 <text x="26" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PASO 1</text>
 <text x="26" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Regístrate en Luma</text>
@@ -1057,7 +1057,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <text x="268" y="138" font-size="11" fill="var(--text-tertiary)">con Monserrat y Giovanny</text>
 <rect x="492" y="45" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
 <text x="510" y="72" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PASO 3</text>
-<text x="510" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Llévate un Tier 5 real</text>
+<text x="510" y="98" font-size="15" font-weight="800" fill="var(--text-primary)">Llévate un Tier 5 demo</text>
 <text x="510" y="120" font-size="11" fill="var(--text-tertiary)">emitido por KUMPLY a tu wallet</text>
 <text x="510" y="138" font-size="11" fill="var(--text-tertiary)">solo dirección, sin datos personales</text>
 <path d="M212 100 L246 100" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#kyaw-arrow1-es)"/>

@@ -504,8 +504,8 @@ export const DECK_HTML = `
       candidates for M4's pilot integrations - one proof-of-concept pipeline, not two separate asks.
       We would rather show you the gap than have you find it.</p>
     <p class="note"><strong>Update, September 24, 2026:</strong> the gap above just narrowed by a real data point, not
-      a projection. A live KYA technical workshop with Team1 LatAm issued <strong>13 real Tier 5 attestations on
-      Fuji</strong> during the session - the first genuine usage since the product was built, not seeded ahead of the
+      a projection. A live KYA technical workshop with Team1 LatAm ended with <strong>13 on-chain attestations issued live
+      during the workshop</strong> (Fuji testnet, demo flow without identity verification) - the first genuine usage since the product was built, not seeded ahead of the
       event, not simulated. Each carries its own transaction hash, independently verifiable on
       <a href="https://kumply.xyz/dashboard">kumply.xyz/dashboard</a> or directly in the
       <a href="https://testnet.snowtrace.io/address/0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD#events">contract's
@@ -586,7 +586,7 @@ export const DECK_HTML = `
       Active in the Team1 LatAm community - introduced KUMPLY at a Team1 weekly call, and shipped two additional
       Avalanche builds in a single weekend (an invisible-blockchain museum ticketing app and an agricultural
       traceability demo), shared with the community. Ran a Team1-approved live technical workshop on KYA on
-      September 24, 2026 - 13 real Tier 5 attestations issued on-chain on Fuji during the session (detail on slide 9).
+      September 24, 2026 - 13 on-chain attestations issued live during the workshop (Fuji testnet, demo flow without identity verification; detail on slide 9).
       <strong>Building on Avalanche is what we do, grant or no grant.</strong>
     </p>
     <p class="note" style="margin-top: 1rem;"><strong>Bus factor, addressed:</strong> most shipped code still runs
@@ -1027,8 +1027,9 @@ export const DECK_HTML_ES = `
       candidatos para las integraciones piloto de M4 - un solo pipeline de proof-of-concept, no dos pedidos separados.
       Preferimos mostrarte el hueco antes de que lo encuentres tú.</p>
     <p class="note"><strong>Actualización, 24 de septiembre de 2026:</strong> el hueco de arriba se acaba de reducir con
-      un dato real, no una proyección. Un workshop técnico en vivo sobre KYA con Team1 LatAm emitió
-      <strong>13 attestations Tier 5 reales en Fuji</strong> durante la sesión - el primer uso genuino desde que se
+      un dato real, no una proyección. Un workshop técnico en vivo sobre KYA con Team1 LatAm cerró con
+      <strong>13 atestaciones on-chain emitidas en vivo durante el workshop</strong> (testnet Fuji, flujo de demo sin
+      verificación de identidad) - el primer uso genuino desde que se
       construyó el producto, no sembrado antes del evento, no simulado. Cada una tiene su propio hash de transacción,
       verificable de forma independiente en <a href="https://kumply.xyz/dashboard">kumply.xyz/dashboard</a> o
       directamente en el <a href="https://testnet.snowtrace.io/address/0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD#events">registro
@@ -1109,8 +1110,8 @@ export const DECK_HTML_ES = `
       Activos en la comunidad LatAm de Team1 - presentaron KUMPLY en una llamada semanal de Team1, y enviaron dos builds
       adicionales de Avalanche en un solo fin de semana (una app de boletos de museo con blockchain invisible y una demo de
       trazabilidad agrícola), compartidos con la comunidad. Corrieron un workshop técnico en vivo sobre KYA aprobado
-      por Team1 el 24 de septiembre de 2026 - 13 attestations Tier 5 reales emitidas on-chain en Fuji durante la
-      sesión (detalle en la diapositiva 9).
+      por Team1 el 24 de septiembre de 2026 - 13 atestaciones on-chain emitidas en vivo durante el workshop (testnet Fuji, flujo de demo sin verificación de identidad;
+      detalle en la diapositiva 9).
       <strong>Construir en Avalanche es lo que hacemos, con o sin grant.</strong>
     </p>
     <p class="note" style="margin-top: 1rem;"><strong>Bus factor, resuelto:</strong> la mayoría del código enviado
