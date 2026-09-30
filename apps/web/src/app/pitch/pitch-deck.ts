@@ -512,6 +512,14 @@ export const DECK_HTML = `
       event log on Snowtrace</a>. This is usage evidence, not committed demand - workshop attendees, not paying
       integrators - and Mainnet still sits at zero attestations, deliberately, until Sumsub production activates
       under M2.</p>
+    <p class="note"><strong>Update, September 30, 2026:</strong> first external integration pilot. 0xgasless (gas
+      infrastructure for AI agents) runs an ERC-4337 paymaster on Avalanche Fuji whose sponsorship service checks KUMPLY
+      attestations before approving gas; the on-chain paymaster then verifies that approval. In a live demo, their
+      control wallet was refused while it had no attestation and was sponsored once a Tier 5 attestation was issued to
+      it. Verifiable on Snowtrace: <a href="https://testnet.snowtrace.io/tx/0xc3b40ae2908f3075c10c1cd40755975be48cac817844977cd4db104c69b32b70">sponsored UserOperation from the attested wallet</a>,
+      <a href="https://testnet.snowtrace.io/tx/0x084e7d548c08fd3a7440cb2a891a7448b2088c8250e8fb5e7e3e3211a462d8aa">Tier 5 attestation issued to the control wallet</a>, and
+      <a href="https://testnet.snowtrace.io/tx/0x4a4490f570fdab1d94f539cc839e85222be608525fd61cfd2a43f08c35a1d9b1">sponsored UserOperation from the control wallet</a>. Technical pilot on testnet with demo
+      attestations; no mainnet usage yet.</p>
     <div class="grid cols-3">
       <div class="cell">
         <h3>Regulatory pressure</h3>
@@ -1036,6 +1044,15 @@ export const DECK_HTML_ES = `
       de eventos del contrato en Snowtrace</a>. Esto es evidencia de uso, no demanda comprometida - asistentes de un
       workshop, no integradores pagando - y Mainnet sigue en cero attestations, deliberadamente, hasta que Sumsub
       producción se active bajo M2.</p>
+    <p class="note"><strong>Actualización, 30 de septiembre de 2026:</strong> primer piloto de integración externo.
+      0xgasless (infraestructura de gas para agentes de IA) opera un paymaster ERC-4337 en Avalanche Fuji cuyo servicio
+      de patrocinio consulta las attestations de KUMPLY antes de aprobar el gas; después, el paymaster on-chain verifica
+      esa aprobación. En una demo en vivo, su wallet de control fue rechazada mientras no tenía attestation y fue
+      patrocinada en cuanto se le emitió una attestation Tier 5. Verificable en Snowtrace:
+      <a href="https://testnet.snowtrace.io/tx/0xc3b40ae2908f3075c10c1cd40755975be48cac817844977cd4db104c69b32b70">UserOperation patrocinada de la wallet atestada</a>,
+      <a href="https://testnet.snowtrace.io/tx/0x084e7d548c08fd3a7440cb2a891a7448b2088c8250e8fb5e7e3e3211a462d8aa">attestation Tier 5 emitida a la wallet de control</a> y
+      <a href="https://testnet.snowtrace.io/tx/0x4a4490f570fdab1d94f539cc839e85222be608525fd61cfd2a43f08c35a1d9b1">UserOperation patrocinada de la wallet de control</a>. Piloto técnico en testnet con
+      attestations de demo; todavía sin uso en mainnet.</p>
     <div class="grid cols-3">
       <div class="cell">
         <h3>Presión regulatoria</h3>
