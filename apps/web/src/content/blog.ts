@@ -459,7 +459,7 @@ export const BLOG_POSTS: BlogPost[] = [
 </svg>
 </figure>
 
-<p>Si alejás la mirada, el caso de mercado coincide con el de producto: Franklin Templeton ya corre su fondo del mercado de dinero BENJI en Avalanche, y KKR tokenizó una parte de su Health Care Strategic Growth Fund II acá también. El dinero institucional ya está llegando esperando exactamente el tipo de gate que da una capa de compliance general, no un solo flujo vertical.</p>
+<p>Si alejas la mirada, el caso de mercado coincide con el de producto: Franklin Templeton ya corre su fondo del mercado de dinero BENJI en Avalanche, y KKR tokenizó una parte de su Health Care Strategic Growth Fund II acá también. El dinero institucional ya está llegando esperando exactamente el tipo de gate que da una capa de compliance general, no un solo flujo vertical.</p>
 
 <h2>La parte que decimos sin rodeos</h2>
 
@@ -733,11 +733,11 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <p>Un ejemplo concreto del mecanismo, ilustrativo, no una transacción real: un agente intenta ejecutar una operación de $50,000. Antes de dejarlo pasar, el contrato del protocolo llama a <code>verify(agentAddress)</code>. La respuesta trae el tier del agente, su expiración, y, a través de la credencial Tier 4 a la que está ligado, quién es el dueño verificado detrás. Tier 5 y sin expirar: la operación avanza, y el protocolo ya sabe quién responde si algo sale mal. Faltante, expirada, o por debajo de Tier 5: el protocolo rechaza la operación o recurre a un firmante humano, antes de que se mueva cualquier fondo.</p>
 
-<p>Podés ver el mecanismo funcionando sin wallet: el <a href="https://kumply.xyz/demo" target="_blank" rel="noopener noreferrer">demo interactivo</a> corre tres escenarios contra attestations reales en la red que elijas, incluyendo un escenario de marketplace de agentes - justo el contexto donde una verificación Tier 5 decidiría si un agente puede ejecutar.</p>
+<p>Puedes ver el mecanismo funcionando sin wallet: el <a href="https://kumply.xyz/demo" target="_blank" rel="noopener noreferrer">demo interactivo</a> corre tres escenarios contra attestations reales en la red que elijas, incluyendo un escenario de marketplace de agentes - justo el contexto donde una verificación Tier 5 decidiría si un agente puede ejecutar.</p>
 
 <h2>Qué es roadmap, no está enviado</h2>
 
-<p>Dos cosas vale la pena precisar, porque es fácil redondear "planeado" hacia "en vivo" cuando describís tu propio roadmap. Primero, la verificación específica de agentes más profunda - huella del modelo, límites de comportamiento, checks de liveness - vive en una extensión planeada, <code>AgentRegistry.sol</code>, sin fecha comprometida todavía. Todavía no existe en los contratos. Segundo, los estándares de pago por agente como x402 son parte de hacia dónde va esto, no algo corriendo en producción hoy. La attestation Tier 5 y el check de compliance son reales; los rieles de micropago automatizado encima de eso todavía están por delante.</p>
+<p>Dos cosas vale la pena precisar, porque es fácil redondear "planeado" hacia "en vivo" cuando describes tu propio roadmap. Primero, la verificación específica de agentes más profunda - huella del modelo, límites de comportamiento, checks de liveness - vive en una extensión planeada, <code>AgentRegistry.sol</code>, sin fecha comprometida todavía. Todavía no existe en los contratos. Segundo, los estándares de pago por agente como x402 son parte de hacia dónde va esto, no algo corriendo en producción hoy. La attestation Tier 5 y el check de compliance son reales; los rieles de micropago automatizado encima de eso todavía están por delante.</p>
 
 <h2>Por qué "primero" necesita un matiz</h2>
 
