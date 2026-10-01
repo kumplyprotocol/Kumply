@@ -43,8 +43,8 @@ DApps must enforce KYC/AML laws, but forcing users to verify their identity on e
 ## 💡 The Solution
 
 KUMPLY is a "Verify Once, Use Everywhere" protocol.
-1. Users/Businesses/Agents complete identity verification via our licensed partner (Sumsub).
-2. We issue an **on-chain attestation credential** to their wallet. The credential holds only `(tier, expiry, issuer, revocation status)` — **no personal data is ever written on-chain**. Documents stay with Sumsub; KUMPLY never stores them.
+1. Users/Businesses/Agents complete identity verification via our certified KYC provider (Sumsub).
+2. We issue an **on-chain attestation credential** to their wallet. The credential holds only `(address, tier, issue time, expiry, verifier)` and is public; revoking it deletes the record. **No personal data is ever written on-chain**. Documents stay with Sumsub; KUMPLY never stores them.
 3. Avalanche Smart Contracts can check a user's compliance Tier (`1-5`) natively via our `AttestationStore` or `ComplianceGate` without touching personal data.
 
 ### Verification Tiers
@@ -112,9 +112,9 @@ kumply/
 
 ```bash
 pnpm test                              # everything: contracts, SDK, API
-pnpm --filter @kumply/contracts test   # 110 — Hardhat + Chai
-pnpm --filter @kumply/sdk test         # 37  — Vitest
-pnpm --filter @kumply/api test         # 17  — Vitest + Supertest
+pnpm --filter @kumply/contracts test   # Hardhat + Chai
+pnpm --filter @kumply/sdk test         # Vitest
+pnpm --filter @kumply/api test         # Vitest + Supertest
 ```
 
 Contract coverage includes roles and access control, pausability, the five tiers, revocation and expiry, the fee/subscription billing paths, and a bit-exact Avalanche-codec round-trip for the ACP-99 Warp payloads.
@@ -147,8 +147,17 @@ Full writeup: [docs/audits/avalanche-ecosystem-audit-2026-08-17.md](docs/audits/
 | [contracts/l1/README.md](contracts/l1/README.md) | L1 genesis and node operation |
 | [packages/sdk/README.md](packages/sdk/README.md) | SDK API reference |
 | [apps/api/openapi.yaml](apps/api/openapi.yaml) | OpenAPI 3.0 spec for the REST API |
-| [docs/audits/avalanche-ecosystem-audit-2026-08-17.md](docs/audits/avalanche-ecosystem-audit-2026-08-17.md) | Security audit against official Avalanche tooling |
+| [docs/audits/avalanche-ecosystem-audit-2026-08-17.md](docs/audits/avalanche-ecosystem-audit-2026-08-17.md) | Our own review of the contracts and docs against official Avalanche tooling (not a formal third-party audit) |
 | [docs/AI-USAGE.md](docs/AI-USAGE.md) | AI-assistance disclosure |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Setup, tests, commit style, PRs |
+| [SECURITY.md](SECURITY.md) | How to report a vulnerability privately |
+| [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) | Contributor Covenant 2.1 |
+
+### Links
+
+- Website: [kumply.xyz](https://kumply.xyz). Docs: [kumply.xyz/docs](https://kumply.xyz/docs). Developers: [kumply.xyz/developers](https://kumply.xyz/developers). Tiers: [kumply.xyz/tiers](https://kumply.xyz/tiers)
+- SDK on npm: [`@kumply/sdk`](https://www.npmjs.com/package/@kumply/sdk) (1.3.0 adds `isPersonAtLeast` / `isBusiness` / `isAgent`; tiers 1-3 are a ladder for people, 4 and 5 are separate categories)
+- X: [@kumplyavax](https://x.com/kumplyavax)
 
 ## 🚀 Getting Started
 

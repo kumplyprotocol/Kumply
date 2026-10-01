@@ -1,0 +1,37 @@
+name: Bug report
+description: Something doesn't work as documented.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "Security issue? Don't file it here. See SECURITY.md."
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      options: [Contracts, SDK (@kumply/sdk), API, Website (kumply.xyz), Docs]
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Commands, code, or the page and clicks.
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Version and network
+      placeholder: "@kumply/sdk 1.3.0, Fuji, Node 20 / browser + OS"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error output or logs
+      render: shell

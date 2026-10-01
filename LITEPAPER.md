@@ -250,7 +250,7 @@ Four structural moats:
 | **L1 Blockchain ID** | `2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b` |
 | **L1 RPC URL** | `https://subnets.avax.network/2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b/rpc` |
 | **Tests CI status** | All passing in CI (contracts, SDK, API), 4 parallel jobs |
-| **Twitter / X** | @kumply_xyz |
+| **Twitter / X** | [@kumplyavax](https://x.com/kumplyavax) |
 | **Contact** | hello@kumply.xyz |
 
 ---

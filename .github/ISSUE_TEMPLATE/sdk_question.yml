@@ -1,0 +1,38 @@
+name: SDK question
+description: Help using @kumply/sdk or calling the contracts.
+labels: ["question", "sdk"]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: SDK version
+      placeholder: "1.3.0 (npm ls @kumply/sdk)"
+    validations:
+      required: true
+  - type: dropdown
+    id: network
+    attributes:
+      label: Network
+      options: [Fuji, Mainnet C-Chain, Other / local]
+    validations:
+      required: true
+  - type: input
+    id: address
+    attributes:
+      label: Contract address used
+      placeholder: "DEPLOYMENTS.fuji.attestationStore or 0x..."
+  - type: textarea
+    id: code
+    attributes:
+      label: Code
+      description: The smallest snippet that shows the problem.
+      render: typescript
+    validations:
+      required: true
+  - type: textarea
+    id: error
+    attributes:
+      label: Error or unexpected result
+      render: shell
+    validations:
+      required: true
