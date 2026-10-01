@@ -121,6 +121,9 @@ jobs:
       - name: Build SDK (dependency)
         run: pnpm --filter @kumply/sdk build
 
+      - name: Test web app
+        run: pnpm --filter web test
+
       - name: Build web app
         run: pnpm --filter web build
         env:
