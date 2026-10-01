@@ -72,27 +72,27 @@ export default function DevelopersPage() {
 
         <h3 style={{ marginBottom: '1rem', color: 'var(--text-primary)', fontSize: '1.05rem' }}>{t('step2')}</h3>
         <div className="code-block dev-code-block">
-          <span className="keyword">import</span> {'{'} <span className="function">KumplyClient</span> {'}'} <span className="keyword">from</span> <span className="string">'@kumply/sdk'</span>;<br/><br/>
+          <span className="keyword">import</span> {'{'} <span className="function">KumplyClient</span> {'}'} <span className="keyword">from</span> <span className="string">&#39;@kumply/sdk&#39;</span>;<br/><br/>
 
           <span className="keyword">const</span> client = <span className="keyword">new</span> <span className="function">KumplyClient</span>({'{'}<br/>
-          &nbsp;&nbsp;network: <span className="string">'mainnet'</span>,<br/>
-          &nbsp;&nbsp;contractAddress: <span className="string">'{ATTESTATION_STORE_MAINNET}'</span><br/>
+          &nbsp;&nbsp;network: <span className="string">&#39;mainnet&#39;</span>,<br/>
+          &nbsp;&nbsp;contractAddress: <span className="string">&#39;{ATTESTATION_STORE_MAINNET}&#39;</span><br/>
           {'}'});<br/><br/>
 
-          <span className="comment">// Verify a wallet address</span><br/>
-          <span className="keyword">const</span> result = <span className="keyword">await</span> client.<span className="function">verify</span>(<span className="string">'0x…'</span>);<br/>
+          <span className="comment">{"// Verify a wallet address"}</span><br/>
+          <span className="keyword">const</span> result = <span className="keyword">await</span> client.<span className="function">verify</span>(<span className="string">&#39;0x…&#39;</span>);<br/>
           console.<span className="function">log</span>(result);<br/>
-          <span className="comment">// {'{'} verified: true, tier: 3, timestamp: 1790311201, expiry: 1821847195 {'}'}</span><br/>
-          <span className="comment">// timestamp = issued at, expiry = expires at (UNIX seconds)</span><br/><br/>
+          <span className="comment">{"// { verified: true, tier: 3, timestamp: 1790311201, expiry: 1821847195 }"}</span><br/>
+          <span className="comment">{"// timestamp = issued at, expiry = expires at (UNIX seconds)"}</span><br/><br/>
 
           <span className="keyword">if</span> (!result.verified) {'{'}<br/>
-          &nbsp;&nbsp;<span className="comment">// Never issued, revoked, or expired: tier is 0</span><br/>
+          &nbsp;&nbsp;<span className="comment">{"// Never issued, revoked, or expired: tier is 0"}</span><br/>
           {'}'} <span className="keyword">else if</span> (result.tier === <span className="number">5</span>) {'{'}<br/>
-          &nbsp;&nbsp;<span className="comment">// KYA verified agent — allow AI execution</span><br/>
+          &nbsp;&nbsp;<span className="comment">{"// KYA verified agent — allow AI execution"}</span><br/>
           {'}'} <span className="keyword">else if</span> (result.tier === <span className="number">4</span>) {'{'}<br/>
-          &nbsp;&nbsp;<span className="comment">// KYB verified institution — allow RWA access</span><br/>
+          &nbsp;&nbsp;<span className="comment">{"// KYB verified institution — allow RWA access"}</span><br/>
           {'}'} <span className="keyword">else if</span> (result.tier &gt;= <span className="number">2</span>) {'{'}<br/>
-          &nbsp;&nbsp;<span className="comment">// Standard KYC verified — allow trading</span><br/>
+          &nbsp;&nbsp;<span className="comment">{"// Standard KYC verified — allow trading"}</span><br/>
           {'}'}
         </div>
       </div>
@@ -126,7 +126,7 @@ export default function DevelopersPage() {
         <h3 style={{ marginBottom: '0.5rem', color: 'var(--text-primary)', fontSize: '1.05rem' }}>{t('solidityTitle')}</h3>
         <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginBottom: '1.5rem' }}>{t('soliditySubtitle')}</p>
         <div className="code-block dev-code-block">
-          <span className="comment">// SPDX-License-Identifier: Apache-2.0</span><br/>
+          <span className="comment">{"// SPDX-License-Identifier: Apache-2.0"}</span><br/>
           <span className="keyword">pragma solidity</span> ^<span className="number">0.8</span>.<span className="number">28</span>;<br/><br/>
 
           <span className="keyword">interface</span> <span className="function">IAttestationStore</span> {'{'}<br/>
@@ -147,9 +147,9 @@ export default function DevelopersPage() {
 
           &nbsp;&nbsp;<span className="keyword">function</span> <span className="function">deposit</span>(uint256 amount) <span className="keyword">external</span> {'{'}<br/>
           &nbsp;&nbsp;&nbsp;&nbsp;(bool verified, uint32 tier,,) = kumply.<span className="function">verify</span>(msg.sender);<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span className="keyword">require</span>(verified, <span className="string">"KYC required"</span>);<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span className="keyword">require</span>(tier &gt;= <span className="number">2</span>, <span className="string">"Standard tier needed"</span>);<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span className="comment">// ... deposit logic</span><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span className="keyword">require</span>(verified, <span className="string">&quot;KYC required&quot;</span>);<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span className="keyword">require</span>(tier &gt;= <span className="number">2</span>, <span className="string">&quot;Standard tier needed&quot;</span>);<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span className="comment">{"// ... deposit logic"}</span><br/>
           &nbsp;&nbsp;{'}'}<br/>
           {'}'}
         </div>
