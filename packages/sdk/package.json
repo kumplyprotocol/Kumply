@@ -18,6 +18,10 @@
     "url": "git+https://github.com/kumplyprotocol/Kumply.git",
     "directory": "packages/sdk"
   },
+  "homepage": "https://kumply.xyz/developers",
+  "bugs": {
+    "url": "https://github.com/kumplyprotocol/Kumply/issues"
+  },
   "keywords": [
     "kumply",
     "avalanche",
