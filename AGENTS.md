@@ -23,6 +23,11 @@ it gets rewritten for a public audience first (see `docs/AI-USAGE.md` and
 the README's "Security & Engineering Rigor" section for the pattern already
 used).
 
+Internal agent skills and playbooks (for example `mexico-legal-check` and
+`teammate-commit-identity`) are gitignored here. Copies live in
+`kumplyprotocol/internal` under `ai-rules/skills/` and `playbooks/`. Don't
+add them back to this repo.
+
 ## Solidity
 
 - Natspec on every public function.
@@ -35,6 +40,10 @@ used).
 
 - Strict mode everywhere.
 - Zod for input validation on the API.
+- Every public endpoint is rate limited and validates its request body with
+  Zod. That includes Next.js route handlers under `apps/web/src/app/api`,
+  not only the Express API. (`/api/token` on the web app shipped without
+  either until 1-Oct-2026.)
 - Structured JSON logging: `{ ts, level, event, ...data }`. Levels: `INFO`,
   `WARN`, `ERROR`, `AUDIT`.
 - HMAC-SHA256 on every webhook, no environment-based bypass, ever.
@@ -111,6 +120,9 @@ used).
   the `npm pack --dry-run` output. A human runs the publish. After
   publishing, confirm the registry tarball's shasum matches the dry-run.
 - Never `git add -A`. Stage files by name.
+- Security findings in this repo are fixed directly on a branch, or reported
+  privately as described in `SECURITY.md`. They are never filed as public
+  issues.
 
 ## Commits
 
