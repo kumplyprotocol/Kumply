@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { useAccount } from "wagmi";
 import { useAppKit } from "@reown/appkit/react";
 import { Link } from "@/i18n/routing";
-import { KumplyClient } from "@kumply/sdk";
+import { KumplyClient, meetsTierRequirement } from "@kumply/sdk";
 import { useKumplyNetwork } from "@/providers/KumplyNetworkProvider";
 
 const TIER_COLORS: Record<number, string> = {
@@ -48,8 +48,16 @@ const DEAD_WALLET = "0x000000000000000000000000000000000000dead";
 // Tiers 1-3 are a ladder for people; 4 (business) and 5 (agent) are separate
 // categories. A business never satisfies a person requirement, and vice versa.
 function meetsRequirement(tier: number, requiredTier: number): boolean {
-  if (requiredTier <= 3) return tier >= requiredTier && tier <= 3;
-  return tier === requiredTier;
+  if (requiredTier >= 1 && requiredTier <= 3) {
+    return meetsTierRequirement(tier, { kind: "person", minLevel: requiredTier as 1 | 2 | 3 });
+  }
+  if (requiredTier === 4) {
+    return meetsTierRequirement(tier, { kind: "business" });
+  }
+  if (requiredTier === 5) {
+    return meetsTierRequirement(tier, { kind: "agent" });
+  }
+  return false;
 }
 
 function denialReason(tier: number, requiredTier: number): string {

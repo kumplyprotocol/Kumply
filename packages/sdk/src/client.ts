@@ -9,6 +9,7 @@ import type {
 } from "./types";
 import { ATTESTATION_STORE_ABI } from "./contracts";
 import { FUJI_CONFIG, MAINNET_CONFIG, KUMPLY_L1_CONFIG, TIER_DEFINITIONS, TIER } from "./constants";
+import { meetsTierRequirement } from "./tier";
 
 /**
  * Viem chain definition for the KUMPLY Compliance L1 (Deploy-Ready).
@@ -225,7 +226,7 @@ export class KumplyClient {
       );
     }
     const result = await this.verify(address);
-    return result.verified && result.tier >= level && result.tier <= TIER.ENHANCED;
+    return result.verified && meetsTierRequirement(result.tier, { kind: "person", minLevel: level as 1 | 2 | 3 });
   }
 
   /**
@@ -234,7 +235,7 @@ export class KumplyClient {
    */
   async isBusiness(address: string): Promise<boolean> {
     const result = await this.verify(address);
-    return result.verified && result.tier === TIER.KYB;
+    return result.verified && meetsTierRequirement(result.tier, { kind: "business" });
   }
 
   /**
@@ -243,7 +244,7 @@ export class KumplyClient {
    */
   async isAgent(address: string): Promise<boolean> {
     const result = await this.verify(address);
-    return result.verified && result.tier === TIER.KYA;
+    return result.verified && meetsTierRequirement(result.tier, { kind: "agent" });
   }
 
   /**
