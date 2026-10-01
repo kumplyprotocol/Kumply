@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+- `meetsTierRequirement(tier, req)`: pure helper to test whether a tier number satisfies a `TierRequirement` (`{ kind: "person", minLevel: 1 | 2 | 3 }`, `{ kind: "business" }`, or `{ kind: "agent" }`). Useful when you already have a tier number (e.g. from `verify()` or cached verification records) without making an RPC call.
+- `TierRequirement`: type descriptor for tier requirement specifications.
+
 ## 1.3.0
 
 ### Added

@@ -112,6 +112,28 @@ await client.isBusiness("0x...");                     // exactly Tier 4
 await client.isAgent("0x...");                        // exactly Tier 5
 ```
 
+#### `meetsTierRequirement(tier: number, req: TierRequirement): boolean`
+
+Pure helper to test whether a tier number satisfies a requirement without making an RPC call. Useful when you already queried `verify()` or have cached verification results:
+
+```typescript
+import { meetsTierRequirement, type TierRequirement } from "@kumply/sdk";
+
+// When you already have a tier number (e.g. from verify()):
+const { verified, tier } = await client.verify("0x...");
+
+// Check for a person at Tier 2 (Standard) or higher (Tier 2 or 3):
+const canTrade = meetsTierRequirement(tier, { kind: "person", minLevel: 2 });
+
+// Check for a business (exactly Tier 4):
+const isCorporate = meetsTierRequirement(tier, { kind: "business" });
+
+// Check for an AI agent (exactly Tier 5):
+const isBot = meetsTierRequirement(tier, { kind: "agent" });
+```
+
+Tier 0 (unverified, expired, or revoked) never satisfies any requirement. Businesses (Tier 4) and agents (Tier 5) never satisfy person requirements, and vice versa.
+
 #### `hasTier(address: string, tier: number)` *(deprecated)*
 
 Compares tiers as one ladder (`tier >= X`), so a Tier 5 agent passes `hasTier(x, TIER.KYB)` and a Tier 4 business passes a Tier 2 check. Kept with the same behavior for backward compatibility; use the three methods above instead.
