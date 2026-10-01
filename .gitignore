@@ -81,3 +81,19 @@ KumplyMainnet.md
 /.cursorrules
 /.windsurfrules
 /.agents/
+
+# Internal agent skills and playbooks - kept locally and in kumplyprotocol/internal (private),
+# not in the public repo. Removed from tracking 30-Sep-2026; history not rewritten.
+/.claude/skills/teammate-commit-identity/
+/.claude/skills/full-context-loading/
+/.claude/skills/mexico-legal-check/
+/.claude/skills/grants-track-record/
+/.claude/skills/portfolio-funding-rollup/
+/.claude/skills/hackathon-fit-check/
+/.claude/skills/doc-accuracy-audit/
+/.claude/skills/public-claim-verify/
+/.claude/skills/repo-security-sweep/
+/.claude/skills/avalanche/
+/.claude/skills/claude-antigravity-setup/
+/PLAYBOOK-claude-antigravity-setup.md
+/skills-lock.json
