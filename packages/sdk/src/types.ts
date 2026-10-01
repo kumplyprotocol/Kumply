@@ -34,6 +34,18 @@ export interface TierConfig {
   requiredChecks: string[];
 }
 
+/**
+ * Requirement descriptor for gating access by KYC/KYB/KYA tier.
+ *
+ * - `person`: verified person whose tier is between `minLevel` and 3 (Basic < Standard < Enhanced).
+ * - `business`: verified business (exactly Tier 4, KYB).
+ * - `agent`: verified autonomous agent (exactly Tier 5, KYA).
+ */
+export type TierRequirement =
+  | { kind: "person"; minLevel: 1 | 2 | 3 }
+  | { kind: "business" }
+  | { kind: "agent" };
+
 /** Supported networks. `kumply-l1` is the dedicated Compliance L1 (chain registered on Fuji; validator activation pending). */
 export type KumplyNetwork = "fuji" | "mainnet" | "kumply-l1";
 

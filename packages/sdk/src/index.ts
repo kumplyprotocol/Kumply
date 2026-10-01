@@ -1,8 +1,10 @@
 export { KumplyClient } from "./client";
+export { meetsTierRequirement } from "./tier";
 export type {
   AttestationResult,
   Attestation,
   TierConfig,
+  TierRequirement,
   KumplyClientOptions,
   KumplyNetwork,
   NetworkConfig,

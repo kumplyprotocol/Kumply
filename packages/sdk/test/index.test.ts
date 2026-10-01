@@ -9,11 +9,13 @@ import {
   TIER,
   DEPLOYMENTS,
   KUMPLY_L1_CONFIG,
+  meetsTierRequirement,
 } from '../src/index';
 import type {
   AttestationResult,
   Attestation,
   TierConfig,
+  TierRequirement,
   KumplyClientOptions,
 } from '../src/types';
 
@@ -26,6 +28,11 @@ describe('@kumply/sdk', () => {
     it('should export KumplyClient class', () => {
       expect(KumplyClient).toBeDefined();
       expect(typeof KumplyClient).toBe('function');
+    });
+
+    it('should export meetsTierRequirement function', () => {
+      expect(meetsTierRequirement).toBeDefined();
+      expect(typeof meetsTierRequirement).toBe('function');
     });
 
     it('should export ATTESTATION_STORE_ABI', () => {
@@ -413,6 +420,119 @@ describe('@kumply/sdk', () => {
     it('mainnet and fuji stores should be distinct deployments', () => {
       expect(DEPLOYMENTS.mainnet.attestationStore).not.toBe(DEPLOYMENTS.fuji.attestationStore);
       expect(DEPLOYMENTS.mainnet.complianceGate).not.toBe(DEPLOYMENTS.fuji.complianceGate);
+    });
+  });
+
+  describe('meetsTierRequirement', () => {
+    const reqPerson1: TierRequirement = { kind: 'person', minLevel: 1 };
+    const reqPerson2: TierRequirement = { kind: 'person', minLevel: 2 };
+    const reqPerson3: TierRequirement = { kind: 'person', minLevel: 3 };
+    const reqBusiness: TierRequirement = { kind: 'business' };
+    const reqAgent: TierRequirement = { kind: 'agent' };
+
+    it('tier 0 (unverified) never satisfies any requirement', () => {
+      expect(meetsTierRequirement(0, reqPerson1)).toBe(false);
+      expect(meetsTierRequirement(0, reqPerson2)).toBe(false);
+      expect(meetsTierRequirement(0, reqPerson3)).toBe(false);
+      expect(meetsTierRequirement(0, reqBusiness)).toBe(false);
+      expect(meetsTierRequirement(0, reqAgent)).toBe(false);
+    });
+
+    it('tier 1 (Basic person) only satisfies person minLevel 1', () => {
+      expect(meetsTierRequirement(1, reqPerson1)).toBe(true);
+      expect(meetsTierRequirement(1, reqPerson2)).toBe(false);
+      expect(meetsTierRequirement(1, reqPerson3)).toBe(false);
+      expect(meetsTierRequirement(1, reqBusiness)).toBe(false);
+      expect(meetsTierRequirement(1, reqAgent)).toBe(false);
+    });
+
+    it('tier 2 (Standard person) satisfies person minLevel 1 and 2, but not 3, business, or agent', () => {
+      expect(meetsTierRequirement(2, reqPerson1)).toBe(true);
+      expect(meetsTierRequirement(2, reqPerson2)).toBe(true);
+      expect(meetsTierRequirement(2, reqPerson3)).toBe(false);
+      expect(meetsTierRequirement(2, reqBusiness)).toBe(false);
+      expect(meetsTierRequirement(2, reqAgent)).toBe(false);
+    });
+
+    it('tier 3 (Enhanced person) satisfies all person levels, but not business or agent', () => {
+      expect(meetsTierRequirement(3, reqPerson1)).toBe(true);
+      expect(meetsTierRequirement(3, reqPerson2)).toBe(true);
+      expect(meetsTierRequirement(3, reqPerson3)).toBe(true);
+      expect(meetsTierRequirement(3, reqBusiness)).toBe(false);
+      expect(meetsTierRequirement(3, reqAgent)).toBe(false);
+    });
+
+    it('tier 4 (Business / KYB) only satisfies business, never person or agent', () => {
+      expect(meetsTierRequirement(4, reqPerson1)).toBe(false);
+      expect(meetsTierRequirement(4, reqPerson2)).toBe(false);
+      expect(meetsTierRequirement(4, reqPerson3)).toBe(false);
+      expect(meetsTierRequirement(4, reqBusiness)).toBe(true);
+      expect(meetsTierRequirement(4, reqAgent)).toBe(false);
+    });
+
+    it('tier 5 (Agent / KYA) only satisfies agent, never person or business', () => {
+      expect(meetsTierRequirement(5, reqPerson1)).toBe(false);
+      expect(meetsTierRequirement(5, reqPerson2)).toBe(false);
+      expect(meetsTierRequirement(5, reqPerson3)).toBe(false);
+      expect(meetsTierRequirement(5, reqBusiness)).toBe(false);
+      expect(meetsTierRequirement(5, reqAgent)).toBe(true);
+    });
+
+    it('exhaustive truth table across all 6 tiers and all 5 requirements', () => {
+      const table: Array<[number, TierRequirement, boolean]> = [
+        // Tier 0
+        [0, reqPerson1, false],
+        [0, reqPerson2, false],
+        [0, reqPerson3, false],
+        [0, reqBusiness, false],
+        [0, reqAgent, false],
+        // Tier 1
+        [1, reqPerson1, true],
+        [1, reqPerson2, false],
+        [1, reqPerson3, false],
+        [1, reqBusiness, false],
+        [1, reqAgent, false],
+        // Tier 2
+        [2, reqPerson1, true],
+        [2, reqPerson2, true],
+        [2, reqPerson3, false],
+        [2, reqBusiness, false],
+        [2, reqAgent, false],
+        // Tier 3
+        [3, reqPerson1, true],
+        [3, reqPerson2, true],
+        [3, reqPerson3, true],
+        [3, reqBusiness, false],
+        [3, reqAgent, false],
+        // Tier 4
+        [4, reqPerson1, false],
+        [4, reqPerson2, false],
+        [4, reqPerson3, false],
+        [4, reqBusiness, true],
+        [4, reqAgent, false],
+        // Tier 5
+        [5, reqPerson1, false],
+        [5, reqPerson2, false],
+        [5, reqPerson3, false],
+        [5, reqBusiness, false],
+        [5, reqAgent, true],
+      ];
+
+      for (const [tier, req, expected] of table) {
+        expect(meetsTierRequirement(tier, req)).toBe(expected);
+      }
+    });
+
+    it('handles invalid / out-of-range tiers safely', () => {
+      expect(meetsTierRequirement(-1, reqPerson1)).toBe(false);
+      expect(meetsTierRequirement(-1, reqBusiness)).toBe(false);
+      expect(meetsTierRequirement(6, reqPerson1)).toBe(false);
+      expect(meetsTierRequirement(6, reqBusiness)).toBe(false);
+      expect(meetsTierRequirement(6, reqAgent)).toBe(false);
+      expect(meetsTierRequirement(100, reqAgent)).toBe(false);
+      expect(meetsTierRequirement(1.5, reqPerson1)).toBe(false);
+      expect(meetsTierRequirement(2.5, reqPerson2)).toBe(false);
+      expect(meetsTierRequirement(NaN, reqPerson1)).toBe(false);
     });
   });
 });
