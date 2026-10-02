@@ -357,7 +357,7 @@ export const DECK_HTML = `
     <p class="note"><strong>Honest status:</strong> the non-custodial core (AttestationStore + ComplianceGate) is live and verified on
       <strong>Mainnet C-Chain</strong> as a read-only beta with fees at zero - self-funded, July 2026 - alongside the full suite on Fuji Testnet.
       Identity checks currently run on Sumsub's sandbox tier.
-      The KUMPLY L1 is registered on Fuji with validator activation in progress - live status at <a href="https://kumply.xyz/l1">kumply.xyz/l1</a>.
+      The KUMPLY L1 is registered on Fuji, not yet activated, with no validators - live status at <a href="https://kumply.xyz/l1">kumply.xyz/l1</a>.
       Production identity checks and mainnet fee activation are exactly what this grant funds - see slide 11.</p>
   </section>
 
@@ -382,12 +382,12 @@ export const DECK_HTML = `
       <div class="flow-step">
         <span class="step-label">3 · Compose</span>
         <h3>Anyone verifies free</h3>
-        <p><code>verify(address)</code> from any contract, the SDK, or cross-L1 via ICM. Sub-second, no API keys.</p>
+        <p><code>verify(address)</code> from any contract or the SDK (cross-L1 via ICM is planned, M4). Sub-second, no API keys.</p>
       </div>
       <div class="flow-step">
         <span class="step-label">4 · Enforce</span>
         <h3>Gates and validators</h3>
-        <p><code>ComplianceGate</code> guards dApp actions by minimum tier; the L1's validator manager requires Tier 4 to join consensus.</p>
+        <p><code>ComplianceGate</code> guards dApp actions by minimum tier; the L1's validator manager will require a Tier 4 (KYB) attestation to register validators once the L1 is activated.</p>
       </div>
     </div>
     <p class="lede" style="margin-top: 1.5rem;">
@@ -400,7 +400,7 @@ export const DECK_HTML = `
   <!-- 06 · Avalanche-native -->
   <section class="slide">
     <div class="slide-head">
-      <span class="eyebrow">Why Avalanche - and only Avalanche</span>
+      <span class="eyebrow">Why Avalanche</span>
       <span class="slide-num">06 / 12</span>
     </div>
     <h2>Built with the primitives this ecosystem invented.</h2>
@@ -408,21 +408,21 @@ export const DECK_HTML = `
       <div class="cell">
         <h3>ACP-99 ValidatorSetManager, KYB-gated</h3>
         <p>Our <code>KumplyValidatorSetManager</code> implements the full two-phase validator lifecycle with
-        Avalanche-codec Warp payloads - and adds a requirement we have not seen on another L1: validators must hold a live
-        attestation of Tier 4 or higher (restricting it to exactly Tier 4 is already in the code and ships with the
+        Avalanche-codec Warp payloads. Validators must hold a live attestation of Tier 4 or higher to register
+        (restricting it to exactly Tier 4 is already in the code and ships with the
         redeploy before activation), with a dedicated test suite. <a href="https://build.avax.network/docs/avalanche-l1s/when-to-build-avalanche-l1" target="_blank" rel="noopener noreferrer">Avalanche's own Builder Hub docs</a> name
         this exact pattern - "for regulatory reasons, some applications may need a consistent access control
         mechanism for all on-chain transactions" - as one of the core reasons to build an L1.</p>
       </div>
       <div class="cell">
         <h3>ACP-77 sovereign L1</h3>
-        <p>KUMPLY Compliance L1, registered on Fuji with validator activation in progress: Subnet-EVM,
+        <p>KUMPLY Compliance L1, registered on Fuji, not yet activated, with no validators: Subnet-EVM,
         chainId 43210, 2-second blocks, KMP gas token, deployer allow-list gated by KYB.</p>
       </div>
       <div class="cell">
-        <h3>ICM: a network-wide primitive</h3>
-        <p>Attestations issued on C-Chain propagate to any Avalanche L1 via Interchain Messaging -
-        one verification serves the whole ecosystem, not one chain.</p>
+        <h3>ICM: a network-wide primitive (planned, M4)</h3>
+        <p>Planned (M4): attestations propagated to other Avalanche L1s via Interchain Messaging, so that
+        one verification could serve the whole ecosystem, not one chain. Not shipped yet.</p>
       </div>
       <div class="cell">
         <h3>C-Chain composability</h3>
@@ -442,7 +442,8 @@ export const DECK_HTML = `
     <p class="lede">
       Agentic DeFi is arriving: autonomous market makers, AI portfolio managers, on-chain agents holding real budgets.
       Every protocol will need to distinguish a <strong>trusted, bounded agent</strong> from an anonymous script -
-      and no composable on-chain compliance rail exists for that today.
+      and few composable on-chain rails exist for that today (Kite AI's Agent Passport on Avalanche is pseudonymous,
+      with no KYB behind it).
     </p>
     <div class="grid cols-3">
       <div class="cell">
@@ -502,13 +503,13 @@ export const DECK_HTML = `
       The case below is structural - the regulatory and ecosystem conditions that make this layer necessary - not
       evidence of committed demand. Converting it into named design partners - Avalanche builders and startups,
       KUMPLY's actual near-term buyer, not necessarily a regulated institution - is milestone M0: scoped, dated,
-      and costed at zero on slide 11. The same 2 confirmed pilot integrators M0 is scoped to produce are the
-      candidates for M4's pilot integrations - one proof-of-concept pipeline, not two separate asks.
+      and costed at zero on slide 11. The 2 pilot integrators M0 is scoped to confirm (one technical pilot has run so far, see the September 30 update
+      below) are the candidates for M4's pilot integrations - one proof-of-concept pipeline, not two separate asks.
       We would rather show you the gap than have you find it.</p>
-    <p class="note"><strong>Update, September 24, 2026:</strong> the gap above just narrowed by a real data point, not
+    <p class="note"><strong>Update, September 24 and October 2, 2026:</strong> the gap above just narrowed by a real data point, not
       a projection. A live KYA technical workshop with Team1 LatAm ended with <strong>13 on-chain attestations issued on the night
       of the workshop</strong>, plus 5 more issued afterwards to the first respondents of an open follow-up form (Fuji testnet, demo flow without identity verification) - the first use by people outside the team since the product was built, not seeded ahead of the
-      event, not simulated. Each carries its own transaction hash, independently verifiable on
+      event. Each carries its own transaction hash, independently verifiable on
       <a href="https://kumply.xyz/dashboard">kumply.xyz/dashboard</a> or directly in the
       <a href="https://testnet.snowtrace.io/address/0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD#events">contract's
       event log on Snowtrace</a>. This is usage evidence, not committed demand - workshop attendees, not paying
@@ -620,18 +621,18 @@ export const DECK_HTML = `
           <tr><td>M1</td><td>Security &amp; quality hardening of AttestationStore + ComplianceGate: static analysis (Slither/Aderyn), fuzz + invariant test suite, expanded edge-case coverage, failure detection and alerting on the attestation-issuance path, and a published threat-model report - findings fixed, all in-repo</td><td class="num">1–3</td><td class="num">$2,000</td></tr>
           <tr><td>M2</td><td>Mexican legal entity incorporated (a hard prerequisite: Sumsub's production tier requires one), then Sumsub production activated and the first real KYC attestations issued on-chain end-to-end. Includes a ring-fenced reserve for Tier-4 KYB provisioning, which M4's validator gating depends on</td><td class="num">2–6</td><td class="num">$3,000</td></tr>
           <tr><td>M3</td><td>Issuance fee activation on Mainnet C-Chain (reads stay free) - the free read layer is already live and verified on mainnet (self-funded, July 2026); this milestone adds a written Mexican fintech legal opinion, trademark registration with IMPI, migrates admin/treasury to cold-key ops, enables fees post-hardening, and ships the SDK mainnet release on npm</td><td class="num">6–9</td><td class="num">$2,000</td></tr>
-          <tr><td>M4</td><td>KUMPLY L1 validator activation on Fuji; ICM integration for cross-L1 attestation reads; 2 pilot integrations generating real mainnet activity</td><td class="num">9–12</td><td class="num">$3,000</td></tr>
+          <tr><td>M4</td><td>KUMPLY L1 validator activation on Fuji; ICM integration for cross-L1 attestation reads; 2 pilot integrations generating mainnet activity</td><td class="num">9–12</td><td class="num">$3,000</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="note"><strong>M0 is already producing signal, not just plans.</strong> One candidate integrator is in
-      active conversation, expected to close within the next two weeks. A separate early conversation - with
+    <p class="note"><strong>M0 is already producing signal, not just plans.</strong> One external integrator,
+      0xgasless, has now run a technical pilot (see the September 30 update on slide 9). A separate early conversation - with
       Fernando, founder of <a href="https://wasiai.io/" target="_blank" rel="noopener noreferrer">WasiAI</a>, a
       multi-chain agentic-payments platform live on Avalanche among other networks - closed with a clear "not yet":
       no real funds at stake today, revisit once third parties can publish paid agents on the platform. Itself a
       real M0 finding, not a setback.</p>
-    <p class="note"><strong>M1 is not theoretical - here is one we found this week.</strong> While preparing this
-      application, a verified identity check failed to produce its on-chain credential. The cause: Fuji's public RPC
+    <p class="note"><strong>M1 is not theoretical - here is one we found while preparing this application.</strong>
+      A verified identity check failed to produce its on-chain credential. The cause: Fuji's public RPC
       intermittently returned a gas estimate of ~9.3&times;10<sup>15</sup>, far above the block limit, so issuance reverted
       <em>after</em> the user had already passed verification. Fixed by pinning gas on the issuance path. The real defect
       wasn't the bad estimate - it was that the failure was <strong>silent</strong>. That is precisely the class of work
@@ -889,7 +890,7 @@ export const DECK_HTML_ES = `
     <p class="note"><strong>Estado honesto:</strong> el núcleo no-custodial (AttestationStore + ComplianceGate) está en vivo y verificado en
       <strong>Mainnet C-Chain</strong> como beta de solo lectura con comisiones en cero - autofinanciado, julio 2026 - junto con la suite completa en Fuji Testnet.
       Las verificaciones de identidad corren hoy en el tier sandbox de Sumsub.
-      La L1 de KUMPLY está registrada en Fuji con activación de validadores en progreso - estado en vivo en <a href="https://kumply.xyz/l1">kumply.xyz/l1</a>.
+      La L1 de KUMPLY está registrada en Fuji, todavía sin activar y sin validadores - estado en vivo en <a href="https://kumply.xyz/l1">kumply.xyz/l1</a>.
       Verificaciones de identidad en producción y activación de comisiones en mainnet es exactamente lo que financia este grant - ver diapositiva 11.</p>
   </section>
 
@@ -914,12 +915,12 @@ export const DECK_HTML_ES = `
       <div class="flow-step">
         <span class="step-label">3 · Componer</span>
         <h3>Cualquiera verifica gratis</h3>
-        <p><code>verify(address)</code> desde cualquier contrato, el SDK, o cross-L1 vía ICM. Menos de un segundo, sin API keys.</p>
+        <p><code>verify(address)</code> desde cualquier contrato o el SDK (cross-L1 vía ICM está planeado, M4). Menos de un segundo, sin API keys.</p>
       </div>
       <div class="flow-step">
         <span class="step-label">4 · Exigir</span>
         <h3>Gates y validadores</h3>
-        <p><code>ComplianceGate</code> protege acciones de dApps por tier mínimo; el gestor de validadores de la L1 exige Tier 4 para unirse al consenso.</p>
+        <p><code>ComplianceGate</code> protege acciones de dApps por tier mínimo; el gestor de validadores de la L1 exigirá una attestation Tier 4 (KYB) para registrar validadores cuando la L1 esté activada.</p>
       </div>
     </div>
     <p class="lede" style="margin-top: 1.5rem;">
@@ -932,7 +933,7 @@ export const DECK_HTML_ES = `
   <!-- 06 · Nativo de Avalanche -->
   <section class="slide">
     <div class="slide-head">
-      <span class="eyebrow">Por qué Avalanche - y solo Avalanche</span>
+      <span class="eyebrow">Por qué Avalanche</span>
       <span class="slide-num">06 / 12</span>
     </div>
     <h2>Construido con las primitivas que este ecosistema inventó.</h2>
@@ -940,8 +941,8 @@ export const DECK_HTML_ES = `
       <div class="cell">
         <h3>ACP-99 ValidatorSetManager, con gating KYB</h3>
         <p>Nuestro <code>KumplyValidatorSetManager</code> implementa el ciclo de vida completo de dos fases para validadores con
-        payloads Warp en el codec de Avalanche - y agrega un requisito que no hemos visto en otra L1: los validadores deben mantener
-        una attestation vigente de Tier 4 o superior (restringirlo a exactamente Tier 4 ya está en el código y sale con el
+        payloads Warp en el codec de Avalanche. Los validadores deben mantener una attestation vigente de Tier 4 o superior
+        para registrarse (restringirlo a exactamente Tier 4 ya está en el código y sale con el
         redespliegue antes de la activación), con una suite de tests dedicada. <a href="https://build.avax.network/docs/avalanche-l1s/when-to-build-avalanche-l1" target="_blank" rel="noopener noreferrer">La propia documentación del Builder Hub de Avalanche</a> nombra
         este mismo patrón - "por razones regulatorias, algunas aplicaciones pueden necesitar un mecanismo de control
         de acceso consistente para todas las transacciones on-chain" - como una de las razones centrales para
@@ -949,13 +950,13 @@ export const DECK_HTML_ES = `
       </div>
       <div class="cell">
         <h3>L1 soberana ACP-77</h3>
-        <p>KUMPLY Compliance L1, registrada en Fuji con activación de validadores en progreso: Subnet-EVM,
+        <p>KUMPLY Compliance L1, registrada en Fuji, todavía sin activar y sin validadores: Subnet-EVM,
         chainId 43210, bloques de 2 segundos, token de gas KMP, allow-list de deployers con gating KYB.</p>
       </div>
       <div class="cell">
-        <h3>ICM: una primitiva de toda la red</h3>
-        <p>Las attestations emitidas en C-Chain se propagan a cualquier L1 de Avalanche vía Interchain Messaging -
-        una sola verificación sirve a todo el ecosistema, no a una sola cadena.</p>
+        <h3>ICM: una primitiva de toda la red (planeado, M4)</h3>
+        <p>Planeado (M4): attestations propagadas a otras L1 de Avalanche vía Interchain Messaging, para que
+        una sola verificación pudiera servir a todo el ecosistema, no a una sola cadena. Todavía no implementado.</p>
       </div>
       <div class="cell">
         <h3>Composabilidad en C-Chain</h3>
@@ -975,7 +976,7 @@ export const DECK_HTML_ES = `
     <p class="lede">
       Las DeFi agénticas están llegando: market makers autónomos, gestores de portafolio con IA, agentes on-chain
       manejando presupuestos reales. Todo protocolo va a necesitar distinguir un <strong>agente confiable y acotado</strong>
-      de un script anónimo - y hoy no existe ningún riel de compliance componible on-chain para eso.
+      de un script anónimo - y hoy existen pocos rieles componibles on-chain para eso (el Agent Passport de Kite AI en Avalanche es pseudónimo, sin KYB detrás).
     </p>
     <div class="grid cols-3">
       <div class="cell">
@@ -1035,14 +1036,14 @@ export const DECK_HTML_ES = `
       El caso de abajo es estructural - las condiciones regulatorias y del ecosistema que hacen necesaria esta capa - no
       evidencia de demanda comprometida. Convertirlo en design partners nombrados - builders y startups de Avalanche,
       el comprador real de corto plazo de KUMPLY, no necesariamente una institución regulada - es el milestone M0: acotado, con fecha,
-      y con costo cero en la diapositiva 11. Los mismos 2 integradores piloto confirmados que M0 está diseñado para producir son los
-      candidatos para las integraciones piloto de M4 - un solo pipeline de proof-of-concept, no dos pedidos separados.
+      y con costo cero en la diapositiva 11. Los 2 integradores piloto que M0 está diseñado para confirmar (hasta hoy se ha corrido un piloto técnico, ver la
+      actualización del 30 de septiembre más abajo) son los candidatos para las integraciones piloto de M4 - un solo pipeline de proof-of-concept, no dos pedidos separados.
       Preferimos mostrarte el hueco antes de que lo encuentres tú.</p>
-    <p class="note"><strong>Actualización, 24 de septiembre de 2026:</strong> el hueco de arriba se acaba de reducir con
+    <p class="note"><strong>Actualización, 24 de septiembre y 2 de octubre de 2026:</strong> el hueco de arriba se acaba de reducir con
       un dato real, no una proyección. Un workshop técnico en vivo sobre KYA con Team1 LatAm cerró con
       <strong>13 attestations on-chain emitidas la noche del workshop</strong>, más 5 emitidas después a las primeras personas que respondieron un formulario de seguimiento abierto (testnet Fuji, flujo de demo sin
       verificación de identidad) - el primer uso por personas fuera del equipo desde que se
-      construyó el producto, no sembrado antes del evento, no simulado. Cada una tiene su propio hash de transacción,
+      construyó el producto, no sembrado antes del evento. Cada una tiene su propio hash de transacción,
       verificable de forma independiente en <a href="https://kumply.xyz/dashboard">kumply.xyz/dashboard</a> o
       directamente en el <a href="https://testnet.snowtrace.io/address/0xa3Bc5564A18e107807aF41fF2a5215Db050b22dD#events">registro
       de eventos del contrato en Snowtrace</a>. Esto es evidencia de uso, no demanda comprometida - asistentes de un
@@ -1157,18 +1158,18 @@ export const DECK_HTML_ES = `
           <tr><td>M1</td><td>Hardening de seguridad y calidad de AttestationStore + ComplianceGate: análisis estático (Slither/Aderyn), suite de fuzz + invariant tests, cobertura ampliada de edge cases, detección de fallos y alertas en el path de emisión, y un threat-model report publicado - hallazgos corregidos, todo en el repo</td><td class="num">1–3</td><td class="num">$2,000</td></tr>
           <tr><td>M2</td><td>Entidad legal mexicana incorporada (prerrequisito duro: el tier de producción de Sumsub lo requiere), luego activación de producción de Sumsub y las primeras attestations KYC reales emitidas on-chain de punta a punta. Incluye una reserva acotada para el aprovisionamiento de KYB Tier-4, del que depende el gating de validadores de M4</td><td class="num">2–6</td><td class="num">$3,000</td></tr>
           <tr><td>M3</td><td>Activación de comisiones de emisión en Mainnet C-Chain (las lecturas siguen gratis) - la capa de lectura gratis ya está en vivo y verificada en mainnet (autofinanciada, julio 2026); este milestone agrega una opinión legal fintech mexicana por escrito, registro de marca ante el IMPI, migra admin/treasury a operación con cold-key, activa comisiones tras el hardening, y libera el release del SDK para mainnet en npm</td><td class="num">6–9</td><td class="num">$2,000</td></tr>
-          <tr><td>M4</td><td>Activación de validador de la L1 de KUMPLY en Fuji; integración de ICM para lecturas de attestation cross-L1; 2 integraciones piloto generando actividad real en mainnet</td><td class="num">9–12</td><td class="num">$3,000</td></tr>
+          <tr><td>M4</td><td>Activación de validador de la L1 de KUMPLY en Fuji; integración de ICM para lecturas de attestation cross-L1; 2 integraciones piloto generando actividad en mainnet</td><td class="num">9–12</td><td class="num">$3,000</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="note"><strong>M0 ya está produciendo señal, no solo planes.</strong> Un integrador candidato está en
-      conversación activa, con cierre esperado dentro de las próximas dos semanas. Una conversación temprana distinta -
+    <p class="note"><strong>M0 ya está produciendo señal, no solo planes.</strong> Un integrador externo,
+      0xgasless, ya corrió un piloto técnico (ver la actualización del 30 de septiembre en la diapositiva 9). Una conversación temprana distinta -
       con Fernando, fundador de <a href="https://wasiai.io/" target="_blank" rel="noopener noreferrer">WasiAI</a>,
       una plataforma de pagos agénticos multi-chain, en vivo en Avalanche entre otras redes - cerró con un claro
       "todavía no": sin fondos reales en juego hoy, revisar cuando terceros puedan publicar agentes pagados en la
       plataforma. Eso en sí es un hallazgo real de M0, no un tropiezo.</p>
-    <p class="note"><strong>M1 no es teórico - aquí hay uno que encontramos esta semana.</strong> Mientras preparábamos esta
-      aplicación, una verificación de identidad aprobada no logró producir su credencial on-chain. La causa: el RPC público de Fuji
+    <p class="note"><strong>M1 no es teórico - aquí hay uno que encontramos mientras preparábamos esta aplicación.</strong>
+      Una verificación de identidad aprobada no logró producir su credencial on-chain. La causa: el RPC público de Fuji
       devolvió intermitentemente una estimación de gas de ~9.3&times;10<sup>15</sup>, muy por encima del límite de bloque, así que la emisión revirtió
       <em>después</em> de que el usuario ya había pasado la verificación. Se corrigió fijando el gas en el path de emisión. El defecto real
       no fue la mala estimación - fue que el fallo era <strong>silencioso</strong>. Ese es exactamente el tipo de trabajo que
