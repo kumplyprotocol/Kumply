@@ -521,8 +521,9 @@ export const DECK_HTML = `
       control wallet was refused while it had no attestation and was sponsored once a Tier 5 attestation was issued to
       it. Verifiable on Snowtrace: <a href="https://testnet.snowtrace.io/tx/0xc3b40ae2908f3075c10c1cd40755975be48cac817844977cd4db104c69b32b70">sponsored UserOperation from the attested wallet</a>,
       <a href="https://testnet.snowtrace.io/tx/0x084e7d548c08fd3a7440cb2a891a7448b2088c8250e8fb5e7e3e3211a462d8aa">Tier 5 attestation issued to the control wallet</a>, and
-      <a href="https://testnet.snowtrace.io/tx/0x4a4490f570fdab1d94f539cc839e85222be608525fd61cfd2a43f08c35a1d9b1">sponsored UserOperation from the control wallet</a>. Technical pilot on testnet with demo
-      attestations; no mainnet usage yet.</p>
+      <a href="https://testnet.snowtrace.io/tx/0x4a4490f570fdab1d94f539cc839e85222be608525fd61cfd2a43f08c35a1d9b1">sponsored UserOperation from the control wallet</a>. On October 2, 2026, 0xgasless publicly highlighted KUMPLY on X
+      as a team it supports with its gas-sponsorship infrastructure (<a href="https://x.com/0xGasless/status/2106040076014903341" target="_blank" rel="noopener noreferrer">0xgasless post on X</a>).
+      Technical pilot on testnet with demo attestations; no mainnet usage yet.</p>
     <div class="grid cols-3">
       <div class="cell">
         <h3>Regulatory pressure</h3>
@@ -598,6 +599,7 @@ export const DECK_HTML = `
       Avalanche builds in a single weekend (an invisible-blockchain museum ticketing app and an agricultural
       traceability demo), shared with the community. Ran a Team1-approved live technical workshop on KYA on
       September 24, 2026 - 13 on-chain attestations issued on the night of the workshop, plus 5 more issued afterwards to the first respondents of an open follow-up form (Fuji testnet, demo flow without identity verification; detail on slide 9).
+      The pilot with 0xgasless was then presented on the Team1 LatAm livestream Los Doritos (September 30, 2026).
       <strong>Building on Avalanche is what we do, grant or no grant.</strong>
     </p>
     <p class="note" style="margin-top: 1rem;"><strong>Bus factor, addressed:</strong> most shipped code still runs
@@ -1056,8 +1058,9 @@ export const DECK_HTML_ES = `
       patrocinada en cuanto se le emitió una attestation Tier 5. Verificable en Snowtrace:
       <a href="https://testnet.snowtrace.io/tx/0xc3b40ae2908f3075c10c1cd40755975be48cac817844977cd4db104c69b32b70">UserOperation patrocinada de la wallet atestada</a>,
       <a href="https://testnet.snowtrace.io/tx/0x084e7d548c08fd3a7440cb2a891a7448b2088c8250e8fb5e7e3e3211a462d8aa">attestation Tier 5 emitida a la wallet de control</a> y
-      <a href="https://testnet.snowtrace.io/tx/0x4a4490f570fdab1d94f539cc839e85222be608525fd61cfd2a43f08c35a1d9b1">UserOperation patrocinada de la wallet de control</a>. Piloto técnico en testnet con
-      attestations de demo; todavía sin uso en mainnet.</p>
+      <a href="https://testnet.snowtrace.io/tx/0x4a4490f570fdab1d94f539cc839e85222be608525fd61cfd2a43f08c35a1d9b1">UserOperation patrocinada de la wallet de control</a>. El 2 de octubre de 2026, 0xgasless destacó públicamente a KUMPLY en X
+      como un equipo al que apoya con su infraestructura de patrocinio de gas (<a href="https://x.com/0xGasless/status/2106040076014903341" target="_blank" rel="noopener noreferrer">publicación de 0xgasless en X</a>).
+      Piloto técnico en testnet con attestations de demo; todavía sin uso en mainnet.</p>
     <div class="grid cols-3">
       <div class="cell">
         <h3>Presión regulatoria</h3>
@@ -1134,6 +1137,7 @@ export const DECK_HTML_ES = `
       trazabilidad agrícola), compartidos con la comunidad. Corrieron un workshop técnico en vivo sobre KYA aprobado
       por Team1 el 24 de septiembre de 2026 - 13 attestations on-chain emitidas la noche del workshop, más 5 emitidas después a las primeras personas que respondieron un formulario de seguimiento abierto (testnet Fuji, flujo de demo sin verificación de identidad;
       detalle en la diapositiva 9).
+      El piloto con 0xgasless se presentó después en el livestream de Team1 LatAm Los Doritos (30 de septiembre de 2026).
       <strong>Construir en Avalanche es lo que hacemos, con o sin grant.</strong>
     </p>
     <p class="note" style="margin-top: 1rem;"><strong>Bus factor, resuelto:</strong> la mayoría del código enviado
