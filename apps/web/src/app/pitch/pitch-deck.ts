@@ -723,7 +723,7 @@ export const DECK_HTML = `
     </div>
     <div class="footer-links">
       <a href="https://kumply.xyz">kumply.xyz</a>
-      <a href="https://discord.gg/8yykwtweX">Discord</a>
+      <a href="https://discord.gg/fuSpmPa9dc">Discord</a>
       <a href="https://t.me/+1X7jBa3Avb84NWU5">Telegram</a>
       <a href="https://x.com/kumplyavax">X</a>
       <a href="https://kumply.xyz/demo">Live demo</a>
@@ -1262,7 +1262,7 @@ export const DECK_HTML_ES = `
     </div>
     <div class="footer-links">
       <a href="https://kumply.xyz">kumply.xyz</a>
-      <a href="https://discord.gg/8yykwtweX">Discord</a>
+      <a href="https://discord.gg/fuSpmPa9dc">Discord</a>
       <a href="https://t.me/+1X7jBa3Avb84NWU5">Telegram</a>
       <a href="https://x.com/kumplyavax">X</a>
       <a href="https://kumply.xyz/demo">Demo en vivo</a>
