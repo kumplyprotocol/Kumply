@@ -77,6 +77,15 @@ for a public audience first (see `docs/AI-USAGE.md` and the README's
 - Spanish copy uses Mexican Spanish (tú), never voseo ("describes", not
   "describís").
 
+## Blog posts
+
+- Don't state in a post's body that it was drafted or reviewed with AI
+  assistance. That disclosure lives in `docs/AI-USAGE.md`, the git commit
+  trailer, and the PR description — never repeat it in the post text
+  itself. A post can still discuss AI tooling as subject matter (e.g. a bug
+  found in an AI tool during an audit) — that's content, not a disclosure
+  of how the post was written, and stays as-is.
+
 ## Tier semantics
 
 - Tiers 1-3 are a ladder for people. Tier 4 (business, KYB) and Tier 5
