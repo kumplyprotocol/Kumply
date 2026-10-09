@@ -2,10 +2,7 @@
 
 This file carries the hard rules that apply to any AI agent working in this
 repo, regardless of tool (Claude Code, Antigravity, Cursor, etc.). It is
-public and safe to read by anyone — internal strategy, team, and grant
-context live in `CLAUDE.md` / `claude_estrategico.md` / `Memory.md`, which
-are gitignored on purpose (see "Public/private boundary" below) and never
-duplicated here.
+public and safe to read by anyone.
 
 For architecture, contracts, and full technical detail, start with
 [README.md](README.md) and [LITEPAPER.md](LITEPAPER.md), not this file —
@@ -13,20 +10,12 @@ this is rules, not documentation.
 
 ## Public/private boundary
 
-`CLAUDE.md`, `claude_estrategico.md`, `Memory.md`, `.agents/`,
-`.cursorrules`/`.windsurfrules`/`.clinerules`, and `docs/submissions/` are
-intentionally excluded from this public repo (see `.gitignore`). They hold
-internal strategy, team contacts, and grant-negotiation context; copies sync
-manually to a private repo. Never move content from those files into this
-one or into any other public file — if something in them needs to be public,
-it gets rewritten for a public audience first (see `docs/AI-USAGE.md` and
-the README's "Security & Engineering Rigor" section for the pattern already
-used).
-
-Internal agent skills and playbooks (for example `mexico-legal-check` and
-`teammate-commit-identity`) are gitignored here. Copies live in
-`kumplyprotocol/internal` under `ai-rules/skills/` and `playbooks/`. Don't
-add them back to this repo.
+Local agent files (`CLAUDE.md`, editor rule files, root `.claude/skills/`
+and `.claude/commands/`, `playbooks/`) and internal planning notes are
+gitignored on purpose and kept outside this repo. Never copy content from
+them into a tracked file. If something there needs to be public, rewrite it
+for a public audience first (see `docs/AI-USAGE.md` and the README's
+"Security & Engineering Rigor" section for the pattern already used).
 
 ## Solidity
 
@@ -134,45 +123,19 @@ add them back to this repo.
   already-deployed and verified contract get reported and confirmed by a
   human before being applied — not applied automatically.
 
-## Session resumption and hallucination discipline
+## Accuracy
 
-**When resuming with `claude --continue`, don't re-read what's already
-in context or re-verify what's already verified this session.** Answer
-directly on what's already established. Detail and why in
-`playbooks/continue.md`.
-
-**Zero hallucination. Anything date-dependent gets verified live before
-being stated, never from training memory — versions, prices, platform
-rules, legal deadlines.** It's fine to say "I don't know, that needs
-verifying." Every claim should trace back to something verifiable; if
-not, mark it as inference. Full guidance in `playbooks/continue.md`.
-
-## Images and screenshots
-
-**Image token cost is area-based, not file-weight-based — crop to the
-relevant region before pasting.** Compressing the file (JPEG/WebP)
-doesn't reduce tokens and can hurt text legibility; cropping dimensions
-does. Detail and verified figures in `playbooks/images.md`.
-
-**Batch multiple images into the same turn instead of pasting them one
-at a time across separate turns.** Each new image invalidates the
-prompt cache from that point forward — pasting one at a time forces
-repeated cache rewrites instead of cheap reads. Detail in
-`playbooks/images.md`.
+- Anything date-dependent (versions, prices, platform rules, legal
+  deadlines) is verified live before it is stated, never from memory.
+  If it can't be verified, say so or mark it as inference.
 
 ## Writing PRs, issues, and comments on GitHub
 
-**Every PR, issue, and comment published to GitHub is written humanized
-and tight - no padding, no AI-writing tells (em dashes, curly quotes,
-unicode ellipsis), and the Co-Authored-By disclosure stays visible,
-never stripped out to look more human.** Detail in `playbooks/git.md`.
-
-**When the root cause is already confirmed, propose the actual fix, not
-just the report.** A diff, corrected line, or exact reproduction beats
-"this seems broken." Detail in `playbooks/git.md`.
-
-**When citing or paraphrasing another thread, re-read the actual source
-today before writing the citation - the disclosure's re-verification
-sentence is only added if that re-read really happened.** A short, true
-disclosure beats a longer one nothing backs up. Detail in
-`playbooks/git.md`.
+- Tight and specific: state the finding, the evidence, and what was done.
+  No padding.
+- The AI-assistance disclosure stays visible on every PR and comment that
+  had AI help. It is never removed.
+- When the root cause is confirmed, include the fix (a diff or the
+  corrected line), not just the report.
+- When citing another thread, re-read the source the same day before
+  quoting it.
