@@ -55,7 +55,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>One point worth being exact about: that on-chain paymaster does not read KUMPLY. It is a <code>VerifyingSingletonPaymaster</code> (source verified on Routescan), and its bytecode contains neither our AttestationStore address nor the selectors for <code>verify()</code> or <code>attestations()</code>. The KUMPLY check happens in the service. The chain only confirms the service's approval.</p>
 
 <figure class="blog-diagram">
-<svg viewBox="0 0 700 250" width="100%" role="img" aria-label="Diagram: a smart account sends a UserOperation asking for sponsored gas, the 0xgasless service reads KUMPLY's verify() on Fuji and signs an approval only if the account holds a valid attestation, then the EntryPoint and the paymaster check that approval on-chain and run the operation. Without a valid attestation the service refuses and no gas is spent. Only step 3 is a transaction.">
+<svg viewBox="0 0 700 250" width="100%" role="img" aria-label="Diagram: a smart account sends a UserOperation asking for sponsored gas, the 0xgasless service calls KUMPLY's verify() on Fuji, and AttestationStore's response is what triggers the service to sign an approval, only when the account holds a valid attestation, then the EntryPoint and the paymaster check that approval on-chain and run the operation. Without a valid attestation the service refuses and no gas is spent. Only step 3 is a transaction.">
 <rect x="8" y="25" width="190" height="115" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
 <text x="26" y="52" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">STEP 1</text>
 <text x="26" y="78" font-size="15" font-weight="800" fill="var(--text-primary)">UserOperation</text>
@@ -76,7 +76,10 @@ export const BLOG_POSTS: BlogPost[] = [
 <text x="243" y="222" font-size="12" fill="var(--text-tertiary)">verify(sender), free read</text>
 <path d="M202 82 L251 82" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#pmp-arrow1-en)"/>
 <path d="M449 82 L498 82" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#pmp-arrow2-en)"/>
-<path d="M350 144 L350 174" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#pmp-arrow3-en)"/>
+<path d="M330 144 L330 174" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#pmp-arrow3-en)"/>
+<path d="M370 174 L370 144" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#pmp-arrow4-en)"/>
+<text x="322" y="163" font-size="9" fill="var(--text-tertiary)" text-anchor="end">call</text>
+<text x="378" y="163" font-size="9" fill="var(--text-tertiary)" text-anchor="start">ack</text>
 <text x="8" y="196" font-size="12" fill="var(--text-tertiary)">No valid attestation:</text>
 <text x="8" y="214" font-size="12" fill="var(--text-tertiary)">refused, no gas spent</text>
 <text x="502" y="196" font-size="12" fill="var(--text-tertiary)">Only step 3 is a</text>
@@ -85,6 +88,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <marker id="pmp-arrow1-en" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
 <marker id="pmp-arrow2-en" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
 <marker id="pmp-arrow3-en" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="pmp-arrow4-en" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
 </defs>
 </svg>
 </figure>
@@ -139,7 +143,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Un punto en el que conviene ser exactos: ese paymaster on-chain no lee KUMPLY. Es un <code>VerifyingSingletonPaymaster</code> (código verificado en Routescan), y su bytecode no contiene ni la dirección de nuestro AttestationStore ni los selectores de <code>verify()</code> o <code>attestations()</code>. La revisión de KUMPLY ocurre en el servicio. La cadena solo confirma la aprobación del servicio.</p>
 
 <figure class="blog-diagram">
-<svg viewBox="0 0 700 250" width="100%" role="img" aria-label="Diagrama: una smart account envía una UserOperation pidiendo gas patrocinado, el servicio de 0xgasless lee el verify() de KUMPLY en Fuji y firma una aprobación solo si la cuenta tiene una attestation válida, y luego el EntryPoint y el paymaster revisan esa aprobación on-chain y ejecutan la operación. Sin attestation válida el servicio rechaza y no se gasta gas. Solo el paso 3 es una transacción.">
+<svg viewBox="0 0 700 250" width="100%" role="img" aria-label="Diagrama: una smart account envía una UserOperation pidiendo gas patrocinado, el servicio de 0xgasless llama al verify() de KUMPLY en Fuji, y la respuesta de AttestationStore es lo que dispara que el servicio firme una aprobación, solo cuando la cuenta tiene una attestation válida, y luego el EntryPoint y el paymaster revisan esa aprobación on-chain y ejecutan la operación. Sin attestation válida el servicio rechaza y no se gasta gas. Solo el paso 3 es una transacción.">
 <rect x="8" y="25" width="190" height="115" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
 <text x="26" y="52" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PASO 1</text>
 <text x="26" y="78" font-size="15" font-weight="800" fill="var(--text-primary)">UserOperation</text>
@@ -160,7 +164,10 @@ export const BLOG_POSTS: BlogPost[] = [
 <text x="243" y="222" font-size="12" fill="var(--text-tertiary)">verify(sender), lectura gratis</text>
 <path d="M202 82 L251 82" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#pmp-arrow1-es)"/>
 <path d="M449 82 L498 82" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#pmp-arrow2-es)"/>
-<path d="M350 144 L350 174" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#pmp-arrow3-es)"/>
+<path d="M330 144 L330 174" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#pmp-arrow3-es)"/>
+<path d="M370 174 L370 144" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#pmp-arrow4-es)"/>
+<text x="322" y="163" font-size="9" fill="var(--text-tertiary)" text-anchor="end">llama</text>
+<text x="378" y="163" font-size="9" fill="var(--text-tertiary)" text-anchor="start">ack</text>
 <text x="8" y="196" font-size="12" fill="var(--text-tertiary)">Sin attestation válida:</text>
 <text x="8" y="214" font-size="12" fill="var(--text-tertiary)">rechazo, sin gastar gas</text>
 <text x="502" y="196" font-size="12" fill="var(--text-tertiary)">Solo el paso 3 es</text>
@@ -169,6 +176,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <marker id="pmp-arrow1-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
 <marker id="pmp-arrow2-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
 <marker id="pmp-arrow3-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="pmp-arrow4-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
 </defs>
 </svg>
 </figure>
