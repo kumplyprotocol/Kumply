@@ -22,6 +22,198 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "0xgasless-paymaster-pilot-kya",
+    date: "2026-10-08",
+    author: {
+      name: "Giovanny Amador",
+      role: { en: "Co-founder, Engineering Lead", es: "Co-founder, Líder de Ingeniería" },
+    },
+    readMinutes: 6,
+    category: "PILOT",
+    title: {
+      en: "How a Paymaster Decides Who Gets Free Gas: Our Testnet Pilot With 0xgasless",
+      es: "Cómo un Paymaster Decide a Quién Patrocinarle el Gas: Nuestro Piloto en Testnet con 0xgasless",
+    },
+    excerpt: {
+      en: "A paymaster that sponsors gas for any wallet drains fast. In a technical pilot on Fuji testnet, 0xgasless's sponsorship service checked KUMPLY's verify() before approving gas: a control wallet was refused without an attestation, then sponsored after one was issued. Three transactions you can check, one ERC-7562 detail that breaks on-chain versions of the check, and an honest status: testnet, demo attestations, no mainnet use.",
+      es: "Un paymaster que patrocina el gas de cualquier wallet se vacía rápido. En un piloto técnico en testnet Fuji, el servicio de patrocinio de 0xgasless consultó el verify() de KUMPLY antes de aprobar el gas: una wallet de control fue rechazada sin attestation y luego patrocinada después de que se le emitió una. Tres transacciones que puedes revisar, un detalle de ERC-7562 que rompe las versiones on-chain de la revisión, y un estado honesto: testnet, attestations de demo, sin uso en mainnet.",
+    },
+    bodyHtml: {
+      en: `
+<p>A paymaster pays the gas fee for someone else's transaction. That is the appeal of ERC-4337 for onboarding: a new user or an AI agent can act without first holding the chain's native token. It is also an open invitation. A paymaster that sponsors every wallet that asks gets scripted wallets, and its deposit drains as fast as someone can write a loop.</p>
+
+<p>We ran a technical pilot on Avalanche Fuji testnet with 0xgasless, a team building gas-sponsorship infrastructure, and showed it live on September 30, 2026. It tests one answer to "who do we sponsor?": the accounts that hold a valid KUMPLY attestation, and nobody else. This post covers what ran, three transactions you can check yourself, one ERC-7562 detail that trips up on-chain versions of this check, and what the pilot does not prove.</p>
+
+<h2>The problem: free gas attracts everything</h2>
+
+<p>Gating sponsorship needs a signal with three properties. It has to be cheap to check on every request. It has to expire or be revocable, so a bad actor does not keep access forever. And it has to attach to the address that actually sends the UserOperation, which in ERC-4337 is the smart account (<code>userOp.sender</code>), not the EOA that controls it. An allowlist maintained by hand covers none of that at scale. An attestation read from a public contract covers all three.</p>
+
+<h2>How the pilot is wired</h2>
+
+<p>0xgasless runs a sponsorship service in front of its paymaster. For each UserOperation, the service calls KUMPLY's <code>verify()</code> on Fuji for the smart account and approves sponsorship only when the account holds a valid attestation. Which tier it requires is their policy to set. The approval travels with the UserOperation as paymaster data, and on-chain their paymaster contract checks that the approval is genuine before the EntryPoint runs the operation.</p>
+
+<p>One point worth being exact about: that on-chain paymaster does not read KUMPLY. It is a <code>VerifyingSingletonPaymaster</code> (source verified on Routescan), and its bytecode contains neither our AttestationStore address nor the selectors for <code>verify()</code> or <code>attestations()</code>. The KUMPLY check happens in the service. The chain only confirms the service's approval.</p>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 250" width="100%" role="img" aria-label="Diagram: a smart account sends a UserOperation asking for sponsored gas, the 0xgasless service reads KUMPLY's verify() on Fuji and signs an approval only if the account holds a valid attestation, then the EntryPoint and the paymaster check that approval on-chain and run the operation. Without a valid attestation the service refuses and no gas is spent. Only step 3 is a transaction.">
+<rect x="8" y="25" width="190" height="115" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="52" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">STEP 1</text>
+<text x="26" y="78" font-size="15" font-weight="800" fill="var(--text-primary)">UserOperation</text>
+<text x="26" y="100" font-size="12" fill="var(--text-tertiary)">from a smart account</text>
+<text x="26" y="118" font-size="12" fill="var(--text-tertiary)">asks for sponsored gas</text>
+<rect x="255" y="25" width="190" height="115" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="273" y="52" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">STEP 2</text>
+<text x="273" y="78" font-size="15" font-weight="800" fill="var(--text-primary)">0xgasless service</text>
+<text x="273" y="100" font-size="12" fill="var(--text-tertiary)">reads KUMPLY verify()</text>
+<text x="273" y="118" font-size="12" fill="var(--text-tertiary)">signs approval if valid</text>
+<rect x="502" y="25" width="190" height="115" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="520" y="52" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">STEP 3</text>
+<text x="520" y="78" font-size="15" font-weight="800" fill="var(--text-primary)">On-chain, Fuji</text>
+<text x="520" y="100" font-size="12" fill="var(--text-tertiary)">EntryPoint + paymaster</text>
+<text x="520" y="118" font-size="12" fill="var(--text-tertiary)">check approval, run op</text>
+<rect x="225" y="178" width="250" height="56" rx="12" fill="var(--bg-card)" stroke="var(--accent)"/>
+<text x="243" y="203" font-size="13" font-weight="800" fill="var(--text-primary)">KUMPLY AttestationStore</text>
+<text x="243" y="222" font-size="12" fill="var(--text-tertiary)">verify(sender), free read</text>
+<path d="M202 82 L251 82" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#pmp-arrow1-en)"/>
+<path d="M449 82 L498 82" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#pmp-arrow2-en)"/>
+<path d="M350 144 L350 174" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#pmp-arrow3-en)"/>
+<text x="8" y="196" font-size="12" fill="var(--text-tertiary)">No valid attestation:</text>
+<text x="8" y="214" font-size="12" fill="var(--text-tertiary)">refused, no gas spent</text>
+<text x="502" y="196" font-size="12" fill="var(--text-tertiary)">Only step 3 is a</text>
+<text x="502" y="214" font-size="12" fill="var(--text-tertiary)">transaction</text>
+<defs>
+<marker id="pmp-arrow1-en" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="pmp-arrow2-en" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="pmp-arrow3-en" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
+
+<h2>The demo, in three transactions</h2>
+
+<p>During the live demo, 0xgasless's service refused to sponsor a control wallet that had no attestation. We then issued a Tier 5 attestation to it, and the same wallet was sponsored. The refusal happened inside their service, so it has no transaction. What the chain does show is that the control account had no attestation at block 58,898,378, one block before we issued it. The three moments that did land on-chain are all on Fuji, and you can check each one. All times are UTC, September 30, 2026.</p>
+
+<div class="blog-scenario">
+<p><strong>1. Sponsored operation, original pilot wallet.</strong> Block 58,898,127, 15:05:58. A UserOperation from the smart account that already held a demo Tier 5 attestation (issued on September 25), paid for by the paymaster: <a href="https://testnet.snowtrace.io/tx/0xc3b40ae2908f3075c10c1cd40755975be48cac817844977cd4db104c69b32b70" target="_blank" rel="noopener noreferrer">0xc3b40a...2b70</a>. Status success. The paymaster paid 0.000191 AVAX in test gas.</p>
+<p><strong>2. Attestation issued to the control wallet.</strong> Block 58,898,379, 15:14:04. One <code>AttestationIssued</code> event, with the control account <code>0x91a0...Bf33</code> as the subject, Tier 5, expiry September 30, 2027: <a href="https://testnet.snowtrace.io/tx/0x084e7d548c08fd3a7440cb2a891a7448b2088c8250e8fb5e7e3e3211a462d8aa" target="_blank" rel="noopener noreferrer">0x084e7d...d8aa</a>. Status success. Issued by KUMPLY's verifier key, on our side.</p>
+<p><strong>3. Sponsored operation, control wallet.</strong> Block 58,898,490, 15:17:38. The same account, now sponsored: <a href="https://testnet.snowtrace.io/tx/0x4a4490f570fdab1d94f539cc839e85222be608525fd61cfd2a43f08c35a1d9b1" target="_blank" rel="noopener noreferrer">0x4a4490...d9b1</a>. Status success. The paymaster paid 0.000480 AVAX in test gas.</p>
+</div>
+
+<p>One detail in transaction 3 is easy to miss. The control account did not exist yet. That UserOperation carried <code>initCode</code>, and the logs include an <code>AccountDeployed</code> event, so the account was deployed by the very operation that was sponsored. We had issued the attestation to an address that was still counterfactual, and it worked because the attestation is keyed by address, not by whether code lives there yet. It also shows why the check has to run on <code>userOp.sender</code>: that is the address that exists in the UserOperation before anything is deployed.</p>
+
+<h2>The ERC-7562 catch: verify() can't run inside validation</h2>
+
+<p>The pilot checks KUMPLY off-chain, so it never hit this. A team that wants the check inside its own paymaster will. ERC-7562 defines the validation rules bundlers enforce on UserOperations, and rule OP-011 blocks a list of opcodes during validation, including <code>TIMESTAMP</code>. KUMPLY's <code>verify()</code> compares the expiry with <code>block.timestamp</code>, which is exactly that opcode. Call it from <code>validatePaymasterUserOp</code> and a bundler that enforces ERC-7562 will reject the operation.</p>
+
+<p>The fix is to read the raw record instead. <code>attestations(sender)</code> returns the stored fields without comparing time, and the paymaster hands the expiry to the EntryPoint as <code>validUntil</code> in the returned <code>validationData</code>. The EntryPoint enforces that time check itself, outside validation. In our example, <code>kumplyValidationData(sender)</code> returns the rejection value when there is no attestation, when it was revoked, or when the tier is not exactly the required one, and otherwise packs the expiry into <code>validUntil</code>. The tier match is exact on purpose: tiers 1 to 3 are a ladder for people, while 4 (business) and 5 (agent) are separate categories.</p>
+
+<p>The example is <a href="https://github.com/kumplyprotocol/Kumply/blob/main/contracts/contracts/examples/KumplyPaymasterCheck.sol" target="_blank" rel="noopener noreferrer"><code>KumplyPaymasterCheck.sol</code></a>, with <a href="https://github.com/kumplyprotocol/Kumply/blob/main/contracts/test/KumplyPaymasterCheck.test.ts" target="_blank" rel="noopener noreferrer">10 Hardhat tests</a> that pass today. They cover a never-attested account, a person tier, a business, revocation, an expired record, a re-issue, and a trace check that the function never executes <code>TIMESTAMP</code>, unlike <code>verify()</code>. It is example code, not audited, and the pilot does not use it. The integration notes live at <a href="https://kumply.xyz/developers#paymasters" target="_blank" rel="noopener noreferrer">kumply.xyz/developers#paymasters</a>.</p>
+
+<h2>Where this stands</h2>
+
+<p>This is a technical pilot on testnet. The attestations in it are demo attestations: KUMPLY's team issued them directly on Fuji, and there is no identity verification behind them. No document check, no business check, no review of the agent. On-chain, a pilot Tier 5 only records that KUMPLY marked that address as Tier 5 until an expiry. Please don't read it as proof of who operates an agent. Nothing from this pilot touches Mainnet C-Chain, and as of October 8, 2026, the mainnet AttestationStore reports zero attestations issued.</p>
+
+<p>On October 2, 0xgasless said publicly on X: <a href="https://x.com/0xGasless/status/2106040076014903341" target="_blank" rel="noopener noreferrer">"Excited to support teams like @KumplyAvax with 0xgasless infrastructure, sponsored transactions and agentic payment rails."</a> We appreciate it. Mainnet is something we expect to discuss with them next, but nothing is scheduled. Before any attestation is issued there, we plan to move our issuing keys to stronger custody and to run identity checks through a production provider.</p>
+
+<h2>If you want to build something similar</h2>
+
+<p>Gate on the account that sends the UserOperation, not its owner. Decide whether your check lives off-chain, like the pilot, or on-chain, and if it is on-chain, read <code>attestations(sender)</code> and return the expiry as <code>validUntil</code>. Match the tier exactly instead of using a "greater than or equal" comparison. Keep any approval you sign short-lived and never longer than the attestation's expiry, so a revocation takes effect quickly. Then start on Fuji, where reading <code>verify()</code> is free.</p>
+
+<p>The guide is at <a href="https://kumply.xyz/developers#paymasters" target="_blank" rel="noopener noreferrer">kumply.xyz/developers</a>, and the TypeScript SDK is on npm as <a href="https://www.npmjs.com/package/@kumply/sdk" target="_blank" rel="noopener noreferrer">@kumply/sdk</a> (version 1.3.0 at the time of writing).</p>
+
+<p>This post was drafted with AI assistance (Claude) under our direction and reviewed by hand. Every transaction, block, and quote was checked against Fuji and the sources below on October 8, 2026. More on how we use AI: <a href="https://github.com/kumplyprotocol/Kumply/blob/main/docs/AI-USAGE.md" target="_blank" rel="noopener noreferrer">docs/AI-USAGE.md</a>.</p>
+
+<p>Sources: <a href="https://eips.ethereum.org/EIPS/eip-7562" target="_blank" rel="noopener noreferrer">ERC-7562</a>, <a href="https://x.com/0xGasless/status/2106040076014903341" target="_blank" rel="noopener noreferrer">0xgasless on X, October 2, 2026</a>, <a href="https://testnet.snowtrace.io/tx/0xc3b40ae2908f3075c10c1cd40755975be48cac817844977cd4db104c69b32b70" target="_blank" rel="noopener noreferrer">sponsored operation, original wallet</a>, <a href="https://testnet.snowtrace.io/tx/0x084e7d548c08fd3a7440cb2a891a7448b2088c8250e8fb5e7e3e3211a462d8aa" target="_blank" rel="noopener noreferrer">attestation to the control wallet</a>, <a href="https://testnet.snowtrace.io/tx/0x4a4490f570fdab1d94f539cc839e85222be608525fd61cfd2a43f08c35a1d9b1" target="_blank" rel="noopener noreferrer">sponsored operation, control wallet</a>.</p>
+`,
+      es: `
+<p>Un paymaster paga la comisión de gas de la transacción de alguien más. Ese es el atractivo de ERC-4337 para el onboarding: un usuario nuevo o un agente de IA puede actuar sin tener antes el token nativo de la cadena. También es una invitación abierta. Un paymaster que patrocina a toda wallet que lo pide recibe wallets generadas con scripts, y su depósito se vacía tan rápido como alguien escriba un ciclo.</p>
+
+<p>Corrimos un piloto técnico en la testnet Fuji de Avalanche con 0xgasless, un equipo que construye infraestructura de patrocinio de gas, y lo mostramos en vivo el 30 de septiembre de 2026. Prueba una respuesta a "¿a quién patrocinamos?": a las cuentas que tienen una attestation válida de KUMPLY, y a nadie más. Este post cubre qué corrió, tres transacciones que puedes revisar tú mismo, un detalle de ERC-7562 que rompe las versiones on-chain de esta revisión, y lo que el piloto no demuestra.</p>
+
+<h2>El problema: el gas gratis atrae de todo</h2>
+
+<p>Para controlar el patrocinio hace falta una señal con tres propiedades. Tiene que ser barata de revisar en cada solicitud. Tiene que expirar o poder revocarse, para que un mal actor no conserve el acceso para siempre. Y tiene que ligarse a la dirección que de verdad envía la UserOperation, que en ERC-4337 es la smart account (<code>userOp.sender</code>), no la EOA que la controla. Una lista de permitidos mantenida a mano no cubre nada de eso a escala. Una attestation leída de un contrato público cubre las tres.</p>
+
+<h2>Cómo está conectado el piloto</h2>
+
+<p>0xgasless corre un servicio de patrocinio frente a su paymaster. Para cada UserOperation, el servicio llama al <code>verify()</code> de KUMPLY en Fuji para la smart account y aprueba el patrocinio solo cuando la cuenta tiene una attestation válida. Qué tier exige es política suya. La aprobación viaja con la UserOperation como datos del paymaster, y on-chain su contrato paymaster revisa que la aprobación sea genuina antes de que el EntryPoint ejecute la operación.</p>
+
+<p>Un punto en el que conviene ser exactos: ese paymaster on-chain no lee KUMPLY. Es un <code>VerifyingSingletonPaymaster</code> (código verificado en Routescan), y su bytecode no contiene ni la dirección de nuestro AttestationStore ni los selectores de <code>verify()</code> o <code>attestations()</code>. La revisión de KUMPLY ocurre en el servicio. La cadena solo confirma la aprobación del servicio.</p>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 250" width="100%" role="img" aria-label="Diagrama: una smart account envía una UserOperation pidiendo gas patrocinado, el servicio de 0xgasless lee el verify() de KUMPLY en Fuji y firma una aprobación solo si la cuenta tiene una attestation válida, y luego el EntryPoint y el paymaster revisan esa aprobación on-chain y ejecutan la operación. Sin attestation válida el servicio rechaza y no se gasta gas. Solo el paso 3 es una transacción.">
+<rect x="8" y="25" width="190" height="115" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="52" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PASO 1</text>
+<text x="26" y="78" font-size="15" font-weight="800" fill="var(--text-primary)">UserOperation</text>
+<text x="26" y="100" font-size="12" fill="var(--text-tertiary)">de una smart account</text>
+<text x="26" y="118" font-size="12" fill="var(--text-tertiary)">pide gas patrocinado</text>
+<rect x="255" y="25" width="190" height="115" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="273" y="52" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PASO 2</text>
+<text x="273" y="78" font-size="15" font-weight="800" fill="var(--text-primary)">Servicio 0xgasless</text>
+<text x="273" y="100" font-size="12" fill="var(--text-tertiary)">lee verify() de KUMPLY</text>
+<text x="273" y="118" font-size="12" fill="var(--text-tertiary)">firma si es válida</text>
+<rect x="502" y="25" width="190" height="115" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="520" y="52" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PASO 3</text>
+<text x="520" y="78" font-size="15" font-weight="800" fill="var(--text-primary)">On-chain, Fuji</text>
+<text x="520" y="100" font-size="12" fill="var(--text-tertiary)">EntryPoint + paymaster</text>
+<text x="520" y="118" font-size="12" fill="var(--text-tertiary)">revisan y ejecutan</text>
+<rect x="225" y="178" width="250" height="56" rx="12" fill="var(--bg-card)" stroke="var(--accent)"/>
+<text x="243" y="203" font-size="13" font-weight="800" fill="var(--text-primary)">KUMPLY AttestationStore</text>
+<text x="243" y="222" font-size="12" fill="var(--text-tertiary)">verify(sender), lectura gratis</text>
+<path d="M202 82 L251 82" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#pmp-arrow1-es)"/>
+<path d="M449 82 L498 82" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#pmp-arrow2-es)"/>
+<path d="M350 144 L350 174" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#pmp-arrow3-es)"/>
+<text x="8" y="196" font-size="12" fill="var(--text-tertiary)">Sin attestation válida:</text>
+<text x="8" y="214" font-size="12" fill="var(--text-tertiary)">rechazo, sin gastar gas</text>
+<text x="502" y="196" font-size="12" fill="var(--text-tertiary)">Solo el paso 3 es</text>
+<text x="502" y="214" font-size="12" fill="var(--text-tertiary)">una transacción</text>
+<defs>
+<marker id="pmp-arrow1-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="pmp-arrow2-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="pmp-arrow3-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
+
+<h2>La demo, en tres transacciones</h2>
+
+<p>Durante la demo en vivo, el servicio de 0xgasless se negó a patrocinar una wallet de control que no tenía attestation. Después le emitimos una attestation Tier 5, y esa misma wallet fue patrocinada. El rechazo ocurrió dentro de su servicio, así que no tiene transacción. Lo que la cadena sí muestra es que la cuenta de control no tenía attestation en el bloque 58,898,378, un bloque antes de que la emitiéramos. Los tres momentos que sí quedaron on-chain están en Fuji y puedes revisar cada uno. Todas las horas son UTC, 30 de septiembre de 2026.</p>
+
+<div class="blog-scenario">
+<p><strong>1. Operación patrocinada, wallet original del piloto.</strong> Bloque 58,898,127, 15:05:58. Una UserOperation de la smart account que ya tenía una attestation Tier 5 de demo (emitida el 25 de septiembre), pagada por el paymaster: <a href="https://testnet.snowtrace.io/tx/0xc3b40ae2908f3075c10c1cd40755975be48cac817844977cd4db104c69b32b70" target="_blank" rel="noopener noreferrer">0xc3b40a...2b70</a>. Estado: success. El paymaster pagó 0.000191 AVAX de gas de prueba.</p>
+<p><strong>2. Attestation emitida a la wallet de control.</strong> Bloque 58,898,379, 15:14:04. Un evento <code>AttestationIssued</code>, con la cuenta de control <code>0x91a0...Bf33</code> como sujeto, Tier 5, vencimiento el 30 de septiembre de 2027: <a href="https://testnet.snowtrace.io/tx/0x084e7d548c08fd3a7440cb2a891a7448b2088c8250e8fb5e7e3e3211a462d8aa" target="_blank" rel="noopener noreferrer">0x084e7d...d8aa</a>. Estado: success. La emitió la llave de verificador de KUMPLY, de nuestro lado.</p>
+<p><strong>3. Operación patrocinada, wallet de control.</strong> Bloque 58,898,490, 15:17:38. La misma cuenta, ahora patrocinada: <a href="https://testnet.snowtrace.io/tx/0x4a4490f570fdab1d94f539cc839e85222be608525fd61cfd2a43f08c35a1d9b1" target="_blank" rel="noopener noreferrer">0x4a4490...d9b1</a>. Estado: success. El paymaster pagó 0.000480 AVAX de gas de prueba.</p>
+</div>
+
+<p>Hay un detalle en la transacción 3 que es fácil pasar por alto. La cuenta de control todavía no existía. Esa UserOperation traía <code>initCode</code> y los logs incluyen un evento <code>AccountDeployed</code>, así que la cuenta se desplegó con la misma operación que fue patrocinada. Le habíamos emitido la attestation a una dirección que todavía era contrafactual, y funcionó porque la attestation está ligada a la dirección, no a que ya haya código ahí. También muestra por qué la revisión debe hacerse sobre <code>userOp.sender</code>: es la dirección que existe en la UserOperation antes de que se despliegue nada.</p>
+
+<h2>El detalle de ERC-7562: verify() no puede correr dentro de la validación</h2>
+
+<p>El piloto revisa KUMPLY off-chain, así que nunca se topó con esto. Un equipo que quiera la revisión dentro de su propio paymaster, sí. ERC-7562 define las reglas de validación que aplican los bundlers a las UserOperations, y la regla OP-011 bloquea una lista de opcodes durante la validación, entre ellos <code>TIMESTAMP</code>. El <code>verify()</code> de KUMPLY compara el vencimiento con <code>block.timestamp</code>, que es justo ese opcode. Si lo llamas desde <code>validatePaymasterUserOp</code>, un bundler que aplique ERC-7562 rechazará la operación.</p>
+
+<p>La solución es leer el registro crudo. <code>attestations(sender)</code> devuelve los campos guardados sin comparar el tiempo, y el paymaster le entrega el vencimiento al EntryPoint como <code>validUntil</code> dentro del <code>validationData</code> que regresa. El EntryPoint aplica esa revisión de tiempo por su cuenta, fuera de la validación. En nuestro ejemplo, <code>kumplyValidationData(sender)</code> devuelve el valor de rechazo cuando no hay attestation, cuando fue revocada o cuando el tier no es exactamente el requerido, y en cualquier otro caso empaca el vencimiento en <code>validUntil</code>. El tier se compara de forma exacta a propósito: los tiers 1 a 3 son una escalera para personas, mientras que el 4 (empresa) y el 5 (agente) son categorías separadas.</p>
+
+<p>El ejemplo es <a href="https://github.com/kumplyprotocol/Kumply/blob/main/contracts/contracts/examples/KumplyPaymasterCheck.sol" target="_blank" rel="noopener noreferrer"><code>KumplyPaymasterCheck.sol</code></a>, con <a href="https://github.com/kumplyprotocol/Kumply/blob/main/contracts/test/KumplyPaymasterCheck.test.ts" target="_blank" rel="noopener noreferrer">10 pruebas de Hardhat</a> que hoy pasan. Cubren una cuenta nunca atestada, un tier de persona, una empresa, la revocación, un registro vencido, una re-emisión, y una prueba de traza de que la función nunca ejecuta <code>TIMESTAMP</code>, a diferencia de <code>verify()</code>. Es código de ejemplo, sin auditar, y el piloto no lo usa. Las notas de integración están en <a href="https://kumply.xyz/developers#paymasters" target="_blank" rel="noopener noreferrer">kumply.xyz/developers#paymasters</a>.</p>
+
+<h2>En qué punto está esto</h2>
+
+<p>Es un piloto técnico en testnet. Las attestations son de demo: el equipo de KUMPLY las emitió directamente en Fuji, y no hay verificación de identidad detrás. No hay revisión de documentos, ni de la empresa, ni del agente. On-chain, un Tier 5 del piloto solo registra que KUMPLY marcó esa dirección como Tier 5 hasta un vencimiento. Por favor no lo tomes como prueba de quién opera un agente. Nada de este piloto toca Mainnet C-Chain, y al 8 de octubre de 2026 el AttestationStore de mainnet reporta cero attestations emitidas.</p>
+
+<p>El 2 de octubre, 0xgasless dijo públicamente en X: <a href="https://x.com/0xGasless/status/2106040076014903341" target="_blank" rel="noopener noreferrer">"Excited to support teams like @KumplyAvax with 0xgasless infrastructure, sponsored transactions and agentic payment rails."</a> Lo agradecemos. Mainnet es algo que esperamos platicar con ellos más adelante, pero no hay nada agendado. Antes de emitir cualquier attestation ahí, planeamos mover nuestras llaves de emisión a una custodia más fuerte y hacer las verificaciones de identidad con un proveedor en producción.</p>
+
+<h2>Si quieres construir algo parecido</h2>
+
+<p>Controla con la cuenta que envía la UserOperation, no con su dueño. Decide si tu revisión vive off-chain, como en el piloto, u on-chain, y si es on-chain, lee <code>attestations(sender)</code> y devuelve el vencimiento como <code>validUntil</code>. Compara el tier de forma exacta en vez de usar un "mayor o igual". Mantén cualquier aprobación que firmes de corta duración y nunca más larga que el vencimiento de la attestation, para que una revocación surta efecto rápido. Y empieza en Fuji, donde leer <code>verify()</code> es gratis.</p>
+
+<p>La guía está en <a href="https://kumply.xyz/developers#paymasters" target="_blank" rel="noopener noreferrer">kumply.xyz/developers</a>, y el SDK de TypeScript está en npm como <a href="https://www.npmjs.com/package/@kumply/sdk" target="_blank" rel="noopener noreferrer">@kumply/sdk</a> (versión 1.3.0 al momento de escribir esto).</p>
+
+<p>Este post se redactó con asistencia de IA (Claude) bajo nuestra dirección y se revisó a mano. Cada transacción, bloque y cita se verificó contra Fuji y las fuentes de abajo el 8 de octubre de 2026. Más sobre cómo usamos la IA: <a href="https://github.com/kumplyprotocol/Kumply/blob/main/docs/AI-USAGE.md" target="_blank" rel="noopener noreferrer">docs/AI-USAGE.md</a>.</p>
+
+<p>Fuentes: <a href="https://eips.ethereum.org/EIPS/eip-7562" target="_blank" rel="noopener noreferrer">ERC-7562</a>, <a href="https://x.com/0xGasless/status/2106040076014903341" target="_blank" rel="noopener noreferrer">0xgasless en X, 2 de octubre de 2026</a>, <a href="https://testnet.snowtrace.io/tx/0xc3b40ae2908f3075c10c1cd40755975be48cac817844977cd4db104c69b32b70" target="_blank" rel="noopener noreferrer">operación patrocinada, wallet original</a>, <a href="https://testnet.snowtrace.io/tx/0x084e7d548c08fd3a7440cb2a891a7448b2088c8250e8fb5e7e3e3211a462d8aa" target="_blank" rel="noopener noreferrer">attestation a la wallet de control</a>, <a href="https://testnet.snowtrace.io/tx/0x4a4490f570fdab1d94f539cc839e85222be608525fd61cfd2a43f08c35a1d9b1" target="_blank" rel="noopener noreferrer">operación patrocinada, wallet de control</a>.</p>
+`,
+    },
+  },
+  {
     slug: "kya-workshop-behind-the-scenes-live-bugs",
     date: "2026-09-27",
     author: {
