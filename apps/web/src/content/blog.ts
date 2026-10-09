@@ -42,7 +42,7 @@ export const BLOG_POSTS: BlogPost[] = [
       en: `
 <p>A paymaster pays the gas fee for someone else's transaction. That is the appeal of ERC-4337 for onboarding: a new user or an AI agent can act without first holding the chain's native token. It is also an open invitation. A paymaster that sponsors every wallet that asks gets scripted wallets, and its deposit drains as fast as someone can write a loop.</p>
 
-<p>We ran a technical pilot on Avalanche Fuji testnet with 0xgasless, a team building gas-sponsorship infrastructure, and showed it live on September 30, 2026. It tests one answer to "who do we sponsor?": the accounts that hold a valid KUMPLY attestation, and nobody else. This post covers what ran, three transactions you can check yourself, one ERC-7562 detail that trips up on-chain versions of this check, and what the pilot does not prove.</p>
+<p>We ran a technical pilot on Avalanche Fuji testnet with 0xGasless, which runs ERC-4337 account-abstraction infrastructure (bundler, paymaster, smart accounts) and x402 payment rails on Avalanche, and showed it live on September 30, 2026. It tests one answer to "who do we sponsor?": the accounts that hold a valid KUMPLY attestation, and nobody else. This post covers what ran, three transactions you can check yourself, one ERC-7562 detail that trips up on-chain versions of this check, and what the pilot does not prove.</p>
 
 <h2>The problem: free gas attracts everything</h2>
 
@@ -50,7 +50,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>How the pilot is wired</h2>
 
-<p>0xgasless runs a sponsorship service in front of its paymaster. For each UserOperation, the service calls KUMPLY's <code>verify()</code> on Fuji for the smart account and approves sponsorship only when the account holds a valid attestation. Which tier it requires is their policy to set. The approval travels with the UserOperation as paymaster data, and on-chain their paymaster contract checks that the approval is genuine before the EntryPoint runs the operation.</p>
+<p>0xgasless runs a sponsorship service in front of its paymaster. For UserOperations submitted under the pilot's API key on Fuji, the service calls KUMPLY's <code>verify()</code> for the smart account and approves sponsorship only when the account holds a valid attestation. Which tier it requires is their policy to set. The approval travels with the UserOperation as paymaster data, and on-chain their paymaster contract checks that the approval is genuine before the EntryPoint runs the operation.</p>
 
 <p>One point worth being exact about: that on-chain paymaster does not read KUMPLY. It is a <code>VerifyingSingletonPaymaster</code> (source verified on Routescan), and its bytecode contains neither our AttestationStore address nor the selectors for <code>verify()</code> or <code>attestations()</code>. The KUMPLY check happens in the service. The chain only confirms the service's approval.</p>
 
@@ -128,7 +128,7 @@ export const BLOG_POSTS: BlogPost[] = [
       es: `
 <p>Un paymaster paga la comisión de gas de la transacción de alguien más. Ese es el atractivo de ERC-4337 para el onboarding: un usuario nuevo o un agente de IA puede actuar sin tener antes el token nativo de la cadena. También es una invitación abierta. Un paymaster que patrocina a toda wallet que lo pide recibe wallets generadas con scripts, y su depósito se vacía tan rápido como alguien escriba un ciclo.</p>
 
-<p>Corrimos un piloto técnico en la testnet Fuji de Avalanche con 0xgasless, un equipo que construye infraestructura de patrocinio de gas, y lo mostramos en vivo el 30 de septiembre de 2026. Prueba una respuesta a "¿a quién patrocinamos?": a las cuentas que tienen una attestation válida de KUMPLY, y a nadie más. Este post cubre qué corrió, tres transacciones que puedes revisar tú mismo, un detalle de ERC-7562 que rompe las versiones on-chain de esta revisión, y lo que el piloto no demuestra.</p>
+<p>Corrimos un piloto técnico en la testnet Fuji de Avalanche con 0xGasless, que opera infraestructura de abstracción de cuentas ERC-4337 (bundler, paymaster, smart accounts) y rieles de pago x402 en Avalanche, y lo mostramos en vivo el 30 de septiembre de 2026. Prueba una respuesta a "¿a quién patrocinamos?": a las cuentas que tienen una attestation válida de KUMPLY, y a nadie más. Este post cubre qué corrió, tres transacciones que puedes revisar tú mismo, un detalle de ERC-7562 que rompe las versiones on-chain de esta revisión, y lo que el piloto no demuestra.</p>
 
 <h2>El problema: el gas gratis atrae de todo</h2>
 
@@ -136,7 +136,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Cómo está conectado el piloto</h2>
 
-<p>0xgasless corre un servicio de patrocinio frente a su paymaster. Para cada UserOperation, el servicio llama al <code>verify()</code> de KUMPLY en Fuji para la smart account y aprueba el patrocinio solo cuando la cuenta tiene una attestation válida. Qué tier exige es política suya. La aprobación viaja con la UserOperation como datos del paymaster, y on-chain su contrato paymaster revisa que la aprobación sea genuina antes de que el EntryPoint ejecute la operación.</p>
+<p>0xgasless corre un servicio de patrocinio frente a su paymaster. Para las UserOperations enviadas bajo la API key del piloto en Fuji, el servicio llama al <code>verify()</code> de KUMPLY para la smart account y aprueba el patrocinio solo cuando la cuenta tiene una attestation válida. Qué tier exige es política suya. La aprobación viaja con la UserOperation como datos del paymaster, y on-chain su contrato paymaster revisa que la aprobación sea genuina antes de que el EntryPoint ejecute la operación.</p>
 
 <p>Un punto en el que conviene ser exactos: ese paymaster on-chain no lee KUMPLY. Es un <code>VerifyingSingletonPaymaster</code> (código verificado en Routescan), y su bytecode no contiene ni la dirección de nuestro AttestationStore ni los selectores de <code>verify()</code> o <code>attestations()</code>. La revisión de KUMPLY ocurre en el servicio. La cadena solo confirma la aprobación del servicio.</p>
 
