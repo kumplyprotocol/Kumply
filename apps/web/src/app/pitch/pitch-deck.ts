@@ -605,7 +605,7 @@ export const DECK_HTML = `
     <p class="note" style="margin-top: 1rem;"><strong>Bus factor, addressed:</strong> most shipped code still runs
       through one founder today (Giovanny - every commit attributable to him, verifiable in the repo's public
       history). Monserrat has now shipped a real fix here too (commit <code>49177e0</code>, address validation
-      before <code>readContract</code>) - a second contributor is real, just not yet at parity.</p>
+      before <code>readContract</code>) - a second contributor is real, just not yet at parity. An outside contributor (not on the team) has also had three pull requests merged, each closing a "good first issue": <a href="https://github.com/kumplyprotocol/Kumply/pull/24" target="_blank" rel="noopener noreferrer">an ESLint fix</a>, <a href="https://github.com/kumplyprotocol/Kumply/pull/25" target="_blank" rel="noopener noreferrer">removal of an unused config file and image</a> and a pure <code>meetsTierRequirement()</code> helper in the SDK, with tests, that follows the tier rule (<a href="https://github.com/kumplyprotocol/Kumply/pull/26" target="_blank" rel="noopener noreferrer">PR #26</a>). That is one outside contributor with three PRs, not a contributor community.</p>
   </section>
 
   <!-- 11 · Roadmap & funds -->
@@ -1144,7 +1144,7 @@ export const DECK_HTML_ES = `
       sigue pasando hoy por un solo founder (Giovanny - cada commit atribuible a él, verificable en el historial
       público del repo). Monserrat ya envió un fix real acá también (commit <code>49177e0</code>, validación de
       dirección antes de <code>readContract</code>) - un segundo contribuidor es real, solo que todavía no está a
-      la par.</p>
+      la par. Una persona externa al equipo también tiene tres pull requests fusionados, cada uno cerrando un "good first issue": <a href="https://github.com/kumplyprotocol/Kumply/pull/24" target="_blank" rel="noopener noreferrer">un fix de ESLint</a>, <a href="https://github.com/kumplyprotocol/Kumply/pull/25" target="_blank" rel="noopener noreferrer">la eliminación de un archivo de configuración y una imagen sin uso</a> y un helper puro <code>meetsTierRequirement()</code> en el SDK, con pruebas, que respeta la regla de tiers (<a href="https://github.com/kumplyprotocol/Kumply/pull/26" target="_blank" rel="noopener noreferrer">PR #26</a>). Es una persona contribuidora externa con tres PRs, no una comunidad de contribuidores.</p>
   </section>
 
   <!-- 11 · Roadmap y fondos -->
