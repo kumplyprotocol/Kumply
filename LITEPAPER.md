@@ -160,16 +160,18 @@ This unlocks **agentic DeFi with safety rails**: an autonomous market-making bot
 
 ## 5. Business Model - Software-Only, B2B
 
-KUMPLY operates as **infrastructure software**, not a financial institution. We do not custody funds, do not facilitate fiat/crypto exchange, do not issue tradable assets. Revenue comes from:
+KUMPLY operates as **infrastructure software**, not a financial institution. We do not custody funds, do not facilitate fiat/crypto exchange, do not issue tradable assets.
 
-| Stream | Customer | Pricing | Channel |
+**Free reads. Verification is the product.** Integrators call `verify()` for free, with no subscription, on Fuji and Mainnet C-Chain. It is a view function that never touches the fee settings, so reads are free by contract design, not only by policy. Revenue sits on the issuance side:
+
+| Stream | Customer | Pricing | Status |
 |---|---|---|---|
-| **SaaS subscription** | Regulated institutions (banks, enterprises) | MXN/USD monthly fixed (CFDI billing) | Direct sales |
-| **Pay-per-use API** | DApps, autonomous agents, small teams | $0.50 USD per `checkCompliance` call, paid in AVAX | Smart contract |
-| **L1 gas (KMP)** | Validators, DApps deploying on KUMPLY L1 | Native gas fees on L1 transactions | On-chain |
-| **Verifier-as-a-Service** | KYC providers wanting on-chain distribution | License + revenue share | Partnership |
+| **Issuance fee** | Businesses (Tier 4, KYB) and agent owners (Tier 5, KYA) | Fee per verified business or agent, paid by the owner, covering the identity-provider check and review | Planned for M3. No fee is active today |
+| **Service plans** | Integrators that depend on KUMPLY in production | Optional: support and response times, priority issuance for their users, revocation alerts. Billed off-chain; nothing in the contracts gates reads | Planned |
+| **L1 gas (KMP)** | DApps deploying on the KUMPLY L1 | Native gas fees on L1 transactions | Planned, after L1 activation |
+| **Verifier-as-a-Service** | KYC providers wanting on-chain distribution | License + revenue share | Planned |
 
-Pricing benchmark: traditional KYC providers (Sumsub, Onfido, Veriff) charge $1–8 per verification with no on-chain composability and no programmatic API for smart contracts. Our $0.50 per-check is a 50–94% cost reduction, plus the compliance data is reusable across every Avalanche DApp the user touches - meaning per-user lifetime cost trends toward zero as the network effect compounds.
+Why issuance and not reads: the identity-provider check is the real cost, and it happens once. After that, the attestation is readable by every Avalanche DApp the user touches at no charge, so no integrator pays again for a check that was already done.
 
 ## 6. Token: KMP
 
@@ -203,16 +205,16 @@ The weakest part of this project is unproven demand (§1.1), so closing it is th
 
 **Deliverable:** a published findings document with attributable quotes, and either (a) 2 confirmed pilot integrators - Avalanche builders or startups willing to test `ComplianceGate` or the SDK, KUMPLY's actual near-term buyer, not necessarily a regulated institution - or (b) a documented decision to re-target the ideal customer profile. Outcome (b) is a valid result, not a failure - it is cheaper to learn it in week two than in month six. Outcome (a)'s integrators are the candidates for M4's pilot integrations - the demand-validation and proof-of-concept work share one pipeline, not two.
 
-**Status:** M0 is already producing signal, not just plans. One candidate integrator is in active conversation, with an expected close date within the next two weeks - not signed yet. A separate early conversation closed with a clear "not yet": no real funds at stake today, revisit once third parties can publish paid agents on the platform. That answer is itself real-time M0 evidence, not a setback.
+**Status (October 2026):** M0 is already producing signal, not just plans. A technical pilot with an external infrastructure team ran live on Fuji on Sep 30, 2026 (gas sponsorship gated by KUMPLY attestations, details at [kumply.xyz/pitch](https://kumply.xyz/pitch)). Integration conversations continue; nothing is signed yet. A separate early conversation closed with a clear "not yet": no real funds at stake today, revisit once third parties can publish paid agents on the platform. That answer is itself real-time M0 evidence, not a setback.
 
 ## 8. Team & Traction
 
 - **Two co-founders.** Giovanny Amador - Engineering Lead: smart contracts, L1, SDK and infrastructure (authorship visible in the public commit history); also a hackathon winner outside Avalanche - ETH Uruguay 2025, 1st place at ETH Mexico Monterrey (Creator Economies track), 3rd place Arbitrum Innovation track. Monserrat Mendoza - Dev Lead: frontend UX/UI and backend developer; also a hackathon winner outside Avalanche - ETH Uruguay 2025. Both are Team1 Network Collaborators (accepted July 2026).
 - **Bus factor.** Most shipped code still runs through one founder today (Giovanny - every commit attributable to him, verifiable in the repo's public history). Monse has now shipped a real fix here too (commit `49177e0`, address validation before `readContract`) - a second contributor is real, just not yet at parity.
 - **Code:** monorepo with pnpm workspaces - contracts, SDK, API, web - full test suite (contracts, SDK, API), CI on every push (GitHub Actions, 4 parallel jobs).
-- **Go-to-market:** targeting Mexican digital banks, venture funds and LatAm enterprises. No commercial agreements are signed to date; any partner will be named only once a relationship is formalized.
+- **Go-to-market:** targeting Mexican digital banks, venture funds and LatAm enterprises. No commercial agreements are signed to date; a partner is named only with their written permission.
 - **Open source:** Apache 2.0 licensed (express patent grant, no trademark license), public GitHub, no proprietary lock-in.
-- **Public commitment:** all smart contracts will be immutably renounced to a 3-of-5 multisig before mainnet; KMP mainnet genesis defined by community governance; quarterly treasury transparency reports starting Q4 2026.
+- **Public commitment:** admin roles on the deployed contracts move to a 3-of-5 multisig before any fee is activated on Mainnet C-Chain (part of M3's cold-key treasury); KMP mainnet genesis defined by community governance; quarterly treasury transparency reports starting Q4 2026.
 
 ## 9. Grant Programs & Funding Asks
 
@@ -220,11 +222,11 @@ We are applying to:
 
 | Program | Amount | Use of funds |
 |---|---|---|
-| **Team1 Mini-Grant** | $10,000 USD, modular | Five milestones, fundable in tranches: **M0 ($0)** demand validation - 5 structured interviews with published findings, runs regardless of funding and is not a disbursement gate (§7.1) · **M1 ($2,000)** security hardening of `AttestationStore` + `ComplianceGate` (Slither, Aderyn, fuzzing, threat model) plus failure detection and alerting on the issuance path · **M2 ($3,000)** Mexican legal entity incorporated (a hard prerequisite for Sumsub's production tier), Sumsub production activated, first real KYC on-chain - includes a ring-fenced reserve against the pending Enterprise quote for Tier-4 KYB · **M3 ($2,000)** on-chain query-fee activation on Mainnet C-Chain, written Mexican fintech legal opinion, IMPI trademark, cold-key treasury · **M4 ($3,000)** Fuji L1 validator activation, ICM integration, 2 integration pilots. $5,000 funds M1–M2; $7,000 adds M3; $10,000 completes M4. Excludes formal L1 audit. Full itemisation at [kumply.xyz/pitch](https://kumply.xyz/pitch). |
+| **Team1 Mini-Grant** | $10,000 USD, modular | Five milestones, fundable in tranches: **M0 ($0)** demand validation - 5 structured interviews with published findings, runs regardless of funding and is not a disbursement gate (§7.1) · **M1 ($2,000)** security hardening of `AttestationStore` + `ComplianceGate` (Slither, Aderyn, fuzzing, threat model) plus failure detection and alerting on the issuance path · **M2 ($3,000)** Mexican legal entity incorporated (a hard prerequisite for Sumsub's production tier), Sumsub production activated, first real KYC on-chain - includes a ring-fenced reserve against the pending Enterprise quote for Tier-4 KYB · **M3 ($2,000)** issuance fee activation on Mainnet C-Chain (reads stay free), written Mexican fintech legal opinion, IMPI trademark, cold-key treasury · **M4 ($3,000)** Fuji L1 validator activation, ICM integration, 2 integration pilots. $5,000 funds M1–M2; $7,000 adds M3; $10,000 completes M4. Excludes formal L1 audit. Full itemisation at [kumply.xyz/pitch](https://kumply.xyz/pitch). |
 | **Avalanche Retro9000** (C-Chain, future round) | Retroactive | Bringing KUMPLY to mainnet as compliance infrastructure: institutional validator-set bootstrap and formal smart-contract audit |
 | **Blizzard Fund** | Seed round, terms TBD | Operating runway 12 months (legal, audits, BD) and engineering hires |
 
-Capital efficiency is core: at $0.50 per-check pricing, breakeven on operating costs is reached at ~50K monthly verifications - a single mid-size LatAm enterprise customer.
+Capital efficiency is core: reads are view calls that any Avalanche RPC serves, so KUMPLY's operating cost scales with issuance, which is also where revenue sits.
 
 ## 10. Why We Win
 

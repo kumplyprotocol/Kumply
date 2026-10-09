@@ -157,19 +157,16 @@ Reporting this plainly rather than inventing an item to fill the category.
 
 ## Add - flagged, not applied
 
-### 5. Gas optimization vs Retro9000
+### 5. Gas optimization
 
 `skills/gas` and `skills/precompiles` list standard storage-packing, calldata, and unchecked-loop
 optimizations. AttestationStore, ComplianceGate, and KumplyValidatorSetManager already follow the
 main patterns those skills recommend: custom errors instead of require strings, calldata for
 external function inputs, events over storage-based history, checked arithmetic outside of
-explicitly bounded loops. No unsafe or clearly-missed optimization was found.
+explicitly bounded loops. No unsafe or clearly-missed optimization was found, so no gas changes
+were made in this pass.
 
-Flagging the tension explicitly, as asked: KUMPLY intends to apply to Retro9000, which rewards
-AVAX burned via gas on Mainnet C-Chain. Reducing gas per call directly reduces that metric. Any
-future gas optimization pass on these contracts should be a deliberate business decision made
-with that trade-off in view, not a default "smaller is better" pass. Not applying anything gas
-related here for that reason, beyond what was already true before this audit.
+*(Section 5 edited 8 Oct 2026 for scope: it now records only the technical finding.)*
 
 ### 6. ReentrancyGuard on AttestationStore.withdrawFees
 
@@ -245,7 +242,7 @@ https://github.com/Ayomisco/avaxskills/issues/2
 | 2 | Fix | contracts/contracts/KumplyValidatorSetManager.sol | Medium | Fixed in same redeploy |
 | 3 | Fix | apps/web/src/app/api/webhook/route.ts, apps/api/src/index.ts | Medium | Fixed |
 | 4 | Improve | contracts/scripts/verify-contracts.ts | N/A | Applied |
-| 5 | Add | gas optimization | N/A | Flagged, not applied (Retro9000 trade-off) |
+| 5 | Add | gas optimization | N/A | Reviewed, no missed optimization found |
 | 6 | Add | contracts/contracts/AttestationStore.sol | Low | Reported, needs confirmation |
 | 7 | External (upstream) | AVAXSKILLS skills/precompiles | N/A | Filed, avaxskills#3, open |
 | 8 | External (upstream) | AVAXSKILLS skills/validator-management | N/A | Filed as comment on avaxskills#2, open |

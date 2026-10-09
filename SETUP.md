@@ -30,9 +30,9 @@ cd ..
 ```
 
 Both `.claude/skills/avalanche-skills/` and `.reference/` are gitignored (see `.gitignore`,
-"Avalanche reference tooling" section). The gitignore entry is scoped specifically to
-`avalanche-skills/`, not all of `.claude/skills/`, so it never hides any of KUMPLY's own skills
-if some get added there later.
+"Avalanche reference tooling" section). Everything under the root `.claude/skills/` is local
+tooling and stays out of the repo. KUMPLY's own project skill, `run-web`, lives under
+`apps/web/.claude/skills/` and is tracked.
 
 None of this is committed to the public repo, under any circumstance:
 - `avalanche-starter-kit` ships with no `LICENSE` file at all.
