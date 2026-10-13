@@ -327,6 +327,8 @@
     "developers": "Desarrolladores",
     "l1": "Compliance L1",
     "docs": "Documentación",
+    "ecosystem": "Ecosistema",
+    "build": "Build",
     "legal": "Legal",
     "trademark": "Aviso de Marca: AVALANCHE® y AVAX® son marcas registradas de Ava Labs, Inc. KUMPLY es un proyecto independiente y no está respaldado, patrocinado ni afiliado con Ava Labs, Inc. KUMPLY está diseñado para operar como infraestructura de software, no como institución financiera, custodio ni transmisor de dinero — una opinión legal formal está planeada antes de activar cualquier comisión en mainnet.",
     "rights": "© 2026 Protocolo KUMPLY. Código abierto bajo Licencia Apache 2.0."

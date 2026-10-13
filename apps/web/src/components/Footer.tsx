@@ -66,6 +66,8 @@ export function Footer() {
             <Link href="/l1" style={linkStyle}>{tFooter('l1') || 'Compliance L1'}</Link>
             <a href="https://subnets-test.avax.network/subnets/2buHAwNvaybnQ6vQYRS4TeXizZhAo33bhpnonAJu21CKYLZoST" target="_blank" rel="noopener noreferrer" style={linkStyle}>Subnet Explorer ↗</a>
             <Link href="/docs" style={linkStyle}>{tFooter('docs') || 'Docs'}</Link>
+            <Link href="/ecosystem" style={linkStyle}>{tFooter('ecosystem')}</Link>
+            <Link href="/build" style={linkStyle}>{tFooter('build')}</Link>
 
           </nav>
 
