@@ -164,6 +164,15 @@ export default async function BlogPostPage({
           background: var(--bg-card); border: 1px solid var(--border);
           padding: 0.1em 0.4em; border-radius: 6px; color: var(--text-primary);
         }
+        .blog-post__body pre {
+          margin: 1.5rem 0; padding: 1rem 1.25rem; overflow-x: auto;
+          background: var(--bg-card); border: 1px solid var(--border);
+          border-radius: var(--radius-md);
+        }
+        .blog-post__body pre code {
+          background: none; border: none; padding: 0; font-size: 0.85em;
+          color: var(--text-primary); white-space: pre;
+        }
         .blog-post__body .blog-scenario {
           margin: 1.75rem 0; padding: 1.5rem 1.5rem 1.25rem;
           border-left: 3px solid var(--accent);
