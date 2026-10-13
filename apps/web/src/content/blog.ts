@@ -22,6 +22,230 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "building-with-kumply-kyc-kyb-kya",
+    date: "2026-10-13",
+    author: {
+      name: "Monserrat Mendoza",
+      role: { en: "Co-founder, Dev Lead", es: "Co-founder, Líder de Desarrollo" },
+    },
+    readMinutes: 7,
+    category: "GUIDE",
+    title: {
+      en: "A Builder's Guide to KUMPLY: KYC, KYB, and KYA in One SDK",
+      es: "Guía para Builders de KUMPLY: KYC, KYB y KYA en un Solo SDK",
+    },
+    excerpt: {
+      en: "Most compliance checks only answer one question: is this address a verified person. KUMPLY's AttestationStore answers three separate questions, person, business, or AI agent, because those aren't rungs on the same ladder. A practical guide: what each category is for, how to call it from the SDK published on npm today, a simple flow diagram, and four product shapes that use it.",
+      es: "La mayoría de las revisiones de compliance solo responden una pregunta: si esta dirección es una persona verificada. El AttestationStore de KUMPLY responde tres preguntas distintas, persona, empresa o agente de IA, porque no son escalones de la misma escalera. Una guía práctica: para qué sirve cada categoría, cómo llamarla desde el SDK publicado hoy en npm, un diagrama simple del flujo, y cuatro formas de producto que la usan.",
+    },
+    bodyHtml: {
+      en: `
+<p>Most "check KYC" integrations answer a single yes-or-no question: is this address a verified person. KUMPLY's AttestationStore answers three separate questions, because an address can be a verified person, a verified business, or a verified AI agent, and those are different kinds of thing, not three steps up the same ladder. This is a practical walkthrough for builders: what each category actually gates, how to call it from the SDK that is live on npm today, a simple diagram of the flow, and four product shapes that use one category or another.</p>
+
+<h2>Three categories, not one ladder</h2>
+
+<p><strong>KYC, tiers 1 to 3 (person):</strong> a ladder for individuals, Basic, Standard, and Enhanced. It answers "is this a verified person, and how deep was the check." Gate a feature on a minimum level with <code>isPersonAtLeast()</code>.</p>
+
+<p><strong>KYB, tier 4 (business):</strong> a separate category, not a level above Enhanced. It answers "is this address controlled by a verified business," for cases like invoicing, payroll, or B2B settlement where the counterparty needs to be a company, not an individual.</p>
+
+<p><strong>KYA, tier 5 (agent):</strong> also separate, built for addresses an autonomous AI agent controls directly. It answers "does a verified operator stand behind this agent," for marketplaces or payment rails where the counterparty might not be a human at all.</p>
+
+<h2>Integrating with the SDK</h2>
+
+<p>The SDK is <a href="https://www.npmjs.com/package/@kumply/sdk" target="_blank" rel="noopener noreferrer">@kumply/sdk</a> on npm (version 1.3.0 as of this post). Install it with your package manager of choice:</p>
+
+<pre><code>pnpm add @kumply/sdk    # or npm / yarn</code></pre>
+
+<p>Point a client at Fuji and read an address's attestation with <code>verify()</code>, a free view call that works even while the contract is paused:</p>
+
+<pre><code>import { KumplyClient, DEPLOYMENTS, TIER } from "@kumply/sdk";
+
+const client = new KumplyClient({
+  network: "fuji",
+  contractAddress: DEPLOYMENTS.fuji.attestationStore,
+});
+
+const result = await client.verify(address);
+// { verified, tier, timestamp, expiry }</code></pre>
+
+<p><code>result.tier</code> is a raw number, 1 through 5. Comparing it directly is where most integrations get the category wrong: checking <code>tier &gt;= 4</code> for "is this a business" also passes a Tier 5 agent, because 5 is greater than 4 on a plain number line. The SDK's category helpers do the right comparison for you: a range for people, an exact tier for a business or an agent.</p>
+
+<pre><code>const canUsePool = await client.isPersonAtLeast(address, TIER.STANDARD);
+const canInvoice = await client.isBusiness(address);
+const canTrade = await client.isAgent(address);</code></pre>
+
+<p>There is also a <code>hasTier(address, tier)</code> method, kept for backward compatibility and marked <code>@deprecated</code> in the published types. It does the plain "greater than or equal" comparison, so <code>hasTier(address, TIER.KYB)</code> returns true for a Tier 5 agent too, and <code>hasTier(address, TIER.STANDARD)</code> returns true for a Tier 4 business. Neither of those is usually what you want, which is exactly why the category-specific helpers exist. Use <code>isPersonAtLeast</code>, <code>isBusiness</code>, or <code>isAgent</code> for anything new.</p>
+
+<h2>How the check flows</h2>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 340" width="100%" role="img" aria-label="Diagram: an app calls KUMPLY's verify() or a category helper on Fuji for an address, AttestationStore's response comes back, and depending on the category, the app allows a person at or above a tier, a business, or an agent, or blocks the action if nothing matches.">
+<rect x="8" y="20" width="190" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="47" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">REQUEST</text>
+<text x="26" y="72" font-size="15" font-weight="800" fill="var(--text-primary)">Your app</text>
+<text x="26" y="94" font-size="12" fill="var(--text-tertiary)">checks an address before</text>
+<text x="26" y="110" font-size="12" fill="var(--text-tertiary)">an on-chain action</text>
+<rect x="255" y="20" width="190" height="100" rx="12" fill="var(--bg-card)" stroke="var(--accent)"/>
+<text x="273" y="47" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">ON-CHAIN, FUJI</text>
+<text x="273" y="72" font-size="15" font-weight="800" fill="var(--text-primary)">AttestationStore</text>
+<text x="273" y="94" font-size="12" fill="var(--text-tertiary)">verify() or a category</text>
+<text x="273" y="110" font-size="12" fill="var(--text-tertiary)">helper, free read</text>
+<path d="M198 58 L251 58" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#bld-arrow1-en)"/>
+<path d="M251 88 L198 88" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#bld-arrow2-en)"/>
+<text x="224" y="49" font-size="9" fill="var(--text-tertiary)" text-anchor="middle">call</text>
+<text x="224" y="101" font-size="9" fill="var(--text-tertiary)" text-anchor="middle">ack</text>
+<path d="M103 120 L103 150 L597 150" stroke="var(--accent)" stroke-width="2" fill="none"/>
+<path d="M103 150 L103 188" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#bld-arrow3-en)"/>
+<path d="M350 150 L350 188" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#bld-arrow4-en)"/>
+<path d="M597 150 L597 188" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#bld-arrow5-en)"/>
+<text x="350" y="142" font-size="9" fill="var(--text-tertiary)" text-anchor="middle">based on tier</text>
+<rect x="8" y="190" width="190" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="217" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">KYC</text>
+<text x="26" y="242" font-size="14" font-weight="800" fill="var(--text-primary)">Person, tier 1-3</text>
+<text x="26" y="264" font-size="12" fill="var(--text-tertiary)">isPersonAtLeast()</text>
+<text x="26" y="280" font-size="12" fill="var(--text-tertiary)">-&gt; allow</text>
+<rect x="255" y="190" width="190" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="273" y="217" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">KYB</text>
+<text x="273" y="242" font-size="14" font-weight="800" fill="var(--text-primary)">Business, tier 4</text>
+<text x="273" y="264" font-size="12" fill="var(--text-tertiary)">isBusiness()</text>
+<text x="273" y="280" font-size="12" fill="var(--text-tertiary)">-&gt; allow</text>
+<rect x="502" y="190" width="190" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="520" y="217" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">KYA</text>
+<text x="520" y="242" font-size="14" font-weight="800" fill="var(--text-primary)">Agent, tier 5</text>
+<text x="520" y="264" font-size="12" fill="var(--text-tertiary)">isAgent()</text>
+<text x="520" y="280" font-size="12" fill="var(--text-tertiary)">-&gt; allow</text>
+<text x="8" y="308" font-size="12" fill="var(--text-tertiary)">No match: request blocked,</text>
+<text x="8" y="325" font-size="12" fill="var(--text-tertiary)">no on-chain action, no gas spent</text>
+<defs>
+<marker id="bld-arrow1-en" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="bld-arrow2-en" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="bld-arrow3-en" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="bld-arrow4-en" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="bld-arrow5-en" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
+
+<p>The app reads the address once, either with <code>verify()</code> or with the category helper it actually needs, and KUMPLY's response (whether that address holds a valid, non-expired attestation at the right tier) is what decides which of the three paths the app takes, or whether it blocks the action and spends no gas at all.</p>
+
+<h2>Four things you could build</h2>
+
+<div class="blog-scenario">
+<p><strong>1. A DeFi pool gated to verified people.</strong> KYC. Check <code>isPersonAtLeast(address, TIER.BASIC)</code> (or a higher level, your call) before a deposit, so the pool only holds funds from addresses with some identity behind them.</p>
+<p><strong>2. A marketplace where only verified agents transact.</strong> KYA. Check <code>isAgent(address)</code> before an autonomous agent is allowed to list, bid, or settle, so a buyer knows a verified operator stands behind whatever it's dealing with.</p>
+<p><strong>3. Payments or payroll between verified businesses.</strong> KYB. Check <code>isBusiness(address)</code> on both sides of a B2B transfer, so the counterparty is a company, not an anonymous wallet.</p>
+<p><strong>4. One person, one vote, no bots.</strong> KYC. Check <code>isPersonAtLeast(address, TIER.BASIC)</code> before a wallet is allowed to vote, so a single verified person can't split one voice into a hundred addresses.</p>
+</div>
+
+<p>Where this stands: everything above runs on Avalanche Fuji testnet. The attestations you'll see there, including any we issue ourselves for testing, are demo attestations: KUMPLY's own team issues them directly, with no document check or identity verification behind them. Please don't read a pilot Tier 5 as proof of who actually operates an address. Mainnet C-Chain hosts the same contracts read-only, with zero attestations issued until we activate Sumsub in production.</p>
+
+<p>Full reference docs and more integration patterns (paymasters, smart accounts) are at <a href="https://kumply.xyz/developers" target="_blank" rel="noopener noreferrer">kumply.xyz/developers</a>, and the general technical documentation is at <a href="https://kumply.xyz/docs" target="_blank" rel="noopener noreferrer">kumply.xyz/docs</a>.</p>
+`,
+      es: `
+<p>La mayoría de las integraciones que "revisan KYC" responden una sola pregunta de sí o no: si esta dirección es una persona verificada. El AttestationStore de KUMPLY responde tres preguntas distintas, porque una dirección puede ser una persona verificada, una empresa verificada o un agente de IA verificado, y son tipos de cosa diferentes, no tres escalones de la misma escalera. Esta es una guía práctica para builders: qué controla en realidad cada categoría, cómo llamarla desde el SDK que hoy está publicado en npm, un diagrama simple del flujo, y cuatro formas de producto que usan una u otra categoría.</p>
+
+<h2>Tres categorías, no una escalera</h2>
+
+<p><strong>KYC, tiers 1 a 3 (persona):</strong> una escalera para individuos, Basic, Standard y Enhanced. Responde "¿es esta una persona verificada, y qué tan profunda fue la revisión?". Controla una función con un nivel mínimo usando <code>isPersonAtLeast()</code>.</p>
+
+<p><strong>KYB, tier 4 (empresa):</strong> una categoría separada, no un nivel arriba de Enhanced. Responde "¿esta dirección la controla una empresa verificada?", para casos como facturación, nómina o liquidación B2B donde la contraparte necesita ser una empresa, no un individuo.</p>
+
+<p><strong>KYA, tier 5 (agente):</strong> también separada, pensada para direcciones que controla directamente un agente de IA autónomo. Responde "¿hay un operador verificado detrás de este agente?", para marketplaces o rieles de pago donde la contraparte podría no ser humana en absoluto.</p>
+
+<h2>Integración con el SDK</h2>
+
+<p>El SDK es <a href="https://www.npmjs.com/package/@kumply/sdk" target="_blank" rel="noopener noreferrer">@kumply/sdk</a> en npm (versión 1.3.0 al momento de este post). Instálalo con tu gestor de paquetes favorito:</p>
+
+<pre><code>pnpm add @kumply/sdk    # o npm / yarn</code></pre>
+
+<p>Apunta un cliente a Fuji y lee la attestation de una dirección con <code>verify()</code>, una lectura gratuita que funciona incluso con el contrato pausado:</p>
+
+<pre><code>import { KumplyClient, DEPLOYMENTS, TIER } from "@kumply/sdk";
+
+const client = new KumplyClient({
+  network: "fuji",
+  contractAddress: DEPLOYMENTS.fuji.attestationStore,
+});
+
+const result = await client.verify(address);
+// { verified, tier, timestamp, expiry }</code></pre>
+
+<p><code>result.tier</code> es un número crudo, del 1 al 5. Compararlo directamente es donde la mayoría de las integraciones confunden la categoría: revisar <code>tier &gt;= 4</code> para "es una empresa" también deja pasar a un agente Tier 5, porque 5 es mayor que 4 en una recta numérica simple. Los helpers de categoría del SDK hacen la comparación correcta por ti: un rango para personas, un tier exacto para una empresa o un agente.</p>
+
+<pre><code>const puedeUsarPool = await client.isPersonAtLeast(address, TIER.STANDARD);
+const puedeFacturar = await client.isBusiness(address);
+const puedeOperar = await client.isAgent(address);</code></pre>
+
+<p>También existe un método <code>hasTier(address, tier)</code>, que se mantiene por compatibilidad hacia atrás y está marcado <code>@deprecated</code> en los tipos publicados. Hace la comparación simple de "mayor o igual", así que <code>hasTier(address, TIER.KYB)</code> también regresa true para un agente Tier 5, y <code>hasTier(address, TIER.STANDARD)</code> regresa true para una empresa Tier 4. Casi nunca es lo que quieres, y es justo por eso que existen los helpers de categoría. Usa <code>isPersonAtLeast</code>, <code>isBusiness</code> o <code>isAgent</code> para cualquier cosa nueva.</p>
+
+<h2>Cómo fluye la revisión</h2>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 340" width="100%" role="img" aria-label="Diagrama: una app llama al verify() de KUMPLY o a un helper de categoría en Fuji para una dirección, la respuesta de AttestationStore regresa, y según la categoría, la app permite a una persona en un tier o más, a una empresa o a un agente, o bloquea la acción si nada coincide.">
+<rect x="8" y="20" width="190" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="47" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">SOLICITUD</text>
+<text x="26" y="72" font-size="15" font-weight="800" fill="var(--text-primary)">Tu app</text>
+<text x="26" y="94" font-size="12" fill="var(--text-tertiary)">revisa una dirección antes</text>
+<text x="26" y="110" font-size="12" fill="var(--text-tertiary)">de una acción on-chain</text>
+<rect x="255" y="20" width="190" height="100" rx="12" fill="var(--bg-card)" stroke="var(--accent)"/>
+<text x="273" y="47" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">ON-CHAIN, FUJI</text>
+<text x="273" y="72" font-size="15" font-weight="800" fill="var(--text-primary)">AttestationStore</text>
+<text x="273" y="94" font-size="12" fill="var(--text-tertiary)">verify() o un helper</text>
+<text x="273" y="110" font-size="12" fill="var(--text-tertiary)">de categoría, lectura gratis</text>
+<path d="M198 58 L251 58" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#bld-arrow1-es)"/>
+<path d="M251 88 L198 88" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#bld-arrow2-es)"/>
+<text x="224" y="49" font-size="9" fill="var(--text-tertiary)" text-anchor="middle">llama</text>
+<text x="224" y="101" font-size="9" fill="var(--text-tertiary)" text-anchor="middle">ack</text>
+<path d="M103 120 L103 150 L597 150" stroke="var(--accent)" stroke-width="2" fill="none"/>
+<path d="M103 150 L103 188" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#bld-arrow3-es)"/>
+<path d="M350 150 L350 188" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#bld-arrow4-es)"/>
+<path d="M597 150 L597 188" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#bld-arrow5-es)"/>
+<text x="350" y="142" font-size="9" fill="var(--text-tertiary)" text-anchor="middle">según el tier</text>
+<rect x="8" y="190" width="190" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="217" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">KYC</text>
+<text x="26" y="242" font-size="14" font-weight="800" fill="var(--text-primary)">Persona, tier 1-3</text>
+<text x="26" y="264" font-size="12" fill="var(--text-tertiary)">isPersonAtLeast()</text>
+<text x="26" y="280" font-size="12" fill="var(--text-tertiary)">-&gt; permite</text>
+<rect x="255" y="190" width="190" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="273" y="217" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">KYB</text>
+<text x="273" y="242" font-size="14" font-weight="800" fill="var(--text-primary)">Empresa, tier 4</text>
+<text x="273" y="264" font-size="12" fill="var(--text-tertiary)">isBusiness()</text>
+<text x="273" y="280" font-size="12" fill="var(--text-tertiary)">-&gt; permite</text>
+<rect x="502" y="190" width="190" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="520" y="217" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">KYA</text>
+<text x="520" y="242" font-size="14" font-weight="800" fill="var(--text-primary)">Agente, tier 5</text>
+<text x="520" y="264" font-size="12" fill="var(--text-tertiary)">isAgent()</text>
+<text x="520" y="280" font-size="12" fill="var(--text-tertiary)">-&gt; permite</text>
+<text x="8" y="308" font-size="12" fill="var(--text-tertiary)">Sin match: solicitud bloqueada,</text>
+<text x="8" y="325" font-size="12" fill="var(--text-tertiary)">sin acción on-chain, sin gastar gas</text>
+<defs>
+<marker id="bld-arrow1-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="bld-arrow2-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="bld-arrow3-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="bld-arrow4-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="bld-arrow5-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
+
+<p>La app lee la dirección una sola vez, con <code>verify()</code> o con el helper de categoría que de verdad necesita, y la respuesta de KUMPLY (si esa dirección tiene una attestation válida y sin vencer en el tier correcto) es lo que decide cuál de los tres caminos toma la app, o si bloquea la acción y no gasta nada de gas.</p>
+
+<h2>Cuatro cosas que podrías construir</h2>
+
+<div class="blog-scenario">
+<p><strong>1. Un pool de DeFi solo para usuarios verificados.</strong> KYC. Revisa <code>isPersonAtLeast(address, TIER.BASIC)</code> (o un nivel más alto, tú decides) antes de un depósito, para que el pool solo reciba fondos de direcciones con alguna identidad detrás.</p>
+<p><strong>2. Un marketplace donde solo transaccionan agentes verificados.</strong> KYA. Revisa <code>isAgent(address)</code> antes de que un agente autónomo pueda publicar, ofertar o liquidar, para que quien compra sepa que hay un operador verificado detrás de lo que sea que esté tratando.</p>
+<p><strong>3. Pagos o nómina entre empresas verificadas.</strong> KYB. Revisa <code>isBusiness(address)</code> en ambos lados de una transferencia B2B, para que la contraparte sea una empresa, no una wallet anónima.</p>
+<p><strong>4. Una persona, un voto, sin bots.</strong> KYC. Revisa <code>isPersonAtLeast(address, TIER.BASIC)</code> antes de dejar votar a una wallet, para que una sola persona verificada no pueda dividir su voz en cien direcciones.</p>
+</div>
+
+<p>Dónde está esto hoy: todo lo anterior corre en la testnet Fuji de Avalanche. Las attestations que vas a ver ahí, incluyendo cualquiera que emitamos nosotros mismos para pruebas, son attestations de demo: el propio equipo de KUMPLY las emite directamente, sin revisión de documentos ni verificación de identidad detrás. Por favor no leas un Tier 5 de piloto como prueba de quién opera de verdad una dirección. Mainnet C-Chain aloja los mismos contratos en modo de solo lectura, con cero attestations emitidas hasta que activemos Sumsub en producción.</p>
+
+<p>La documentación completa y más patrones de integración (paymasters, smart accounts) están en <a href="https://kumply.xyz/developers" target="_blank" rel="noopener noreferrer">kumply.xyz/developers</a>, y la documentación técnica general está en <a href="https://kumply.xyz/docs" target="_blank" rel="noopener noreferrer">kumply.xyz/docs</a>.</p>
+`,
+    },
+  },
+  {
     slug: "0xgasless-paymaster-pilot-kya",
     date: "2026-10-08",
     author: {
