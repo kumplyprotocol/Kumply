@@ -56,7 +56,10 @@ export default async function EcosystemPage() {
 
       <div className="glass-card ecosystem-card">
         <span className="badge badge-accent">{t.cardBadge}</span>
-        <h2 className="ecosystem-card__name">{t.cardName}</h2>
+        <h2 className="ecosystem-card__name">
+          <img src="/ecosystem/0xgasless-dark-full-logo.svg" alt={t.cardName} width={180} height={28} className="theme-logo--light ecosystem-card__logo" />
+          <img src="/ecosystem/0xgasless-light-full-logo.svg" alt={t.cardName} width={180} height={28} className="theme-logo--dark ecosystem-card__logo" />
+        </h2>
         <p className="ecosystem-card__desc">{t.cardDescription}</p>
 
         <h3 className="ecosystem-card__heading">{t.howTitle}</h3>
@@ -95,7 +98,8 @@ export default async function EcosystemPage() {
         .ecosystem-subtitle { margin: 0 auto; max-width: 600px; }
         .ecosystem-intro { text-align: center; color: var(--text-secondary); max-width: 680px; margin: 0 auto 3rem; line-height: 1.7; }
         .ecosystem-card { max-width: 760px; margin: 0 auto; padding: 2.5rem; }
-        .ecosystem-card__name { font-size: 1.6rem; font-weight: 800; margin: 1rem 0 1rem; color: var(--text-primary); }
+        .ecosystem-card__name { margin: 1rem 0 1rem; line-height: 0; }
+        .ecosystem-card__logo { height: 28px; width: auto; }
         .ecosystem-card__desc { color: var(--text-secondary); line-height: 1.7; margin-bottom: 2rem; font-size: 1.05rem; }
         .ecosystem-card__heading { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin: 1.75rem 0 0.6rem; }
         .ecosystem-card__body { color: var(--text-secondary); line-height: 1.7; }

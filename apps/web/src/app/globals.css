@@ -570,6 +570,14 @@ a:hover {
 [data-theme="light"] .footer__logo-img--light { display: inline-block; }
 [data-theme="light"] .footer__logo-img--dark { display: none; }
 
+/* Same server-component-safe theme switch as the footer logo above,
+   generalized for any third-party logo shown on a server-rendered page
+   (e.g. /ecosystem). --light shows in light theme, --dark in dark theme. */
+.theme-logo--light { display: none; }
+.theme-logo--dark { display: inline-block; }
+[data-theme="light"] .theme-logo--light { display: inline-block; }
+[data-theme="light"] .theme-logo--dark { display: none; }
+
 /* — Desktop Navigation — */
 .navbar__desktop {
   display: flex;
