@@ -55,7 +55,7 @@ const content = {
       {
         category: "KYB",
         title: "Avalanche L1 validators restricted to verified businesses (ACP-99)",
-        desc: "Gate validator registration on isBusiness(), the same pattern KUMPLY's own Compliance L1 uses for its ACP-99 ValidatorSetManager.",
+        desc: "Gate validator registration on isBusiness(), the same check KUMPLY's ACP-99 ValidatorSetManager contract implements (the KUMPLY L1 itself is not activated yet).",
         helper: "isBusiness(address)",
       },
     ] as Idea[],
@@ -112,7 +112,7 @@ const content = {
       {
         category: "KYB",
         title: "Validadores de una L1 de Avalanche restringidos a empresas verificadas (ACP-99)",
-        desc: "Controla el registro de validadores con isBusiness(), el mismo patrón que usa la propia L1 de Compliance de KUMPLY en su ValidatorSetManager de ACP-99.",
+        desc: "Controla el registro de validadores con isBusiness(), la misma revisión que implementa el contrato ValidatorSetManager de ACP-99 de KUMPLY (la L1 de KUMPLY todavía no está activada).",
         helper: "isBusiness(address)",
       },
     ] as Idea[],
