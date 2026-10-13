@@ -35,8 +35,8 @@ export const BLOG_POSTS: BlogPost[] = [
       es: "Guía para Builders de KUMPLY: KYC, KYB y KYA en un Solo SDK",
     },
     excerpt: {
-      en: "Most compliance checks only answer one question: is this address a verified person. KUMPLY's AttestationStore answers three separate questions, person, business, or AI agent, because those aren't rungs on the same ladder. A practical guide: what each category is for, how to call it from the SDK published on npm today, a simple flow diagram, and four product shapes that use it.",
-      es: "La mayoría de las revisiones de compliance solo responden una pregunta: si esta dirección es una persona verificada. El AttestationStore de KUMPLY responde tres preguntas distintas, persona, empresa o agente de IA, porque no son escalones de la misma escalera. Una guía práctica: para qué sirve cada categoría, cómo llamarla desde el SDK publicado hoy en npm, un diagrama simple del flujo, y cuatro formas de producto que la usan.",
+      en: "A compliance check often starts with one question: is this address a verified person. KUMPLY's AttestationStore answers three separate questions, person, business, or AI agent, because those aren't rungs on the same ladder. A practical guide: what each category is for, how to call it from the SDK published on npm today, a simple flow diagram, and four product shapes that use it.",
+      es: "Una revisión de compliance suele empezar con una pregunta: si esta dirección es una persona verificada. El AttestationStore de KUMPLY responde tres preguntas distintas, persona, empresa o agente de IA, porque no son escalones de la misma escalera. Una guía práctica: para qué sirve cada categoría, cómo llamarla desde el SDK publicado hoy en npm, un diagrama simple del flujo, y cuatro formas de producto que la usan.",
     },
     bodyHtml: {
       en: `
@@ -68,7 +68,7 @@ const client = new KumplyClient({
 const result = await client.verify(address);
 // { verified, tier, timestamp, expiry }</code></pre>
 
-<p><code>result.tier</code> is a raw number, 1 through 5. Comparing it directly is where most integrations get the category wrong: checking <code>tier &gt;= 4</code> for "is this a business" also passes a Tier 5 agent, because 5 is greater than 4 on a plain number line. The SDK's category helpers do the right comparison for you: a range for people, an exact tier for a business or an agent.</p>
+<p><code>result.tier</code> is a raw number, 1 through 5. Comparing it directly makes it easy to get the category wrong: checking <code>tier &gt;= 4</code> for "is this a business" also passes a Tier 5 agent, because 5 is greater than 4 on a plain number line. The SDK's category helpers do the right comparison for you: a range for people, an exact tier for a business or an agent.</p>
 
 <pre><code>const canUsePool = await client.isPersonAtLeast(address, TIER.STANDARD);
 const canInvoice = await client.isBusiness(address);
@@ -170,7 +170,7 @@ const client = new KumplyClient({
 const result = await client.verify(address);
 // { verified, tier, timestamp, expiry }</code></pre>
 
-<p><code>result.tier</code> es un número crudo, del 1 al 5. Compararlo directamente es donde la mayoría de las integraciones confunden la categoría: revisar <code>tier &gt;= 4</code> para "es una empresa" también deja pasar a un agente Tier 5, porque 5 es mayor que 4 en una recta numérica simple. Los helpers de categoría del SDK hacen la comparación correcta por ti: un rango para personas, un tier exacto para una empresa o un agente.</p>
+<p><code>result.tier</code> es un número crudo, del 1 al 5. Compararlo directamente hace fácil confundir la categoría: revisar <code>tier &gt;= 4</code> para "es una empresa" también deja pasar a un agente Tier 5, porque 5 es mayor que 4 en una recta numérica simple. Los helpers de categoría del SDK hacen la comparación correcta por ti: un rango para personas, un tier exacto para una empresa o un agente.</p>
 
 <pre><code>const puedeUsarPool = await client.isPersonAtLeast(address, TIER.STANDARD);
 const puedeFacturar = await client.isBusiness(address);
