@@ -17,6 +17,10 @@ dist/
 .next/
 out/
 build/
+# The generic build/ rule above also matches the real Next.js route at
+# apps/web/src/app/[locale]/build/ (the "/build" page) - un-ignore it.
+!apps/web/src/app/\[locale\]/build/
+!apps/web/src/app/\[locale\]/build/**
 
 # ── Hardhat / Solidity ──────────────────────────────────────────
 contracts/artifacts/
