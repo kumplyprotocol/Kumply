@@ -15,7 +15,9 @@
     "connected": "Connected",
     "themeLight": "Light",
     "themeDark": "Dark",
-    "blog": "Blog"
+    "blog": "Blog",
+    "ecosystem": "Ecosystem",
+    "build": "Build"
   },
   "Hero": {
     "badge": "Live on Mainnet C-Chain · Beta",

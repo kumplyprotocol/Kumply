@@ -105,6 +105,8 @@ export function Navbar() {
     { href: "/developers" as const, label: t('developers') },
     { href: "/docs" as const, label: t('docs') },
     { href: "/blog" as const, label: t('blog') },
+    { href: "/ecosystem" as const, label: t('ecosystem') },
+    { href: "/build" as const, label: t('build') },
   ];
 
   return (
