@@ -1539,6 +1539,150 @@ const puedeOperar = await client.isAgent(address);</code></pre>
     },
     hasLumaCheckout: true,
   },
+  {
+    slug: "multi-address-identity-linking",
+    date: "2026-11-01",
+    author: {
+      name: "Giovanny Amador",
+      role: { en: "Co-founder, Engineering Lead", es: "Co-founder, Líder de Ingeniería" },
+    },
+    readMinutes: 7,
+    category: "DEEP DIVE",
+    title: {
+      en: "One KYC, Many Wallets: Why We Built Multi-Address Identity Linking (and Haven't Shipped It)",
+      es: "Un KYC, Varias Wallets: Por Qué Construimos la Vinculación de Identidad Multi-Dirección (y Todavía No la Lanzamos)",
+    },
+    excerpt: {
+      en: "AttestationStore ties a verified identity to exactly one address. Real users don't work that way: an EOA, a smart account, sometimes several, especially as account abstraction spreads. We built a standalone contract, IdentityLinkRegistry, to link a verified identity across addresses without touching the live AttestationStore or holding anyone's keys. It's built and tested, not deployed, and a real candidate integrator's feedback already surfaced a limit in the design worth sharing honestly.",
+      es: "AttestationStore ata una identidad verificada a exactamente una dirección. Los usuarios reales no funcionan así: una EOA, una smart account, a veces varias, sobre todo con el avance de account abstraction. Construimos un contrato independiente, IdentityLinkRegistry, para vincular una identidad verificada entre direcciones sin tocar el AttestationStore en vivo ni custodiar las llaves de nadie. Está construido y probado, no desplegado, y la retroalimentación de un candidato a integrador real ya reveló un límite del diseño que vale la pena contar con honestidad.",
+    },
+    bodyHtml: {
+      en: `
+<p>Most identity checks assume one address, one identity. <code>AttestationStore</code> is built that way today: <code>attestations</code> is a <code>mapping(address => Attestation)</code>, so an address either holds a valid attestation or it doesn't, with no concept of identity above that. That assumption breaks the moment a real user shows up with more than one address attached to the same person or business - an EOA for one app, a smart account for another, sometimes several smart accounts as account abstraction (<a href="https://eips.ethereum.org/EIPS/eip-4337" target="_blank" rel="noopener noreferrer">ERC-4337</a>) wallets spread across chains and apps. Today, every new address means KYC or KYB from zero, even for someone KUMPLY already verified yesterday on a different address.</p>
+
+<p>This isn't a hypothetical. It's the specific friction a candidate integrator evaluating KUMPLY flagged to us directly: their users accumulate wallets over time, and re-verifying each one from scratch is a real product problem for them, not just an abstract gap in our contracts. We're not naming them here - they haven't given explicit permission for public mention, and this post doesn't need their name to make the point. What's true either way is that we built something in response, and we're laying out exactly what it does, what it doesn't do yet, and the real limit their feedback surfaced.</p>
+
+<h2>A separate registry, not a bigger AttestationStore</h2>
+
+<p><code>AttestationStore</code> and <code>ComplianceGate</code> are live and verified on both Fuji and Mainnet C-Chain, and the SDK, the Sumsub webhook, and the workshop issuance script all depend on today's exact <code>verify(address)</code> semantics. Reshaping that mapping to hold multiple addresses per identity would mean a redeploy and re-pointing every one of those consumers - the same category of pain as <a href="/blog/acp99-kyb-gated-consensus-validator-bug">August's ValidatorSetManager redeploy</a>, except this time against a contract that already holds real attestations, not a validator set that hadn't gone live yet.</p>
+
+<p>So <code>IdentityLinkRegistry.sol</code> is a new, standalone contract. It never touches <code>AttestationStore</code>'s storage. It answers a narrower question - do these two addresses belong to the same verified identity - and a backend process uses that answer to mirror an existing attestation onto the new address through the same, unmodified <code>issueAttestation()</code> call every other attestation already goes through.</p>
+
+<h2>How the link gets proven</h2>
+
+<p>Linking two addresses takes a signature from both: the address that's already verified, and the new one, each signing an EIP-712 typed message naming the other address, a nonce, and a deadline. Both signatures are checked with OpenZeppelin's <code>SignatureChecker.isValidSignatureNow</code>, not raw <code>ECDSA.recover</code> - so a smart-contract wallet using <a href="https://eips.ethereum.org/EIPS/eip-1271" target="_blank" rel="noopener noreferrer">ERC-1271</a> (a Safe, for instance) can produce a valid signature too, not only a plain EOA private key. One address becomes the canonical identity; the registry tracks group size as a single counter instead of an on-chain array, specifically so revoking a link never costs unbounded gas as a group grows. Per-address nonces plus the EIP-712 domain (chain ID and verifying contract) stop a signature made for one chain, or one link request, from being replayed somewhere else.</p>
+
+<p>Once both signatures check out, a backend process - gated by the same <code>VERIFIER_ROLE</code> that already gates <code>issueAttestation()</code> - submits the link on-chain, then calls <code>issueAttestation()</code> again, this time for the new address, mirroring whatever tier the canonical identity already holds. That's two separate transactions, deliberately not one atomic call: it means the registry never needs its own grant of <code>VERIFIER_ROLE</code> on the live <code>AttestationStore</code>.</p>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 300" width="100%" role="img" aria-label="Diagram: an already-verified address and a new address each sign an EIP-712 message naming the other, both signatures are checked by IdentityLinkRegistry using OpenZeppelin's SignatureChecker, and once the link is recorded a backend process calls AttestationStore's existing issueAttestation to mirror the verified tier onto the new address">
+<rect x="20" y="15" width="220" height="80" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="38" y="45" font-size="15" font-weight="800" fill="var(--text-primary)">Address A (verified)</text>
+<text x="38" y="68" font-size="11" fill="var(--text-tertiary)">signs EIP-712 link message</text>
+
+<rect x="460" y="15" width="220" height="80" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="478" y="45" font-size="15" font-weight="800" fill="var(--text-primary)">Address B (new)</text>
+<text x="478" y="68" font-size="11" fill="var(--text-tertiary)">signs too (EOA or ERC-1271)</text>
+
+<rect x="220" y="140" width="260" height="70" rx="12" fill="var(--bg-card)" stroke="var(--accent)"/>
+<text x="238" y="168" font-family="'Fira Code', Consolas, monospace" font-size="13" font-weight="700" fill="var(--accent)">IdentityLinkRegistry</text>
+<text x="238" y="188" font-size="11" fill="var(--text-tertiary)">checks both sigs, records the link</text>
+
+<rect x="200" y="245" width="300" height="55" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="218" y="268" font-size="12" font-weight="800" fill="var(--text-primary)">issueAttestation() mirrors the tier</text>
+<text x="218" y="286" font-size="11" fill="var(--text-tertiary)">to Address B - same call, not a new path</text>
+
+<path d="M140 95 L280 138" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#idlink-arrow1-en)"/>
+<path d="M560 95 L420 138" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#idlink-arrow2-en)"/>
+<path d="M350 210 L350 243" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#idlink-arrow3-en)"/>
+<defs>
+<marker id="idlink-arrow1-en" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="idlink-arrow2-en" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="idlink-arrow3-en" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
+
+<h2>What this doesn't make KUMPLY</h2>
+
+<p>Nothing in this design gives KUMPLY anyone's keys or funds. Both signatures come from the user's own wallets - the backend only verifies them, it never signs the link on anyone's behalf. One nuance worth being precise about, the same way we're precise about the limits of <a href="/blog/kya-know-your-agent-tier-5">KYA</a> elsewhere: the second step, mirroring the attestation onto the new address, runs with KUMPLY's own verifier key, not the user's signature. It only fires after both addresses have already proven the link themselves, but it's still KUMPLY's own on-chain act, not something the contract forces automatically - a policy question worth settling before this goes anywhere near production, not just an implementation detail to wave past.</p>
+
+<h2>Where it actually stands today</h2>
+
+<p>Plainly: this is built, not shipped. The contract is 319 lines with 26 passing Hardhat tests, plus a mock ERC-1271 wallet covering the smart-wallet signing path. The SDK, the API, and the dashboard frontend all have working code for it already - a wallet-linking card, a backend endpoint, read methods for the registry. None of it is deployed, not on Fuji and not on Mainnet, and no contract address exists anywhere for it to even point at. It hasn't been tested against a single real, non-mock wallet yet.</p>
+
+<p>We already shared this design with the candidate integrator mentioned above, for exactly the use case described - their users rotate and accumulate wallets over time. Their answer surfaced a real limit worth sharing rather than glossing over: their users' wallets can't produce an EIP-712 signature at all, because the users themselves never hold a seed phrase to sign with. The ERC-1271 path already covers smart-contract wallets that can sign on their own - that part isn't the obstacle. The obstacle is a wallet architecture that can't sign anything by itself, and this design currently assumes both sides always can. That's a real constraint across part of the account-abstraction space, not an edge case to patch over later, and it's why nothing is deployed yet: shipping a design that can't serve the integrator who asked for it in the first place isn't a milestone worth claiming.</p>
+
+<h2>What's next</h2>
+
+<p>Before this goes anywhere near Fuji, we're evaluating a variant that doesn't require every linked address to self-sign - most likely some form of on-chain authorization from whoever actually controls the wallet, instead of an off-chain EIP-712 signature from the wallet itself. Whichever shape it takes, deploying it is a separate, explicit decision from writing the code, and we'll report it here when it actually happens instead of letting a commit speak for us.</p>
+
+<p>Sources: <a href="https://eips.ethereum.org/EIPS/eip-712" target="_blank" rel="noopener noreferrer">EIP-712, typed structured data signing</a>, <a href="https://eips.ethereum.org/EIPS/eip-1271" target="_blank" rel="noopener noreferrer">ERC-1271, signature validation for contract wallets</a>, <a href="https://eips.ethereum.org/EIPS/eip-4337" target="_blank" rel="noopener noreferrer">ERC-4337, account abstraction</a>, <a href="https://docs.openzeppelin.com/contracts/5.x/api/utils#SignatureChecker" target="_blank" rel="noopener noreferrer">OpenZeppelin Contracts, SignatureChecker</a>.</p>
+`,
+      es: `
+<p>La mayoría de las revisiones de identidad asumen una dirección, una identidad. <code>AttestationStore</code> hoy está construido así: <code>attestations</code> es un <code>mapping(address => Attestation)</code>, así que una dirección tiene una attestation válida o no la tiene, sin ningún concepto de identidad por encima de eso. Esa suposición se rompe en el momento en que aparece un usuario real con más de una dirección ligada a la misma persona o empresa - una EOA para una app, una smart account para otra, a veces varias smart accounts conforme las wallets de account abstraction (<a href="https://eips.ethereum.org/EIPS/eip-4337" target="_blank" rel="noopener noreferrer">ERC-4337</a>) se extienden entre cadenas y apps. Hoy, cada dirección nueva significa KYC o KYB desde cero, incluso para alguien a quien KUMPLY ya verificó ayer en otra dirección.</p>
+
+<p>Esto no es hipotético. Es la friction específica que un candidato a integrador evaluando a KUMPLY nos señaló directamente: sus usuarios acumulan wallets con el tiempo, y reverificar cada una desde cero es un problema de producto real para ellos, no solo un hueco abstracto en nuestros contratos. No los nombramos aquí - no nos han dado permiso explícito para mencionarlos públicamente, y este post no necesita su nombre para hacer el punto. Lo que sí es cierto en cualquier caso es que construimos algo en respuesta, y vamos a detallar exactamente qué hace, qué todavía no hace, y el límite real que su retroalimentación reveló.</p>
+
+<h2>Un registro separado, no un AttestationStore más grande</h2>
+
+<p><code>AttestationStore</code> y <code>ComplianceGate</code> están en vivo y verificados tanto en Fuji como en Mainnet C-Chain, y el SDK, el webhook de Sumsub y el script de emisión del workshop dependen de la semántica exacta de <code>verify(address)</code> de hoy. Rediseñar ese mapping para que sostenga varias direcciones por identidad significaría un redeploy y reapuntar cada uno de esos consumidores - la misma categoría de dolor que el <a href="/blog/acp99-kyb-gated-consensus-validator-bug">redeploy de ValidatorSetManager en agosto</a>, solo que esta vez contra un contrato que ya sostiene attestations reales, no un validator set que todavía no estaba en vivo.</p>
+
+<p>Así que <code>IdentityLinkRegistry.sol</code> es un contrato nuevo, independiente. Nunca toca el storage de <code>AttestationStore</code>. Responde una pregunta más acotada - si estas dos direcciones pertenecen a la misma identidad verificada - y un proceso de backend usa esa respuesta para replicar una attestation existente en la dirección nueva, a través de la misma llamada <code>issueAttestation()</code>, sin modificar, por la que ya pasa cualquier otra attestation.</p>
+
+<h2>Cómo se demuestra el vínculo</h2>
+
+<p>Vincular dos direcciones requiere una firma de ambas: la dirección que ya está verificada, y la nueva, cada una firmando un mensaje tipado EIP-712 que nombra a la otra dirección, un nonce, y una fecha límite. Las dos firmas se revisan con <code>SignatureChecker.isValidSignatureNow</code> de OpenZeppelin, no con <code>ECDSA.recover</code> directo - así que una wallet de contrato inteligente que use <a href="https://eips.ethereum.org/EIPS/eip-1271" target="_blank" rel="noopener noreferrer">ERC-1271</a> (una Safe, por ejemplo) también puede producir una firma válida, no solo una llave privada de EOA. Una dirección se vuelve la identidad canónica; el registro lleva el tamaño del grupo como un solo contador en vez de un arreglo on-chain, específicamente para que revocar un vínculo nunca cueste un gas sin límite conforme un grupo crece. Los nonces por dirección más el dominio EIP-712 (chain ID y contrato verificador) evitan que una firma hecha para una cadena, o para una solicitud de vínculo, se reutilice en otro lugar.</p>
+
+<p>Una vez que ambas firmas pasan la revisión, un proceso de backend - protegido por el mismo <code>VERIFIER_ROLE</code> que ya protege <code>issueAttestation()</code> - somete el vínculo on-chain, y luego llama a <code>issueAttestation()</code> otra vez, ahora para la dirección nueva, replicando el tier que la identidad canónica ya tiene. Son dos transacciones separadas, deliberadamente no una sola llamada atómica: significa que el registro nunca necesita su propio otorgamiento de <code>VERIFIER_ROLE</code> sobre el <code>AttestationStore</code> en vivo.</p>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 300" width="100%" role="img" aria-label="Diagrama: una dirección ya verificada y una dirección nueva firman cada una un mensaje EIP-712 que nombra a la otra, ambas firmas son revisadas por IdentityLinkRegistry usando SignatureChecker de OpenZeppelin, y una vez registrado el vínculo un proceso de backend llama al issueAttestation existente de AttestationStore para replicar el tier verificado en la dirección nueva">
+<rect x="20" y="15" width="220" height="80" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="38" y="45" font-size="15" font-weight="800" fill="var(--text-primary)">Dirección A (verificada)</text>
+<text x="38" y="68" font-size="11" fill="var(--text-tertiary)">firma el mensaje EIP-712</text>
+
+<rect x="460" y="15" width="220" height="80" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="478" y="45" font-size="15" font-weight="800" fill="var(--text-primary)">Dirección B (nueva)</text>
+<text x="478" y="68" font-size="11" fill="var(--text-tertiary)">firma también (EOA o ERC-1271)</text>
+
+<rect x="220" y="140" width="260" height="70" rx="12" fill="var(--bg-card)" stroke="var(--accent)"/>
+<text x="238" y="168" font-family="'Fira Code', Consolas, monospace" font-size="13" font-weight="700" fill="var(--accent)">IdentityLinkRegistry</text>
+<text x="238" y="188" font-size="11" fill="var(--text-tertiary)">revisa ambas firmas, registra el vínculo</text>
+
+<rect x="200" y="245" width="300" height="55" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="218" y="268" font-size="12" font-weight="800" fill="var(--text-primary)">issueAttestation() replica el tier</text>
+<text x="218" y="286" font-size="11" fill="var(--text-tertiary)">en la Dirección B - misma llamada, no un camino nuevo</text>
+
+<path d="M140 95 L280 138" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#idlink-arrow1-es)"/>
+<path d="M560 95 L420 138" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#idlink-arrow2-es)"/>
+<path d="M350 210 L350 243" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#idlink-arrow3-es)"/>
+<defs>
+<marker id="idlink-arrow1-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="idlink-arrow2-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="idlink-arrow3-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
+
+<h2>Qué NO vuelve a KUMPLY con esto</h2>
+
+<p>Nada en este diseño le da a KUMPLY las llaves o los fondos de nadie. Las dos firmas vienen de las propias wallets del usuario - el backend solo las verifica, nunca firma el vínculo en nombre de nadie. Un matiz vale la pena precisar, de la misma forma en que somos precisos sobre los límites de <a href="/blog/kya-know-your-agent-tier-5">KYA</a> en otro lado: el segundo paso, replicar la attestation en la dirección nueva, corre con la propia llave de verificador de KUMPLY, no con la firma del usuario. Solo se dispara después de que ambas direcciones ya probaron el vínculo por su cuenta, pero sigue siendo un acto on-chain propio de KUMPLY, no algo que el contrato fuerce automáticamente - una decisión de política que vale la pena resolver antes de que esto se acerque a producción, no solo un detalle de implementación para pasar por alto.</p>
+
+<h2>Dónde está parado esto hoy, en realidad</h2>
+
+<p>Con claridad: esto está construido, no lanzado. El contrato tiene 319 líneas con 26 pruebas de Hardhat pasando, más una wallet mock ERC-1271 que cubre el camino de firma de smart wallets. El SDK, la API y el frontend del dashboard ya tienen código funcionando para esto - una tarjeta para vincular wallets, un endpoint de backend, métodos de lectura para el registro. Nada de eso está desplegado, ni en Fuji ni en Mainnet, y no existe ninguna dirección de contrato a la cual apuntar siquiera. Todavía no se ha probado contra una sola wallet real, que no sea mock.</p>
+
+<p>Ya compartimos este diseño con el candidato a integrador mencionado arriba, exactamente para el caso de uso descrito - sus usuarios rotan y acumulan wallets con el tiempo. Su respuesta reveló un límite real que vale la pena contar en vez de disimular: las wallets de sus usuarios no pueden producir una firma EIP-712 en absoluto, porque los usuarios mismos nunca tienen una seed phrase con la que firmar. El camino ERC-1271 ya cubre las smart-contract wallets que pueden firmar por su cuenta - esa parte no es el obstáculo. El obstáculo es una arquitectura de wallet que no puede firmar nada por sí misma, y este diseño por ahora asume que ambos lados siempre pueden. Esa es una restricción real en parte del espacio de account abstraction, no un caso extremo para parchar después, y es la razón por la que nada está desplegado todavía: lanzar un diseño que no puede servir al integrador que lo pidió en primer lugar no es un hito que valga la pena presumir.</p>
+
+<h2>Qué sigue</h2>
+
+<p>Antes de que esto se acerque a Fuji, estamos evaluando una variante que no requiera que cada dirección vinculada firme por su cuenta - probablemente alguna forma de autorización on-chain de quien de verdad controla la wallet, en vez de una firma EIP-712 off-chain de la propia wallet. Cualquiera que sea la forma final, desplegarlo es una decisión separada y explícita de escribir el código, y la reportaremos aquí cuando de verdad suceda, en vez de dejar que un commit hable por nosotros.</p>
+
+<p>Fuentes: <a href="https://eips.ethereum.org/EIPS/eip-712" target="_blank" rel="noopener noreferrer">EIP-712, firma de datos estructurados tipados</a>, <a href="https://eips.ethereum.org/EIPS/eip-1271" target="_blank" rel="noopener noreferrer">ERC-1271, validación de firmas para wallets de contrato</a>, <a href="https://eips.ethereum.org/EIPS/eip-4337" target="_blank" rel="noopener noreferrer">ERC-4337, account abstraction</a>, <a href="https://docs.openzeppelin.com/contracts/5.x/api/utils#SignatureChecker" target="_blank" rel="noopener noreferrer">OpenZeppelin Contracts, SignatureChecker</a>.</p>
+`,
+    },
+  },
 ];
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
