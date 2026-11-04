@@ -182,6 +182,14 @@ export default async function BlogPostPage({
         .blog-post__body .blog-scenario p:last-child { margin-bottom: 0; }
         .blog-post__body .blog-diagram { margin: 1.75rem 0; }
         .blog-post__body .blog-diagram svg { display: block; max-width: 100%; height: auto; }
+        .blog-post__body .blog-photo { margin: 1.75rem 0; }
+        .blog-post__body .blog-photo img {
+          display: block; width: 100%; height: auto;
+          border: 1px solid var(--border); border-radius: var(--radius-md);
+        }
+        .blog-post__body .blog-photo figcaption {
+          margin-top: 0.6rem; font-size: 0.85rem; color: var(--text-tertiary); text-align: center;
+        }
         .blog-post__body .blog-cta { margin: 2rem 0; text-align: center; }
         .blog-post__body .blog-cta .btn { display: inline-flex; }
 
