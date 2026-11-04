@@ -1,7 +1,12 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { getPostBySlug } from "@/content/blog";
 
-export const runtime = "edge";
+// Node runtime, not edge: the per-post ogImage is embedded as a base64 data
+// URI read straight from /public, since next/og's remote <img src="https://...">
+// fetch path throws an opaque "Cannot read properties of undefined (reading
+// 'trim')" in this Next.js version - a data URI sidesteps that fetch entirely.
 export const alt = "KUMPLY Blog";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -18,6 +23,12 @@ export default async function OGImage({
   const eyebrow = lang === "es" ? "BLOG DE KUMPLY" : "KUMPLY BLOG";
   const author = post?.author.name ?? "KUMPLY";
 
+  let photoUrl: string | undefined;
+  if (post?.ogImage) {
+    const bytes = await readFile(join(process.cwd(), "public", post.ogImage));
+    photoUrl = `data:image/png;base64,${bytes.toString("base64")}`;
+  }
+
   return new ImageResponse(
     (
       <div
@@ -29,11 +40,43 @@ export default async function OGImage({
           justifyContent: "space-between",
           padding: "72px",
           background: "#0B0B0D",
-          backgroundImage:
-            "radial-gradient(circle at 78% 22%, rgba(232,65,66,0.28), transparent 55%)",
+          ...(photoUrl
+            ? {}
+            : { backgroundImage: "radial-gradient(circle at 78% 22%, rgba(232,65,66,0.28), transparent 55%)" }),
           fontFamily: "sans-serif",
+          position: "relative",
         }}
       >
+        {photoUrl && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={photoUrl}
+            alt=""
+            width={1200}
+            height={630}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "1200px",
+              height: "630px",
+              objectFit: "cover",
+            }}
+          />
+        )}
+        {photoUrl && (
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "1200px",
+              height: "630px",
+              background:
+                "linear-gradient(to top, rgba(11,11,13,0.9) 0%, rgba(11,11,13,0.84) 45%, rgba(11,11,13,0.78) 70%, rgba(11,11,13,0.82) 100%)",
+            }}
+          />
+        )}
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <div
             style={{
