@@ -1683,6 +1683,64 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 `,
     },
   },
+  {
+    slug: "team1-global-weekly-recognition",
+    date: "2026-11-04",
+    author: {
+      name: "Monserrat Mendoza",
+      role: { en: "Co-founder, Dev Lead", es: "Co-founder, Líder de Desarrollo" },
+    },
+    readMinutes: 3,
+    category: "COMMUNITY",
+    title: {
+      en: "Named on Team1's Global Weekly Call",
+      es: "Nos Nombraron en la Llamada Semanal Global de Team1",
+    },
+    excerpt: {
+      en: "On November 4, 2026, Team1 named both of us on a global weekly call - not just the LatAm chapter - with a dedicated slide and a real quote. This isn't a technical milestone or a product announcement, just a community recognition worth recording honestly, with the source attached.",
+      es: "El 4 de noviembre de 2026, Team1 nos nombró a ambos en una llamada semanal global - no solo el chapter LatAm - con una diapositiva dedicada y una cita real. No es un hito técnico ni un anuncio de producto, solo un reconocimiento de comunidad que vale la pena registrar con honestidad, con la fuente adjunta.",
+    },
+    bodyHtml: {
+      en: `
+<p>On November 4, 2026, Team1 named both KUMPLY founders - Giovanny Amador and Monserrat Mendoza - during a global weekly call, not the LatAm chapter's own weekly. A dedicated slide, titled "Giovanny & Monserrat - Mexico", carried this text:</p>
+
+<blockquote class="blog-scenario">
+<p>"They are building in the Avalanche ecosystem and have shown great commitment to Team1 LATAM. They are very collaborative and make an excellent team together, always supporting each other on every project. They join all our meetings, share ideas, and bring new perspectives to the community. They also post regularly about Avalanche, helping more people learn about the ecosystem and stay connected. Their energy and teamwork make our community stronger."</p>
+</blockquote>
+
+<p>Right after, Sofi - the admin of the "Miembros Team1 LatAm" Discord channel - tagged both of us there (<code>@Vaiosx</code> <code>@M0nsxx</code>), and the channel reacted with real congratulations from people in the community: Karotlover, Gerardo Vela, Cisn3ronauta, and Aritoshi, among others.</p>
+
+<h2>What this is, and what it isn't</h2>
+
+<p>It's worth being precise about the scope. This was a Team1 global weekly call - the same kind of recurring call every Team1 chapter joins, not an event built around us or an Avalanche-wide announcement. It's a real signal that two people building consistently in this community got noticed beyond their own chapter, nothing more and nothing less. We're not reading it as a partnership, a grant decision, or any kind of official Avalanche Foundation statement - it's community recognition from Team1, and we're treating it as exactly that.</p>
+
+<p>It's also a different kind of post than everything else on this blog so far: no contract, no SDK release, no workshop, no pilot. We're writing it up anyway because it's real, it happened in front of us, and because "Team1 Collaborator" status on its own - the line in our <a href="/pitch">pitch deck</a> - undersells what this specific moment was: two names read out loud on a global call, not just a status field.</p>
+
+<h2>Source</h2>
+
+<p>Everything above comes from screenshots of the actual "Miembros Team1 LatAm" Discord channel taken at the time, not a secondhand account relayed by someone else. We're not linking the channel itself since it's a private community space, not a public one.</p>
+`,
+      es: `
+<p>El 4 de noviembre de 2026, Team1 nombró a los dos founders de KUMPLY - Giovanny Amador y Monserrat Mendoza - durante una llamada semanal global, no la llamada semanal propia del chapter LatAm. Una diapositiva dedicada, titulada "Giovanny & Monserrat - Mexico", traía este texto (cita original en inglés, el idioma de la llamada):</p>
+
+<blockquote class="blog-scenario">
+<p>"They are building in the Avalanche ecosystem and have shown great commitment to Team1 LATAM. They are very collaborative and make an excellent team together, always supporting each other on every project. They join all our meetings, share ideas, and bring new perspectives to the community. They also post regularly about Avalanche, helping more people learn about the ecosystem and stay connected. Their energy and teamwork make our community stronger."</p>
+</blockquote>
+
+<p>Justo después, Sofi - la admin del canal de Discord "Miembros Team1 LatAm" - nos etiquetó ahí (<code>@Vaiosx</code> <code>@M0nsxx</code>), y el canal reaccionó con felicitaciones reales de personas de la comunidad: Karotlover, Gerardo Vela, Cisn3ronauta y Aritoshi, entre otros.</p>
+
+<h2>Qué es esto, y qué no es</h2>
+
+<p>Vale la pena ser precisos sobre el alcance. Esto fue una llamada semanal global de Team1 - el mismo tipo de llamada recurrente a la que se une cada chapter de Team1, no un evento construido alrededor de nosotros ni un anuncio a nivel de todo Avalanche. Es una señal real de que dos personas construyendo de forma consistente en esta comunidad fueron notadas más allá de su propio chapter, ni más ni menos. No lo leemos como una alianza, una decisión de grant, ni ningún tipo de declaración oficial de la Avalanche Foundation - es reconocimiento de comunidad por parte de Team1, y lo tratamos exactamente así.</p>
+
+<p>También es un tipo de post distinto a todo lo demás que hemos publicado en este blog: sin contrato, sin release de SDK, sin workshop, sin piloto. Lo escribimos de todas formas porque es real, pasó frente a nosotros, y porque el estatus de "Team1 Collaborator" por sí solo - la línea en nuestro <a href="/pitch">pitch deck</a> - se queda corto frente a lo que fue este momento específico: dos nombres leídos en voz alta en una llamada global, no solo un campo de estatus.</p>
+
+<h2>Fuente</h2>
+
+<p>Todo lo anterior viene de capturas de pantalla del canal real de Discord "Miembros Team1 LatAm" tomadas en el momento, no de un relato de segunda mano contado por otra persona. No enlazamos el canal en sí porque es un espacio privado de la comunidad, no uno público.</p>
+`,
+    },
+  },
 ];
 
 export function getPostBySlug(slug: string): BlogPost | undefined {

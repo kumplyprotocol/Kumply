@@ -602,6 +602,13 @@ export const DECK_HTML = `
       The pilot with 0xgasless was then presented on the Team1 LatAm livestream Los Doritos (September 30, 2026).
       <strong>Building on Avalanche is what we do, grant or no grant.</strong>
     </p>
+    <p class="note" style="margin-top: 1rem;"><strong>Recognized by Team1, globally:</strong> on November 4, 2026,
+      Team1 named both founders by name on a global weekly call (not limited to the LatAm chapter), with a
+      dedicated slide: "They are building in the Avalanche ecosystem and have shown great commitment to Team1
+      LATAM. They are very collaborative and make an excellent team together, always supporting each other on
+      every project. They join all our meetings, share ideas, and bring new perspectives to the community. They
+      also post regularly about Avalanche, helping more people learn about the ecosystem and stay connected.
+      Their energy and teamwork make our community stronger."</p>
     <p class="note" style="margin-top: 1rem;"><strong>Bus factor, addressed:</strong> most shipped code still runs
       through one founder today (Giovanny - every commit attributable to him, verifiable in the repo's public
       history). Monserrat has now shipped a real fix here too (commit <code>49177e0</code>, address validation
@@ -1140,6 +1147,14 @@ export const DECK_HTML_ES = `
       El piloto con 0xgasless se presentó después en el livestream de Team1 LatAm Los Doritos (30 de septiembre de 2026).
       <strong>Construir en Avalanche es lo que hacemos, con o sin grant.</strong>
     </p>
+    <p class="note" style="margin-top: 1rem;"><strong>Reconocidos por Team1, a nivel global:</strong> el 4 de
+      noviembre de 2026, Team1 nombró a ambos founders por nombre en una llamada semanal global (no limitada al
+      chapter LatAm), con una diapositiva dedicada: "They are building in the Avalanche ecosystem and have shown
+      great commitment to Team1 LATAM. They are very collaborative and make an excellent team together, always
+      supporting each other on every project. They join all our meetings, share ideas, and bring new
+      perspectives to the community. They also post regularly about Avalanche, helping more people learn about
+      the ecosystem and stay connected. Their energy and teamwork make our community stronger." (cita original
+      en inglés, el idioma de la llamada).</p>
     <p class="note" style="margin-top: 1rem;"><strong>Bus factor, resuelto:</strong> la mayoría del código enviado
       sigue pasando hoy por un solo founder (Giovanny - cada commit atribuible a él, verificable en el historial
       público del repo). Monserrat ya envió un fix real acá también (commit <code>49177e0</code>, validación de
