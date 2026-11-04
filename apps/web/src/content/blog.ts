@@ -1690,7 +1690,7 @@ const puedeOperar = await client.isAgent(address);</code></pre>
       name: "Monserrat Mendoza",
       role: { en: "Co-founder, Dev Lead", es: "Co-founder, Líder de Desarrollo" },
     },
-    readMinutes: 3,
+    readMinutes: 5,
     category: "COMMUNITY",
     title: {
       en: "Named on Team1's Global Weekly Call",
@@ -1713,7 +1713,17 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 <figcaption>The slide, live on the Team1 global weekly call (November 4, 2026).</figcaption>
 </figure>
 
-<p>Right after, Sofi - the admin of the "Miembros Team1 LatAm" Discord channel - tagged both of us there (<code>@Vaiosx</code> <code>@M0nsxx</code>), and the channel reacted with real congratulations from people in the community: Karotlover, Gerardo Vela, Cisn3ronauta, and Aritoshi, among others.</p>
+<p>Right after, Sofi - Team1 LatAm's chapter lead - tagged both of us in the "Miembros Team1 LatAm" Discord channel (<code>@Vaiosx</code> <code>@M0nsxx</code>), and the channel reacted with real congratulations from people in the community: Karotlover, Gerardo Vela, Cisn3ronauta, and Aritoshi, among others.</p>
+
+<h2>What the "commitment" in that slide is actually made of</h2>
+
+<p>The slide credits "great commitment to Team1 LATAM," so here's what that's been in practice, not just a status badge. <code>AttestationStore</code> and <code>ComplianceGate</code> are deployed and verified on both Avalanche Fuji and Avalanche Mainnet C-Chain (mainnet is a read-only beta today - <code>verificationFee=0</code>, no custody of funds or identity documents). The test suite behind that is real: 127 Hardhat tests on the contracts, 87 on the SDK, 17 on the API, all green as of this post. <code>@kumply/sdk</code> is published on npm under Apache-2.0.</p>
+
+<p>On September 24, 2026, we ran a Team1-approved live technical workshop on KYA (Know Your Agent) with the LatAm chapter - 13 on-chain Tier 5 attestations issued to real attendees that night on Fuji testnet, plus 5 more to the first respondents of an open follow-up form. Six days later, on September 30, 2026, 0xgasless - a builder in the Team1 community - ran a live pilot with us: their own demo smart account got a real Tier 5 attestation, checked against their paymaster logic (that check runs off-chain today, not as an on-chain gate - the <a href="/blog/0xgasless-paymaster-pilot-kya">dedicated post</a> covers the exact mechanics). That pilot was then presented on the Team1 LatAm livestream, Los Doritos, that same day.</p>
+
+<p>Outside the Avalanche ecosystem specifically, we've also placed in sponsor tracks at other hackathons: first place in the Creator Economies track and third place in the Arbitrum Innovation track at ETH Mexico Monterrey, plus a win at ETH Uruguay 2025 with both founders on the team. None of that is Avalanche-specific, but it's part of why "building" is a fair word for what we've been doing, not just Avalanche content.</p>
+
+<p>And there's an open thread still in motion: an active $10,000 Team1 mini-grant proposal, currently under review, not yet decided either way. We're naming it here as exactly that - a pending proposal, not a result.</p>
 
 <h2>What this is, and what it isn't</h2>
 
@@ -1737,7 +1747,17 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 <figcaption>La diapositiva, en vivo en la llamada semanal global de Team1 (4 de noviembre de 2026).</figcaption>
 </figure>
 
-<p>Justo después, Sofi - la admin del canal de Discord "Miembros Team1 LatAm" - nos etiquetó ahí (<code>@Vaiosx</code> <code>@M0nsxx</code>), y el canal reaccionó con felicitaciones reales de personas de la comunidad: Karotlover, Gerardo Vela, Cisn3ronauta y Aritoshi, entre otros.</p>
+<p>Justo después, Sofi - chapter lead de Team1 LatAm - nos etiquetó en el canal de Discord "Miembros Team1 LatAm" (<code>@Vaiosx</code> <code>@M0nsxx</code>), y el canal reaccionó con felicitaciones reales de personas de la comunidad: Karotlover, Gerardo Vela, Cisn3ronauta y Aritoshi, entre otros.</p>
+
+<h2>De qué está hecho realmente el "compromiso" de esa diapositiva</h2>
+
+<p>La diapositiva reconoce "gran compromiso con Team1 LATAM", así que esto es lo que eso ha significado en la práctica, no solo una insignia de estatus. <code>AttestationStore</code> y <code>ComplianceGate</code> están desplegados y verificados tanto en Avalanche Fuji como en Avalanche Mainnet C-Chain (mainnet hoy es una beta de solo lectura - <code>verificationFee=0</code>, sin custodia de fondos ni de documentos de identidad). La suite de pruebas detrás de eso es real: 127 pruebas de Hardhat en los contratos, 87 en el SDK, 17 en la API, todas en verde al momento de este post. <code>@kumply/sdk</code> está publicado en npm bajo Apache-2.0.</p>
+
+<p>El 24 de septiembre de 2026 corrimos un workshop técnico en vivo sobre KYA (Know Your Agent) aprobado por Team1 con el chapter LatAm - 13 attestations on-chain de Tier 5 emitidas esa noche a asistentes reales en testnet Fuji, más 5 emitidas después a las primeras personas que respondieron un formulario de seguimiento abierto. Seis días después, el 30 de septiembre de 2026, 0xgasless - un builder de la comunidad Team1 - corrió un piloto en vivo con nosotros: su propia smart account de demo recibió una attestation real de Tier 5, revisada contra su lógica de paymaster (esa revisión corre off-chain hoy, no como un gate on-chain - el <a href="/blog/0xgasless-paymaster-pilot-kya">post dedicado</a> cubre la mecánica exacta). Ese piloto se presentó después en el livestream de Team1 LatAm, Los Doritos, ese mismo día.</p>
+
+<p>Fuera del ecosistema de Avalanche específicamente, también hemos quedado en tracks de patrocinadores en otros hackathones: primer lugar en el track de Creator Economies y tercer lugar en el track de Arbitrum Innovation en ETH Mexico Monterrey, más una victoria en ETH Uruguay 2025 con ambos founders en el equipo. Nada de eso es específico de Avalanche, pero es parte de por qué "construir" es una palabra justa para lo que hemos estado haciendo, no solo contenido sobre Avalanche.</p>
+
+<p>Y hay un hilo abierto todavía en movimiento: una propuesta activa de mini-grant de $10,000 con Team1, actualmente en revisión, sin decisión todavía en ningún sentido. La nombramos aquí exactamente como eso - una propuesta pendiente, no un resultado.</p>
 
 <h2>Qué es esto, y qué no es</h2>
 
