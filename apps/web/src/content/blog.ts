@@ -18,6 +18,11 @@ export interface BlogPost {
   // not a React bug) - the [slug]/page.tsx loads it via next/script instead, only
   // when this flag is set, so other posts never pay for the third-party script.
   hasLumaCheckout?: boolean;
+  // Path (under /public) of a real photo to use as the link-preview (OG/Twitter
+  // card) background instead of the generated title card. opengraph-image.tsx
+  // overlays the usual KUMPLY branding + title on top of it. Omit for the
+  // default generated card.
+  ogImage?: string;
 }
 
 export const BLOG_POSTS: BlogPost[] = [
@@ -1686,6 +1691,7 @@ const puedeOperar = await client.isAgent(address);</code></pre>
   {
     slug: "team1-global-weekly-recognition",
     date: "2026-11-04",
+    ogImage: "/images/blog/team1-global-weekly-recognition-og.png",
     author: {
       name: "Monserrat Mendoza",
       role: { en: "Co-founder, Dev Lead", es: "Co-founder, Líder de Desarrollo" },
