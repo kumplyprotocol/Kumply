@@ -1708,13 +1708,18 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 <p>"They are building in the Avalanche ecosystem and have shown great commitment to Team1 LATAM. They are very collaborative and make an excellent team together, always supporting each other on every project. They join all our meetings, share ideas, and bring new perspectives to the community. They also post regularly about Avalanche, helping more people learn about the ecosystem and stay connected. Their energy and teamwork make our community stronger."</p>
 </blockquote>
 
+<figure class="blog-photo">
+<img src="/images/blog/team1-global-weekly-recognition.png" alt="Screen share of the Team1 global weekly call showing the dedicated slide 'Giovanny & Monserrat - Mexico' with the recognition text, next to the Avalanche logo" width="1140" height="746" loading="lazy" />
+<figcaption>The slide, live on the Team1 global weekly call (November 4, 2026).</figcaption>
+</figure>
+
 <p>Right after, Sofi - the admin of the "Miembros Team1 LatAm" Discord channel - tagged both of us there (<code>@Vaiosx</code> <code>@M0nsxx</code>), and the channel reacted with real congratulations from people in the community: Karotlover, Gerardo Vela, Cisn3ronauta, and Aritoshi, among others.</p>
 
 <h2>What this is, and what it isn't</h2>
 
 <p>It's worth being precise about the scope. This was a Team1 global weekly call - the same kind of recurring call every Team1 chapter joins, not an event built around us or an Avalanche-wide announcement. It's a real signal that two people building consistently in this community got noticed beyond their own chapter, nothing more and nothing less. We're not reading it as a partnership, a grant decision, or any kind of official Avalanche Foundation statement - it's community recognition from Team1, and we're treating it as exactly that.</p>
 
-<p>It's also a different kind of post than everything else on this blog so far: no contract, no SDK release, no workshop, no pilot. We're writing it up anyway because it's real, it happened in front of us, and because "Team1 Collaborator" status on its own - the line in our <a href="/pitch">pitch deck</a> - undersells what this specific moment was: two names read out loud on a global call, not just a status field.</p>
+<p>It's also a different kind of post than everything else on this blog so far: no contract, no SDK release, no workshop, no pilot. We're writing it up anyway because it's real, it happened in front of us, and because "Team1 Collaborator" status on its own undersells what this specific moment was: two names read out loud on a global call, not just a status field.</p>
 
 <h2>Source</h2>
 
@@ -1727,13 +1732,18 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 <p>"They are building in the Avalanche ecosystem and have shown great commitment to Team1 LATAM. They are very collaborative and make an excellent team together, always supporting each other on every project. They join all our meetings, share ideas, and bring new perspectives to the community. They also post regularly about Avalanche, helping more people learn about the ecosystem and stay connected. Their energy and teamwork make our community stronger."</p>
 </blockquote>
 
+<figure class="blog-photo">
+<img src="/images/blog/team1-global-weekly-recognition.png" alt="Captura de pantalla de la llamada semanal global de Team1 mostrando la diapositiva dedicada 'Giovanny & Monserrat - Mexico' con el texto de reconocimiento, junto al logo de Avalanche" width="1140" height="746" loading="lazy" />
+<figcaption>La diapositiva, en vivo en la llamada semanal global de Team1 (4 de noviembre de 2026).</figcaption>
+</figure>
+
 <p>Justo después, Sofi - la admin del canal de Discord "Miembros Team1 LatAm" - nos etiquetó ahí (<code>@Vaiosx</code> <code>@M0nsxx</code>), y el canal reaccionó con felicitaciones reales de personas de la comunidad: Karotlover, Gerardo Vela, Cisn3ronauta y Aritoshi, entre otros.</p>
 
 <h2>Qué es esto, y qué no es</h2>
 
 <p>Vale la pena ser precisos sobre el alcance. Esto fue una llamada semanal global de Team1 - el mismo tipo de llamada recurrente a la que se une cada chapter de Team1, no un evento construido alrededor de nosotros ni un anuncio a nivel de todo Avalanche. Es una señal real de que dos personas construyendo de forma consistente en esta comunidad fueron notadas más allá de su propio chapter, ni más ni menos. No lo leemos como una alianza, una decisión de grant, ni ningún tipo de declaración oficial de la Avalanche Foundation - es reconocimiento de comunidad por parte de Team1, y lo tratamos exactamente así.</p>
 
-<p>También es un tipo de post distinto a todo lo demás que hemos publicado en este blog: sin contrato, sin release de SDK, sin workshop, sin piloto. Lo escribimos de todas formas porque es real, pasó frente a nosotros, y porque el estatus de "Team1 Collaborator" por sí solo - la línea en nuestro <a href="/pitch">pitch deck</a> - se queda corto frente a lo que fue este momento específico: dos nombres leídos en voz alta en una llamada global, no solo un campo de estatus.</p>
+<p>También es un tipo de post distinto a todo lo demás que hemos publicado en este blog: sin contrato, sin release de SDK, sin workshop, sin piloto. Lo escribimos de todas formas porque es real, pasó frente a nosotros, y porque el estatus de "Team1 Collaborator" por sí solo se queda corto frente a lo que fue este momento específico: dos nombres leídos en voz alta en una llamada global, no solo un campo de estatus.</p>
 
 <h2>Fuente</h2>
 

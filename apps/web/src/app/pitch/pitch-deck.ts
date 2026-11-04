@@ -608,7 +608,7 @@ export const DECK_HTML = `
       LATAM. They are very collaborative and make an excellent team together, always supporting each other on
       every project. They join all our meetings, share ideas, and bring new perspectives to the community. They
       also post regularly about Avalanche, helping more people learn about the ecosystem and stay connected.
-      Their energy and teamwork make our community stronger."</p>
+      Their energy and teamwork make our community stronger." Full writeup and screenshot: <a href="https://kumply.xyz/blog/team1-global-weekly-recognition" target="_blank" rel="noopener noreferrer">kumply.xyz/blog/team1-global-weekly-recognition</a>.</p>
     <p class="note" style="margin-top: 1rem;"><strong>Bus factor, addressed:</strong> most shipped code still runs
       through one founder today (Giovanny - every commit attributable to him, verifiable in the repo's public
       history). Monserrat has now shipped a real fix here too (commit <code>49177e0</code>, address validation
@@ -1154,7 +1154,7 @@ export const DECK_HTML_ES = `
       supporting each other on every project. They join all our meetings, share ideas, and bring new
       perspectives to the community. They also post regularly about Avalanche, helping more people learn about
       the ecosystem and stay connected. Their energy and teamwork make our community stronger." (cita original
-      en inglés, el idioma de la llamada).</p>
+      en inglés, el idioma de la llamada). Nota completa y captura: <a href="https://kumply.xyz/blog/team1-global-weekly-recognition" target="_blank" rel="noopener noreferrer">kumply.xyz/blog/team1-global-weekly-recognition</a>.</p>
     <p class="note" style="margin-top: 1rem;"><strong>Bus factor, resuelto:</strong> la mayoría del código enviado
       sigue pasando hoy por un solo founder (Giovanny - cada commit atribuible a él, verificable en el historial
       público del repo). Monserrat ya envió un fix real acá también (commit <code>49177e0</code>, validación de
