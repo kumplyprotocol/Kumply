@@ -1744,14 +1744,14 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 <p>Since this post is already recapping what we've built, here's where to actually poke at it. The <a href="https://kumply.xyz/demo" target="_blank" rel="noopener noreferrer">live demo</a> runs a real compliance check against Fuji or Mainnet, no wallet required - pick a use case (DeFi access, a tokenized RWA fund, an AI agent marketplace) and watch <code>ComplianceGate</code> accept or reject a seeded address in real time. The <a href="https://kumply.xyz/build" target="_blank" rel="noopener noreferrer">Build page</a> lists concrete software ideas on top of KUMPLY - anti-Sybil airdrop filters, one-person-one-vote DAO voting, gas sponsorship limited to verified wallets, and more - and the <a href="https://kumply.xyz/developers" target="_blank" rel="noopener noreferrer">SDK docs</a> have the actual TypeScript to integrate it.</p>
 
 <figure class="blog-photo">
-<img src="/images/blog/kumply-demo-live.png" alt="KUMPLY's live demo page at kumply.xyz/demo, showing the use case selector for DeFi Protocol Access, RWA Tokenized Asset, and AI Agent Marketplace" width="1280" height="920" loading="lazy" />
+<img src="/images/blog/kumply-demo-live.webp" alt="KUMPLY's live demo page at kumply.xyz/demo, showing the use case selector for DeFi Protocol Access, RWA Tokenized Asset, and AI Agent Marketplace" width="1280" height="920" loading="lazy" />
 <figcaption>KUMPLY's live demo - <a href="https://kumply.xyz/demo" target="_blank" rel="noopener noreferrer">kumply.xyz/demo</a>.</figcaption>
 </figure>
 
 <p>The 0xgasless integration mentioned above is also real and inspectable, not just a claim: the <a href="https://kumply.xyz/ecosystem" target="_blank" rel="noopener noreferrer">Ecosystem page</a> lists the exact mechanism (their sponsorship service calls <code>verify()</code> before approving gas for a UserOperation) plus the three on-chain transaction hashes behind it.</p>
 
 <figure class="blog-photo">
-<img src="/images/blog/kumply-0xgasless-integration.png" alt="The 0xgasless pilot integration card on kumply.xyz/ecosystem, describing how their sponsorship service calls KUMPLY's verify() before approving gas" width="760" height="765" loading="lazy" />
+<img src="/images/blog/kumply-0xgasless-integration.webp" alt="The 0xgasless pilot integration card on kumply.xyz/ecosystem, describing how their sponsorship service calls KUMPLY's verify() before approving gas" width="760" height="765" loading="lazy" />
 <figcaption>The 0xgasless pilot card - <a href="https://kumply.xyz/ecosystem" target="_blank" rel="noopener noreferrer">kumply.xyz/ecosystem</a>.</figcaption>
 </figure>
 
@@ -1760,7 +1760,7 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 <p>Unrelated to KUMPLY, but worth a mention since it comes from the same community that just named us: <a href="https://www.avalanchecity.fun/" target="_blank" rel="noopener noreferrer">Avalanche City</a> is a fan-made arcade built on Avalanche by the Team1 LatAm community - not affiliated with or endorsed by Ava Labs or the Avalanche Foundation. Its first game, AvaxRacing, is actually playable today at <a href="https://www.avalanchecity.fun/play" target="_blank" rel="noopener noreferrer">avalanchecity.fun/play</a> - 14 tracks, a story mode, and lap times signed server-side and recorded on a LapRegistry contract on Fuji. A few more cabinets (an L1-building game, an ICM courier game, a validator-uptime game) are listed as in design, not live yet.</p>
 
 <figure class="blog-photo">
-<img src="/images/blog/avalanchecity-play.png" alt="AvaxRacing, the playable racing game inside Avalanche City, showing the garage screen with the Sakura GT car and a track list" width="1280" height="900" loading="lazy" />
+<img src="/images/blog/avalanchecity-play.webp" alt="AvaxRacing, the playable racing game inside Avalanche City, showing the garage screen with the Sakura GT car and a track list" width="1280" height="900" loading="lazy" />
 <figcaption>AvaxRacing, live at <a href="https://www.avalanchecity.fun/play" target="_blank" rel="noopener noreferrer">avalanchecity.fun/play</a>.</figcaption>
 </figure>
 
@@ -1805,14 +1805,14 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 <p>Ya que este post está haciendo recuento de lo que hemos construido, aquí es donde de verdad puedes tocarlo. El <a href="https://kumply.xyz/demo" target="_blank" rel="noopener noreferrer">demo en vivo</a> corre una revisión de compliance real contra Fuji o Mainnet, sin necesidad de wallet - elige un caso de uso (acceso a DeFi, un fondo RWA tokenizado, un marketplace de agentes IA) y mira a <code>ComplianceGate</code> aceptar o rechazar una dirección sembrada en tiempo real. La <a href="https://kumply.xyz/build" target="_blank" rel="noopener noreferrer">página de Build</a> enumera ideas de software concretas sobre KUMPLY - filtros anti-Sybil para airdrops, votación de una persona un voto en una DAO, patrocinio de gas limitado a wallets verificadas, y más - y los <a href="https://kumply.xyz/developers" target="_blank" rel="noopener noreferrer">docs del SDK</a> tienen el TypeScript real para integrarlo.</p>
 
 <figure class="blog-photo">
-<img src="/images/blog/kumply-demo-live.png" alt="El demo en vivo de KUMPLY en kumply.xyz/demo, mostrando el selector de casos de uso para DeFi Protocol Access, RWA Tokenized Asset y AI Agent Marketplace" width="1280" height="920" loading="lazy" />
+<img src="/images/blog/kumply-demo-live.webp" alt="El demo en vivo de KUMPLY en kumply.xyz/demo, mostrando el selector de casos de uso para DeFi Protocol Access, RWA Tokenized Asset y AI Agent Marketplace" width="1280" height="920" loading="lazy" />
 <figcaption>El demo en vivo de KUMPLY - <a href="https://kumply.xyz/demo" target="_blank" rel="noopener noreferrer">kumply.xyz/demo</a>.</figcaption>
 </figure>
 
 <p>La integración con 0xgasless mencionada arriba también es real e inspeccionable, no solo una afirmación: la <a href="https://kumply.xyz/ecosystem" target="_blank" rel="noopener noreferrer">página de Ecosystem</a> enumera el mecanismo exacto (su servicio de sponsorship llama a <code>verify()</code> antes de aprobar gas para una UserOperation) más los tres hashes de transacción on-chain detrás de eso.</p>
 
 <figure class="blog-photo">
-<img src="/images/blog/kumply-0xgasless-integration.png" alt="La tarjeta de integración piloto con 0xgasless en kumply.xyz/ecosystem, describiendo cómo su servicio de sponsorship llama a verify() de KUMPLY antes de aprobar gas" width="760" height="765" loading="lazy" />
+<img src="/images/blog/kumply-0xgasless-integration.webp" alt="La tarjeta de integración piloto con 0xgasless en kumply.xyz/ecosystem, describiendo cómo su servicio de sponsorship llama a verify() de KUMPLY antes de aprobar gas" width="760" height="765" loading="lazy" />
 <figcaption>La tarjeta del piloto con 0xgasless - <a href="https://kumply.xyz/ecosystem" target="_blank" rel="noopener noreferrer">kumply.xyz/ecosystem</a>.</figcaption>
 </figure>
 
@@ -1821,7 +1821,7 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 <p>Sin relación con KUMPLY, pero vale la pena mencionarlo porque viene de la misma comunidad que acaba de nombrarnos: <a href="https://www.avalanchecity.fun/" target="_blank" rel="noopener noreferrer">Avalanche City</a> es un arcade hecho por fans, construido sobre Avalanche por la comunidad de Team1 LatAm - no afiliado ni avalado por Ava Labs ni la Avalanche Foundation. Su primer juego, AvaxRacing, de verdad se puede jugar hoy en <a href="https://www.avalanchecity.fun/play" target="_blank" rel="noopener noreferrer">avalanchecity.fun/play</a> - 14 pistas, un modo historia, y tiempos de vuelta firmados del lado del servidor y registrados en un contrato LapRegistry en Fuji. Un par de cabinas más (un juego de construir tu propia L1, uno de mensajería ICM, uno de uptime de validadores) están listadas como en diseño, todavía no en vivo.</p>
 
 <figure class="blog-photo">
-<img src="/images/blog/avalanchecity-play.png" alt="AvaxRacing, el juego de carreras jugable dentro de Avalanche City, mostrando la pantalla de garage con el auto Sakura GT y una lista de pistas" width="1280" height="900" loading="lazy" />
+<img src="/images/blog/avalanchecity-play.webp" alt="AvaxRacing, el juego de carreras jugable dentro de Avalanche City, mostrando la pantalla de garage con el auto Sakura GT y una lista de pistas" width="1280" height="900" loading="lazy" />
 <figcaption>AvaxRacing, en vivo en <a href="https://www.avalanchecity.fun/play" target="_blank" rel="noopener noreferrer">avalanchecity.fun/play</a>.</figcaption>
 </figure>
 
