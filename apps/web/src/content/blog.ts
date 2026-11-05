@@ -1760,7 +1760,7 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 <p>Unrelated to KUMPLY, but worth a mention since it comes from the same community that just named us: <a href="https://www.avalanchecity.fun/" target="_blank" rel="noopener noreferrer">Avalanche City</a> is a fan-made arcade built on Avalanche by the Team1 LatAm community - not affiliated with or endorsed by Ava Labs or the Avalanche Foundation. Its first game, AvaxRacing, is actually playable today at <a href="https://www.avalanchecity.fun/play" target="_blank" rel="noopener noreferrer">avalanchecity.fun/play</a> - 14 tracks, a story mode, and lap times signed server-side and recorded on a LapRegistry contract on Fuji. A few more cabinets (an L1-building game, an ICM courier game, a validator-uptime game) are listed as in design, not live yet.</p>
 
 <figure class="blog-photo">
-<img src="/images/blog/avalanchecity-play.webp" alt="AvaxRacing, the playable racing game inside Avalanche City, showing the garage screen with the Sakura GT car and a track list" width="1280" height="900" loading="lazy" />
+<img src="/images/blog/avalanchecity-play.webp" alt="AvaxRacing, the playable racing game inside Avalanche City, showing the garage screen with the full roster of 13 cars and a track list" width="1600" height="535" loading="lazy" />
 <figcaption>AvaxRacing, live at <a href="https://www.avalanchecity.fun/play" target="_blank" rel="noopener noreferrer">avalanchecity.fun/play</a>.</figcaption>
 </figure>
 
@@ -1821,7 +1821,7 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 <p>Sin relación con KUMPLY, pero vale la pena mencionarlo porque viene de la misma comunidad que acaba de nombrarnos: <a href="https://www.avalanchecity.fun/" target="_blank" rel="noopener noreferrer">Avalanche City</a> es un arcade hecho por fans, construido sobre Avalanche por la comunidad de Team1 LatAm - no afiliado ni avalado por Ava Labs ni la Avalanche Foundation. Su primer juego, AvaxRacing, de verdad se puede jugar hoy en <a href="https://www.avalanchecity.fun/play" target="_blank" rel="noopener noreferrer">avalanchecity.fun/play</a> - 14 pistas, un modo historia, y tiempos de vuelta firmados del lado del servidor y registrados en un contrato LapRegistry en Fuji. Un par de cabinas más (un juego de construir tu propia L1, uno de mensajería ICM, uno de uptime de validadores) están listadas como en diseño, todavía no en vivo.</p>
 
 <figure class="blog-photo">
-<img src="/images/blog/avalanchecity-play.webp" alt="AvaxRacing, el juego de carreras jugable dentro de Avalanche City, mostrando la pantalla de garage con el auto Sakura GT y una lista de pistas" width="1280" height="900" loading="lazy" />
+<img src="/images/blog/avalanchecity-play.webp" alt="AvaxRacing, el juego de carreras jugable dentro de Avalanche City, mostrando la pantalla de garage con los 13 autos completos y una lista de pistas" width="1600" height="535" loading="lazy" />
 <figcaption>AvaxRacing, en vivo en <a href="https://www.avalanchecity.fun/play" target="_blank" rel="noopener noreferrer">avalanchecity.fun/play</a>.</figcaption>
 </figure>
 
