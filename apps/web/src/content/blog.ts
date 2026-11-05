@@ -1721,6 +1721,12 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 
 <p>Right after, Sofi - Team1 LatAm's chapter lead - tagged both of us in the "Miembros Team1 LatAm" Telegram channel (<code>@Vaiosx</code> <code>@M0nsxx</code>), and the channel reacted with real congratulations from people in the community: Karotlover, Gerardo Vela, Cisn3ronauta, and Aritoshi, among others.</p>
 
+<blockquote class="blog-scenario">
+<p><strong>In plain language</strong> (because people outside crypto are going to read this too): an international community of people building technology on the Avalanche blockchain - spread across dozens of countries, not just Mexico - named us by name on a call that includes teams from all over the world, not only Latin America. It was public recognition that we've spent over a year building something real, not just talking about it.</p>
+<p>What did we actually build? KUMPLY works like a digital ID card. Today, to use a serious financial app - a bank, an insurance company - you have to show ID, prove you're an adult, or prove your business is legally registered. KUMPLY does the same thing, but for apps built on blockchain: it lets a person or a business prove, once, that they already passed that check, without handing over their documents again every time they use a new app, and without those documents sitting in one company's hands.</p>
+<p>Why does this matter for Mexico and Latin America? Because most of the digital identity infrastructure for blockchain gets built in the US or Europe. Two people building from Mexico, in Spanish, working on this exact problem - and an international community noticing it - is a sign that this kind of technology can be built here too, not just used here. And globally: Avalanche is one of the networks where serious financial applications get built around the world, so a Mexican project handling identity and rule-following on it matters beyond our own region.</p>
+</blockquote>
+
 <h2>What the "commitment" in that slide is actually made of</h2>
 
 <p>The slide credits "great commitment to Team1 LATAM," so here's what that's been in practice, not just a status badge. <code>AttestationStore</code> and <code>ComplianceGate</code> are deployed and verified on both Avalanche Fuji and Avalanche Mainnet C-Chain (mainnet is a read-only beta today - <code>verificationFee=0</code>, no custody of funds or identity documents). The test suite behind that is real: 127 Hardhat tests on the contracts, 87 on the SDK, 17 on the API, all green as of this post. <code>@kumply/sdk</code> is published on npm under Apache-2.0.</p>
@@ -1786,6 +1792,12 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 </figure>
 
 <p>Justo después, Sofi - chapter lead de Team1 LatAm - nos etiquetó en el canal de Telegram "Miembros Team1 LatAm" (<code>@Vaiosx</code> <code>@M0nsxx</code>), y el canal reaccionó con felicitaciones reales de personas de la comunidad: Karotlover, Gerardo Vela, Cisn3ronauta y Aritoshi, entre otros.</p>
+
+<blockquote class="blog-scenario">
+<p><strong>En palabras simples</strong> (porque esto también lo va a leer gente que no está metida en cripto): una comunidad internacional de personas que construyen tecnología sobre la blockchain de Avalanche -repartida en decenas de países, no solo México- nos mencionó por nuestro nombre en una llamada en la que participan equipos de todo el mundo, no solo de Latinoamérica. Fue un reconocimiento público a que llevamos más de un año construyendo algo real, no solo hablando de ello.</p>
+<p>¿Qué es lo que construimos? KUMPLY funciona como una credencial digital. Hoy, para usar una app financiera seria -un banco, una aseguradora- tienes que mostrar tu identificación, comprobar que eres mayor de edad, o que tu negocio está registrado legalmente. KUMPLY hace lo mismo, pero para apps construidas sobre blockchain: deja que una persona o una empresa demuestre, una sola vez, que ya pasó esa revisión, sin tener que volver a enseñar sus documentos cada vez que usa una app nueva, y sin que esos documentos queden guardados en manos de una sola empresa.</p>
+<p>¿Por qué importa esto para México y Latinoamérica? Porque la mayoría de la infraestructura de identidad digital para blockchain se construye en Estados Unidos o Europa. Que dos personas construyan desde México, en español, resolviendo exactamente este problema -y que una comunidad internacional lo note- es una señal de que esta tecnología también se puede construir aquí, no solo usarse aquí. Y a nivel global: Avalanche es una de las redes donde se construyen aplicaciones financieras serias alrededor del mundo, así que un proyecto mexicano encargado de la identidad y el cumplimiento de reglas en esa red importa más allá de nuestra región.</p>
+</blockquote>
 
 <h2>De qué está hecho realmente el "compromiso" de esa diapositiva</h2>
 
