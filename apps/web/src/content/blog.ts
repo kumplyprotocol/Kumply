@@ -1727,6 +1727,11 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 
 <p>On September 24, 2026, we ran a Team1-approved live technical workshop on KYA (Know Your Agent) with the LatAm chapter - 13 on-chain Tier 5 attestations issued to real attendees that night on Fuji testnet, plus 5 more to the first respondents of an open follow-up form. Six days later, on September 30, 2026, 0xgasless - a builder in the Team1 community - ran a live pilot with us: their own demo smart account got a real Tier 5 attestation, checked against their paymaster logic (that check runs off-chain today, not as an on-chain gate - the <a href="/blog/0xgasless-paymaster-pilot-kya">dedicated post</a> covers the exact mechanics). That pilot was then presented on the Team1 LatAm livestream, Los Doritos, that same day.</p>
 
+<figure class="blog-photo">
+<img src="/images/blog/kya-workshop-live.webp" alt="Live screen share of the KUMPLY x Team1 LatAm KYA workshop, showing the agenda slide (problem, live demo, hands-on deploy, Q&A and SDK integration) next to video tiles of the presenters and attendees" width="1280" height="601" loading="lazy" />
+<figcaption>The KYA workshop, live with the Team1 LatAm chapter (September 24, 2026).</figcaption>
+</figure>
+
 <p>KUMPLY itself started as a submission to Avalanche's LatAm Institucional hackathon back in May 2026 - we didn't win that one, but it's where the project was born. We've kept building on Avalanche since: two more weekend builds, shipped and shared with the community - Tequio, an invisible-blockchain museum ticketing app, and Chanampa, an agricultural traceability demo.</p>
 
 <p>Outside the Avalanche ecosystem specifically, we've also placed in hackathon sponsor tracks. Giovanny placed in two at ETH Mexico Monterrey - first place in the Creator Economies track and third place in the Arbitrum Innovation track - both with other teammates, not Monserrat. Both founders together won first place at ETH Uruguay 2025, and first place in the FDA Track at the DeSci Builders Hackathon 2025 with BioShield Insurance, an insurance project deployed on Solana, Base, and Optimism. None of that is Avalanche-specific, but it's part of why "building" is a fair word for what we've been doing, not just Avalanche content.</p>
@@ -1787,6 +1792,11 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 <p>La diapositiva reconoce "gran compromiso con Team1 LATAM", así que esto es lo que eso ha significado en la práctica, no solo una insignia de estatus. <code>AttestationStore</code> y <code>ComplianceGate</code> están desplegados y verificados tanto en Avalanche Fuji como en Avalanche Mainnet C-Chain (mainnet hoy es una beta de solo lectura - <code>verificationFee=0</code>, sin custodia de fondos ni de documentos de identidad). La suite de pruebas detrás de eso es real: 127 pruebas de Hardhat en los contratos, 87 en el SDK, 17 en la API, todas en verde al momento de este post. <code>@kumply/sdk</code> está publicado en npm bajo Apache-2.0.</p>
 
 <p>El 24 de septiembre de 2026 corrimos un workshop técnico en vivo sobre KYA (Know Your Agent) aprobado por Team1 con el chapter LatAm - 13 attestations on-chain de Tier 5 emitidas esa noche a asistentes reales en testnet Fuji, más 5 emitidas después a las primeras personas que respondieron un formulario de seguimiento abierto. Seis días después, el 30 de septiembre de 2026, 0xgasless - un builder de la comunidad Team1 - corrió un piloto en vivo con nosotros: su propia smart account de demo recibió una attestation real de Tier 5, revisada contra su lógica de paymaster (esa revisión corre off-chain hoy, no como un gate on-chain - el <a href="/blog/0xgasless-paymaster-pilot-kya">post dedicado</a> cubre la mecánica exacta). Ese piloto se presentó después en el livestream de Team1 LatAm, Los Doritos, ese mismo día.</p>
+
+<figure class="blog-photo">
+<img src="/images/blog/kya-workshop-live.webp" alt="Captura en vivo del workshop de KYA de KUMPLY x Team1 LatAm, mostrando la diapositiva de agenda (el problema, demo en vivo, deploy práctico, Q&A e integración del SDK) junto a los recuadros de video de los presentadores y asistentes" width="1280" height="601" loading="lazy" />
+<figcaption>El workshop de KYA, en vivo con el chapter LatAm de Team1 (24 de septiembre de 2026).</figcaption>
+</figure>
 
 <p>KUMPLY mismo empezó como una submission al hackathon LatAm Institucional de Avalanche en mayo de 2026 - no ganamos ese, pero de ahí nació el proyecto. Hemos seguido construyendo en Avalanche desde entonces: dos builds de fin de semana más, enviados y compartidos con la comunidad - Tequio, una app de boletos de museo con blockchain invisible, y Chanampa, una demo de trazabilidad agrícola.</p>
 
