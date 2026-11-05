@@ -1719,7 +1719,7 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 <figcaption>The slide, live on the Team1 global weekly call (November 4, 2026).</figcaption>
 </figure>
 
-<p>Right after, Sofi - Team1 LatAm's chapter lead - tagged both of us in the "Miembros Team1 LatAm" Discord channel (<code>@Vaiosx</code> <code>@M0nsxx</code>), and the channel reacted with real congratulations from people in the community: Karotlover, Gerardo Vela, Cisn3ronauta, and Aritoshi, among others.</p>
+<p>Right after, Sofi - Team1 LatAm's chapter lead - tagged both of us in the "Miembros Team1 LatAm" Telegram channel (<code>@Vaiosx</code> <code>@M0nsxx</code>), and the channel reacted with real congratulations from people in the community: Karotlover, Gerardo Vela, Cisn3ronauta, and Aritoshi, among others.</p>
 
 <h2>What the "commitment" in that slide is actually made of</h2>
 
@@ -1771,7 +1771,7 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 
 <h2>Source</h2>
 
-<p>Everything above comes from screenshots of the actual "Miembros Team1 LatAm" Discord channel taken at the time, not a secondhand account relayed by someone else. We're not linking the channel itself since it's a private community space, not a public one.</p>
+<p>Everything above comes from screenshots of the actual "Miembros Team1 LatAm" Telegram channel taken at the time, not a secondhand account relayed by someone else. We're not linking the channel itself since it's a private community space, not a public one.</p>
 `,
       es: `
 <p>El 4 de noviembre de 2026, Team1 nombró a los dos founders de KUMPLY - Giovanny Amador y Monserrat Mendoza - durante una llamada semanal global, no la llamada semanal propia del chapter LatAm. Una diapositiva dedicada, titulada "Giovanny & Monserrat - Mexico", traía este texto (cita original en inglés, el idioma de la llamada):</p>
@@ -1785,7 +1785,7 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 <figcaption>La diapositiva, en vivo en la llamada semanal global de Team1 (4 de noviembre de 2026).</figcaption>
 </figure>
 
-<p>Justo después, Sofi - chapter lead de Team1 LatAm - nos etiquetó en el canal de Discord "Miembros Team1 LatAm" (<code>@Vaiosx</code> <code>@M0nsxx</code>), y el canal reaccionó con felicitaciones reales de personas de la comunidad: Karotlover, Gerardo Vela, Cisn3ronauta y Aritoshi, entre otros.</p>
+<p>Justo después, Sofi - chapter lead de Team1 LatAm - nos etiquetó en el canal de Telegram "Miembros Team1 LatAm" (<code>@Vaiosx</code> <code>@M0nsxx</code>), y el canal reaccionó con felicitaciones reales de personas de la comunidad: Karotlover, Gerardo Vela, Cisn3ronauta y Aritoshi, entre otros.</p>
 
 <h2>De qué está hecho realmente el "compromiso" de esa diapositiva</h2>
 
@@ -1837,7 +1837,7 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 
 <h2>Fuente</h2>
 
-<p>Todo lo anterior viene de capturas de pantalla del canal real de Discord "Miembros Team1 LatAm" tomadas en el momento, no de un relato de segunda mano contado por otra persona. No enlazamos el canal en sí porque es un espacio privado de la comunidad, no uno público.</p>
+<p>Todo lo anterior viene de capturas de pantalla del canal real de Telegram "Miembros Team1 LatAm" tomadas en el momento, no de un relato de segunda mano contado por otra persona. No enlazamos el canal en sí porque es un espacio privado de la comunidad, no uno público.</p>
 `,
     },
   },
