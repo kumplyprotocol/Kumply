@@ -1855,6 +1855,62 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 `,
     },
   },
+  {
+    slug: "kumply-hackatwin-workshop",
+    date: "2026-11-05",
+    author: {
+      name: "Monserrat Mendoza",
+      role: { en: "Co-founder, Dev Lead", es: "Co-founder, Líder de Desarrollo" },
+    },
+    readMinutes: 3,
+    category: "WORKSHOP",
+    title: {
+      en: "KUMPLY at HackaTwin: Turn Identity Checks Into Hackathon Points",
+      es: "KUMPLY en HackaTwin: Convierte la Verificación de Identidad en Puntos del Hackathon",
+    },
+    excerpt: {
+      en: "A short workshop for HackaTwin builders: how to use KUMPLY's SDK to check whether an address is a verified person, business, or AI agent on Avalanche Fuji, and how that maps directly to the hackathon's bonus scoring.",
+      es: "Un workshop corto para los builders de HackaTwin: cómo usar el SDK de KUMPLY para verificar si una dirección es una persona, una empresa o un agente de IA en Avalanche Fuji, y cómo eso se traduce directo en puntos de bonus del hackathon.",
+    },
+    bodyHtml: {
+      en: `
+<p>If you're building for HackaTwin's Avalanche track, integrating KUMPLY is worth up to +10 bonus points on top of the jury score (up to +20 if you also integrate 0xGasless). This short, hands-on session walks through exactly how to get there.</p>
+
+<h2>What we'll cover</h2>
+
+<p>KUMPLY's AttestationStore answers three separate questions on-chain: is this address a verified person (KYC, tiers 1-3), a verified business (KYB, tier 4), or a verified AI agent (KYA, tier 5). Those aren't three steps on the same ladder, they're different categories - and the SDK has a helper for each one: <code>isPersonAtLeast()</code>, <code>isBusiness()</code>, <code>isAgent()</code>.</p>
+
+<p>We'll run these live against real attestations on Avalanche Fuji, not a toy exercise, showing one address that passes and one that doesn't - exactly what the Basic tier of HackaTwin's scoring table asks for. Then we'll cover what the Core tier needs on top: the smart contract itself calling <code>verify()</code> on-chain, using a real example already live in our repo.</p>
+
+<p>For the full technical walkthrough with code samples and a diagram, see our <a href="/blog/building-with-kumply-kyc-kyb-kya">builder's guide to KYC, KYB, and KYA</a>. This session is the hands-on version of that guide, built specifically for HackaTwin's scoring rules.</p>
+
+<p>Honest framing, same as every KUMPLY workshop: the attestations issued during this session are demo attestations on Fuji testnet, no real identity verification behind them. They're real, signed, on-chain attestations using the exact same mechanism as production - the only thing skipped is Sumsub's identity check.</p>
+
+<h2>Details</h2>
+
+<p><strong>When:</strong> [HORA A CONFIRMAR]<br>
+<strong>Where:</strong> [FORMATO A CONFIRMAR - evento propio o segmento del HackaTwin]</p>
+`,
+      es: `
+<p>Si estás construyendo para el track de Avalanche en HackaTwin, integrar KUMPLY vale hasta +10 puntos de bonus sobre el puntaje del jurado (hasta +20 si también integras 0xGasless). Esta sesión corta y práctica te muestra exactamente cómo lograrlo.</p>
+
+<h2>Qué vamos a cubrir</h2>
+
+<p>El AttestationStore de KUMPLY responde tres preguntas separadas on-chain: si una dirección es una persona verificada (KYC, tiers 1-3), una empresa verificada (KYB, tier 4), o un agente de IA verificado (KYA, tier 5). No son tres escalones de la misma escalera, son categorías distintas - y el SDK tiene un helper para cada una: <code>isPersonAtLeast()</code>, <code>isBusiness()</code>, <code>isAgent()</code>.</p>
+
+<p>Los vamos a correr en vivo contra atestaciones reales en Avalanche Fuji, no un ejercicio de juguete, mostrando una dirección que pasa y una que no - exactamente lo que pide el nivel Basic de la tabla de puntaje de HackaTwin. Después cubrimos qué pide el nivel Core: que el contrato mismo llame <code>verify()</code> on-chain, con un ejemplo real que ya está vivo en nuestro repo.</p>
+
+<p>Para el recorrido técnico completo con ejemplos de código y diagrama, revisa nuestra <a href="/blog/building-with-kumply-kyc-kyb-kya">guía para builders de KYC, KYB y KYA</a>. Esta sesión es la versión práctica de esa guía, construida específicamente para las reglas de puntaje de HackaTwin.</p>
+
+<p>Honestidad de siempre, como en cada workshop de KUMPLY: las atestaciones emitidas durante esta sesión son de demo en Fuji testnet, sin verificación de identidad real detrás. Son atestaciones reales, firmadas, on-chain, con el mismo mecanismo exacto que producción - lo único que se salta es el chequeo de identidad de Sumsub.</p>
+
+<h2>Detalles</h2>
+
+<p><strong>Cuándo:</strong> [HORA A CONFIRMAR]<br>
+<strong>Dónde:</strong> [FORMATO A CONFIRMAR - evento propio o segmento del HackaTwin]</p>
+`,
+    },
+  },
 ];
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
