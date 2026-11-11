@@ -27,6 +27,260 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "nyse-avalanche-who-gets-to-take-part",
+    date: "2026-11-11",
+    author: {
+      name: "Giovanny Amador",
+      role: { en: "Co-founder, Engineering Lead", es: "Co-founder, Líder de Ingeniería" },
+    },
+    readMinutes: 6,
+    category: "AVALANCHE NEWS",
+    title: {
+      en: "NYSE Picked Avalanche for Its Tokenized Stock Ledger. The Real Story Is Who Gets to Take Part.",
+      es: "NYSE eligió Avalanche para el ledger de sus acciones tokenizadas. La historia de fondo es quién puede participar.",
+    },
+    excerpt: {
+      en: "On November 9, Ava Labs announced that Avalanche will provide the core ledger technology for the clearing firm behind NYSE's upcoming tokenized securities platform. Here's what was announced, what wasn't, and why NYSE's own requirement, control over who can take part, is a question every builder on Avalanche now has to answer.",
+      es: "El 9 de noviembre, Ava Labs anunció que Avalanche dará la tecnología de ledger a la firma de compensación detrás de la próxima plataforma de valores tokenizados de NYSE. Esto es lo que se anunció, lo que no, y por qué el propio requisito de NYSE, controlar quién puede participar, es una pregunta que todo builder en Avalanche ya tiene que responder.",
+    },
+    bodyHtml: {
+      en: `
+<p>On November 9, 2026, Ava Labs <a href="https://www.prnewswire.com/news-releases/avalanche-to-serve-as-core-ledger-technology-for-clearing-and-settlement-of-nyse-affiliated-upcoming-tokenized-securities-platform-302932803.html" target="_blank" rel="noopener noreferrer">announced</a> that Avalanche will serve as the core ledger technology for clearing and settlement of an upcoming NYSE-affiliated tokenized securities platform. The platform is being designed for 24/7 trading, clearing and settlement of tokenized securities, and it is subject to applicable regulatory approvals. According to <a href="https://www.theblock.co/news/business/2026-11-09-nyse-settle-tokenized-stocks-avalanche-planned-24-7-market-436208" target="_blank" rel="noopener noreferrer">The Block</a>, the decision follows about a year of testing.</p>
+
+<h2>What was actually announced</h2>
+
+<p>The split of roles is specific. NYSE keeps its existing technology to match trades. Avalanche provides the core ledger technology to the platform's clearing firm, the ledger that records and settles those trades. The Wall Street Journal, as cited by The Block, reports a fourth-quarter launch target. The press release itself gives no date.</p>
+
+<p>Ava Labs CEO Emin Gün Sirer said Avalanche "will support the platform's 24/7 atomic settlement needs with dedicated infrastructure", with predictable performance and costs and the control the platform needs to meet its regulatory and operational requirements.</p>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 200" width="100%" role="img" aria-label="Diagram: the announced split of roles. Trades are matched with NYSE's existing technology, then recorded and settled on a ledger built on Avalanche technology for the platform's clearing firm, serving the platform's subscribers 24/7, subject to regulatory approval">
+<rect x="8" y="40" width="200" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="67" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">1. MATCHING</text>
+<text x="26" y="93" font-size="15" font-weight="800" fill="var(--text-primary)">NYSE technology</text>
+<text x="26" y="113" font-size="11" fill="var(--text-tertiary)">existing, trades matched</text>
+<rect x="250" y="40" width="200" height="100" rx="12" fill="var(--bg-card)" stroke="var(--accent)"/>
+<text x="268" y="67" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">2. CLEARING LEDGER</text>
+<text x="268" y="93" font-size="15" font-weight="800" fill="var(--text-primary)">Avalanche</text>
+<text x="268" y="113" font-size="11" fill="var(--text-tertiary)">records + settles trades</text>
+<rect x="492" y="40" width="200" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="510" y="67" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">3. SUBSCRIBERS</text>
+<text x="510" y="93" font-size="15" font-weight="800" fill="var(--text-primary)">24/7 settlement</text>
+<text x="510" y="113" font-size="11" fill="var(--text-tertiary)">tokenized securities</text>
+<path d="M210 90 L248 90" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nyse-arrow1)"/>
+<path d="M452 90 L490 90" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nyse-arrow2)"/>
+<text x="350" y="178" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="11" fill="var(--text-secondary)">subject to applicable regulatory approvals</text>
+<defs>
+<marker id="nyse-arrow1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="nyse-arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
+
+<p>What the announcement doesn't say matters too. It doesn't say whether that dedicated infrastructure is its own Avalanche L1 or something else, and it doesn't name the platform's participants beyond "subscribers". We're not going to fill those gaps with guesses.</p>
+
+<h2>The sentence that matters most</h2>
+
+<p>Dennis Lee, NYSE's Head of Digital Issuance, explained the choice in the same release. The platform will support equities listed on a range of blockchains, but the ledger that records and settles trades "needs to be fast and reliable, let us control who can take part", keep costs predictable and have a large developer community behind it. His conclusion: "Avalanche meets all those needs."</p>
+
+<p>Read that from a builder's seat. One of the largest exchanges in the world, picking a ledger, put control over who can take part right next to speed and reliability. Not as a compliance step bolted on later, but as a requirement for the infrastructure itself.</p>
+
+<h2>Where KUMPLY fits, and where it doesn't</h2>
+
+<p>To be clear: KUMPLY has no relationship with NYSE, ICE or this platform, and nothing in this post suggests otherwise. An exchange-run venue controls participation in its own way, through its own onboarding and its own infrastructure.</p>
+
+<p>What the announcement does is take the question mainstream. Most protocols on Avalanche don't run an exchange, and they still need an answer to "who is on the other side of this wallet?" That's the gap KUMPLY covers on the C-Chain. A verified identity becomes a public on-chain attestation (address, tier, timestamp, expiry and verifier, no personal data), and any contract or backend can check it with one call.</p>
+
+<p>The categories are separate, not a ladder: Tiers 1 to 3 are for people (KYC), Tier 4 is for businesses (KYB) and Tier 5 is for AI agents with an accountable owner behind them (KYA).</p>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 270" width="100%" role="img" aria-label="Diagram: a wallet is checked against KUMPLY's AttestationStore on the Avalanche C-Chain, a public attestation with no personal data, and the answer splits into three separate categories: a person at Tier 1 to 3 via isPersonAtLeast, a business at Tier 4 via isBusiness, and an AI agent at Tier 5 via isAgent">
+<rect x="8" y="100" width="160" height="70" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="24" y="127" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">WALLET</text>
+<text x="24" y="152" font-family="'Fira Code', Consolas, monospace" font-size="13" fill="var(--text-primary)">0x????</text>
+<rect x="210" y="90" width="210" height="90" rx="12" fill="var(--bg-card)" stroke="var(--accent)"/>
+<text x="228" y="117" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">C-CHAIN</text>
+<text x="228" y="142" font-size="14" font-weight="800" fill="var(--text-primary)">AttestationStore</text>
+<text x="228" y="162" font-size="11" fill="var(--text-tertiary)">public, no personal data</text>
+<rect x="470" y="8" width="222" height="64" rx="10" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="488" y="32" font-size="13" font-weight="800" fill="var(--text-primary)">Person, Tier 1-3 (KYC)</text>
+<text x="488" y="52" font-family="'Fira Code', Consolas, monospace" font-size="11" fill="var(--accent)">isPersonAtLeast()</text>
+<rect x="470" y="103" width="222" height="64" rx="10" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="488" y="127" font-size="13" font-weight="800" fill="var(--text-primary)">Business, Tier 4 (KYB)</text>
+<text x="488" y="147" font-family="'Fira Code', Consolas, monospace" font-size="11" fill="var(--accent)">isBusiness()</text>
+<rect x="470" y="198" width="222" height="64" rx="10" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="488" y="222" font-size="13" font-weight="800" fill="var(--text-primary)">AI agent, Tier 5 (KYA)</text>
+<text x="488" y="242" font-family="'Fira Code', Consolas, monospace" font-size="11" fill="var(--accent)">isAgent()</text>
+<path d="M170 135 L208 135" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nyse-who0)"/>
+<path d="M422 115 L468 42" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nyse-who1)"/>
+<path d="M422 135 L468 135" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nyse-who2)"/>
+<path d="M422 155 L468 228" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nyse-who3)"/>
+<defs>
+<marker id="nyse-who0" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="nyse-who1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="nyse-who2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="nyse-who3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
+
+<p>In code, with <code>@kumply/sdk</code> 1.3.0, each category is its own check:</p>
+
+<pre><code>import { KumplyClient, DEPLOYMENTS, TIER } from "@kumply/sdk";
+
+const client = new KumplyClient({
+  network: "fuji",
+  contractAddress: DEPLOYMENTS.fuji.attestationStore,
+});
+
+const canDeposit = await client.isPersonAtLeast(wallet, TIER.STANDARD); // a person, Tier 2 or 3
+const isCompany  = await client.isBusiness(wallet);                     // Tier 4
+const isAgent    = await client.isAgent(wallet);                        // Tier 5</code></pre>
+
+<h2>Three use cases you can try today</h2>
+
+<p>These aren't hypotheticals. <a href="https://kumply.xyz/demo" target="_blank" rel="noopener noreferrer">kumply.xyz/demo</a> runs them on Fuji with seeded wallets, no login needed:</p>
+
+<blockquote class="blog-scenario">
+<p><strong>DeFi lending.</strong> A lending protocol requires a person with Tier 2 (Standard KYC) or higher to deposit. A Tier 2 person gets in. A Tier 4 business wallet is rejected, because a business is a different category, not a higher person level.</p>
+</blockquote>
+
+<blockquote class="blog-scenario">
+<p><strong>Tokenized real estate.</strong> A tokenized real estate fund requires exactly Tier 4 (Business, KYB), so only corporate entities can invest. An unverified wallet is rejected.</p>
+</blockquote>
+
+<blockquote class="blog-scenario">
+<p><strong>AI agent marketplace.</strong> An on-chain marketplace requires exactly Tier 5 (KYA) before an autonomous agent can list itself. A business wallet that isn't a registered agent is rejected.</p>
+</blockquote>
+
+<p>Same contract, three unrelated rules, one call each. That's the point: who gets to take part is a decision each protocol makes for itself, and it shouldn't require running your own onboarding stack to make it.</p>
+
+<h2>What we'll say plainly</h2>
+
+<p>An exchange choosing Avalanche for its settlement ledger is a signal for the whole ecosystem, not for any one project, and we're not going to dress it up as a win for us. What it does show is where the bar is moving: institutions want to settle on-chain, and they want to decide who participates. If you build on Avalanche, that second part is your problem too, and you don't need to run an exchange to solve it.</p>
+
+<p>Sources: <a href="https://www.prnewswire.com/news-releases/avalanche-to-serve-as-core-ledger-technology-for-clearing-and-settlement-of-nyse-affiliated-upcoming-tokenized-securities-platform-302932803.html" target="_blank" rel="noopener noreferrer">Ava Labs press release (PR Newswire, Nov 9, 2026)</a> and <a href="https://www.theblock.co/news/business/2026-11-09-nyse-settle-tokenized-stocks-avalanche-planned-24-7-market-436208" target="_blank" rel="noopener noreferrer">The Block (Nov 9, 2026)</a>.</p>
+`,
+      es: `
+<p>El 9 de noviembre de 2026, Ava Labs <a href="https://www.prnewswire.com/news-releases/avalanche-to-serve-as-core-ledger-technology-for-clearing-and-settlement-of-nyse-affiliated-upcoming-tokenized-securities-platform-302932803.html" target="_blank" rel="noopener noreferrer">anunció</a> que Avalanche será la tecnología de ledger central para la compensación y liquidación de una próxima plataforma de valores tokenizados afiliada a NYSE. La plataforma se está diseñando para operar, compensar y liquidar valores tokenizados 24/7, y está sujeta a las aprobaciones regulatorias aplicables. Según <a href="https://www.theblock.co/news/business/2026-11-09-nyse-settle-tokenized-stocks-avalanche-planned-24-7-market-436208" target="_blank" rel="noopener noreferrer">The Block</a>, la decisión llega después de cerca de un año de pruebas.</p>
+
+<h2>Qué se anunció en realidad</h2>
+
+<p>El reparto de papeles es concreto. NYSE mantiene su tecnología actual para emparejar las órdenes. Avalanche aporta la tecnología de ledger a la firma de compensación de la plataforma, el registro donde esas operaciones se anotan y se liquidan. The Wall Street Journal, citado por The Block, reporta que la meta de lanzamiento es el cuarto trimestre. El comunicado en sí no da fecha.</p>
+
+<p>Emin Gün Sirer, CEO de Ava Labs, dijo que Avalanche "will support the platform's 24/7 atomic settlement needs with dedicated infrastructure" (soportará la liquidación atómica 24/7 de la plataforma con infraestructura dedicada), con rendimiento y costos predecibles y el control que la plataforma necesita para cumplir sus requisitos regulatorios y operativos.</p>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 200" width="100%" role="img" aria-label="Diagrama: el reparto de papeles anunciado. Las operaciones se emparejan con la tecnologia actual de NYSE, luego se registran y liquidan en un ledger construido con tecnologia de Avalanche para la firma de compensacion de la plataforma, al servicio de sus suscriptores 24/7, sujeto a aprobacion regulatoria">
+<rect x="8" y="40" width="200" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="67" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">1. EMPAREJAMIENTO</text>
+<text x="26" y="93" font-size="15" font-weight="800" fill="var(--text-primary)">Tecnología NYSE</text>
+<text x="26" y="113" font-size="11" fill="var(--text-tertiary)">la actual, empareja órdenes</text>
+<rect x="250" y="40" width="200" height="100" rx="12" fill="var(--bg-card)" stroke="var(--accent)"/>
+<text x="268" y="67" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">2. LEDGER</text>
+<text x="268" y="93" font-size="15" font-weight="800" fill="var(--text-primary)">Avalanche</text>
+<text x="268" y="113" font-size="11" fill="var(--text-tertiary)">registra + liquida</text>
+<rect x="492" y="40" width="200" height="100" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="510" y="67" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">3. SUSCRIPTORES</text>
+<text x="510" y="93" font-size="15" font-weight="800" fill="var(--text-primary)">Liquidación 24/7</text>
+<text x="510" y="113" font-size="11" fill="var(--text-tertiary)">valores tokenizados</text>
+<path d="M210 90 L248 90" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nyse-arrow1-es)"/>
+<path d="M452 90 L490 90" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nyse-arrow2-es)"/>
+<text x="350" y="178" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="11" fill="var(--text-secondary)">sujeto a las aprobaciones regulatorias aplicables</text>
+<defs>
+<marker id="nyse-arrow1-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="nyse-arrow2-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
+
+<p>Lo que el anuncio no dice también importa. No dice si esa infraestructura dedicada es una L1 propia de Avalanche u otra cosa, y no nombra a los participantes de la plataforma más allá de "suscriptores". No vamos a llenar esos huecos con suposiciones.</p>
+
+<h2>La frase que más importa</h2>
+
+<p>Dennis Lee, Head of Digital Issuance de NYSE, explicó la decisión en el mismo comunicado. La plataforma soportará acciones listadas en varias blockchains, pero el ledger que registra y liquida las operaciones "needs to be fast and reliable, let us control who can take part" (tiene que ser rápido y confiable, y dejarnos controlar quién puede participar), mantener costos predecibles y tener una comunidad grande de desarrolladores detrás. Su conclusión: "Avalanche meets all those needs" (Avalanche cumple con todo eso).</p>
+
+<p>Léelo desde la silla de un builder. Una de las bolsas más grandes del mundo, al elegir un ledger, puso el control sobre quién puede participar al mismo nivel que la velocidad y la confiabilidad. No como un paso de compliance que se agrega después, sino como requisito de la infraestructura misma.</p>
+
+<h2>Dónde entra KUMPLY, y dónde no</h2>
+
+<p>Para que quede claro: KUMPLY no tiene ninguna relación con NYSE, con ICE ni con esta plataforma, y nada en este post sugiere lo contrario. Una plataforma operada por una bolsa controla la participación a su manera, con su propio onboarding y su propia infraestructura.</p>
+
+<p>Lo que sí hace el anuncio es volver la pregunta tema de todos. La mayoría de los protocolos en Avalanche no opera una bolsa, y aun así necesita responder "¿quién está del otro lado de esta wallet?". Ese es el hueco que cubre KUMPLY en la C-Chain. Una identidad verificada se convierte en una attestation pública on-chain (dirección, tier, fecha, vencimiento y verificador, sin datos personales), y cualquier contrato o backend la puede consultar con una sola llamada.</p>
+
+<p>Las categorías son separadas, no una escalera: los Tiers 1 a 3 son para personas (KYC), el Tier 4 para empresas (KYB) y el Tier 5 para agentes de IA con un dueño responsable detrás (KYA).</p>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 270" width="100%" role="img" aria-label="Diagrama: una wallet se consulta contra el AttestationStore de KUMPLY en la C-Chain de Avalanche, una attestation publica sin datos personales, y la respuesta se divide en tres categorias separadas: una persona en Tier 1 a 3 via isPersonAtLeast, una empresa en Tier 4 via isBusiness, y un agente de IA en Tier 5 via isAgent">
+<rect x="8" y="100" width="160" height="70" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="24" y="127" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">WALLET</text>
+<text x="24" y="152" font-family="'Fira Code', Consolas, monospace" font-size="13" fill="var(--text-primary)">0x????</text>
+<rect x="210" y="90" width="210" height="90" rx="12" fill="var(--bg-card)" stroke="var(--accent)"/>
+<text x="228" y="117" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">C-CHAIN</text>
+<text x="228" y="142" font-size="14" font-weight="800" fill="var(--text-primary)">AttestationStore</text>
+<text x="228" y="162" font-size="11" fill="var(--text-tertiary)">pública, sin datos personales</text>
+<rect x="470" y="8" width="222" height="64" rx="10" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="488" y="32" font-size="13" font-weight="800" fill="var(--text-primary)">Persona, Tier 1-3 (KYC)</text>
+<text x="488" y="52" font-family="'Fira Code', Consolas, monospace" font-size="11" fill="var(--accent)">isPersonAtLeast()</text>
+<rect x="470" y="103" width="222" height="64" rx="10" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="488" y="127" font-size="13" font-weight="800" fill="var(--text-primary)">Empresa, Tier 4 (KYB)</text>
+<text x="488" y="147" font-family="'Fira Code', Consolas, monospace" font-size="11" fill="var(--accent)">isBusiness()</text>
+<rect x="470" y="198" width="222" height="64" rx="10" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="488" y="222" font-size="13" font-weight="800" fill="var(--text-primary)">Agente de IA, Tier 5 (KYA)</text>
+<text x="488" y="242" font-family="'Fira Code', Consolas, monospace" font-size="11" fill="var(--accent)">isAgent()</text>
+<path d="M170 135 L208 135" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nyse-who0-es)"/>
+<path d="M422 115 L468 42" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nyse-who1-es)"/>
+<path d="M422 135 L468 135" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nyse-who2-es)"/>
+<path d="M422 155 L468 228" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nyse-who3-es)"/>
+<defs>
+<marker id="nyse-who0-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="nyse-who1-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="nyse-who2-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="nyse-who3-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
+
+<p>En código, con <code>@kumply/sdk</code> 1.3.0, cada categoría es su propia consulta:</p>
+
+<pre><code>import { KumplyClient, DEPLOYMENTS, TIER } from "@kumply/sdk";
+
+const client = new KumplyClient({
+  network: "fuji",
+  contractAddress: DEPLOYMENTS.fuji.attestationStore,
+});
+
+const canDeposit = await client.isPersonAtLeast(wallet, TIER.STANDARD); // una persona, Tier 2 o 3
+const isCompany  = await client.isBusiness(wallet);                     // Tier 4
+const isAgent    = await client.isAgent(wallet);                        // Tier 5</code></pre>
+
+<h2>Tres casos de uso que puedes probar hoy</h2>
+
+<p>No son hipotéticos. <a href="https://kumply.xyz/demo" target="_blank" rel="noopener noreferrer">kumply.xyz/demo</a> los corre en Fuji con wallets de prueba, sin login:</p>
+
+<blockquote class="blog-scenario">
+<p><strong>Préstamos DeFi.</strong> Un protocolo de préstamos exige una persona con Tier 2 (KYC Estándar) o más para depositar. Una persona Tier 2 entra. Una wallet de empresa Tier 4 se rechaza, porque una empresa es otra categoría, no un nivel más alto de persona.</p>
+</blockquote>
+
+<blockquote class="blog-scenario">
+<p><strong>Bienes raíces tokenizados.</strong> Un fondo tokenizado de bienes raíces exige exactamente Tier 4 (Empresa, KYB), así que solo invierten entidades corporativas. Una wallet sin verificar se rechaza.</p>
+</blockquote>
+
+<blockquote class="blog-scenario">
+<p><strong>Marketplace de agentes de IA.</strong> Un marketplace on-chain exige exactamente Tier 5 (KYA) antes de que un agente autónomo se pueda listar. Una wallet de empresa que no es un agente registrado se rechaza.</p>
+</blockquote>
+
+<p>El mismo contrato, tres reglas sin relación entre sí, una llamada cada una. De eso se trata: quién puede participar es una decisión que cada protocolo toma por su cuenta, y no debería exigir montar tu propio sistema de onboarding para tomarla.</p>
+
+<h2>Lo que decimos sin rodeos</h2>
+
+<p>Que una bolsa elija Avalanche para su ledger de liquidación es una señal para todo el ecosistema, no para un proyecto en particular, y no lo vamos a disfrazar de logro nuestro. Lo que sí muestra es hacia dónde se mueve la vara: las instituciones quieren liquidar on-chain, y quieren decidir quién participa. Si construyes en Avalanche, esa segunda parte también es tu problema, y no necesitas operar una bolsa para resolverla.</p>
+
+<p>Fuentes: <a href="https://www.prnewswire.com/news-releases/avalanche-to-serve-as-core-ledger-technology-for-clearing-and-settlement-of-nyse-affiliated-upcoming-tokenized-securities-platform-302932803.html" target="_blank" rel="noopener noreferrer">comunicado de Ava Labs (PR Newswire, 9 nov 2026)</a> y <a href="https://www.theblock.co/news/business/2026-11-09-nyse-settle-tokenized-stocks-avalanche-planned-24-7-market-436208" target="_blank" rel="noopener noreferrer">The Block (9 nov 2026)</a>.</p>
+`,
+    },
+  },
+  {
     slug: "building-with-kumply-kyc-kyb-kya",
     date: "2026-10-13",
     author: {
