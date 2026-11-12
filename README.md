@@ -61,8 +61,8 @@ KUMPLY is a "Verify Once, Use Everywhere" protocol.
 KUMPLY is built entirely around the Avalanche technical stack.
 
 - **Software-Only Protocol** *(shipped)*: We never store user documents. Data is processed by Sumsub, while KUMPLY exclusively handles the cryptographic on-chain proofs. No custody, no financial intermediation.
-- **PII-free attestations** *(shipped)*: `AttestationStore` records only tier, expiry, issuer and revocation status against an address. Reads are public and free.
-- **Avalanche L1 Interoperability via ICM** *(designed, not yet shipped)*: The architecture targets Interchain Messaging so a credential issued on C-Chain can be read from any Avalanche L1 without a bridge. `AttestationStoreL1.sol` (the ICM-mirrored reader) is on the Q3 2026 roadmap — today, cross-chain reads are not yet live.
+- **PII-free attestations** *(shipped)*: `AttestationStore` records only tier, issue time, expiry and verifier against an address; revoking deletes the record. Reads are public and free.
+- **Avalanche L1 Interoperability via ICM** *(designed, not yet shipped)*: The architecture targets Interchain Messaging so a credential issued on C-Chain can be read from any Avalanche L1 without a bridge. `AttestationStoreL1.sol` (the ICM-mirrored reader) is planned for Q4 2026+ in the [litepaper roadmap](LITEPAPER.md) (moved from Q3 2026) — today, cross-chain reads are not yet live.
 - **Encrypted ERC (eERC)** *(Phase 2, not yet shipped)*: `AttestationStore` exposes an admin-only `setEercToken()` hook so encrypted credentials can be added once AvaCloud's EncryptedERC integration lands. In Phase 1 this is set to `address(0)` — attestations today are plaintext tier records, not encrypted tokens.
 
 > We list roadmap items explicitly as roadmap. If it says *shipped*, you can verify it on Snowtrace or in the test suite right now.
@@ -156,7 +156,7 @@ Full writeup: [docs/audits/avalanche-ecosystem-audit-2026-08-17.md](docs/audits/
 ### Links
 
 - Website: [kumply.xyz](https://kumply.xyz). Docs: [kumply.xyz/docs](https://kumply.xyz/docs). Developers: [kumply.xyz/developers](https://kumply.xyz/developers). Tiers: [kumply.xyz/tiers](https://kumply.xyz/tiers)
-- SDK on npm: [`@kumply/sdk`](https://www.npmjs.com/package/@kumply/sdk) (1.3.0 adds `isPersonAtLeast` / `isBusiness` / `isAgent`; tiers 1-3 are a ladder for people, 4 and 5 are separate categories)
+- SDK on npm: [`@kumply/sdk`](https://www.npmjs.com/package/@kumply/sdk) (latest 1.4.1: `isPersonAtLeast` / `isBusiness` / `isAgent` since 1.3.0, the pure `meetsTierRequirement` helper since 1.4.0; tiers 1-3 are a ladder for people, 4 and 5 are separate categories)
 - X: [@kumplyavax](https://x.com/kumplyavax)
 
 ## 🚀 Getting Started
@@ -203,8 +203,8 @@ import { KumplyClient, DEPLOYMENTS, TIER } from '@kumply/sdk';
 
 // `contractAddress` is required — use DEPLOYMENTS for the canonical addresses.
 const client = new KumplyClient({
-  network: 'mainnet',
-  contractAddress: DEPLOYMENTS.mainnet.attestationStore,
+  network: 'fuji', // live attestations are issued on Fuji today
+  contractAddress: DEPLOYMENTS.fuji.attestationStore,
 });
 
 // Tiers 1-3 are a ladder for people; 4 (business) and 5 (agent) are separate categories.
@@ -215,7 +215,7 @@ if (await client.isPersonAtLeast('0xUserAddress', TIER.STANDARD)) {
 }
 ```
 
-Reads are free while `verificationFee` is 0. Swap `network: 'fuji'` with `DEPLOYMENTS.fuji.attestationStore` to target testnet.
+Reads are free while `verificationFee` is 0. For production, swap in `network: 'mainnet'` with `DEPLOYMENTS.mainnet.attestationStore` (read-only beta: mainnet attestations are issued manually for now).
 
 Or enforce it directly in your Solidity contracts:
 

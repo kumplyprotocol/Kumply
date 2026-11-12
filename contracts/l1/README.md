@@ -24,7 +24,7 @@ This folder contains everything needed to spin up the **KUMPLY Compliance L1** o
 
 - **Name:** KUMPLY Compliance L1
 - **Symbol:** KMP
-- **Chain ID:** 43210 (mainnet) · 432103 (testnet variant)
+- **Chain ID:** 43210. This is the genesis registered on Fuji (see `.deployment/deployment.json`). The mainnet genesis is redefined by governance before launch (see the [litepaper roadmap](../../LITEPAPER.md)).
 - **VM:** Subnet-EVM v0.7.0
 - **Gas token:** KMP
 - **Consensus:** Snowman (k=20, β=15, ACP-77 compliant)
