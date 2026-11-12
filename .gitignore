@@ -62,7 +62,6 @@ Memory.md
 LEGAL_REVIEW_BRIEF.md
 LEGAL_*.md
 INTERNAL_*.md
-# Grant/submission drafts + operational runbooks — live in kumplyprotocol/internal
 docs/submissions/
 docs/internal/
 claude_estrategico.md
@@ -75,10 +74,10 @@ update_docs.py
 missing_in_*.txt
 .env*
 
-# Internal legal analysis — never commit
+# Local-only notes (never commit)
 KumplyMainnet.md
 
-# Internal strategy docs — live in kumplyprotocol/internal (private), kept locally for AI assistants
+# Local AI-assistant config and notes (not part of the project)
 /CLAUDE.md
 /claude_estrategico.md
 /.clinerules
