@@ -70,6 +70,9 @@ KUMPLY is built entirely around the Avalanche technical stack.
 ## ⛓️ KUMPLY Compliance L1 (Registered on Fuji — Activation Pending)
 
 We are building an Avalanche L1 where validators must hold a KUMPLY attestation to register: **Tier 4 (KYB) or higher** in the deployed manager. A fix that restricts registration to exactly Tier 4 is already in the code and ships with the manager's redeploy before the L1 is activated. The L1 is not activated yet and has no validators.
+
+**Live status:** [kumply.xyz/l1](https://kumply.xyz/l1) | **Design:** [L1.md](L1.md) | **Genesis and node operation:** [contracts/l1/README.md](contracts/l1/README.md) | **Manager source:** [KumplyValidatorSetManager.sol](contracts/contracts/KumplyValidatorSetManager.sol)
+
 - **Validator Architecture (ACP-77 + ACP-99)**: Uses `KumplyValidatorSetManager.sol` to require a valid attestation of Tier 4 (KYB) or higher as a prerequisite for registering a validator.
 - **Sub-Cent Compliance Reads**: Predictable, near-zero fees for compliance lookups at institutional scale.
 - **Cross-L1 via Warp + ICM** *(planned, not shipped)*: Attestations would propagate natively without bridges or third-party trust assumptions.
@@ -77,12 +80,13 @@ We are building an Avalanche L1 where validators must hold a KUMPLY attestation 
 
 ### L1 Network Details (Fuji — chain registered, validator activation pending)
 - **Network Name:** KUMPLY Compliance L1
-- **RPC URL:** `https://subnets.avax.network/2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b/rpc`
+- **RPC URL:** `https://subnets.avax.network/2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b/rpc` (not serving until activation; it answers HTTP 405 today)
 - **Chain ID:** `43210`
 - **Currency Symbol:** `KMP`
-- **Subnet ID:** `2buHAwNvaybnQ6vQYRS4TeXizZhAo33bhpnonAJu21CKYLZoST`
+- **Subnet ID:** [`2buHAwNvaybnQ6vQYRS4TeXizZhAo33bhpnonAJu21CKYLZoST`](https://subnets-test.avax.network/subnets/2buHAwNvaybnQ6vQYRS4TeXizZhAo33bhpnonAJu21CKYLZoST)
 - **Blockchain ID:** `2pyvAQK1WQ318yHtnv4ZQeL9hWeJmmgMp9MEHqpJnDYttQEL6b`
-- **Validator Set Manager:** [`0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64`](https://testnet.snowtrace.io/address/0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64)
+- **Validator Set Manager:** [`0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64`](https://testnet.snowtrace.io/address/0x935114966Ac6CB6Ec569c8C6959aDF5Ceb9E6f64) (Fuji C-Chain, deployed and source-verified, not initialized)
+- **P-Chain status:** permissioned subnet, not converted to an L1 yet (`platform.getSubnet` returns no `conversionID` and no manager)
 
 ## 💻 Tech Stack
 
