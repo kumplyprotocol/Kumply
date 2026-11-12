@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased
+## 1.4.0
+
+### Packaging
+- The npm package now ships `LICENSE`, `NOTICE` and `CHANGELOG.md`.
+- `homepage` points to kumply.xyz/developers and `repository.directory` is set, so npm links resolve to `packages/sdk`.
 
 ### Added
 - `meetsTierRequirement(tier, req)`: pure helper to test whether a tier number satisfies a `TierRequirement` (`{ kind: "person", minLevel: 1 | 2 | 3 }`, `{ kind: "business" }`, or `{ kind: "agent" }`). Useful when you already have a tier number (e.g. from `verify()` or cached verification records) without making an RPC call.
