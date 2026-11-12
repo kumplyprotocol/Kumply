@@ -26,9 +26,10 @@ pnpm add @kumply/sdk
 ```typescript
 import { KumplyClient, DEPLOYMENTS, TIER } from "@kumply/sdk";
 
+// Fuji has live attestations today. For production, use "mainnet" and DEPLOYMENTS.mainnet.
 const client = new KumplyClient({
-  network: "mainnet",
-  contractAddress: DEPLOYMENTS.mainnet.attestationStore,
+  network: "fuji",
+  contractAddress: DEPLOYMENTS.fuji.attestationStore,
 });
 
 // Check if a wallet is a verified person with at least Standard KYC (Tier 2 or 3)
@@ -52,6 +53,17 @@ if (await client.isPersonAtLeast("0xUserAddress", TIER.STANDARD)) {
 All addresses ship in the SDK as the `DEPLOYMENTS` constant — no copy-pasting needed.
 Mainnet currently runs as a **read-only beta with `verificationFee = 0`**; the automated
 Sumsub KYC flow issues attestations on Fuji.
+
+## How a wallet gets an attestation
+
+The SDK only reads. Attestations are written to `AttestationStore` by KUMPLY's verifier
+(`VERIFIER_ROLE`), never by your app:
+
+- **Fuji:** the user verifies at [kumply.xyz/verify](https://kumply.xyz/verify) (Sumsub flow), and the
+  attestation is issued automatically to the wallet they verify with.
+- **Mainnet:** read-only beta. Attestations are issued manually for now.
+
+Your app then checks that wallet with `verify()` or one of the helpers below.
 
 ## API reference
 
@@ -156,6 +168,15 @@ const feeAvax = Number(feeWei) / Number(10n ** AVAX_DECIMALS); // e.g. 0.0005
 #### `getTotalFeesCollected(): Promise<bigint>`
 
 Cumulative protocol revenue collected in wei.
+
+#### `getTierConfig(tier: number): Promise<TierConfig>`
+
+Reads the tier's `name` and `description` from the contract (`getTier`) and adds its
+`requiredChecks` from `TIER_DEFINITIONS`.
+
+#### `listTiers(): Promise<TierConfig[]>`
+
+Returns the local `TIER_DEFINITIONS` for all 5 tiers (no RPC call).
 
 ### Constants
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.1
+
+### Docs
+- README: quick start runs against Fuji (where attestations exist today); new "How a wallet gets an attestation" section (the SDK only reads; Fuji attestations come from kumply.xyz/verify, mainnet ones are manual); documents `getTierConfig()` and `listTiers()`, which were public but undocumented.
+- No code changes.
+
 ## 1.4.0
 
 ### Packaging

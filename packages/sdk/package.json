@@ -1,6 +1,6 @@
 {
   "name": "@kumply/sdk",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "TypeScript SDK for KUMPLY compliance infrastructure on the AVALANCHE\u00ae public blockchain",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
