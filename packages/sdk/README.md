@@ -114,7 +114,7 @@ await client.isAgent("0x...");                        // exactly Tier 5
 
 #### `meetsTierRequirement(tier: number, req: TierRequirement): boolean`
 
-Pure helper to test whether a tier number satisfies a requirement without making an RPC call. Useful when you already queried `verify()` or have cached verification results:
+*(since 1.4.0)* Pure helper to test whether a tier number satisfies a requirement without making an RPC call. Useful when you already queried `verify()` or have cached verification results:
 
 ```typescript
 import { meetsTierRequirement, type TierRequirement } from "@kumply/sdk";
@@ -136,7 +136,7 @@ Tier 0 (unverified, expired, or revoked) never satisfies any requirement. Busine
 
 #### `hasTier(address: string, tier: number)` *(deprecated)*
 
-Compares tiers as one ladder (`tier >= X`), so a Tier 5 agent passes `hasTier(x, TIER.KYB)` and a Tier 4 business passes a Tier 2 check. Kept with the same behavior for backward compatibility; use the three methods above instead.
+Compares tiers as one ladder (`tier >= X`), so a Tier 5 agent passes `hasTier(x, TIER.KYB)` and a Tier 4 business passes a Tier 2 check. Kept with the same behavior for backward compatibility; use `isPersonAtLeast`, `isBusiness` or `isAgent` (or `meetsTierRequirement` when you already have a tier number) instead.
 
 #### `getTotalAttestations(): Promise<number>`
 
@@ -165,6 +165,7 @@ import {
   TIER,                   // { BASIC: 1, STANDARD: 2, ENHANCED: 3, KYB: 4, KYA: 5 }
   FUJI_CONFIG,            // { chainId: 43113, rpcUrl, name, explorerUrl }
   MAINNET_CONFIG,         // { chainId: 43114, rpcUrl, name, explorerUrl }
+  KUMPLY_L1_CONFIG,       // Compliance L1 config; `live` is false until activation
   TIER_DEFINITIONS,       // TierConfig[] — all 5 KYC tier descriptions
   AVAX_DECIMALS,          // 18n — divide wei by 10n**AVAX_DECIMALS to get AVAX
   ATTESTATION_STORE_ABI,  // Typed ABI for AttestationStore
@@ -261,4 +262,4 @@ contract MyProtocol {
 
 ## License
 
-Apache License 2.0 — see [LICENSE](../../LICENSE) and [NOTICE](../../NOTICE).
+Apache License 2.0. `LICENSE` and `NOTICE` ship inside the package; also on GitHub: [LICENSE](https://github.com/kumplyprotocol/Kumply/blob/main/LICENSE) and [NOTICE](https://github.com/kumplyprotocol/Kumply/blob/main/NOTICE).
