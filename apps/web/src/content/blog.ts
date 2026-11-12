@@ -33,7 +33,7 @@ export const BLOG_POSTS: BlogPost[] = [
       name: "Giovanny Amador",
       role: { en: "Co-founder, Engineering Lead", es: "Co-founder, Líder de Ingeniería" },
     },
-    readMinutes: 6,
+    readMinutes: 8,
     category: "AVALANCHE NEWS",
     title: {
       en: "NYSE Picked Avalanche for Its Tokenized Stock Ledger. The Real Story Is Who Gets to Take Part.",
@@ -47,11 +47,17 @@ export const BLOG_POSTS: BlogPost[] = [
       en: `
 <p>On November 9, 2026, Ava Labs <a href="https://www.prnewswire.com/news-releases/avalanche-to-serve-as-core-ledger-technology-for-clearing-and-settlement-of-nyse-affiliated-upcoming-tokenized-securities-platform-302932803.html" target="_blank" rel="noopener noreferrer">announced</a> that Avalanche will serve as the core ledger technology for clearing and settlement of an upcoming NYSE-affiliated tokenized securities platform. The platform is being designed for 24/7 trading, clearing and settlement of tokenized securities, and it is subject to applicable regulatory approvals. According to <a href="https://www.theblock.co/news/business/2026-11-09-nyse-settle-tokenized-stocks-avalanche-planned-24-7-market-436208" target="_blank" rel="noopener noreferrer">The Block</a>, the decision follows about a year of testing.</p>
 
+<h2>Some background: what NYSE is building</h2>
+
+<p>NYSE first described this platform in January. In <a href="https://ir.theice.com/press/news-details/2026/The-New-York-Stock-Exchange-Develops-Tokenized-Securities-Platform/" target="_blank" rel="noopener noreferrer">ICE's announcement</a> on January 19, 2026, the exchange said it is developing a venue for trading and on-chain settlement of tokenized securities, with 24/7 operations, instant settlement, orders sized in dollar amounts and stablecoin-based funding. Tokenized shareholders keep their dividend and governance rights, and access goes through qualified broker-dealers. All of it is subject to regulatory approval. What November 9 added is the ledger under the clearing side: Avalanche.</p>
+
 <h2>What was actually announced</h2>
 
 <p>The split of roles is specific. NYSE keeps its existing technology to match trades. Avalanche provides the core ledger technology to the platform's clearing firm, the ledger that records and settles those trades. The Wall Street Journal, as cited by The Block, reports a fourth-quarter launch target. The press release itself gives no date.</p>
 
 <p>Ava Labs CEO Emin Gün Sirer said Avalanche "will support the platform's 24/7 atomic settlement needs with dedicated infrastructure", with predictable performance and costs and the control the platform needs to meet its regulatory and operational requirements.</p>
+
+<p>He went further on X the same day. As quoted by <a href="https://www.fxstreet.com/cryptocurrencies/news/nyse-taps-avalanche-for-clearing-and-settlement-of-tokenized-securities-202611092237" target="_blank" rel="noopener noreferrer">FXStreet</a>: "For decades, financial markets have operated on infrastructure designed around fixed trading hours and delayed settlement. There is no longer a technical reason for these constraints to exist."</p>
 
 <figure class="blog-diagram">
 <svg viewBox="0 0 700 200" width="100%" role="img" aria-label="Diagram: the announced split of roles. Trades are matched with NYSE's existing technology, then recorded and settled on a ledger built on Avalanche technology for the platform's clearing firm, serving the platform's subscribers 24/7, subject to regulatory approval">
@@ -90,6 +96,37 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>To be clear: KUMPLY has no relationship with NYSE, ICE or this platform, and nothing in this post suggests otherwise. An exchange-run venue controls participation in its own way, through its own onboarding and its own infrastructure.</p>
 
 <p>What the announcement does is take the question mainstream. Most protocols on Avalanche don't run an exchange, and they still need an answer to "who is on the other side of this wallet?" That's the gap KUMPLY covers on the C-Chain. A verified identity becomes a public on-chain attestation (address, tier, timestamp, expiry and verifier, no personal data), and any contract or backend can check it with one call.</p>
+
+<p>If you've never heard of KUMPLY, here's the short version, in three steps.</p>
+
+<p><strong>1. You verify once.</strong> A person goes through KYC, a company through KYB, or the accountable owner behind an AI agent through KYA.</p>
+
+<p><strong>2. A public credential lands on Avalanche.</strong> It records the wallet's tier, when it was issued, when it expires and who verified it. No name, no document and no personal data go on-chain.</p>
+
+<p><strong>3. Any app checks it with one call.</strong> A lending pool, a tokenized fund or an agent marketplace reads that credential directly, without asking you for your documents again.</p>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 170" width="100%" role="img" aria-label="Diagram: how KUMPLY works in three steps. You verify once as a person, company or AI agent owner; a public credential with no personal data is written to the Avalanche C-Chain; any app checks it with one call, without asking for documents again">
+<rect x="8" y="30" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="58" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">STEP 1</text>
+<text x="26" y="86" font-size="15" font-weight="800" fill="var(--text-primary)">You verify once</text>
+<text x="26" y="108" font-size="11" fill="var(--text-tertiary)">person, company or agent</text>
+<rect x="250" y="30" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--accent)"/>
+<text x="268" y="58" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">STEP 2</text>
+<text x="268" y="86" font-size="15" font-weight="800" fill="var(--text-primary)">Public credential</text>
+<text x="268" y="108" font-size="11" fill="var(--text-tertiary)">on Avalanche, no personal data</text>
+<rect x="492" y="30" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="510" y="58" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">STEP 3</text>
+<text x="510" y="86" font-size="15" font-weight="800" fill="var(--text-primary)">Any app checks it</text>
+<text x="510" y="108" font-size="11" fill="var(--text-tertiary)">one call, no documents again</text>
+<path d="M210 85 L248 85" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nyse-step1)"/>
+<path d="M452 85 L490 85" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nyse-step2)"/>
+<defs>
+<marker id="nyse-step1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="nyse-step2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
 
 <p>The categories are separate, not a ladder: Tiers 1 to 3 are for people (KYC), Tier 4 is for businesses (KYB) and Tier 5 is for AI agents with an accountable owner behind them (KYA).</p>
 
@@ -159,16 +196,22 @@ const isAgent    = await client.isAgent(wallet);                        // Tier 
 
 <p>An exchange choosing Avalanche for its settlement ledger is a signal for the whole ecosystem, not for any one project, and we're not going to dress it up as a win for us. What it does show is where the bar is moving: institutions want to settle on-chain, and they want to decide who participates. If you build on Avalanche, that second part is your problem too, and you don't need to run an exchange to solve it.</p>
 
-<p>Sources: <a href="https://www.prnewswire.com/news-releases/avalanche-to-serve-as-core-ledger-technology-for-clearing-and-settlement-of-nyse-affiliated-upcoming-tokenized-securities-platform-302932803.html" target="_blank" rel="noopener noreferrer">Ava Labs press release (PR Newswire, Nov 9, 2026)</a> and <a href="https://www.theblock.co/news/business/2026-11-09-nyse-settle-tokenized-stocks-avalanche-planned-24-7-market-436208" target="_blank" rel="noopener noreferrer">The Block (Nov 9, 2026)</a>.</p>
+<p>Sources: <a href="https://www.prnewswire.com/news-releases/avalanche-to-serve-as-core-ledger-technology-for-clearing-and-settlement-of-nyse-affiliated-upcoming-tokenized-securities-platform-302932803.html" target="_blank" rel="noopener noreferrer">Ava Labs press release (PR Newswire, Nov 9, 2026)</a> and <a href="https://www.theblock.co/news/business/2026-11-09-nyse-settle-tokenized-stocks-avalanche-planned-24-7-market-436208" target="_blank" rel="noopener noreferrer">The Block (Nov 9, 2026)</a>, <a href="https://ir.theice.com/press/news-details/2026/The-New-York-Stock-Exchange-Develops-Tokenized-Securities-Platform/" target="_blank" rel="noopener noreferrer">ICE (Jan 19, 2026)</a> and <a href="https://www.fxstreet.com/cryptocurrencies/news/nyse-taps-avalanche-for-clearing-and-settlement-of-tokenized-securities-202611092237" target="_blank" rel="noopener noreferrer">FXStreet (Nov 9, 2026)</a>.</p>
 `,
       es: `
 <p>El 9 de noviembre de 2026, Ava Labs <a href="https://www.prnewswire.com/news-releases/avalanche-to-serve-as-core-ledger-technology-for-clearing-and-settlement-of-nyse-affiliated-upcoming-tokenized-securities-platform-302932803.html" target="_blank" rel="noopener noreferrer">anunció</a> que Avalanche será la tecnología de ledger central para la compensación y liquidación de una próxima plataforma de valores tokenizados afiliada a NYSE. La plataforma se está diseñando para operar, compensar y liquidar valores tokenizados 24/7, y está sujeta a las aprobaciones regulatorias aplicables. Según <a href="https://www.theblock.co/news/business/2026-11-09-nyse-settle-tokenized-stocks-avalanche-planned-24-7-market-436208" target="_blank" rel="noopener noreferrer">The Block</a>, la decisión llega después de cerca de un año de pruebas.</p>
+
+<h2>Un poco de contexto: qué está construyendo NYSE</h2>
+
+<p>NYSE describió esta plataforma por primera vez en enero. En el <a href="https://ir.theice.com/press/news-details/2026/The-New-York-Stock-Exchange-Develops-Tokenized-Securities-Platform/" target="_blank" rel="noopener noreferrer">anuncio de ICE</a> del 19 de enero de 2026, la bolsa dijo que está desarrollando una plataforma para operar y liquidar on-chain valores tokenizados, con operación 24/7, liquidación inmediata, órdenes por monto en dólares y fondeo con stablecoins. Quienes tengan acciones tokenizadas conservan sus dividendos y sus derechos de voto, y el acceso es a través de broker-dealers calificados. Todo está sujeto a aprobación regulatoria. Lo que agregó el 9 de noviembre es el ledger que va debajo de la parte de compensación: Avalanche.</p>
 
 <h2>Qué se anunció en realidad</h2>
 
 <p>El reparto de papeles es concreto. NYSE mantiene su tecnología actual para emparejar las órdenes. Avalanche aporta la tecnología de ledger a la firma de compensación de la plataforma, el registro donde esas operaciones se anotan y se liquidan. The Wall Street Journal, citado por The Block, reporta que la meta de lanzamiento es el cuarto trimestre. El comunicado en sí no da fecha.</p>
 
 <p>Emin Gün Sirer, CEO de Ava Labs, dijo que Avalanche "will support the platform's 24/7 atomic settlement needs with dedicated infrastructure" (soportará la liquidación atómica 24/7 de la plataforma con infraestructura dedicada), con rendimiento y costos predecibles y el control que la plataforma necesita para cumplir sus requisitos regulatorios y operativos.</p>
+
+<p>Ese mismo día fue más lejos en X. Según cita <a href="https://www.fxstreet.com/cryptocurrencies/news/nyse-taps-avalanche-for-clearing-and-settlement-of-tokenized-securities-202611092237" target="_blank" rel="noopener noreferrer">FXStreet</a>: "For decades, financial markets have operated on infrastructure designed around fixed trading hours and delayed settlement. There is no longer a technical reason for these constraints to exist." (Durante décadas, los mercados financieros han operado sobre infraestructura diseñada en torno a horarios fijos y liquidación con retraso. Ya no hay ninguna razón técnica para que existan esas limitaciones.)</p>
 
 <figure class="blog-diagram">
 <svg viewBox="0 0 700 200" width="100%" role="img" aria-label="Diagrama: el reparto de papeles anunciado. Las operaciones se emparejan con la tecnologia actual de NYSE, luego se registran y liquidan en un ledger construido con tecnologia de Avalanche para la firma de compensacion de la plataforma, al servicio de sus suscriptores 24/7, sujeto a aprobacion regulatoria">
@@ -207,6 +250,37 @@ const isAgent    = await client.isAgent(wallet);                        // Tier 
 <p>Para que quede claro: KUMPLY no tiene ninguna relación con NYSE, con ICE ni con esta plataforma, y nada en este post sugiere lo contrario. Una plataforma operada por una bolsa controla la participación a su manera, con su propio onboarding y su propia infraestructura.</p>
 
 <p>Lo que sí hace el anuncio es volver la pregunta tema de todos. La mayoría de los protocolos en Avalanche no opera una bolsa, y aun así necesita responder "¿quién está del otro lado de esta wallet?". Ese es el hueco que cubre KUMPLY en la C-Chain. Una identidad verificada se convierte en una attestation pública on-chain (dirección, tier, fecha, vencimiento y verificador, sin datos personales), y cualquier contrato o backend la puede consultar con una sola llamada.</p>
+
+<p>Si nunca habías oído de KUMPLY, esta es la versión corta, en tres pasos.</p>
+
+<p><strong>1. Te verificas una vez.</strong> Una persona pasa por KYC, una empresa por KYB, o el dueño responsable de un agente de IA por KYA.</p>
+
+<p><strong>2. Queda una credencial pública en Avalanche.</strong> Registra el tier de la wallet, cuándo se emitió, cuándo vence y quién la verificó. Ni tu nombre, ni tus documentos, ni ningún dato personal van a la cadena.</p>
+
+<p><strong>3. Cualquier app la consulta con una sola llamada.</strong> Un pool de préstamos, un fondo tokenizado o un marketplace de agentes lee esa credencial directo, sin volver a pedirte tus documentos.</p>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 700 170" width="100%" role="img" aria-label="Diagrama: como funciona KUMPLY en tres pasos. Te verificas una vez como persona, empresa o dueno de un agente de IA; se escribe una credencial publica sin datos personales en la C-Chain de Avalanche; cualquier app la consulta con una sola llamada, sin volver a pedir documentos">
+<rect x="8" y="30" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="26" y="58" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PASO 1</text>
+<text x="26" y="86" font-size="15" font-weight="800" fill="var(--text-primary)">Te verificas una vez</text>
+<text x="26" y="108" font-size="11" fill="var(--text-tertiary)">persona, empresa o agente</text>
+<rect x="250" y="30" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--accent)"/>
+<text x="268" y="58" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PASO 2</text>
+<text x="268" y="86" font-size="15" font-weight="800" fill="var(--text-primary)">Credencial pública</text>
+<text x="268" y="108" font-size="11" fill="var(--text-tertiary)">en Avalanche, sin datos personales</text>
+<rect x="492" y="30" width="200" height="110" rx="12" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="510" y="58" font-family="'Fira Code', Consolas, monospace" font-size="11" font-weight="700" letter-spacing="1" fill="var(--accent)">PASO 3</text>
+<text x="510" y="86" font-size="15" font-weight="800" fill="var(--text-primary)">Cualquier app la consulta</text>
+<text x="510" y="108" font-size="11" fill="var(--text-tertiary)">una llamada, sin documentos</text>
+<path d="M210 85 L248 85" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nyse-step1-es)"/>
+<path d="M452 85 L490 85" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#nyse-step2-es)"/>
+<defs>
+<marker id="nyse-step1-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+<marker id="nyse-step2-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/></marker>
+</defs>
+</svg>
+</figure>
 
 <p>Las categorías son separadas, no una escalera: los Tiers 1 a 3 son para personas (KYC), el Tier 4 para empresas (KYB) y el Tier 5 para agentes de IA con un dueño responsable detrás (KYA).</p>
 
@@ -276,7 +350,7 @@ const isAgent    = await client.isAgent(wallet);                        // Tier 
 
 <p>Que una bolsa elija Avalanche para su ledger de liquidación es una señal para todo el ecosistema, no para un proyecto en particular, y no lo vamos a disfrazar de logro nuestro. Lo que sí muestra es hacia dónde se mueve la vara: las instituciones quieren liquidar on-chain, y quieren decidir quién participa. Si construyes en Avalanche, esa segunda parte también es tu problema, y no necesitas operar una bolsa para resolverla.</p>
 
-<p>Fuentes: <a href="https://www.prnewswire.com/news-releases/avalanche-to-serve-as-core-ledger-technology-for-clearing-and-settlement-of-nyse-affiliated-upcoming-tokenized-securities-platform-302932803.html" target="_blank" rel="noopener noreferrer">comunicado de Ava Labs (PR Newswire, 9 nov 2026)</a> y <a href="https://www.theblock.co/news/business/2026-11-09-nyse-settle-tokenized-stocks-avalanche-planned-24-7-market-436208" target="_blank" rel="noopener noreferrer">The Block (9 nov 2026)</a>.</p>
+<p>Fuentes: <a href="https://www.prnewswire.com/news-releases/avalanche-to-serve-as-core-ledger-technology-for-clearing-and-settlement-of-nyse-affiliated-upcoming-tokenized-securities-platform-302932803.html" target="_blank" rel="noopener noreferrer">comunicado de Ava Labs (PR Newswire, 9 nov 2026)</a> y <a href="https://www.theblock.co/news/business/2026-11-09-nyse-settle-tokenized-stocks-avalanche-planned-24-7-market-436208" target="_blank" rel="noopener noreferrer">The Block (9 nov 2026)</a>, <a href="https://ir.theice.com/press/news-details/2026/The-New-York-Stock-Exchange-Develops-Tokenized-Securities-Platform/" target="_blank" rel="noopener noreferrer">ICE (19 ene 2026)</a> y <a href="https://www.fxstreet.com/cryptocurrencies/news/nyse-taps-avalanche-for-clearing-and-settlement-of-tokenized-securities-202611092237" target="_blank" rel="noopener noreferrer">FXStreet (9 nov 2026)</a>.</p>
 `,
     },
   },
