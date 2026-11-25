@@ -23,6 +23,18 @@ export default async function OGImage({
   const eyebrow = lang === "es" ? "BLOG DE KUMPLY" : "KUMPLY BLOG";
   const author = post?.author.name ?? "KUMPLY";
 
+  // A finished card ships as-is: same English image for every locale.
+  if (post?.ogCard) {
+    const card = await readFile(join(process.cwd(), "public", post.ogCard));
+    const cardUrl = `data:image/png;base64,${card.toString("base64")}`;
+    return new ImageResponse(
+      (
+        <img src={cardUrl} alt="" width={1200} height={630} style={{ width: "1200px", height: "630px" }} />
+      ),
+      { ...size }
+    );
+  }
+
   let photoUrl: string | undefined;
   if (post?.ogImage) {
     const bytes = await readFile(join(process.cwd(), "public", post.ogImage));

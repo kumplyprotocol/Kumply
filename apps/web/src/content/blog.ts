@@ -23,9 +23,249 @@ export interface BlogPost {
   // overlays the usual KUMPLY branding + title on top of it. Omit for the
   // default generated card.
   ogImage?: string;
+  // Path (under /public) of a finished 1200x630 PNG link-preview card, in
+  // English, served as-is for both locales: no overlay, no generated title.
+  // Takes precedence over ogImage. Every new post should ship one; the HTML
+  // source for each card lives in docs/og-cards/.
+  ogCard?: string;
 }
 
 export const BLOG_POSTS: BlogPost[] = [
+  {
+    slug: "everyone-is-talking-about-kya",
+    date: "2026-11-24",
+    author: {
+      name: "Giovanny Amador",
+      role: { en: "Co-founder, Engineering Lead", es: "Co-founder, Líder de Ingeniería" },
+    },
+    readMinutes: 6,
+    category: "DEEP DIVE",
+    ogCard: "/images/blog/everyone-is-talking-about-kya-og.png",
+    title: {
+      en: "Everyone Is Talking About Know Your Agent. Here Is Where the Answer Lives.",
+      es: "Todos hablan de Know Your Agent. La pregunta es dónde vive la respuesta.",
+    },
+    excerpt: {
+      en: "a16z, Sumsub, Elliptic and Chainlink have all written about verifying AI agents this year. They agree on the question. The real difference is where the answer is kept, and who else can read it. An honest comparison, including what KUMPLY does not do yet.",
+      es: "a16z, Sumsub, Elliptic y Chainlink escribieron este año sobre cómo verificar agentes de IA. Coinciden en la pregunta. La diferencia real está en dónde se guarda la respuesta y quién más la puede leer. Una comparación honesta, incluido lo que KUMPLY todavía no hace.",
+    },
+    bodyHtml: {
+      en: `
+<p>This year, "Know Your Agent" showed up in an a16z essay, on identity vendors' product pages and in blockchain analytics guides. That's good news for anyone building agent identity, us included. It also makes it easy to lose track of what each of them actually does. So we went to the primary sources and lined them up.</p>
+
+<h2>What each one says, in their own words</h2>
+
+<p><strong>a16z crypto</strong> (<a href="https://a16zfrontier.com/posts/article/5-ways-blockchains-help-ai-agents" target="_blank" rel="noopener noreferrer">April 16, 2026</a>) frames KYA as the agent version of a credit history: agents "will need cryptographically signed credentials linking an agent to its principal, permissions, constraints, and reputation." They are also blunt about the state of things: "There is still no broadly adopted, interoperable way for one agent to prove to another who it represents, what it's allowed to do, and how it gets paid."</p>
+
+<p><strong>Sumsub</strong> (<a href="https://sumsub.com/blog/know-your-agent/" target="_blank" rel="noopener noreferrer">January 28, 2026</a>) defines KYA as establishing trust in AI agents "by defining their identity, binding them to responsible entities." Their approach is to verify the human behind the agent, with liveness checks, and they describe the chain as going from the agent, to a verified user, to that user's face. Detection, decisioning and attribution "all happen within a single platform."</p>
+
+<p><strong>Elliptic</strong> (<a href="https://www.elliptic.co/blockchain-basics/what-is-know-your-agent-kya/" target="_blank" rel="noopener noreferrer">guide, current as of October 2026</a>) gives the most complete definition we found: KYA is "the set of checks that establishes who operates an AI agent, who the agent acts for and what it is authorized to do." That covers KYC or KYB on the operator, a mandate (assets, counterparties, limits, expiry) and a revocation check on every transaction. They point to draft ERC-8004, which records an agent's identity as an ERC-721 token, and they are clear that "No single KYA standard exists." As of October 2026, they add, no regulator requires KYA by name.</p>
+
+<p><strong>Chainlink</strong> (<a href="https://chain.link/article/onchain-ai-agent-identity" target="_blank" rel="noopener noreferrer">updated June 23, 2026</a>) comes at it from the infrastructure side: onchain agent identity as decentralized identifiers plus smart contract wallets, so a contract can tell a legitimate agent request from a malicious one.</p>
+
+<p>Read side by side, they agree on the question: before an agent moves money, someone needs to know who answers for it and what it may do. Where they differ is less obvious, and it matters more for builders: <strong>where the answer is stored, and who else can read it.</strong></p>
+
+<h2>Two places the answer can live</h2>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 640 300" width="100%" role="img" aria-label="Diagram: on the left, a platform check where each business sends the agent to a vendor and gets a private answer, so a second business has to check again. On the right, an on-chain attestation written once by a verifier and read by any contract with verify(address).">
+<defs>
+<marker id="kya-land-arrow-en" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/>
+</marker>
+</defs>
+<text x="160" y="22" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="12" font-weight="700" letter-spacing="1" fill="var(--text-secondary)">PLATFORM CHECK</text>
+<text x="480" y="22" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="12" font-weight="700" letter-spacing="1" fill="var(--accent)">ON-CHAIN ATTESTATION</text>
+<line x1="320" y1="10" x2="320" y2="290" stroke="var(--border)" stroke-dasharray="4 4"/>
+<rect x="20" y="45" width="120" height="50" rx="10" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="80" y="75" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">Business A</text>
+<rect x="20" y="215" width="120" height="50" rx="10" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="80" y="245" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">Business B</text>
+<rect x="190" y="120" width="115" height="70" rx="10" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="247" y="150" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">Vendor</text>
+<text x="247" y="170" text-anchor="middle" font-size="11" fill="var(--text-tertiary)">private result</text>
+<path d="M140 75 L200 125" stroke="var(--text-tertiary)" stroke-width="1.5" fill="none"/>
+<path d="M140 240 L200 185" stroke="var(--text-tertiary)" stroke-width="1.5" fill="none"/>
+<text x="80" y="160" text-anchor="middle" font-size="11" fill="var(--text-tertiary)">each one</text>
+<text x="80" y="175" text-anchor="middle" font-size="11" fill="var(--text-tertiary)">checks again</text>
+<rect x="345" y="45" width="120" height="50" rx="10" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="405" y="70" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">Verifier</text>
+<text x="405" y="86" text-anchor="middle" font-size="11" fill="var(--text-tertiary)">writes once</text>
+<rect x="345" y="125" width="270" height="60" rx="10" fill="var(--bg-card)" stroke="var(--accent)"/>
+<text x="480" y="150" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="12" font-weight="700" fill="var(--accent)">AttestationStore</text>
+<text x="480" y="170" text-anchor="middle" font-size="11" fill="var(--text-tertiary)">tier / issued / expiry / verifier</text>
+<path d="M405 95 L405 120" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#kya-land-arrow-en)"/>
+<rect x="345" y="230" width="80" height="40" rx="8" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="385" y="255" text-anchor="middle" font-size="12" fill="var(--text-primary)">Lending</text>
+<rect x="440" y="230" width="80" height="40" rx="8" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="480" y="255" text-anchor="middle" font-size="12" fill="var(--text-primary)">DEX</text>
+<rect x="535" y="230" width="80" height="40" rx="8" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="575" y="255" text-anchor="middle" font-size="12" fill="var(--text-primary)">Marketplace</text>
+<path d="M385 228 L410 190" stroke="var(--accent)" stroke-width="1.5" fill="none" marker-end="url(#kya-land-arrow-en)"/>
+<path d="M480 228 L480 190" stroke="var(--accent)" stroke-width="1.5" fill="none" marker-end="url(#kya-land-arrow-en)"/>
+<path d="M575 228 L550 190" stroke="var(--accent)" stroke-width="1.5" fill="none" marker-end="url(#kya-land-arrow-en)"/>
+<text x="480" y="292" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="11" fill="var(--text-secondary)">verify(address)</text>
+</svg>
+</figure>
+
+<p><strong>Inside a platform.</strong> The business sends the agent (or its owner) to a vendor, the vendor runs its checks, and the business gets an answer through the vendor's dashboard or API. The checks can be very deep: liveness, device signals, behavior over time. But the result belongs to that relationship. A second business that meets the same agent has to run its own check. And a smart contract can't call a vendor's API by itself: it would need an oracle to bring the answer on-chain, and the answer would still belong to the vendor.</p>
+
+<p><strong>On a public ledger.</strong> A verifier writes the result once, and anyone can read it, including a contract, at the moment it matters. That's the model KUMPLY uses. Our <code>AttestationStore</code> on Avalanche C-Chain stores, for each address, a tier, when it was issued, when it expires and which verifier issued it. Tier 5 is the agent category. Any contract reads it with one call to <code>verify(address)</code>, and the SDK wraps it as <code>isAgent(address)</code>.</p>
+
+<p>Neither model is "better" in general. A platform can check much more than a public record should ever hold, and nobody should put a face scan on a blockchain. What a platform can't give you is a result that the next protocol can reuse without asking anyone. That's the gap an on-chain attestation fills.</p>
+
+<h2>A use case: an agent asks for a loan</h2>
+
+<p>An illustrative scenario, not a real transaction. A lending pool on C-Chain wants to accept AI agents as borrowers, but only agents someone has verified. A trading agent calls <code>borrow()</code>. Before anything moves, the pool's contract reads the agent's attestation: is it valid, is it Tier 5? If yes, the loan goes through. If not, the call reverts and no funds move. In Solidity, the whole check is two lines (illustrative code, not a deployed contract):</p>
+
+<pre><code>interface IAttestationStore {
+    function verify(address subject) external view
+        returns (bool verified, uint32 tier, uint64 issuedAt, uint64 expiry);
+}
+
+function borrow(uint256 amount) external {
+    (bool verified, uint32 tier, , ) = store.verify(msg.sender);
+    require(verified &amp;&amp; tier == 5, "not a verified agent");
+    // ... lending logic
+}</code></pre>
+
+<p>Note the <code>tier == 5</code>: tiers 1 to 3 are a ladder for people, and 4 (business) and 5 (agent) are separate categories, so an agent check is an exact match, never <code>tier &gt;= 5</code>. Off-chain, the SDK does the same with <code>isAgent(address)</code>.</p>
+
+<p>The same agent then opens a position on a DEX that applies the same rule, and the DEX doesn't verify it again. It reads the same record.</p>
+
+<p>That's what "composable" means here: one verification, read by many contracts, with no new integration and no data shared between the protocols.</p>
+
+<h2>Where KUMPLY falls short of the full definition</h2>
+
+<p>Measured against a16z's list (principal, permissions, constraints, reputation) and Elliptic's (operator, principal, mandate, revocation), here's an honest scorecard of what lives on-chain in KUMPLY today:</p>
+
+<ul>
+<li><strong>Is this a verified agent, who verified it, until when:</strong> yes. That's the attestation itself, readable by anyone.</li>
+<li><strong>Revocation:</strong> yes. A revoked or expired attestation makes <code>verify()</code> return false, so every contract that checks sees it at once.</li>
+<li><strong>Link to the owner (the principal):</strong> not on-chain yet. The attestation contract has no field that points from an agent to its owner's address. Accountability to a verified business is the design goal of Tier 5, but today it isn't something another contract can read.</li>
+<li><strong>Mandate, limits, reputation:</strong> no. KUMPLY doesn't store what an agent is allowed to do or how it has behaved. A protocol that needs spending limits has to enforce them itself, for example in the agent's smart wallet.</li>
+<li><strong>Self-serve Tier 5 verification:</strong> not yet. The verification level our webhook maps to Tier 5 isn't configured with our KYC provider, so Tier 5 attestations today are issued directly by a KUMPLY verifier.</li>
+</ul>
+
+<p>Mandates, behavior bounds and the owner link are what the planned <code>AgentRegistry.sol</code> extension is for. It's on our roadmap with no date committed, and we'd rather say that than round it up.</p>
+
+<p>On adoption, the live numbers as of today: our AttestationStore on Fuji testnet shows 50 attestations issued (the counter includes re-issues), from our own tests and the live KYA workshop with Team1 in September. On mainnet the counter still reads 0. The rails are there, real usage on mainnet is not yet.</p>
+
+<p>We're writing this down because the KYA conversation is moving faster than any single standard, and Elliptic is right that none exists yet. The useful question for a builder isn't "who does KYA," it's "can my contract read the answer, and what exactly does that answer cover." For KUMPLY, it's the list above, the yes lines and the no lines.</p>
+
+<h2>Try it</h2>
+
+<p>The <a href="https://kumply.xyz/demo" target="_blank" rel="noopener noreferrer">interactive demo</a> runs an agent marketplace scenario against real attestations, no wallet needed. To read an attestation from your own code, install <a href="https://www.npmjs.com/package/@kumply/sdk" target="_blank" rel="noopener noreferrer">@kumply/sdk</a> and call <code>isAgent(address)</code>. And a note on the name, since the acronym is shared: KUMPLY's KYA is our Tier 5, not <a href="https://github.com/decentralized-identity/kya-os-mcp" target="_blank" rel="noopener noreferrer">KYA-OS</a>, the separate protocol for MCP agents at the Decentralized Identity Foundation.</p>
+`,
+      es: `
+<p>Este año, "Know Your Agent" apareció en un ensayo de a16z, en páginas de producto de empresas de identidad y en guías de analítica blockchain. Es buena noticia para quien construye identidad de agentes, nosotros incluidos. También hace fácil perder de vista qué hace cada uno en realidad. Así que fuimos a las fuentes primarias y las pusimos lado a lado.</p>
+
+<h2>Qué dice cada uno, con sus palabras</h2>
+
+<p><strong>a16z crypto</strong> (<a href="https://a16zfrontier.com/posts/article/5-ways-blockchains-help-ai-agents" target="_blank" rel="noopener noreferrer">16 de abril de 2026</a>) plantea KYA como la versión para agentes de un historial crediticio: los agentes "will need cryptographically signed credentials linking an agent to its principal, permissions, constraints, and reputation" (necesitarán credenciales firmadas que liguen al agente con su principal, permisos, restricciones y reputación). También son directos sobre el estado actual: todavía no existe una forma interoperable y adoptada para que un agente le pruebe a otro a quién representa, qué puede hacer y cómo se le paga.</p>
+
+<p><strong>Sumsub</strong> (<a href="https://sumsub.com/blog/know-your-agent/" target="_blank" rel="noopener noreferrer">28 de enero de 2026</a>) define KYA como establecer confianza en agentes de IA "by defining their identity, binding them to responsible entities" (definiendo su identidad y ligándolos a entidades responsables). Su enfoque es verificar al humano detrás del agente, con pruebas de vida, y describen la cadena como ir del agente, a un usuario verificado, a la cara de ese usuario. La detección, la decisión y la atribución ocurren "within a single platform", dentro de una sola plataforma.</p>
+
+<p><strong>Elliptic</strong> (<a href="https://www.elliptic.co/blockchain-basics/what-is-know-your-agent-kya/" target="_blank" rel="noopener noreferrer">guía vigente a octubre de 2026</a>) da la definición más completa que encontramos: KYA es el conjunto de revisiones que establece quién opera un agente, para quién actúa y qué está autorizado a hacer. Eso incluye KYC o KYB del operador, un mandato (activos, contrapartes, límites, vencimiento) y revisar en cada transacción que la credencial no esté revocada. Mencionan el borrador ERC-8004, que registra la identidad de un agente como un token ERC-721, y son claros en que "No single KYA standard exists" (no existe un estándar único de KYA). Agregan que, a octubre de 2026, ningún regulador exige KYA por nombre.</p>
+
+<p><strong>Chainlink</strong> (<a href="https://chain.link/article/onchain-ai-agent-identity" target="_blank" rel="noopener noreferrer">actualizado el 23 de junio de 2026</a>) lo ve desde la infraestructura: identidad on-chain del agente como identificadores descentralizados más wallets de smart contract, para que un contrato distinga una petición legítima de una maliciosa.</p>
+
+<p>Leídos juntos, coinciden en la pregunta: antes de que un agente mueva dinero, alguien necesita saber quién responde por él y qué puede hacer. En lo que difieren es menos obvio, y para quien construye importa más: <strong>dónde se guarda la respuesta y quién más la puede leer.</strong></p>
+
+<h2>Dos lugares donde puede vivir la respuesta</h2>
+
+<figure class="blog-diagram">
+<svg viewBox="0 0 640 300" width="100%" role="img" aria-label="Diagrama: a la izquierda, una revisión en plataforma donde cada empresa manda al agente con un proveedor y recibe una respuesta privada, así que una segunda empresa tiene que revisar otra vez. A la derecha, una atestación on-chain que un verificador escribe una vez y que cualquier contrato lee con verify(address).">
+<defs>
+<marker id="kya-land-arrow-es" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 Z" fill="var(--accent)"/>
+</marker>
+</defs>
+<text x="160" y="22" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="12" font-weight="700" letter-spacing="1" fill="var(--text-secondary)">EN PLATAFORMA</text>
+<text x="480" y="22" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="12" font-weight="700" letter-spacing="1" fill="var(--accent)">ATESTACIÓN ON-CHAIN</text>
+<line x1="320" y1="10" x2="320" y2="290" stroke="var(--border)" stroke-dasharray="4 4"/>
+<rect x="20" y="45" width="120" height="50" rx="10" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="80" y="75" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">Empresa A</text>
+<rect x="20" y="215" width="120" height="50" rx="10" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="80" y="245" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">Empresa B</text>
+<rect x="190" y="120" width="115" height="70" rx="10" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="247" y="150" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">Proveedor</text>
+<text x="247" y="170" text-anchor="middle" font-size="11" fill="var(--text-tertiary)">resultado privado</text>
+<path d="M140 75 L200 125" stroke="var(--text-tertiary)" stroke-width="1.5" fill="none"/>
+<path d="M140 240 L200 185" stroke="var(--text-tertiary)" stroke-width="1.5" fill="none"/>
+<text x="80" y="160" text-anchor="middle" font-size="11" fill="var(--text-tertiary)">cada una</text>
+<text x="80" y="175" text-anchor="middle" font-size="11" fill="var(--text-tertiary)">revisa de nuevo</text>
+<rect x="345" y="45" width="120" height="50" rx="10" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="405" y="70" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-primary)">Verificador</text>
+<text x="405" y="86" text-anchor="middle" font-size="11" fill="var(--text-tertiary)">escribe una vez</text>
+<rect x="345" y="125" width="270" height="60" rx="10" fill="var(--bg-card)" stroke="var(--accent)"/>
+<text x="480" y="150" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="12" font-weight="700" fill="var(--accent)">AttestationStore</text>
+<text x="480" y="170" text-anchor="middle" font-size="11" fill="var(--text-tertiary)">tier / emisión / vencimiento / verificador</text>
+<path d="M405 95 L405 120" stroke="var(--accent)" stroke-width="2" fill="none" marker-end="url(#kya-land-arrow-es)"/>
+<rect x="345" y="230" width="80" height="40" rx="8" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="385" y="255" text-anchor="middle" font-size="12" fill="var(--text-primary)">Préstamos</text>
+<rect x="440" y="230" width="80" height="40" rx="8" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="480" y="255" text-anchor="middle" font-size="12" fill="var(--text-primary)">DEX</text>
+<rect x="535" y="230" width="80" height="40" rx="8" fill="var(--bg-card)" stroke="var(--border)"/>
+<text x="575" y="255" text-anchor="middle" font-size="12" fill="var(--text-primary)">Marketplace</text>
+<path d="M385 228 L410 190" stroke="var(--accent)" stroke-width="1.5" fill="none" marker-end="url(#kya-land-arrow-es)"/>
+<path d="M480 228 L480 190" stroke="var(--accent)" stroke-width="1.5" fill="none" marker-end="url(#kya-land-arrow-es)"/>
+<path d="M575 228 L550 190" stroke="var(--accent)" stroke-width="1.5" fill="none" marker-end="url(#kya-land-arrow-es)"/>
+<text x="480" y="292" text-anchor="middle" font-family="'Fira Code', Consolas, monospace" font-size="11" fill="var(--text-secondary)">verify(address)</text>
+</svg>
+</figure>
+
+<p><strong>Dentro de una plataforma.</strong> La empresa manda al agente (o a su dueño) con un proveedor, el proveedor hace sus revisiones y la empresa recibe la respuesta en el panel o la API del proveedor. Las revisiones pueden ser muy profundas: prueba de vida, señales del dispositivo, comportamiento en el tiempo. Pero el resultado se queda en esa relación. Una segunda empresa que se topa con el mismo agente tiene que hacer su propia revisión. Y un smart contract no puede llamar por sí solo a la API de un proveedor: necesitaría un oráculo que suba la respuesta a la cadena, y la respuesta seguiría siendo del proveedor.</p>
+
+<p><strong>En un registro público.</strong> Un verificador escribe el resultado una vez y cualquiera lo puede leer, incluido un contrato, justo en el momento en que importa. Ese es el modelo de KUMPLY. Nuestro <code>AttestationStore</code> en la C-Chain de Avalanche guarda, por cada dirección, un tier, cuándo se emitió, cuándo vence y qué verificador lo emitió. El Tier 5 es la categoría de agentes. Cualquier contrato lo lee con una llamada a <code>verify(address)</code>, y el SDK lo envuelve como <code>isAgent(address)</code>.</p>
+
+<p>Ningún modelo es "mejor" en general. Una plataforma puede revisar mucho más de lo que un registro público debería guardar jamás, y nadie debería subir un escaneo de cara a una blockchain. Lo que una plataforma no te puede dar es un resultado que el siguiente protocolo reutilice sin pedirle permiso a nadie. Ese es el hueco que llena una atestación on-chain.</p>
+
+<h2>Un caso de uso: un agente pide un préstamo</h2>
+
+<p>Un escenario ilustrativo, no una transacción real. Un pool de préstamos en la C-Chain quiere aceptar agentes de IA como deudores, pero solo agentes que alguien ya verificó. Un agente de trading llama a <code>borrow()</code>. Antes de que se mueva nada, el contrato del pool lee la atestación del agente: ¿es válida y es Tier 5? Si sí, el préstamo pasa. Si no, la llamada se revierte y no se mueven fondos. En Solidity, toda la revisión son dos líneas (código ilustrativo, no un contrato desplegado):</p>
+
+<pre><code>interface IAttestationStore {
+    function verify(address subject) external view
+        returns (bool verified, uint32 tier, uint64 issuedAt, uint64 expiry);
+}
+
+function borrow(uint256 amount) external {
+    (bool verified, uint32 tier, , ) = store.verify(msg.sender);
+    require(verified &amp;&amp; tier == 5, "not a verified agent");
+    // ... logica del prestamo
+}</code></pre>
+
+<p>Fíjate en el <code>tier == 5</code>: los tiers 1 a 3 son una escalera para personas, y el 4 (empresa) y el 5 (agente) son categorías aparte, así que revisar un agente es una coincidencia exacta, nunca <code>tier &gt;= 5</code>. Fuera de la cadena, el SDK hace lo mismo con <code>isAgent(address)</code>.</p>
+
+<p>Después el mismo agente abre una posición en un DEX que aplica la misma regla, y el DEX no lo vuelve a verificar. Lee el mismo registro.</p>
+
+<p>Eso es lo que significa "componible" aquí: una sola verificación, leída por muchos contratos, sin integración nueva y sin compartir datos entre protocolos.</p>
+
+<h2>Dónde KUMPLY no llega todavía a la definición completa</h2>
+
+<p>Comparado con la lista de a16z (principal, permisos, restricciones, reputación) y la de Elliptic (operador, principal, mandato, revocación), esta es la cuenta honesta de lo que vive on-chain en KUMPLY hoy:</p>
+
+<ul>
+<li><strong>Si es un agente verificado, quién lo verificó y hasta cuándo:</strong> sí. Es la atestación misma, y cualquiera la puede leer.</li>
+<li><strong>Revocación:</strong> sí. Una atestación revocada o vencida hace que <code>verify()</code> devuelva false, así que todo contrato que revisa lo ve al instante.</li>
+<li><strong>El vínculo con el dueño (el principal):</strong> todavía no está on-chain. El contrato de atestaciones no tiene un campo que apunte del agente a la dirección de su dueño. Que el agente responda ante una empresa verificada es el objetivo de diseño del Tier 5, pero hoy no es algo que otro contrato pueda leer.</li>
+<li><strong>Mandato, límites, reputación:</strong> no. KUMPLY no guarda qué puede hacer un agente ni cómo se ha comportado. Un protocolo que necesite límites de gasto los tiene que aplicar por su cuenta, por ejemplo en la smart wallet del agente.</li>
+<li><strong>Verificación Tier 5 en autoservicio:</strong> todavía no. El nivel de verificación que nuestro webhook asigna al Tier 5 no está configurado con nuestro proveedor de KYC, así que hoy las atestaciones Tier 5 las emite directamente un verificador de KUMPLY.</li>
+</ul>
+
+<p>El mandato, los límites de comportamiento y el vínculo con el dueño son para lo que está pensada la extensión <code>AgentRegistry.sol</code>. Está en nuestro roadmap sin fecha comprometida, y preferimos decirlo así que redondearlo hacia arriba.</p>
+
+<p>Sobre adopción, los números en vivo a hoy: nuestro AttestationStore en la testnet Fuji marca 50 atestaciones emitidas (el contador incluye reemisiones), entre nuestras pruebas y el workshop de KYA en vivo con Team1 en septiembre. En mainnet el contador sigue en 0. Los rieles ya están, el uso real en mainnet todavía no.</p>
+
+<p>Lo escribimos porque la conversación sobre KYA avanza más rápido que cualquier estándar, y Elliptic tiene razón en que todavía no existe uno. La pregunta útil para quien construye no es "quién hace KYA", sino "¿mi contrato puede leer la respuesta, y qué cubre exactamente esa respuesta?". En KUMPLY, es la lista de arriba, con sus síes y sus noes.</p>
+
+<h2>Pruébalo</h2>
+
+<p>La <a href="https://kumply.xyz/demo" target="_blank" rel="noopener noreferrer">demo interactiva</a> corre un escenario de marketplace de agentes contra atestaciones reales, sin wallet. Para leer una atestación desde tu propio código, instala <a href="https://www.npmjs.com/package/@kumply/sdk" target="_blank" rel="noopener noreferrer">@kumply/sdk</a> y llama a <code>isAgent(address)</code>. Y una nota sobre el nombre, porque las siglas se comparten: el KYA de KUMPLY es nuestro Tier 5, no <a href="https://github.com/decentralized-identity/kya-os-mcp" target="_blank" rel="noopener noreferrer">KYA-OS</a>, el protocolo aparte para agentes MCP de la Decentralized Identity Foundation.</p>
+`,
+    },
+  },
   {
     slug: "nyse-avalanche-who-gets-to-take-part",
     date: "2026-11-11",
