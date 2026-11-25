@@ -4,6 +4,7 @@ import { Link } from "@/i18n/routing";
 import { getTranslations, getLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { getPostBySlug } from "@/content/blog";
+import { ogImageVersion } from "@/lib/og-version";
 
 export async function generateMetadata({
   params,
@@ -22,7 +23,10 @@ export async function generateMetadata({
   // prefix-less one. Crawlers (Telegram, WhatsApp, Discord, X) don't follow
   // redirects on og:image, so that broke link previews. Set it explicitly
   // to the working, prefix-less URL instead of letting Next infer it.
-  const ogImage = { url: `/blog/${slug}/opengraph-image`, width: 1200, height: 630, alt: post.title[lang] };
+  // The ?v= changes when the image does, because those crawlers also cache
+  // the image by URL.
+  const ogUrl = `/blog/${slug}/opengraph-image${await ogImageVersion(post, lang)}`;
+  const ogImage = { url: ogUrl, width: 1200, height: 630, alt: post.title[lang] };
 
   return {
     title: post.title[lang],
