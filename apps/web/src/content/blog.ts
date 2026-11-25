@@ -142,7 +142,7 @@ function borrow(uint256 amount) external {
 <p>Measured against a16z's list (principal, permissions, constraints, reputation) and Elliptic's (operator, principal, mandate, revocation), here's an honest scorecard of what lives on-chain in KUMPLY today:</p>
 
 <ul>
-<li><strong>Whether an address is marked Tier 5, who marked it, until when:</strong> yes, readable by anyone. But the Tier 5 attestations from our pilots and workshop on Fuji are <strong>demo attestations: our team issued them with no identity verification behind them</strong>. They show that the mechanism works. They don't prove who operates an agent.</li>
+<li><strong>Whether an address is marked Tier 5, who marked it, until when:</strong> yes, readable by anyone. But the Tier 5 attestations from our pilots and workshop on Fuji are <strong>demo attestations, with no identity verification behind them</strong>. They show that the mechanism works. They don't prove who operates an agent.</li>
 <li><strong>Revocation:</strong> yes. A revoked or expired attestation makes <code>verify()</code> return false, so every contract that checks sees it at once.</li>
 <li><strong>Link to the owner (the principal):</strong> not on-chain yet. The attestation contract has no field that points from an agent to its owner's address. Accountability to a verified business is the design goal of Tier 5, but today it isn't something another contract can read.</li>
 <li><strong>Mandate, limits, reputation:</strong> no. KUMPLY doesn't store what an agent is allowed to do or how it has behaved. A protocol that needs spending limits has to enforce them itself, for example in the agent's smart wallet.</li>
@@ -251,7 +251,7 @@ function borrow(uint256 amount) external {
 <p>Comparado con la lista de a16z (principal, permisos, restricciones, reputación) y la de Elliptic (operador, principal, mandato, revocación), esta es la cuenta honesta de lo que vive on-chain en KUMPLY hoy:</p>
 
 <ul>
-<li><strong>Si una dirección está marcada como Tier 5, quién la marcó y hasta cuándo:</strong> sí, cualquiera lo puede leer. Pero las atestaciones Tier 5 de nuestros pilotos y del workshop en Fuji son <strong>de demo: las emitió nuestro equipo, sin verificación de identidad detrás</strong>. Muestran que el mecanismo funciona. No prueban quién opera un agente.</li>
+<li><strong>Si una dirección está marcada como Tier 5, quién la marcó y hasta cuándo:</strong> sí, cualquiera lo puede leer. Pero las atestaciones Tier 5 de nuestros pilotos y del workshop en Fuji son <strong>de demo, sin verificación de identidad detrás</strong>. Muestran que el mecanismo funciona. No prueban quién opera un agente.</li>
 <li><strong>Revocación:</strong> sí. Una atestación revocada o vencida hace que <code>verify()</code> devuelva false, así que todo contrato que revisa lo ve al instante.</li>
 <li><strong>El vínculo con el dueño (el principal):</strong> todavía no está on-chain. El contrato de atestaciones no tiene un campo que apunte del agente a la dirección de su dueño. Que el agente responda ante una empresa verificada es el objetivo de diseño del Tier 5, pero hoy no es algo que otro contrato pueda leer.</li>
 <li><strong>Mandato, límites, reputación:</strong> no. KUMPLY no guarda qué puede hacer un agente ni cómo se ha comportado. Un protocolo que necesite límites de gasto los tiene que aplicar por su cuenta, por ejemplo en la smart wallet del agente.</li>
@@ -1651,7 +1651,7 @@ const puedeOperar = await client.isAgent(address);</code></pre>
     },
     bodyHtml: {
       en: `
-<p><em>Updated November 24, 2026: corrected. The link from an agent to its KYB-verified owner is the design of Tier 5, not something stored on-chain today. <code>verify()</code> returns verified, tier, timestamp and expiry. It does not return an owner, as earlier versions of this post said.</em></p>
+<p><em>Updated November 24, 2026: corrected. The link from an agent to its KYB-verified owner is the design of Tier 5, not something stored on-chain today. <code>verify()</code> returns verified, tier, timestamp and expiry. It does not return an owner. Earlier versions of this post wrongly said it did.</em></p>
 
 <p><em>Updated September 30, 2026: the AgentRegistry.sol extension no longer has a Q3 2026 date; no date is committed yet. Also removed an unsupported "first" claim.</em></p>
 
@@ -1702,7 +1702,7 @@ const puedeOperar = await client.isAgent(address);</code></pre>
 <p>One more disambiguation, since the acronym is shared: KUMPLY's KYA is not KYA-OS (<a href="https://github.com/decentralized-identity/kya-os-mcp" target="_blank" rel="noopener noreferrer">github.com/decentralized-identity/kya-os-mcp</a>), a separate identity protocol for MCP agents donated to the Decentralized Identity Foundation. Different standard, different governance, no relationship between the two beyond the name.</p>
 `,
       es: `
-<p><em>Actualizado el 24 de noviembre de 2026: corregido. El vínculo de un agente con su dueño verificado con KYB es el diseño del Tier 5, no algo guardado on-chain hoy. <code>verify()</code> devuelve verified, tier, timestamp y expiry. No devuelve un dueño, como decían las versiones anteriores de este post.</em></p>
+<p><em>Actualizado el 24 de noviembre de 2026: corregido. El vínculo de un agente con su dueño verificado con KYB es el diseño del Tier 5, no algo guardado on-chain hoy. <code>verify()</code> devuelve verified, tier, timestamp y expiry. No devuelve un dueño. Las versiones anteriores de este post decían, por error, que sí.</em></p>
 
 <p><em>Actualizado el 30 de septiembre de 2026: la extensión AgentRegistry.sol ya no tiene fecha de Q3 2026; todavía no hay fecha comprometida. También quitamos una afirmación de "primero" sin sustento.</em></p>
 
