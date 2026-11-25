@@ -23,6 +23,11 @@ export interface BlogPost {
   // overlays the usual KUMPLY branding + title on top of it. Omit for the
   // default generated card.
   ogImage?: string;
+  // Path (under /public) of a finished 1200x630 PNG link-preview card, in
+  // English, served as-is for both locales: no overlay, no generated title.
+  // Takes precedence over ogImage. Every new post should ship one; the HTML
+  // source for each card lives in docs/og-cards/.
+  ogCard?: string;
 }
 
 export const BLOG_POSTS: BlogPost[] = [
@@ -35,6 +40,7 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     readMinutes: 6,
     category: "DEEP DIVE",
+    ogCard: "/images/blog/everyone-is-talking-about-kya-og.png",
     title: {
       en: "Everyone Is Talking About Know Your Agent. Here Is Where the Answer Lives.",
       es: "Todos hablan de Know Your Agent. La pregunta es dónde vive la respuesta.",

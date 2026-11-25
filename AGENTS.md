@@ -85,6 +85,13 @@ for a public audience first (see `docs/AI-USAGE.md` and the README's
   itself. A post can still discuss AI tooling as subject matter (e.g. a bug
   found in an AI tool during an audit) — that's content, not a disclosure
   of how the post was written, and stays as-is.
+- Every new post ships a custom link-preview card: a 1200x630 PNG in
+  English (also used for the ES locale), set with `ogCard` in `blog.ts`
+  and stored in `apps/web/public/images/blog/<slug>-og.png`. Keep its
+  HTML source in `docs/og-cards/<slug>.html` (brand colors, the official
+  lockup from `public/branding-kumply/svg/`), render it at exactly
+  1200x630 and look at the PNG before committing. Same honesty rules as
+  the post: no claim on the card that the post doesn't back up.
 
 ## Tier semantics
 

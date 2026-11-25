@@ -1,0 +1,57 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1200px;height:630px;overflow:hidden}
+body{background:#0B0B0D;font-family:Arial,Helvetica,sans-serif;color:#F2F0EE;position:relative}
+.glow{position:absolute;inset:0;background:radial-gradient(circle at 82% 18%,rgba(232,65,66,.22),transparent 50%),radial-gradient(circle at 8% 100%,rgba(232,65,66,.08),transparent 40%)}
+.grid{position:absolute;inset:0;opacity:.05;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:40px 40px;-webkit-mask-image:radial-gradient(circle at 80% 50%,#000,transparent 70%)}
+.wrap{position:absolute;inset:0;padding:56px 64px;display:flex;flex-direction:column;justify-content:space-between}
+.top{display:flex;justify-content:space-between;align-items:center}
+.logo{height:66px}
+.tag{font-family:Consolas,'Fira Code',monospace;font-size:17px;letter-spacing:.18em;color:#E84142;font-weight:700;border:1.5px solid rgba(232,65,66,.5);padding:8px 14px;border-radius:8px}
+.mid{display:flex;align-items:center;gap:48px}
+.text{flex:1}
+h1{font-size:58px;line-height:1.06;font-weight:800;letter-spacing:-.02em}
+h1 .r{color:#E84142;display:block;margin-top:16px;font-size:40px}
+.viz{width:370px;display:flex;flex-direction:column;gap:16px}
+.card{border-radius:16px;padding:20px 22px;background:rgba(255,255,255,.035);border:1.5px solid rgba(255,255,255,.12)}
+.card.on{border-color:#E84142;background:rgba(232,65,66,.08)}
+.lbl{font-family:Consolas,monospace;font-size:14px;letter-spacing:.16em;font-weight:700;color:#8E8B88}
+.card.on .lbl{color:#E84142}
+.big{font-size:24px;font-weight:700;margin-top:8px}
+.sub{font-size:17px;color:#A8A5A1;margin-top:6px}
+.code{font-family:Consolas,monospace;font-size:18px;margin-top:12px;color:#F2F0EE;background:rgba(0,0,0,.4);border-radius:8px;padding:8px 12px;display:inline-block}
+.code b{color:#E84142}
+.bot{display:flex;justify-content:space-between;align-items:center;font-size:21px;color:#A8A5A1}
+.bot .u{color:#F2F0EE;font-weight:700}
+</style></head><body>
+<div class="glow"></div><div class="grid"></div>
+<div class="wrap">
+  <div class="top">
+    <img class="logo" src="../../apps/web/public/branding-kumply/svg/kumply-lockup-dark.svg" alt="">
+    <span class="tag">DEEP DIVE / KYA</span>
+  </div>
+  <div class="mid">
+    <div class="text">
+      <h1>Everyone is talking about Know Your Agent.<span class="r">Where does the answer live?</span></h1>
+    </div>
+    <div class="viz">
+      <div class="card">
+        <div class="lbl">VENDOR PLATFORM</div>
+        <div class="big">Private result</div>
+        <div class="sub">Every business checks again</div>
+      </div>
+      <div class="card on">
+        <div class="lbl">ON-CHAIN ATTESTATION</div>
+        <div class="big">Written once, read by any contract</div>
+        <div class="code">isAgent(agent) <b>// true</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="bot">
+    <span>An honest look at where agent verification is stored</span>
+    <span class="u">kumply.xyz/blog</span>
+  </div>
+</div>
+</body></html>
