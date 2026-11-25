@@ -5,7 +5,6 @@
 html,body{width:1200px;height:630px;overflow:hidden}
 body{background:#0B0B0D;font-family:Arial,Helvetica,sans-serif;color:#F2F0EE;position:relative}
 .glow{position:absolute;inset:0;background:radial-gradient(circle at 82% 18%,rgba(232,65,66,.22),transparent 50%),radial-gradient(circle at 8% 100%,rgba(232,65,66,.08),transparent 40%)}
-.grid{position:absolute;inset:0;opacity:.05;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:40px 40px;-webkit-mask-image:radial-gradient(circle at 80% 50%,#000,transparent 70%)}
 .wrap{position:absolute;inset:0;padding:56px 64px;display:flex;flex-direction:column;justify-content:space-between}
 .top{display:flex;justify-content:space-between;align-items:center}
 .logo{height:66px}
@@ -26,7 +25,7 @@ h1 .r{color:#E84142;display:block;margin-top:16px;font-size:40px}
 .bot{display:flex;justify-content:space-between;align-items:center;font-size:21px;color:#A8A5A1}
 .bot .u{color:#F2F0EE;font-weight:700}
 </style></head><body>
-<div class="glow"></div><div class="grid"></div>
+<div class="glow"></div>
 <div class="wrap">
   <div class="top">
     <img class="logo" src="../../apps/web/public/branding-kumply/svg/kumply-lockup-dark.svg" alt="">
@@ -40,12 +39,12 @@ h1 .r{color:#E84142;display:block;margin-top:16px;font-size:40px}
       <div class="card">
         <div class="lbl">VENDOR PLATFORM</div>
         <div class="big">Private result</div>
-        <div class="sub">Every business checks again</div>
+        <div class="sub">A contract needs an oracle to read it</div>
       </div>
       <div class="card on">
         <div class="lbl">ON-CHAIN ATTESTATION</div>
         <div class="big">Written once, read by any contract</div>
-        <div class="code">isAgent(agent) <b>// true</b></div>
+        <div class="code">verify(agent) <b>// tier 5</b></div>
       </div>
     </div>
   </div>
