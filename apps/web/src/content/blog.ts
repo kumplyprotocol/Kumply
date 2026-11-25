@@ -33,7 +33,7 @@ export const BLOG_POSTS: BlogPost[] = [
       name: "Giovanny Amador",
       role: { en: "Co-founder, Engineering Lead", es: "Co-founder, Líder de Ingeniería" },
     },
-    readMinutes: 7,
+    readMinutes: 6,
     category: "DEEP DIVE",
     title: {
       en: "Everyone Is Talking About Know Your Agent. Here Is Where the Answer Lives.",
@@ -45,7 +45,7 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     bodyHtml: {
       en: `
-<p>A year ago, "Know Your Agent" was a niche phrase. In 2026 it shows up everywhere: in a16z's essays, in identity vendors' product pages, in blockchain analytics guides. That's good news for anyone building agent identity, us included. It also makes it easy to lose track of what each of these actually does. So we read the primary sources and lined them up.</p>
+<p>This year, "Know Your Agent" showed up in an a16z essay, on identity vendors' product pages and in blockchain analytics guides. That's good news for anyone building agent identity, us included. It also makes it easy to lose track of what each of them actually does. So we went to the primary sources and lined them up.</p>
 
 <h2>What each one says, in their own words</h2>
 
@@ -53,7 +53,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <p><strong>Sumsub</strong> (<a href="https://sumsub.com/blog/know-your-agent/" target="_blank" rel="noopener noreferrer">January 28, 2026</a>) defines KYA as establishing trust in AI agents "by defining their identity, binding them to responsible entities." Their approach is to verify the human behind the agent, with liveness checks, and they describe the chain as going from the agent, to a verified user, to that user's face. Detection, decisioning and attribution "all happen within a single platform."</p>
 
-<p><strong>Elliptic</strong> (<a href="https://www.elliptic.co/blockchain-basics/what-is-know-your-agent-kya/" target="_blank" rel="noopener noreferrer">guide, current as of October 2026</a>) gives the most complete definition we found: KYA is "the set of checks that establishes who operates an AI agent, who the agent acts for and what it is authorized to do." That covers KYC or KYB on the operator, a mandate (assets, counterparties, limits, expiry) and a revocation check on every transaction. They also note that "No single KYA standard exists," and that, as of October 2026, no regulator requires KYA by name.</p>
+<p><strong>Elliptic</strong> (<a href="https://www.elliptic.co/blockchain-basics/what-is-know-your-agent-kya/" target="_blank" rel="noopener noreferrer">guide, current as of October 2026</a>) gives the most complete definition we found: KYA is "the set of checks that establishes who operates an AI agent, who the agent acts for and what it is authorized to do." That covers KYC or KYB on the operator, a mandate (assets, counterparties, limits, expiry) and a revocation check on every transaction. They point to draft ERC-8004, which records an agent's identity as an ERC-721 token, and they are clear that "No single KYA standard exists." As of October 2026, they add, no regulator requires KYA by name.</p>
 
 <p><strong>Chainlink</strong> (<a href="https://chain.link/article/onchain-ai-agent-identity" target="_blank" rel="noopener noreferrer">updated June 23, 2026</a>) comes at it from the infrastructure side: onchain agent identity as decentralized identifiers plus smart contract wallets, so a contract can tell a legitimate agent request from a malicious one.</p>
 
@@ -94,7 +94,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <rect x="440" y="230" width="80" height="40" rx="8" fill="var(--bg-card)" stroke="var(--border)"/>
 <text x="480" y="255" text-anchor="middle" font-size="12" fill="var(--text-primary)">DEX</text>
 <rect x="535" y="230" width="80" height="40" rx="8" fill="var(--bg-card)" stroke="var(--border)"/>
-<text x="575" y="255" text-anchor="middle" font-size="12" fill="var(--text-primary)">Paymaster</text>
+<text x="575" y="255" text-anchor="middle" font-size="12" fill="var(--text-primary)">Marketplace</text>
 <path d="M385 228 L410 190" stroke="var(--accent)" stroke-width="1.5" fill="none" marker-end="url(#kya-land-arrow-en)"/>
 <path d="M480 228 L480 190" stroke="var(--accent)" stroke-width="1.5" fill="none" marker-end="url(#kya-land-arrow-en)"/>
 <path d="M575 228 L550 190" stroke="var(--accent)" stroke-width="1.5" fill="none" marker-end="url(#kya-land-arrow-en)"/>
@@ -102,7 +102,7 @@ export const BLOG_POSTS: BlogPost[] = [
 </svg>
 </figure>
 
-<p><strong>Inside a platform.</strong> The business sends the agent (or its owner) to a vendor, the vendor runs its checks, and the business gets an answer through the vendor's dashboard or API. The checks can be very deep: liveness, device signals, behavior over time. But the result belongs to that relationship. A second business that meets the same agent has to run its own check, and a smart contract can't call a vendor's API in the middle of a transaction at all.</p>
+<p><strong>Inside a platform.</strong> The business sends the agent (or its owner) to a vendor, the vendor runs its checks, and the business gets an answer through the vendor's dashboard or API. The checks can be very deep: liveness, device signals, behavior over time. But the result belongs to that relationship. A second business that meets the same agent has to run its own check. And a smart contract can't call a vendor's API by itself: it would need an oracle to bring the answer on-chain, and the answer would still belong to the vendor.</p>
 
 <p><strong>On a public ledger.</strong> A verifier writes the result once, and anyone can read it, including a contract, at the moment it matters. That's the model KUMPLY uses. Our <code>AttestationStore</code> on Avalanche C-Chain stores, for each address, a tier, when it was issued, when it expires and which verifier issued it. Tier 5 is the agent category. Any contract reads it with one call to <code>verify(address)</code>, and the SDK wraps it as <code>isAgent(address)</code>.</p>
 
@@ -110,7 +110,22 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>A use case: an agent asks for a loan</h2>
 
-<p>An illustrative scenario, not a real transaction. A lending pool on C-Chain wants to accept deposits and loans from AI agents, but only agents someone has verified. A trading agent calls <code>borrow()</code>. Before anything moves, the pool's contract reads the agent's attestation: is it Tier 5, and has it not expired? If yes, the loan goes through. If not, the call reverts and no funds move. The same agent then opens a position on a DEX that applies the same rule, and the DEX doesn't verify it again. It reads the same record.</p>
+<p>An illustrative scenario, not a real transaction. A lending pool on C-Chain wants to accept AI agents as borrowers, but only agents someone has verified. A trading agent calls <code>borrow()</code>. Before anything moves, the pool's contract reads the agent's attestation: is it valid, is it Tier 5? If yes, the loan goes through. If not, the call reverts and no funds move. In Solidity, the whole check is two lines (illustrative code, not a deployed contract):</p>
+
+<pre><code>interface IAttestationStore {
+    function verify(address subject) external view
+        returns (bool verified, uint32 tier, uint64 issuedAt, uint64 expiry);
+}
+
+function borrow(uint256 amount) external {
+    (bool verified, uint32 tier, , ) = store.verify(msg.sender);
+    require(verified &amp;&amp; tier == 5, "not a verified agent");
+    // ... lending logic
+}</code></pre>
+
+<p>Note the <code>tier == 5</code>: tiers 1 to 3 are a ladder for people, and 4 (business) and 5 (agent) are separate categories, so an agent check is an exact match, never <code>tier &gt;= 5</code>. Off-chain, the SDK does the same with <code>isAgent(address)</code>.</p>
+
+<p>The same agent then opens a position on a DEX that applies the same rule, and the DEX doesn't verify it again. It reads the same record.</p>
 
 <p>That's what "composable" means here: one verification, read by many contracts, with no new integration and no data shared between the protocols.</p>
 
@@ -123,18 +138,21 @@ export const BLOG_POSTS: BlogPost[] = [
 <li><strong>Revocation:</strong> yes. A revoked or expired attestation makes <code>verify()</code> return false, so every contract that checks sees it at once.</li>
 <li><strong>Link to the owner (the principal):</strong> not on-chain yet. The attestation contract has no field that points from an agent to its owner's address. Accountability to a verified business is the design goal of Tier 5, but today it isn't something another contract can read.</li>
 <li><strong>Mandate, limits, reputation:</strong> no. KUMPLY doesn't store what an agent is allowed to do or how it has behaved. A protocol that needs spending limits has to enforce them itself, for example in the agent's smart wallet.</li>
+<li><strong>Self-serve Tier 5 verification:</strong> not yet. The verification level our webhook maps to Tier 5 isn't configured with our KYC provider, so Tier 5 attestations today are issued directly by a KUMPLY verifier.</li>
 </ul>
+
+<p>Mandates, behavior bounds and the owner link are what the planned <code>AgentRegistry.sol</code> extension is for. It's on our roadmap with no date committed, and we'd rather say that than round it up.</p>
 
 <p>On adoption, the live numbers as of today: our AttestationStore on Fuji testnet shows 50 attestations issued (the counter includes re-issues), from our own tests and the live KYA workshop with Team1 in September. On mainnet the counter still reads 0. The rails are there, real usage on mainnet is not yet.</p>
 
-<p>We're writing this down because the KYA conversation is moving faster than any single standard, and Elliptic is right that none exists yet. The useful question for a builder isn't "who does KYA," it's "can my contract read the answer, and what exactly does that answer cover." For KUMPLY, it's the four lines above.</p>
+<p>We're writing this down because the KYA conversation is moving faster than any single standard, and Elliptic is right that none exists yet. The useful question for a builder isn't "who does KYA," it's "can my contract read the answer, and what exactly does that answer cover." For KUMPLY, it's the list above, the yes lines and the no lines.</p>
 
 <h2>Try it</h2>
 
-<p>The <a href="https://kumply.xyz/demo" target="_blank" rel="noopener noreferrer">interactive demo</a> runs an agent marketplace scenario against real attestations, no wallet needed. To read an attestation from your own code, install <a href="https://www.npmjs.com/package/@kumply/sdk" target="_blank" rel="noopener noreferrer">@kumply/sdk</a> and call <code>isAgent(address)</code>. And a note on the name, since the acronym is shared: KUMPLY's KYA is our Tier 5, not KYA-OS, the separate protocol for MCP agents at the Decentralized Identity Foundation.</p>
+<p>The <a href="https://kumply.xyz/demo" target="_blank" rel="noopener noreferrer">interactive demo</a> runs an agent marketplace scenario against real attestations, no wallet needed. To read an attestation from your own code, install <a href="https://www.npmjs.com/package/@kumply/sdk" target="_blank" rel="noopener noreferrer">@kumply/sdk</a> and call <code>isAgent(address)</code>. And a note on the name, since the acronym is shared: KUMPLY's KYA is our Tier 5, not <a href="https://github.com/decentralized-identity/kya-os-mcp" target="_blank" rel="noopener noreferrer">KYA-OS</a>, the separate protocol for MCP agents at the Decentralized Identity Foundation.</p>
 `,
       es: `
-<p>Hace un año, "Know Your Agent" era una frase de nicho. En 2026 aparece por todos lados: en los ensayos de a16z, en las páginas de producto de empresas de identidad, en las guías de analítica blockchain. Es buena noticia para quien construye identidad de agentes, nosotros incluidos. También hace fácil perder de vista qué hace cada uno en realidad. Así que leímos las fuentes primarias y las pusimos lado a lado.</p>
+<p>Este año, "Know Your Agent" apareció en un ensayo de a16z, en páginas de producto de empresas de identidad y en guías de analítica blockchain. Es buena noticia para quien construye identidad de agentes, nosotros incluidos. También hace fácil perder de vista qué hace cada uno en realidad. Así que fuimos a las fuentes primarias y las pusimos lado a lado.</p>
 
 <h2>Qué dice cada uno, con sus palabras</h2>
 
@@ -142,7 +160,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <p><strong>Sumsub</strong> (<a href="https://sumsub.com/blog/know-your-agent/" target="_blank" rel="noopener noreferrer">28 de enero de 2026</a>) define KYA como establecer confianza en agentes de IA "by defining their identity, binding them to responsible entities" (definiendo su identidad y ligándolos a entidades responsables). Su enfoque es verificar al humano detrás del agente, con pruebas de vida, y describen la cadena como ir del agente, a un usuario verificado, a la cara de ese usuario. La detección, la decisión y la atribución ocurren "within a single platform", dentro de una sola plataforma.</p>
 
-<p><strong>Elliptic</strong> (<a href="https://www.elliptic.co/blockchain-basics/what-is-know-your-agent-kya/" target="_blank" rel="noopener noreferrer">guía vigente a octubre de 2026</a>) da la definición más completa que encontramos: KYA es el conjunto de revisiones que establece quién opera un agente, para quién actúa y qué está autorizado a hacer. Eso incluye KYC o KYB del operador, un mandato (activos, contrapartes, límites, vencimiento) y revisar en cada transacción que la credencial no esté revocada. También señalan que "No single KYA standard exists" (no existe un estándar único de KYA) y que, a octubre de 2026, ningún regulador exige KYA por nombre.</p>
+<p><strong>Elliptic</strong> (<a href="https://www.elliptic.co/blockchain-basics/what-is-know-your-agent-kya/" target="_blank" rel="noopener noreferrer">guía vigente a octubre de 2026</a>) da la definición más completa que encontramos: KYA es el conjunto de revisiones que establece quién opera un agente, para quién actúa y qué está autorizado a hacer. Eso incluye KYC o KYB del operador, un mandato (activos, contrapartes, límites, vencimiento) y revisar en cada transacción que la credencial no esté revocada. Mencionan el borrador ERC-8004, que registra la identidad de un agente como un token ERC-721, y son claros en que "No single KYA standard exists" (no existe un estándar único de KYA). Agregan que, a octubre de 2026, ningún regulador exige KYA por nombre.</p>
 
 <p><strong>Chainlink</strong> (<a href="https://chain.link/article/onchain-ai-agent-identity" target="_blank" rel="noopener noreferrer">actualizado el 23 de junio de 2026</a>) lo ve desde la infraestructura: identidad on-chain del agente como identificadores descentralizados más wallets de smart contract, para que un contrato distinga una petición legítima de una maliciosa.</p>
 
@@ -183,7 +201,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <rect x="440" y="230" width="80" height="40" rx="8" fill="var(--bg-card)" stroke="var(--border)"/>
 <text x="480" y="255" text-anchor="middle" font-size="12" fill="var(--text-primary)">DEX</text>
 <rect x="535" y="230" width="80" height="40" rx="8" fill="var(--bg-card)" stroke="var(--border)"/>
-<text x="575" y="255" text-anchor="middle" font-size="12" fill="var(--text-primary)">Paymaster</text>
+<text x="575" y="255" text-anchor="middle" font-size="12" fill="var(--text-primary)">Marketplace</text>
 <path d="M385 228 L410 190" stroke="var(--accent)" stroke-width="1.5" fill="none" marker-end="url(#kya-land-arrow-es)"/>
 <path d="M480 228 L480 190" stroke="var(--accent)" stroke-width="1.5" fill="none" marker-end="url(#kya-land-arrow-es)"/>
 <path d="M575 228 L550 190" stroke="var(--accent)" stroke-width="1.5" fill="none" marker-end="url(#kya-land-arrow-es)"/>
@@ -191,7 +209,7 @@ export const BLOG_POSTS: BlogPost[] = [
 </svg>
 </figure>
 
-<p><strong>Dentro de una plataforma.</strong> La empresa manda al agente (o a su dueño) con un proveedor, el proveedor hace sus revisiones y la empresa recibe la respuesta en el panel o la API del proveedor. Las revisiones pueden ser muy profundas: prueba de vida, señales del dispositivo, comportamiento en el tiempo. Pero el resultado se queda en esa relación. Una segunda empresa que se topa con el mismo agente tiene que hacer su propia revisión, y un smart contract ni siquiera puede llamar a la API de un proveedor a mitad de una transacción.</p>
+<p><strong>Dentro de una plataforma.</strong> La empresa manda al agente (o a su dueño) con un proveedor, el proveedor hace sus revisiones y la empresa recibe la respuesta en el panel o la API del proveedor. Las revisiones pueden ser muy profundas: prueba de vida, señales del dispositivo, comportamiento en el tiempo. Pero el resultado se queda en esa relación. Una segunda empresa que se topa con el mismo agente tiene que hacer su propia revisión. Y un smart contract no puede llamar por sí solo a la API de un proveedor: necesitaría un oráculo que suba la respuesta a la cadena, y la respuesta seguiría siendo del proveedor.</p>
 
 <p><strong>En un registro público.</strong> Un verificador escribe el resultado una vez y cualquiera lo puede leer, incluido un contrato, justo en el momento en que importa. Ese es el modelo de KUMPLY. Nuestro <code>AttestationStore</code> en la C-Chain de Avalanche guarda, por cada dirección, un tier, cuándo se emitió, cuándo vence y qué verificador lo emitió. El Tier 5 es la categoría de agentes. Cualquier contrato lo lee con una llamada a <code>verify(address)</code>, y el SDK lo envuelve como <code>isAgent(address)</code>.</p>
 
@@ -199,7 +217,22 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Un caso de uso: un agente pide un préstamo</h2>
 
-<p>Un escenario ilustrativo, no una transacción real. Un pool de préstamos en la C-Chain quiere aceptar depósitos y préstamos de agentes de IA, pero solo de agentes que alguien ya verificó. Un agente de trading llama a <code>borrow()</code>. Antes de que se mueva nada, el contrato del pool lee la atestación del agente: ¿es Tier 5 y no ha vencido? Si sí, el préstamo pasa. Si no, la llamada se revierte y no se mueven fondos. Después el mismo agente abre una posición en un DEX que aplica la misma regla, y el DEX no lo vuelve a verificar. Lee el mismo registro.</p>
+<p>Un escenario ilustrativo, no una transacción real. Un pool de préstamos en la C-Chain quiere aceptar agentes de IA como deudores, pero solo agentes que alguien ya verificó. Un agente de trading llama a <code>borrow()</code>. Antes de que se mueva nada, el contrato del pool lee la atestación del agente: ¿es válida y es Tier 5? Si sí, el préstamo pasa. Si no, la llamada se revierte y no se mueven fondos. En Solidity, toda la revisión son dos líneas (código ilustrativo, no un contrato desplegado):</p>
+
+<pre><code>interface IAttestationStore {
+    function verify(address subject) external view
+        returns (bool verified, uint32 tier, uint64 issuedAt, uint64 expiry);
+}
+
+function borrow(uint256 amount) external {
+    (bool verified, uint32 tier, , ) = store.verify(msg.sender);
+    require(verified &amp;&amp; tier == 5, "not a verified agent");
+    // ... logica del prestamo
+}</code></pre>
+
+<p>Fíjate en el <code>tier == 5</code>: los tiers 1 a 3 son una escalera para personas, y el 4 (empresa) y el 5 (agente) son categorías aparte, así que revisar un agente es una coincidencia exacta, nunca <code>tier &gt;= 5</code>. Fuera de la cadena, el SDK hace lo mismo con <code>isAgent(address)</code>.</p>
+
+<p>Después el mismo agente abre una posición en un DEX que aplica la misma regla, y el DEX no lo vuelve a verificar. Lee el mismo registro.</p>
 
 <p>Eso es lo que significa "componible" aquí: una sola verificación, leída por muchos contratos, sin integración nueva y sin compartir datos entre protocolos.</p>
 
@@ -212,15 +245,18 @@ export const BLOG_POSTS: BlogPost[] = [
 <li><strong>Revocación:</strong> sí. Una atestación revocada o vencida hace que <code>verify()</code> devuelva false, así que todo contrato que revisa lo ve al instante.</li>
 <li><strong>El vínculo con el dueño (el principal):</strong> todavía no está on-chain. El contrato de atestaciones no tiene un campo que apunte del agente a la dirección de su dueño. Que el agente responda ante una empresa verificada es el objetivo de diseño del Tier 5, pero hoy no es algo que otro contrato pueda leer.</li>
 <li><strong>Mandato, límites, reputación:</strong> no. KUMPLY no guarda qué puede hacer un agente ni cómo se ha comportado. Un protocolo que necesite límites de gasto los tiene que aplicar por su cuenta, por ejemplo en la smart wallet del agente.</li>
+<li><strong>Verificación Tier 5 en autoservicio:</strong> todavía no. El nivel de verificación que nuestro webhook asigna al Tier 5 no está configurado con nuestro proveedor de KYC, así que hoy las atestaciones Tier 5 las emite directamente un verificador de KUMPLY.</li>
 </ul>
+
+<p>El mandato, los límites de comportamiento y el vínculo con el dueño son para lo que está pensada la extensión <code>AgentRegistry.sol</code>. Está en nuestro roadmap sin fecha comprometida, y preferimos decirlo así que redondearlo hacia arriba.</p>
 
 <p>Sobre adopción, los números en vivo a hoy: nuestro AttestationStore en la testnet Fuji marca 50 atestaciones emitidas (el contador incluye reemisiones), entre nuestras pruebas y el workshop de KYA en vivo con Team1 en septiembre. En mainnet el contador sigue en 0. Los rieles ya están, el uso real en mainnet todavía no.</p>
 
-<p>Lo escribimos porque la conversación sobre KYA avanza más rápido que cualquier estándar, y Elliptic tiene razón en que todavía no existe uno. La pregunta útil para quien construye no es "quién hace KYA", sino "¿mi contrato puede leer la respuesta, y qué cubre exactamente esa respuesta?". En KUMPLY, son las cuatro líneas de arriba.</p>
+<p>Lo escribimos porque la conversación sobre KYA avanza más rápido que cualquier estándar, y Elliptic tiene razón en que todavía no existe uno. La pregunta útil para quien construye no es "quién hace KYA", sino "¿mi contrato puede leer la respuesta, y qué cubre exactamente esa respuesta?". En KUMPLY, es la lista de arriba, con sus síes y sus noes.</p>
 
 <h2>Pruébalo</h2>
 
-<p>La <a href="https://kumply.xyz/demo" target="_blank" rel="noopener noreferrer">demo interactiva</a> corre un escenario de marketplace de agentes contra atestaciones reales, sin wallet. Para leer una atestación desde tu propio código, instala <a href="https://www.npmjs.com/package/@kumply/sdk" target="_blank" rel="noopener noreferrer">@kumply/sdk</a> y llama a <code>isAgent(address)</code>. Y una nota sobre el nombre, porque las siglas se comparten: el KYA de KUMPLY es nuestro Tier 5, no KYA-OS, el protocolo aparte para agentes MCP de la Decentralized Identity Foundation.</p>
+<p>La <a href="https://kumply.xyz/demo" target="_blank" rel="noopener noreferrer">demo interactiva</a> corre un escenario de marketplace de agentes contra atestaciones reales, sin wallet. Para leer una atestación desde tu propio código, instala <a href="https://www.npmjs.com/package/@kumply/sdk" target="_blank" rel="noopener noreferrer">@kumply/sdk</a> y llama a <code>isAgent(address)</code>. Y una nota sobre el nombre, porque las siglas se comparten: el KYA de KUMPLY es nuestro Tier 5, no <a href="https://github.com/decentralized-identity/kya-os-mcp" target="_blank" rel="noopener noreferrer">KYA-OS</a>, el protocolo aparte para agentes MCP de la Decentralized Identity Foundation.</p>
 `,
     },
   },
